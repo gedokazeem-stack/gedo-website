@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -10,116 +8,141 @@
 *{box-sizing:border-box}
 body{
  margin:0;background:#080b14;color:white;
- font-family:Arial,sans-serif;padding:18px
+ font-family:Arial,sans-serif;padding:15px
 }
-.container{max-width:750px;margin:auto}
-header{text-align:center;padding:25px 10px}
-h1{color:#39a9ff;font-size:32px}
-.sub{color:#aaa}
+.container{max-width:800px;margin:auto}
+header{text-align:center;padding:25px 5px}
+h1{color:#38a9ff;font-size:34px;margin:5px}
+.sub{color:#9baac0}
 .card{
- background:#141b2b;border:1px solid #26334b;
- border-radius:16px;padding:20px;margin:15px 0
+ background:#141d2e;border:1px solid #293954;
+ border-radius:17px;padding:20px;margin:15px 0
+}
+input{
+ width:100%;padding:14px;border-radius:10px;
+ border:1px solid #52627a;background:#0b1220;
+ color:white;font-size:16px
 }
 button{
- background:#1688e8;color:white;border:0;
- border-radius:10px;padding:13px 20px;
- font-size:16px;cursor:pointer;margin-top:12px
+ border:0;border-radius:10px;padding:13px 18px;
+ background:#1688e8;color:white;font-size:16px;
+ cursor:pointer;margin:5px
 }
-button:disabled{opacity:.5}
+button:disabled{opacity:.35}
 .option{
  display:block;width:100%;text-align:right;
- background:#202b40;color:white;
+ background:#202c40;color:white;
  border:2px solid #35445e;margin:10px 0;
  padding:15px;border-radius:12px
 }
-.option.correct{background:#124c35;border-color:#27d982}
-.option.wrong{background:#57232c;border-color:#ff5968}
-#feedback{font-weight:bold;margin-top:15px}
-#next{display:none}
-#result{text-align:center;font-size:22px}
-.small{color:#aebbd0}
+.option.selected{border-color:#38a9ff;background:#173653}
+.info{color:#aebbd0;font-size:14px}
+.bar{
+ height:8px;background:#293954;
+ border-radius:10px;overflow:hidden;margin:15px 0
+}
+#fill{height:100%;width:0;background:#38a9ff}
+.hidden{display:none}
+#review .correct{color:#35d68b}
+#review .wrong{color:#ff6474}
 </style>
 </head>
+
 <body>
 <div class="container">
+
 <header>
 <h1>GEDO EXAMS</h1>
-<div class="sub">امتحان الصف الثالث الإعدادي 2027</div>
+<div class="sub">نظام الامتحانات الإلكترونية</div>
+<div class="info">اختبر مستواك وحقق أفضل نتيجة</div>
 </header>
 
-<div class="card" id="start">
+<div class="card" id="welcome">
 <h2>أهلاً بك في الامتحان</h2>
-<p>اختبر مستواك وأجب عن الأسئلة بعناية.</p>
-<input id="student" placeholder="اكتب اسم الطالب"
-style="width:100%;padding:14px;border-radius:9px">
-<br>
-<button onclick="begin()">ابدأ الامتحان</button>
+<p>اكتب اسم الطالب للبدء:</p>
+<input id="studentName" placeholder="اسم الطالب">
+<br><br>
+<button onclick="startExam()">ابدأ الامتحان</button>
 </div>
 
-<div class="card" id="exam" style="display:none">
-<div class="small" id="progress"></div>
+<div class="card hidden" id="exam">
+<div class="info" id="progress"></div>
+<div class="bar"><div id="fill"></div></div>
+
 <h3 id="subject"></h3>
 <h2 id="question"></h2>
+
 <div id="options"></div>
-<div id="feedback"></div>
-<button id="next" onclick="nextQuestion()">السؤال التالي</button>
+
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap">
+<button id="previous" onclick="move(-1)">السابق</button>
+<button id="next" onclick="move(1)">التالي</button>
+<button id="submit" onclick="submitExam()">تسليم الامتحان</button>
+</div>
+<p class="info" id="answered"></p>
 </div>
 
-<div class="card" id="result" style="display:none">
-<h2>انتهى الامتحان</h2>
-<p id="studentResult"></p>
-<p id="score"></p>
-<p id="percent"></p>
+<div class="card hidden" id="result">
+<h2>انتهى الامتحان 🎉</h2>
+<h3 id="resultName"></h3>
+<h1 id="score"></h1>
+<h2 id="percentage"></h2>
+<div id="review"></div>
 </div>
+
 </div>
 
 <script>
 const questions = [
 {
-subject:"اللغة الإنجليزية",
-q:"Which sentence is in the present perfect?",
-a:["I play football.","I have finished my homework.","I am playing now.","I played yesterday."],
-correct:1
-},
-{
-subject:"اللغة الإنجليزية",
-q:"Choose the correct word: I have lived here ___ 2020.",
-a:["for","since","ago","during"],
-correct:1
-},
-{
-subject:"اللغة الإنجليزية",
-q:"If I had studied harder, I ___ the exam.",
-a:["will pass","would pass","would have passed","pass"],
-correct:2
-},
-{
-subject:"اللغة العربية",
+subject:"اللغة العربية - تجريبي",
 q:"ما علامة رفع الفاعل المفرد؟",
 a:["الضمة","الفتحة","الكسرة","السكون"],
-correct:0
+correct:0,
+explain:"الفاعل المفرد يُرفع بالضمة الظاهرة إذا كان صحيح الآخر."
 },
 {
-subject:"اللغة العربية",
-q:"أي الكلمات الآتية فعل؟",
-a:["مدرسة","يكتب","كتاب","قلم"],
-correct:1
+subject:"اللغة الإنجليزية - تجريبي",
+q:"Choose the correct form: She has ___ her homework.",
+a:["finish","finished","finishing","finishes"],
+correct:1,
+explain:"المضارع التام يتكون من has أو have + التصريف الثالث للفعل."
 },
 {
-subject:"الرياضيات",
-q:"إذا كان س + 5 = 12، فإن قيمة س تساوي:",
-a:["5","6","7","8"],
-correct:2
+subject:"الرياضيات - تجريبي",
+q:"إذا كان 3س + 6 = 21، فما قيمة س؟",
+a:["3","4","5","6"],
+correct:2,
+explain:"نطرح 6 من الطرفين فنحصل على 3س = 15، ثم نقسم على 3."
+},
+{
+subject:"العلوم - تجريبي",
+q:"ما الوحدة الأساسية لبناء الكائن الحي؟",
+a:["النسيج","العضو","الخلية","الجهاز"],
+correct:2,
+explain:"الخلية هي الوحدة الأساسية في بناء الكائنات الحية."
+},
+{
+subject:"الدراسات - تجريبي",
+q:"ما المقصود بالموقع الجغرافي؟",
+a:["مناخ المكان","موقع المكان بالنسبة للأماكن الأخرى","عدد السكان","مساحة المكان"],
+correct:1,
+explain:"الموقع الجغرافي يوضح موضع المكان بالنسبة لما يحيط به."
 }
 ];
 
-let current=0,score=0,studentName="";
+let current=0;
+let answers=Array(questions.length).fill(null);
+let student="";
 
-function begin(){
- studentName=document.getElementById("student").value.trim();
- if(!studentName){alert("اكتب اسم الطالب أولاً");return;}
- document.getElementById("start").style.display="none";
- document.getElementById("exam").style.display="block";
+function startExam(){
+ student=document.getElementById("studentName").value.trim();
+ if(!student){
+  alert("اكتب اسم الطالب أولاً");
+  return;
+ }
+ document.getElementById("welcome").classList.add("hidden");
+ document.getElementById("exam").classList.remove("hidden");
  showQuestion();
 }
 
@@ -127,56 +150,99 @@ function showQuestion(){
  let q=questions[current];
  document.getElementById("progress").textContent=
  "السؤال "+(current+1)+" من "+questions.length;
+
+ document.getElementById("fill").style.width=
+ ((current+1)/questions.length*100)+"%";
+
  document.getElementById("subject").textContent=q.subject;
  document.getElementById("question").textContent=q.q;
- document.getElementById("feedback").textContent="";
- document.getElementById("next").style.display="none";
+
  let box=document.getElementById("options");
  box.innerHTML="";
+
  q.a.forEach((answer,i)=>{
   let b=document.createElement("button");
   b.className="option";
   b.textContent=answer;
-  b.onclick=()=>choose(i);
+  if(answers[current]===i)b.classList.add("selected");
+  b.onclick=()=>{
+   answers[current]=i;
+   showQuestion();
+  };
   box.appendChild(b);
  });
+
+ document.getElementById("previous").disabled=current===0;
+ document.getElementById("next").disabled=
+ current===questions.length-1;
+
+ let count=answers.filter(x=>x!==null).length;
+ document.getElementById("answered").textContent=
+ "تمت الإجابة عن "+count+" من "+questions.length+" أسئلة";
 }
 
-function choose(choice){
- let q=questions[current];
- let buttons=document.querySelectorAll(".option");
- buttons.forEach((b,i)=>{
-  b.disabled=true;
-  if(i===q.correct)b.classList.add("correct");
-  else if(i===choice)b.classList.add("wrong");
- });
- if(choice===q.correct){
-  score++;
-  document.getElementById("feedback").textContent="إجابة صحيحة! أحسنت";
-  document.getElementById("feedback").style.color="#27d982";
+function move(direction){
+ current+=direction;
+ showQuestion();
+}
+
+function submitExam(){
+ let unanswered=answers.filter(x=>x===null).length;
+ if(unanswered>0){
+  if(!confirm("لسه فيه "+unanswered+
+  " سؤال بدون إجابة. هل تريد التسليم؟"))return;
  }else{
-  document.getElementById("feedback").textContent=
-  "إجابة غير صحيحة. الإجابة الصحيحة: "+q.a[q.correct];
-  document.getElementById("feedback").style.color="#ff5968";
+  if(!confirm("هل أنت متأكد من تسليم الامتحان؟"))return;
  }
- document.getElementById("next").style.display="inline-block";
+ finishExam();
 }
 
-function nextQuestion(){
- current++;
- if(current<questions.length)showQuestion();
- else finish();
-}
+function finishExam(){
+ let score=0;
+ questions.forEach((q,i)=>{
+  if(answers[i]===q.correct)score++;
+ });
 
-function finish(){
- document.getElementById("exam").style.display="none";
- document.getElementById("result").style.display="block";
- document.getElementById("studentResult").textContent=
- "الطالب: "+studentName;
+ document.getElementById("exam").classList.add("hidden");
+ document.getElementById("result").classList.remove("hidden");
+
+ document.getElementById("resultName").textContent=
+ "الطالب: "+student;
+
  document.getElementById("score").textContent=
- "درجتك: "+score+" من "+questions.length;
- document.getElementById("percent").textContent=
+ "الدرجة: "+score+" / "+questions.length;
+
+ document.getElementById("percentage").textContent=
  "النسبة: "+Math.round(score/questions.length*100)+"%";
+
+ let review=document.getElementById("review");
+ review.innerHTML="<h2>مراجعة الإجابات</h2>";
+
+ questions.forEach((q,i)=>{
+  let div=document.createElement("div");
+  div.className="card";
+
+  let title=document.createElement("h3");
+  title.textContent="السؤال "+(i+1)+": "+q.q;
+  div.appendChild(title);
+
+  let your=document.createElement("p");
+  your.className=answers[i]===q.correct?"correct":"wrong";
+  your.textContent="إجابتك: "+
+  (answers[i]===null?"لم تتم الإجابة":q.a[answers[i]]);
+  div.appendChild(your);
+
+  let right=document.createElement("p");
+  right.className="correct";
+  right.textContent="الإجابة الصحيحة: "+q.a[q.correct];
+  div.appendChild(right);
+
+  let explain=document.createElement("p");
+  explain.textContent="التفسير: "+q.explain;
+  div.appendChild(explain);
+
+  review.appendChild(div);
+ });
 }
 </script>
 </body>
