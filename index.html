@@ -1,1 +1,208 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEDO EXAMS | امتحان الشهادة الإعدادية</title>
+<style>
+:root{--bg:#080b12;--panel:#111827;--panel2:#182235;--text:#f5f7fb;--muted:#aab4c5;--blue:#4f8cff;--green:#20c997;--red:#ff6577;--line:#29364b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#17243a 0,#080b12 48%);color:var(--text);font-family:Tahoma,Arial,sans-serif;min-height:100vh}
+.wrap{width:min(900px,94%);margin:25px auto}.brand{text-align:center;margin:24px 0}.brand h1{font-size:clamp(30px,7vw,48px);letter-spacing:2px;margin:0;color:#fff}.brand p{color:var(--muted);margin:8px 0}
+.card{background:rgba(17,24,39,.96);border:1px solid var(--line);border-radius:18px;padding:20px;margin:15px 0;box-shadow:0 12px 35px #0005}
+input{width:100%;padding:14px;border-radius:11px;border:1px solid var(--line);background:#0b1220;color:white;font-size:17px;margin:10px 0}
+button{border:0;border-radius:11px;padding:12px 18px;background:var(--blue);color:white;font-size:16px;font-weight:bold;cursor:pointer;margin:5px}
+button:disabled{opacity:.4;cursor:not-allowed}.secondary{background:#26354c}.danger{background:#a83245}.success{background:#138765}
+.row{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}.muted{color:var(--muted)}.hidden{display:none!important}
+.progress{height:8px;background:#263247;border-radius:10px;overflow:hidden;margin:12px 0}.bar{height:100%;background:var(--green);width:0}
+#subject{color:#9fc0ff;font-weight:bold}.qtext{font-size:21px;line-height:1.8;margin:18px 0}
+.option{display:block;width:100%;text-align:right;background:#172338;border:1px solid #2d3d57;margin:10px 0;padding:14px;border-radius:12px;color:white;font-size:17px}
+.option.selected{border:2px solid var(--blue);background:#1c355b}
+.small{font-size:14px;color:var(--muted)}.review-item{border-top:1px solid var(--line);padding:15px 0;line-height:1.8}
+.correct{color:#48dfad}.wrong{color:#ff8290}
+@media(max-width:520px){.card{padding:15px}.qtext{font-size:18px}button{flex:1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="brand"><h1>GEDO EXAMS</h1><p>امتحان تجريبي — الصف الثالث الإعدادي 2027</p></header>
 
+<section id="start" class="card">
+<h2>ابدأ امتحانك</h2>
+<p class="muted">100 سؤال — 5 مواد — اختر إجابة واحدة لكل سؤال.</p>
+<label for="student">اسم الطالب</label>
+<input id="student" maxlength="40" placeholder="اكتب اسمك هنا">
+<div class="row"><span class="small">اللغة العربية 25 • English 20 • الرياضيات 15 • العلوم 20 • الدراسات 20</span></div>
+<button id="begin" class="success">ابدأ الامتحان</button>
+</section>
+
+<section id="exam" class="hidden">
+<div class="card">
+<div class="row"><strong id="studentLabel"></strong><span id="counter" class="muted"></span></div>
+<div class="progress"><div id="bar" class="bar"></div></div>
+<div class="row"><span id="subject"></span><span id="answered" class="small"></span></div>
+<div id="question" class="qtext"></div>
+<div id="options"></div>
+<div class="row">
+<button id="prev" class="secondary">السابق</button>
+<button id="next">التالي</button>
+<button id="submit" class="danger">إنهاء وتسليم</button>
+</div>
+</div>
+</section>
+
+<section id="result" class="hidden">
+<div class="card">
+<h2>نتيجة الامتحان</h2>
+<p id="resultName"></p>
+<h1 id="score"></h1>
+<p id="percent" class="muted"></p>
+<button id="showReview">مراجعة الإجابات</button>
+<button onclick="location.reload()" class="secondary">امتحان جديد</button>
+</div>
+<div id="review" class="card hidden"><h2>مراجعة الأسئلة</h2><div id="reviewList"></div></div>
+</section>
+<footer class="small" style="text-align:center;padding:20px">GEDO EXAMS</footer>
+</div>
+<script>
+const make=(subject,question,options,answer,explanation)=>({subject,question,options,answer,explanation});
+const arabicQuestions=[
+make("اللغة العربية","أي الكلمات الآتية اسم فاعل من الفعل «استخرج»؟",["مُستخرِج","مُستخرَج","استخراج","خارج"],0,"اسم الفاعل من استخرج هو مُستخرِج."),
+make("اللغة العربية","اسم المفعول من الفعل «كتب» هو:",["كاتب","مكتوب","كتاب","كتابة"],1,"اسم المفعول من الفعل الثلاثي كتب هو مكتوب."),
+make("اللغة العربية","أي الكلمات الآتية صيغة مبالغة؟",["غفور","كاتب","مكتوب","مكتب"],0,"غفور على وزن فعول، وهو من صيغ المبالغة."),
+make("اللغة العربية","اسم المكان من الفعل «جلس» هو:",["جالس","مجلس","جلوس","جليس"],1,"مجلس اسم مكان يدل على موضع الجلوس."),
+make("اللغة العربية","في جملة «أمكرمٌ الضيفَ صاحبُ البيت؟» عمل اسم الفاعل لأنه:",["معرف بأل","اعتمد على استفهام","مضاف","مسبوق بنفي"],1,"اسم الفاعل اعتمد على الاستفهام فعمل عمل فعله."),
+make("اللغة العربية","أي الكلمات الآتية اسم آلة؟",["مِفتاح","فاتح","مفتوح","فتح"],0,"مفتاح اسم آلة."),
+make("اللغة العربية","اسم المفعول من «احترم» هو:",["محترِم","مُحترَم","احترام","حَرَم"],1,"اسم المفعول من احترم هو مُحترَم."),
+make("اللغة العربية","صيغة المبالغة «صبور» على وزن:",["فعيل","فعّال","فعول","مفعال"],2,"صبور على وزن فعول."),
+make("اللغة العربية","اسم الفاعل من «انتصر» هو:",["منتصر","منصور","نصر","ناصر"],0,"اسم الفاعل من انتصر هو منتصر."),
+make("اللغة العربية","اسم المكان من «وعد» هو:",["واعد","موعد","موعود","وعد"],1,"موعد اسم مكان أو زمان من الفعل وعد."),
+make("اللغة العربية","أي الجمل الآتية تشتمل على اسم مفعول؟",["الطالب مجتهد","الحق محفوظ","المعلم شارح","الطفل لاعب"],1,"محفوظ اسم مفعول."),
+make("اللغة العربية","اسم الفاعل من «قال» هو:",["قائل","مقول","قول","قوال"],0,"قائل اسم فاعل من قال."),
+make("اللغة العربية","اسم المفعول من «باع» هو:",["بائع","مبيع","بيع","بيّاع"],1,"مبيع اسم مفعول من باع."),
+make("اللغة العربية","أي الكلمات الآتية صيغة مبالغة؟",["مقدام","قادم","مقدم","قدوم"],0,"مقدام صيغة مبالغة تدل على كثرة الإقدام."),
+make("اللغة العربية","اسم الآلة من «نشر» هو:",["ناشر","منشور","مِنشار","نشرة"],2,"مِنشار اسم آلة."),
+make("اللغة العربية","في «الطالب حافظٌ درسه» كلمة حافظ:",["اسم مفعول","اسم فاعل","اسم آلة","مصدر"],1,"حافظ اسم فاعل من حفظ."),
+make("اللغة العربية","اسم المفعول من «أكرم» هو:",["مُكرِم","مُكرَم","كريم","إكرام"],1,"مُكرَم اسم مفعول من أكرم."),
+make("اللغة العربية","أي الكلمات اسم زمان؟",["مطلع الفجر","مِفتاح","كاتب","مكتوب"],0,"مطلع قد يدل على زمان الطلوع بحسب السياق."),
+make("اللغة العربية","«العليم» من حيث الصيغة:",["اسم آلة","صيغة مبالغة","اسم مكان","اسم مفعول"],1,"العليم صيغة مبالغة على وزن فعيل."),
+make("اللغة العربية","اسم الفاعل من «أحسن» هو:",["مُحسِن","مُحسَن","حسن","إحسان"],0,"مُحسِن اسم فاعل من أحسن."),
+make("اللغة العربية","اسم المفعول من «انتظر» هو:",["منتظِر","منتظَر","انتظار","ناظر"],1,"منتظَر اسم مفعول."),
+make("اللغة العربية","أي الكلمات الآتية اسم آلة؟",["مِكنسة","كانس","مكنوس","كنس"],0,"مكنسة اسم آلة."),
+make("اللغة العربية","صيغة المبالغة من «غفر» هي:",["غافر","مغفور","غفّار","غفران"],2,"غفّار صيغة مبالغة على وزن فعّال."),
+make("اللغة العربية","اسم المكان من «لعب» هو:",["لاعب","ملعب","ملعوب","لعبة"],1,"ملعب اسم مكان اللعب."),
+make("اللغة العربية","في «ما مهملٌ واجبَه المجتهدُ» عمل اسم الفاعل لاعتماده على:",["نفي","استفهام","نداء","موصوف"],0,"اسم الفاعل اعتمد على النفي.")
+];
+const englishQuestions=[
+make("English","Choose the correct form: I have lived here ___ 2020.",["for","since","ago","during"],1,"Use since with a starting point in time."),
+make("English","They have studied English ___ three years.",["since","for","yet","already"],1,"Use for with a period of time."),
+make("English","The homework ___ by the students yesterday.",["did","was done","is doing","has do"],1,"Past simple passive: was/were + past participle."),
+make("English","If I had studied harder, I ___ the exam.",["will pass","would pass","would have passed","passed"],2,"Third conditional: If + past perfect, would have + past participle."),
+make("English","She has ___ finished her project.",["yet","already","since","for"],1,"Already is used in affirmative present perfect sentences."),
+make("English","The letter was ___ by my friend.",["write","wrote","written","writing"],2,"Passive voice uses the past participle."),
+make("English","Choose the correct sentence.",["He have finished.","He has finished.","He has finish.","He finished has."],1,"He takes has in the present perfect."),
+make("English","I haven't seen him ___ Monday.",["for","since","from","at"],1,"Since is used with a point in time."),
+make("English","If she had left earlier, she ___ the bus.",["would catch","will catch","would have caught","caught"],2,"This is a third conditional sentence."),
+make("English","The room ___ every day.",["cleans","is cleaned","cleaned","clean"],1,"Present simple passive: is/are + past participle."),
+make("English","Choose the opposite of «polite».",["kind","rude","helpful","honest"],1,"Rude is the opposite of polite."),
+make("English","The students ___ their work yet.",["haven't finished","didn't finish","aren't finish","hasn't finished"],0,"Yet commonly appears in negative present perfect."),
+make("English","She has worked here ___ five months.",["since","for","already","yet"],1,"Five months is a duration, so use for."),
+make("English","The window ___ by the boy last night.",["breaks","was broken","is broken","has broke"],1,"Past simple passive."),
+make("English","If I were you, I ___ apologize.",["will","would","have","am"],1,"If I were you is followed by would + infinitive."),
+make("English","Choose the correct past participle of «choose».",["chose","chosen","choosing","chooses"],1,"The past participle is chosen."),
+make("English","Have you ever ___ to Luxor?",["be","been","being","was"],1,"Present perfect uses have + past participle."),
+make("English","The message ___ tomorrow.",["will send","will be sent","sent","is sending"],1,"Future passive: will be + past participle."),
+make("English","He has known his best friend ___ childhood.",["for","since","during","while"],1,"Since is used with a starting point."),
+make("English","If they had invited me, I ___.",["come","will come","would have come","would come"],2,"Third conditional describes an unreal past result.")
+];
+const mathQuestions=[
+make("الرياضيات","إذا كان ٣س = ٢١ فإن س =",["٦","٧","٨","٩"],1,"نقسم الطرفين على ٣ فيكون س = ٧."),
+make("الرياضيات","ناتج ٢³ × ٢² =",["٢⁵","٢⁶","٢¹","٤⁵"],0,"عند ضرب قوتين لهما الأساس نفسه نجمع الأسس."),
+make("الرياضيات","تحليل س² − ٩ هو:",["(س−٣)(س+٣)","(س−٩)(س+١)","(س−٣)²","(س+٩)(س−١)"],0,"فرق بين مربعين."),
+make("الرياضيات","إذا كان س + ٥ = ١٢ فإن س =",["٥","٦","٧","٨"],2,"س = ١٢ − ٥ = ٧."),
+make("الرياضيات","قيمة (٣س)² عندما س = ٢ هي:",["١٢","١٨","٣٦","٦"],2,"(٣×٢)² = ٦² = ٣٦."),
+make("الرياضيات","حل المعادلة س² = ٤٩ هو:",["٧ فقط","−٧ فقط","±٧","٤٩"],2,"الجذران هما ٧ و−٧."),
+make("الرياضيات","ناتج (س+٢)(س+٣) هو:",["س²+٥س+٦","س²+٦","س²+٥","س²−٥س+٦"],0,"نضرب الحدود ثم نجمع الحدود المتشابهة."),
+make("الرياضيات","إذا كان ٢س − ٤ = ١٠ فإن س =",["٥","٦","٧","٨"],2,"٢س = ١٤ إذن س = ٧."),
+make("الرياضيات","الجذر التربيعي للعدد ١٤٤ هو:",["١٠","١١","١٢","١٤"],2,"١٢ × ١٢ = ١٤٤."),
+make("الرياضيات","ناتج ٥⁰ + ٢² =",["٤","٥","٦","٧"],2,"أي عدد غير الصفر أس صفر يساوي ١، و٢² = ٤."),
+make("الرياضيات","تحليل س² + ٧س + ١٢ هو:",["(س+٣)(س+٤)","(س+٢)(س+٦)","(س−٣)(س−٤)","(س+١)(س+١٢)"],0,"٣ و٤ حاصل ضربهما ١٢ ومجموعهما ٧."),
+make("الرياضيات","إذا كان ص = ٢س + ١ فإن ص عندما س = ٤ يساوي:",["٧","٨","٩","١٠"],2,"ص = ٢×٤ + ١ = ٩."),
+make("الرياضيات","ناتج ٣/٤ + ١/٤ =",["١/٢","١","٣/٨","٤/٨"],1,"نجمع البسطين لتساوي ٤/٤ = ١."),
+make("الرياضيات","إذا كان س/٥ = ٣ فإن س =",["٨","١٠","١٥","٢٠"],2,"نضرب الطرفين في ٥."),
+make("الرياضيات","حل المتباينة س + ٢ > ٦ هو:",["س > ٤","س < ٤","س > ٨","س < ٨"],0,"بطرح ٢ من الطرفين نحصل على س > ٤.")
+];
+const scienceQuestions=[
+make("العلوم","أي مما يلي دليل على حدوث تفاعل كيميائي؟",["تغير شكل الورقة","تكون راسب","تقطيع الخشب","انصهار الثلج"],1,"تكون راسب قد يدل على تكوّن مادة جديدة."),
+make("العلوم","الرمز الكيميائي للأكسجين هو:",["O","H","N","C"],0,"يرمز للأكسجين بالحرف O."),
+make("العلوم","عند اتحاد مادتين لتكوين مادة جديدة يحدث:",["تغير فيزيائي","تفاعل كيميائي","تبخر فقط","تجمد"],1,"التفاعل الكيميائي ينتج مواد جديدة."),
+make("العلوم","وحدة قياس شدة التيار الكهربائي هي:",["الفولت","الأوم","الأمبير","الواط"],2,"تقاس شدة التيار بالأمبير."),
+make("العلوم","الجهاز المستخدم لقياس فرق الجهد هو:",["الأميتر","الفولتميتر","الترمومتر","البارومتر"],1,"الفولتميتر يقيس فرق الجهد."),
+make("العلوم","في الدائرة الكهربية المفتوحة:",["يمر التيار","لا يمر التيار","تزداد المقاومة للصفر","تتولد طاقة ضوئية دائمًا"],1,"الدائرة المفتوحة تقطع مسار التيار."),
+make("العلوم","من صور الطاقة المتجددة:",["الفحم","البترول","الطاقة الشمسية","الغاز الطبيعي"],2,"الشمس مصدر متجدد للطاقة."),
+make("العلوم","أي الغازات ضروري لعملية التنفس الهوائي؟",["النيتروجين","الأكسجين","الهيدروجين","الهيليوم"],1,"تستخدم الخلايا الأكسجين في التنفس الهوائي."),
+make("العلوم","تنتقل الحرارة في الفراغ بواسطة:",["التوصيل","الحمل","الإشعاع","التلامس"],2,"الإشعاع لا يحتاج إلى وسط مادي."),
+make("العلوم","العدسة المحدبة تعمل على:",["تجميع الأشعة","تفريق الأشعة دائمًا","امتصاص الضوء","إيقاف الضوء"],0,"العدسة المحدبة تجمع الأشعة المتوازية."),
+make("العلوم","العنصر الذي عدده الذري ٦ هو:",["الأكسجين","الكربون","النيتروجين","الهيدروجين"],1,"العدد الذري للكربون ٦."),
+make("العلوم","المادة التي لها حجم ثابت وشكل غير ثابت هي:",["الصلبة","السائلة","الغازية","البلازما"],1,"السائل له حجم ثابت ويأخذ شكل الإناء."),
+make("العلوم","أي مما يلي خليط متجانس؟",["الرمل والماء","الزيت والماء","محلول الملح","برادة الحديد والكبريت"],2,"محلول الملح خليط متجانس."),
+make("العلوم","تزداد سرعة التفاعل الكيميائي غالبًا عند:",["خفض درجة الحرارة","زيادة درجة الحرارة","تقليل مساحة السطح","تقليل التركيز"],1,"زيادة درجة الحرارة ترفع طاقة حركة الجسيمات."),
+make("العلوم","وظيفة الكلوروفيل في النبات هي:",["امتصاص الضوء","امتصاص الماء","نقل الغذاء","تكوين الجذور"],0,"الكلوروفيل يمتص الضوء اللازم للبناء الضوئي."),
+make("العلوم","أي الأجزاء التالية مسؤول عن التحكم في أنشطة الخلية؟",["الغشاء","النواة","السيتوبلازم","الجدار"],1,"النواة تحتوي المادة الوراثية وتتحكم في أنشطة الخلية."),
+make("العلوم","عند مرور تيار في سلك ملفوف حول قلب حديدي يتكون:",["مغناطيس كهربائي","عازل","خلية شمسية","مكثف"],0,"التيار في الملف يولد مجالًا مغناطيسيًا."),
+make("العلوم","من أمثلة التغير الفيزيائي:",["صدأ الحديد","احتراق الورق","انصهار الشمع","تعفن الطعام"],2,"انصهار الشمع يغير الحالة دون تكوين مادة جديدة."),
+make("العلوم","أي مما يلي يقلل تلوث الهواء؟",["حرق القمامة","زيادة عوادم السيارات","استخدام النقل الجماعي","قطع الأشجار"],2,"النقل الجماعي يقلل عدد المركبات والانبعاثات."),
+make("العلوم","تسمى عملية تحول السائل إلى غاز من سطحه:",["التكاثف","التجمد","التبخر","الانصهار"],2,"التبخر تحول السائل إلى غاز من سطحه.")
+];
+const socialQuestions=[
+make("الدراسات الاجتماعية","من أهداف محمد علي بناء جيش قوي من أجل:",["حماية الدولة وتوسيع نفوذها","إلغاء الزراعة","تقليل التجارة","إغلاق المدارس"],0,"اهتم محمد علي ببناء جيش حديث لتقوية الدولة."),
+make("الدراسات الاجتماعية","اهتم محمد علي بالتعليم لأنه أراد:",["إعداد الكوادر اللازمة للدولة","إلغاء الدواوين","تقليل عدد الموظفين","منع الترجمة"],0,"أنشأ المدارس وبعثات التعليم لإعداد المتخصصين."),
+make("الدراسات الاجتماعية","من مظاهر تحديث الزراعة في عهد محمد علي:",["إهمال الري","شق الترع وتنظيم الري","منع زراعة القطن","إلغاء الأراضي"],1,"اهتم بمشروعات الري وتطوير الزراعة."),
+make("الدراسات الاجتماعية","أرسل محمد علي البعثات العلمية إلى:",["أوروبا","أمريكا الجنوبية فقط","أستراليا فقط","وسط أفريقيا"],0,"أرسل بعثات إلى أوروبا للاستفادة من العلوم الحديثة."),
+make("الدراسات الاجتماعية","من نتائج إنشاء المصانع في عهد محمد علي:",["دعم الإنتاج المحلي","اختفاء التجارة","توقف الزراعة","إلغاء الجيش"],0,"سعى إلى إقامة صناعات تخدم احتياجات الدولة."),
+make("الدراسات الاجتماعية","كان من أهداف محمد علي إنشاء أسطول بحري:",["تقوية القوة العسكرية","إلغاء الموانئ","منع الصيد","إيقاف التجارة"],0,"الأسطول جزء من بناء القوة العسكرية."),
+make("الدراسات الاجتماعية","تولى محمد علي حكم مصر عام:",["1798م","1805م","1840م","1882م"],1,"تولى الحكم عام 1805م."),
+make("الدراسات الاجتماعية","من القوى التي ساعدت على صعود محمد علي للحكم:",["تأييد الشعب والعلماء","الاحتلال الفرنسي","الحملة البريطانية","الحكومة العثمانية وحدها"],0,"حظي بتأييد قطاعات من الشعب والعلماء."),
+make("الدراسات الاجتماعية","كان نظام الاحتكار في عهد محمد علي يهدف إلى:",["سيطرة الدولة على شراء وبيع جانب كبير من المحاصيل","إلغاء الزراعة","توزيع المصانع مجانًا","منع التصدير تمامًا"],0,"احتكرت الدولة شراء المحاصيل وبيعها ضمن نظامها الاقتصادي."),
+make("الدراسات الاجتماعية","من نتائج سياسة محمد علي التعليمية:",["ظهور كوادر متخصصة","اختفاء المدارس","تراجع الترجمة","منع الطب"],0,"ساهمت المدارس والبعثات في إعداد متخصصين."),
+make("الدراسات الاجتماعية","أي القارات تقع غرب المحيط الأطلسي؟",["أوروبا","أفريقيا","الأمريكتان","آسيا"],2,"تقع الأمريكتان غرب المحيط الأطلسي."),
+make("الدراسات الاجتماعية","أكبر قارات العالم مساحة هي:",["أفريقيا","آسيا","أوروبا","أستراليا"],1,"قارة آسيا هي الأكبر مساحة."),
+make("الدراسات الاجتماعية","يفصل المحيط الأطلسي بين:",["أفريقيا وأوروبا من جهة والأمريكتين من جهة","آسيا وأستراليا","أوروبا وآسيا","أفريقيا وآسيا"],0,"يقع الأطلسي بين القارات المذكورة والأمريكتين."),
+make("الدراسات الاجتماعية","من العوامل المؤثرة في توزيع السكان:",["المناخ","لون الصخور فقط","شكل العلم","عدد القارات"],0,"المناخ من العوامل الطبيعية المؤثرة في توزيع السكان."),
+make("الدراسات الاجتماعية","من مظاهر بناء الدولة الحديثة في عهد محمد علي:",["إنشاء الدواوين وتنظيم الإدارة","إلغاء الإدارة","إغلاق المدارس","منع الزراعة"],0,"عمل على تنظيم الإدارة والدواوين."),
+make("الدراسات الاجتماعية","اهتم محمد علي بالصناعة لتوفير:",["احتياجات الجيش والدولة","المنتجات الكمالية فقط","الألعاب فقط","المواد المستوردة فقط"],0,"دعمت الصناعة احتياجات الجيش والدولة."),
+make("الدراسات الاجتماعية","من خلفاء محمد علي الذين تولوا حكم مصر:",["عباس الأول","نابليون","كرومر","سعد زغلول"],0,"عباس الأول من أسرة محمد علي وتولى حكم مصر."),
+make("الدراسات الاجتماعية","من مشروعات محمد علي في مجال النقل:",["تطوير الطرق والمواصلات","إلغاء الموانئ","منع حركة التجارة","إغلاق الترع"],0,"اهتم بتطوير وسائل النقل لخدمة الدولة."),
+make("الدراسات الاجتماعية","أدى الاهتمام بالري إلى:",["تحسين استغلال الأراضي الزراعية","اختفاء الزراعة","زيادة التصحر حتمًا","منع زراعة المحاصيل"],0,"تنظيم الري يساعد على تحسين استغلال الأراضي."),
+make("الدراسات الاجتماعية","من سمات الدولة الحديثة التي سعى محمد علي إلى بنائها:",["جيش وإدارة وتعليم وصناعة","جيش فقط دون مؤسسات","إلغاء التعليم","الاعتماد الكامل على الخارج"],0,"عمل على تطوير مؤسسات متعددة لبناء دولة قوية.")
+];
+
+const bank=[...arabicQuestions,...englishQuestions,...mathQuestions,...scienceQuestions,...socialQuestions];
+let current=0,answers=Array(bank.length).fill(null),studentName="";
+const $=id=>document.getElementById(id);
+$("begin").onclick=()=>{
+ studentName=$("student").value.trim();
+ if(!studentName){alert("اكتب اسم الطالب أولًا");return;}
+ $("start").classList.add("hidden");$("exam").classList.remove("hidden");$("studentLabel").textContent="الطالب: "+studentName;render();
+};
+function render(){
+ const item=bank[current];$("counter").textContent=`السؤال ${current+1} من ${bank.length}`;
+ $("bar").style.width=((current+1)/bank.length*100)+"%";$("subject").textContent=item.subject;
+ $("answered").textContent=`تمت الإجابة عن ${answers.filter(x=>x!==null).length} سؤال`;
+ $("question").textContent=item.question;$("options").innerHTML="";
+ item.options.forEach((op,i)=>{const b=document.createElement("button");b.className="option"+(answers[current]===i?" selected":"");b.textContent=String.fromCharCode(65+i)+") "+op;b.onclick=()=>{answers[current]=i;render();};$("options").appendChild(b);});
+ $("prev").disabled=current===0;$("next").disabled=current===bank.length-1;
+}
+$("prev").onclick=()=>{if(current>0){current--;render();}};
+$("next").onclick=()=>{if(current<bank.length-1){current++;render();}};
+$("submit").onclick=()=>{const unanswered=answers.filter(x=>x===null).length;if(!confirm(`هل تريد تسليم الامتحان؟ الأسئلة غير المجابة: ${unanswered}`))return;finish();};
+function finish(){
+ $("exam").classList.add("hidden");$("result").classList.remove("hidden");
+ let score=0;bank.forEach((q,i)=>{if(answers[i]===q.answer)score++;});
+ $("resultName").textContent="اسم الطالب: "+studentName;
+ $("score").textContent=`${score} / ${bank.length}`;
+ $("percent").textContent=`النسبة المئوية: ${Math.round(score/bank.length*100)}%`;
+ $("showReview").onclick=()=>{const list=$("reviewList");list.innerHTML="";bank.forEach((q,i)=>{const d=document.createElement("div");d.className="review-item";const chosen=answers[i]===null?"لم تتم الإجابة":q.options[answers[i]];const good=q.options[q.answer];d.innerHTML=`<strong>${i+1}. ${q.subject}</strong><div>${escapeHTML(q.question)}</div><div class="${answers[i]===q.answer?"correct":"wrong"}">إجابتك: ${escapeHTML(chosen)}</div><div class="correct">الإجابة الصحيحة: ${escapeHTML(good)}</div><div class="small">التفسير: ${escapeHTML(q.explanation)}</div>`;list.appendChild(d);});$("review").classList.remove("hidden");$("review").scrollIntoView({behavior:"smooth"});};
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+</script>
+</body>
+</html>
