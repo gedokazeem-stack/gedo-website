@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جدو هاكر</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 25px 15px;
+  background: #080000;
+  color: #ff2222;
+  font-family: Tahoma, Arial, sans-serif;
+  text-align: center;
+  animation: glow 2s infinite alternate;
+}
+@keyframes glow {
+  from { background: #080000; }
+  to { background: #250000; }
+}
+h1 {
+  font-size: 38px;
+  text-shadow: 0 0 18px red;
+}
+.panel {
+  border: 2px solid red;
+  border-radius: 14px;
+  padding: 22px 12px;
+  box-shadow: 0 0 20px red;
+  margin-top: 30px;
+}
+.warning {
+  font-size: 21px;
+  animation: blink 1s infinite;
+}
+@keyframes blink {
+  50% { opacity: .3; }
+}
+#timer {
+  font-size: 55px;
+  font-weight: bold;
+  margin: 25px 0;
+  direction: ltr;
+}
+#output {
+  text-align: right;
+  line-height: 2.2;
+  min-height: 120px;
+  color: #ff7777;
+}
+button {
+  background: #d00000;
+  color: white;
+  border: 1px solid red;
+  border-radius: 8px;
+  padding: 14px 25px;
+  font-size: 18px;
+}
+#result {
+  display: none;
+  color: white;
+  background: #a00000;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  line-height: 2;
+}
+</style>
+</head>
+<body>
+
+<h1>جدو هاكر</h1>
+<p>مرحباً بك في عالم المحاكاة الإلكترونية</p>
+
+<div class="panel">
+  <div class="warning">⚠️ تحذير: بدأت المحاكاة ⚠️</div>
+
+  <div id="timer">05:00</div>
+
+  <div id="output">
+    النظام الافتراضي جاهز...
+  </div>
+
+  <button id="start" onclick="startSim()">
+    ابدأ المحاكاة
+  </button>
+
+  <div id="result">
+    😂 متقلقش! جهازك سليم تماماً.
+    <br>
+    دي مجرد محاكاة ومقلب من جدو عبدالله.
+  </div>
+</div>
+
+<p>صناعة: جدو عبدالله</p>
+<p>محاكاة تعليمية فقط</p>
+
+<script>
+let remaining = 300;
+let interval;
+let messages = [
+ "جاري تشغيل البيئة الافتراضية...",
+ "جاري فحص النظام التجريبي...",
+ "جاري تحليل البيانات الوهمية...",
+ "جاري فحص إعدادات المحاكاة...",
+ "جاري تجهيز التقرير النهائي...",
+ "النظام يعمل بصورة طبيعية..."
+];
+
+function startSim() {
+  let button = document.getElementById("start");
+  let output = document.getElementById("output");
+  let timer = document.getElementById("timer");
+  let result = document.getElementById("result");
+
+  button.disabled = true;
+  button.style.opacity = ".5";
+  result.style.display = "none";
+  remaining = 300;
+
+  output.innerHTML = "بدأت المحاكاة بنجاح...";
+  let i = 0;
+
+  let msgInterval = setInterval(() => {
+    if (remaining <= 0) return;
+    output.innerHTML += "<br>" + messages[i % messages.length];
+    i++;
+  }, 12000);
+
+  interval = setInterval(() => {
+    remaining--;
+
+    let min = Math.floor(remaining / 60);
+    let sec = remaining % 60;
+
+    timer.textContent =
+      String(min).padStart(2,"0") + ":" +
+      String(sec).padStart(2,"0");
+
+    if (remaining <= 0) {
+      clearInterval(interval);
+      clearInterval(msgInterval);
+
+      output.innerHTML = "انتهت المحاكاة بنجاح!";
+      result.style.display = "block";
+      button.disabled = false;
+      button.style.opacity = "1";
+    }
+  }, 1000);
+}
+</script>
+
+</body>
+</html>
