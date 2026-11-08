@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عالم السلطان زلاتان</title>
+<style>
+body {
+  background: #080808;
+  color: white;
+  font-family: Arial;
+  text-align: center;
+  padding: 35px 15px;
+}
+h1 { color: gold; }
+h2 { margin-top: 40px; }
+button {
+  background: gold;
+  color: black;
+  border: none;
+  padding: 15px 25px;
+  margin: 12px;
+  border-radius: 12px;
+  font-size: 19px;
+  font-weight: bold;
+}
+#result {
+  color: gold;
+  font-size: 23px;
+  margin-top: 30px;
+}
+</style>
+</head>
+<body>
+
+<h1>🔥 إبراهيموفيتش عمك؟ 🔥</h1>
+<p>أهلاً بيك في اختبار السلطان زلاتان</p>
+
+<div id="question">
+<h2>السؤال الأول: إبراهيموفيتش عمك؟</h2>
+<button onclick="first('yes')">أيوه 😎</button>
+<button onclick="first('no')">لا 😂</button>
+</div>
+
+<div id="result"></div>
+<div id="next"></div>
+
+<script>
+function first(answer) {
+  document.getElementById("result").innerText =
+    answer === "yes"
+    ? "والله أنت راجل محترم وبحبك ❤️"
+    : "خلاص جدو عمك 😂🔥";
+
+  document.getElementById("next").innerHTML =
+    '<button onclick="secondQuestion()">السؤال التالي ➡️</button>';
+}
+
+function secondQuestion() {
+  document.getElementById("question").innerHTML = `
+    <h2>هل إبراهيموفيتش أفضل مهاجم في تاريخ كرة القدم؟</h2>
+    <button onclick="second('yes')">أيوه 😍</button>
+    <button onclick="second('no')">لا 😂</button>
+  `;
+  document.getElementById("result").innerText = "";
+  document.getElementById("next").innerHTML = "";
+}
+
+function second(answer) {
+  document.getElementById("result").innerText =
+    answer === "yes"
+    ? "خد بوسة 😘❤️"
+    : "عشان أنت أصلاً ملكش في الكورة 😂⚽";
+
+  document.getElementById("next").innerHTML =
+    '<h3>Created by Gedo Abdullah 👑</h3>';
+}
+</script>
+
+</body>
+</html>
