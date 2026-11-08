@@ -1,188 +1,138 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>امتحان أولى إعدادي 2027 | GEDO EXAMS</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>امتحان أولى إعدادي 2027 | Gedo</title>
 <style>
-:root{--navy:#10243b;--blue:#1769aa;--gold:#f3bd45;--bg:#f3f6fa;--ink:#172536}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Tahoma,Arial,sans-serif;color:var(--ink);line-height:1.8}
-header{background:linear-gradient(120deg,#10243b,#1769aa);color:white;padding:22px 16px;text-align:center}
-header h1{margin:0;font-size:25px}header p{margin:4px 0 0;color:#e4efff}
-main{max-width:850px;margin:20px auto;padding:0 12px}.panel{background:white;border-radius:16px;padding:20px;box-shadow:0 4px 18px #14283b12;margin-bottom:16px}
-.meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#526579;font-size:14px}
-.progress{height:9px;background:#e7edf4;border-radius:20px;overflow:hidden;margin:12px 0}.bar{height:100%;width:0;background:var(--gold);transition:width .2s}
-h2{font-size:20px;margin:8px 0 14px}.choice{display:block;border:1px solid #d9e1ea;border-radius:11px;padding:12px;margin:10px 0;cursor:pointer;background:#fff}
-.choice:has(input:checked){border-color:var(--blue);background:#edf6ff}.choice input{margin-left:9px;accent-color:var(--blue)}
-button{border:0;border-radius:10px;padding:12px 20px;font-size:16px;font-weight:bold;cursor:pointer;background:var(--blue);color:white}
-button:disabled{opacity:.4;cursor:not-allowed}.actions{display:flex;justify-content:space-between;gap:10px;margin-top:18px}.muted{color:#68798b;font-size:14px}
-.hidden{display:none}.result{text-align:center}.score{font-size:42px;font-weight:bold;color:var(--blue)}
-.review-item{border-top:1px solid #e3e9ef;padding:16px 0}.correct{color:#087443}.wrong{color:#b42318}
-.explain{background:#f5f8fb;padding:12px;border-radius:10px;margin-top:8px;font-size:14px}
-footer{text-align:center;color:#748397;padding:15px;font-size:13px}
-</style></head>
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#101b35,#142d50);color:#172033;min-height:100vh;padding:18px}
+.wrap{max-width:760px;margin:20px auto;background:#fff;border-radius:20px;padding:22px;box-shadow:0 12px 35px #0005}
+header{text-align:center;border-bottom:2px solid #e7edf5;padding-bottom:15px}
+h1{color:#173b68;margin:5px 0 8px;font-size:25px}
+.sub{color:#61738b;font-size:14px}
+.info{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:18px 0;color:#294765;font-weight:bold}
+.progress{height:9px;background:#e7edf5;border-radius:20px;overflow:hidden;margin:12px 0 20px}
+#bar{height:100%;width:0;background:#18a878;transition:width .2s}
+#subject{display:inline-block;background:#eaf3ff;color:#174c80;padding:7px 13px;border-radius:20px;font-weight:bold;margin-bottom:12px}
+#question{font-size:20px;line-height:1.8;margin:8px 0 18px}
+.choice{display:block;width:100%;text-align:right;padding:13px 15px;margin:10px 0;border:2px solid #dce5ef;border-radius:12px;background:#fff;font-size:17px;cursor:pointer;color:#172033}
+.choice:active{transform:scale(.99)}
+.choice.selected{border-color:#2676c9;background:#edf6ff}
+.choice:disabled{cursor:default;opacity:1}
+.buttons{display:flex;gap:10px;margin-top:20px}
+button.main{border:0;border-radius:12px;padding:13px 20px;font-size:16px;font-weight:bold;cursor:pointer;background:#1769aa;color:white;flex:1}
+button.secondary{background:#e9eef5;color:#20354d}
+button:disabled{opacity:.45;cursor:not-allowed}
+#result{display:none}
+.score{font-size:30px;color:#13845f;text-align:center;font-weight:bold;margin:18px}
+.review{padding:13px;margin:12px 0;border-radius:12px;background:#f2f6fa;line-height:1.8}
+.correct{border-right:5px solid #18a878}
+.wrong{border-right:5px solid #d9534f}
+.small{font-size:13px;color:#66788d}
+@media(max-width:520px){.wrap{margin:5px auto;padding:16px}h1{font-size:21px}#question{font-size:18px}}
+</style>
+</head>
 <body>
-<header><h1>GEDO EXAMS</h1><p>امتحان الصف الأول الإعدادي 2027</p></header>
-<main>
-<section id="start" class="panel">
-<h2>أهلًا بك في الامتحان</h2>
-<p>يتكون الامتحان من 100 سؤال اختيار من متعدد. اختر إجابة واحدة لكل سؤال. لن تظهر الإجابات الصحيحة إلا بعد إنهاء الامتحان.</p>
-<div class="meta"><span>100 سؤال</span><span>5 مواد</span><span>الدرجة من 100</span></div>
-<button id="begin">ابدأ الامتحان</button>
-<p class="muted">ملحوظة: أسئلة العلوم والدراسات مبنية على معلومات تأسيسية عامة لأول وحدتين، لعدم تحديد عناوين الوحدتين.</p>
-</section>
-<section id="quiz" class="panel hidden">
-<div class="meta"><span id="subject"></span><span id="counter"></span></div>
-<div class="progress"><div id="bar" class="bar"></div></div>
-<h2 id="question"></h2><div id="choices"></div>
-<div class="actions"><button id="prev" class="muted" style="background:#718096">السابق</button><button id="next">التالي</button><button id="finish" class="hidden">إنهاء الامتحان</button></div>
-</section>
-<section id="result" class="panel hidden result">
-<h2>انتهى الامتحان</h2><div class="score" id="score"></div><p id="percent"></p><p id="summary"></p>
-<button onclick="window.print()">طباعة النتيجة والتصحيح</button>
-</section>
-<section id="review" class="panel hidden"><h2>التصحيح التفصيلي</h2><div id="details"></div></section>
-</main><footer>GEDO EXAMS © 2026</footer>
+<div class="wrap">
+<header>
+<h1>امتحان أولى إعدادي 2027</h1>
+<div class="sub">اختبار تدريبي شامل – 100 سؤال</div>
+<div class="sub">إعداد: Gedo</div>
+</header>
+<div id="exam">
+<div class="info"><span id="counter">السؤال 1 من 100</span><span id="scoreLive">تمت الإجابة: 0</span></div>
+<div class="progress"><div id="bar"></div></div>
+<div id="subject"></div>
+<div id="question"></div>
+<div id="choices"></div>
+<div class="buttons">
+<button class="main secondary" id="prev">السابق</button>
+<button class="main" id="next">التالي</button>
+</div>
+<p class="small">اختر إجابة واحدة لكل سؤال. لن تظهر الإجابات الصحيحة إلا بعد إنهاء الامتحان.</p>
+</div>
+<div id="result">
+<h2 style="text-align:center">انتهى الامتحان</h2>
+<div class="score" id="finalScore"></div>
+<p id="summary" style="text-align:center"></p>
+<div id="review"></div>
+<button class="main" onclick="location.reload()">إعادة الامتحان</button>
+</div>
+</div>
 <script>
-const Q=[];
-function add(s,q,a,c,e){Q.push({s,q,a,c,e})}
-const A='اللغة العربية',E='English',M='الرياضيات',S='العلوم',D='الدراسات';
-[
-['في جملة «قرأ التلميذ الدرس» الفعل قرأ:', ['لازم','متعدٍ','معتل','جامد'],1,'لأنه تجاوز الفاعل إلى مفعول به هو «الدرس». اللازم يكتفي بفاعله، والمعتل وصف لبنية الفعل، والجامد لا يتصرف.'],
-['في جملة «نام الطفل مبكرًا» الفعل نام:', ['متعدٍ','مزيد','لازم','مضعف'],2,'لأنه اكتفى بفاعله ولم يحتج إلى مفعول به.'],
-['الفعل المجرد هو ما كانت حروفه:', ['كلها أصلية','فيه حرف زائد','أربعة أحرف دائمًا','مسبوقًا بحرف جر'],0,'حروف الفعل المجرد كلها أصلية، أما المزيد ففيه حرف أو أكثر زائد.'],
-['الفعل «استخرج» فعل:', ['ثلاثي مجرد','ثلاثي مزيد','رباعي مجرد','رباعي مزيد'],1,'أصله خرج، وزيدت عليه همزة وسين وتاء.'],
-['الفعل «كتب» من حيث الصحة والاعتلال:', ['صحيح','معتل مثال','معتل أجوف','معتل ناقص'],0,'حروفه الأصلية لا تحتوي حرف علة.'],
-['الفعل «وعد» فعل معتل:', ['أجوف','ناقص','مثال','لفيف'],2,'لأن حرف العلة في أوله.'],
-['الفعل «قال» معتل:', ['مثال','أجوف','ناقص','صحيح'],1,'لأن حرف العلة في وسطه.'],
-['الفعل «دعا» معتل:', ['مثال','أجوف','ناقص','مضعف'],2,'لأن حرف العلة في آخره.'],
-['أي الكلمات التالية فعل صحيح مضعف؟',['مدّ','وعد','قال','سعى'],0,'الفعل مدّ صحيح مضعف؛ لأن عينه ولامه من جنس واحد.'],
-['الهمزة المتوسطة في «سأل» كتبت على:', ['الألف','الواو','الياء','السطر'],0,'فتحت الهمزة وما قبلها مفتوح، والفتحة تناسب الألف.'],
-['الهمزة المتوسطة في «مؤمن» كتبت على:', ['الألف','الواو','الياء','السطر'],1,'الهمزة مضمومة وما قبلها ساكن، والضمة أقوى من السكون فتناسب الواو.'],
-['الهمزة المتوسطة في «فئة» كتبت على:', ['الألف','الواو','الياء','السطر'],2,'الهمزة مكسورة، والكسرة أقوى الحركات وتناسب الياء.'],
-['أقوى الحركات عند كتابة الهمزة المتوسطة:', ['الفتحة','الضمة','الكسرة','السكون'],2,'ترتيب القوة: الكسرة ثم الضمة ثم الفتحة ثم السكون.'],
-['أي جملة تصلح افتتاحًا لتعبير عن القراءة؟',['القراءة غذاء العقل وبوابة المعرفة.','ذهبت أمس إلى السوق.','الجو شديد الحرارة.','انتهى الدرس.'],0,'تقدم فكرة عامة واضحة تمهد لموضوع القراءة.'],
-['من صفات التعبير الكتابي الجيد:', ['ترابط الأفكار','تكرار الكلام','الخروج عن الموضوع','غياب علامات الترقيم'],0,'ترابط الأفكار ووضوحها من أهم عناصر جودة التعبير.'],
-['النص الذي يعرض معلومات وحقائق عن موضوع غالبًا نص:', ['معلوماتي','خيالي فقط','مسرحي','غنائي'],0,'النص المعلوماتي يهدف إلى تقديم المعرفة والحقائق.'],
-['الفكرة الرئيسة للنص هي:', ['أهم معنى يدور حوله النص','كلمة صعبة','آخر كلمة','عنوان فرعي فقط'],0,'هي المعنى المحوري الذي تنتظم حوله التفاصيل.'],
-['الفعل «أكرم» بالنسبة إلى «كرم» هو:', ['مجرد','مزيد بحرف','مزيد بحرفين','مزيد بثلاثة أحرف'],1,'أضيفت الهمزة إلى الفعل الثلاثي كرم.'],
-['الفعل «تعلّم» فعل:', ['ثلاثي مجرد','ثلاثي مزيد بحرفين','رباعي مجرد','معتل أجوف'],1,'أصله علم، وزيدت التاء والتضعيف.'],
-['أي الأفعال التالية لازم؟',['فتح الباب','شرب الماء','جلس الطالب','كتب الرسالة'],2,'جلس لا يحتاج إلى مفعول به ليتم معناه.'],
-['أي الأفعال التالية متعدٍ؟',['ذهب','ابتسم','وصل','حفظ'],3,'حفظ يتعدى إلى مفعول به مثل حفظ الطالب الدرس.'],
-['في «السماء صافية» نوع الجملة:', ['اسمية','فعلية','استفهامية','تعجبية'],0,'بدأت باسم وهو «السماء».'],
-['علامة الترقيم المناسبة في نهاية السؤال:', ['النقطة','الفاصلة','علامة الاستفهام','النقطتان'],2,'يوضع الاستفهام في نهاية السؤال.'],
-['مرادف «يزدهر» هو:', ['يتقدم وينمو','يضعف','يتوقف','يختفي'],0,'يزدهر تعني ينمو ويتقدم.'],
-['ضد «التعاون» هو:', ['التكاتف','التنازع','المشاركة','المساعدة'],1,'التنازع عكس التعاون.']
-].forEach(x=>add(A,...x));
-[
-['Choose the correct word: I ___ to school every day.',['go','goes','going','went'],0,'With I in the present simple, use the base verb go. Goes is for he/she/it; going needs an auxiliary; went is past.'],
-['She ___ TV now.',['watch','watches','is watching','watched'],2,'Now signals present continuous: is + verb-ing.'],
-['They ___ football yesterday.',['play','plays','played','playing'],2,'Yesterday signals the past simple; the past form is played.'],
-['He is interested ___ science.',['on','in','at','for'],1,'The adjective interested is followed by in.'],
-['There ___ some milk in the fridge.',['are','is','be','were'],1,'Milk is uncountable singular, so use is.'],
-['I have ___ apple.',['a','an','the','no article'],1,'Apple begins with a vowel sound, so use an.'],
-['The opposite of “cheap” is:', ['expensive','easy','small','early'],0,'Expensive means not cheap; the other choices have different meanings.'],
-['The synonym of “begin” is:', ['finish','start','close','leave'],1,'Start means begin.'],
-['My brother is ___ than me.',['tall','taller','tallest','more tall'],1,'Use the comparative form taller with than.'],
-['You ___ wear a seat belt. It is important.',['should','shouldn’t','might not','couldn’t'],0,'Should gives advice or recommendation.'],
-['If it rains, we ___ at home.',['stay','stayed','will stay','staying'],2,'First conditional: if + present simple, will + base verb.'],
-['She enjoys ___ books.',['read','reads','reading','to reading'],2,'Enjoy is followed by a gerund (verb-ing).'],
-['How ___ oranges do you need?',['much','many','any','some'],1,'Oranges are countable plural, so use many.'],
-['How ___ water is there?',['many','much','few','a few'],1,'Water is uncountable, so use much.'],
-['The past of “go” is:', ['goed','gone','went','goes'],2,'Went is the simple past; gone is the past participle.'],
-['Choose the correct sentence:', ['He don’t like tea.','He doesn’t like tea.','He not like tea.','He isn’t like tea.'],1,'With he in present simple negative, use doesn’t + base verb.'],
-['We were tired, ___ we went to bed early.',['because','so','but','although'],1,'So introduces the result.'],
-['A person who teaches students is a:', ['doctor','pilot','teacher','farmer'],2,'A teacher teaches students.'],
-['The word “careful” is:', ['a noun','an adjective','a verb','an adverb'],1,'Careful describes a noun, so it is an adjective.'],
-['Please speak ___.',['slow','slowly','slowerly','slowness'],1,'Slowly is the adverb describing how someone speaks.']
-].forEach(x=>add(E,...x));
-[
-['أي عدد مما يلي عدد نسبي؟',['√2','π','3/4','√5'],2,'العدد النسبي يمكن كتابته في صورة كسر a/b حيث b لا يساوي صفرًا؛ 3/4 يحقق ذلك.'],
-['ناتج 1/2 + 1/4 يساوي:',['1/4','2/6','3/4','1'],2,'نوحد المقام: 2/4 + 1/4 = 3/4.'],
-['ناتج (-3) + 7 يساوي:',['-10','-4','4','10'],2,'إشارتان مختلفتان: نطرح 7-3 ونأخذ إشارة الأكبر، فيكون الناتج 4.'],
-['ناتج (-4) × 3 يساوي:',['12','-12','7','-7'],1,'حاصل ضرب عدد سالب في موجب سالب، و4×3=12.'],
-['إذا كانت A={1,2,3} وB={3,4} فإن A∩B تساوي:',['{1,2}','{3}','{1,2,3,4}','{4}'],1,'التقاطع يضم العناصر المشتركة فقط، وهي 3.'],
-['اتحاد {1,2} و{2,3} هو:',['{2}','{1,2,3}','{1,3}','{}'],1,'الاتحاد يجمع كل العناصر دون تكرار.'],
-['إذا كان س=3 فإن 2س+5 يساوي:',['8','10','11','13'],2,'بالتعويض: 2×3+5=11.'],
-['تبسيط 3س + 2س يساوي:',['5','5س','6س','س'],1,'نجمع معاملات الحدود المتشابهة: 3+2=5.'],
-['أي حدين متشابهان؟',['3س و3ص','2س و5س','س و س²','4 و4س'],1,'الحدود المتشابهة لها نفس الجزء الحرفي والأس.'],
-['حل المعادلة س+4=9 هو:',['3','4','5','13'],2,'نطرح 4 من الطرفين فنحصل على س=5.'],
-['حل 3س=12 هو:',['3','4','9','15'],1,'نقسم الطرفين على 3 فنحصل على س=4.'],
-['حل 2س-1=7 هو:',['2','3','4','5'],2,'نضيف 1 للطرفين: 2س=8، ثم نقسم على 2.'],
-['إذا كان س>3 فأي عدد يحقق المتباينة؟',['2','3','4','1'],2,'المطلوب عدد أكبر من 3، والعدد 4 يحقق ذلك.'],
-['عند ضرب طرفي متباينة في عدد سالب:', ['لا تتغير الإشارة','تنعكس إشارة المتباينة','تصبح مساواة','نحذف العدد'],1,'الضرب أو القسمة في عدد سالب يقتضي عكس اتجاه المتباينة.'],
-['ناتج 5 - (-2) يساوي:',['3','-3','7','-7'],2,'طرح السالب يعادل الجمع: 5+2=7.']
-].forEach(x=>add(M,...x));
-[
-['أصغر وحدة بنائية للمادة تحتفظ بخواص العنصر هي:', ['الجزيء','الذرة','الخلية','النسيج'],1,'الذرة هي أصغر وحدة للعنصر تحتفظ بخواصه الكيميائية.'],
-['تتكون الذرة من:', ['نواة وإلكترونات','خلايا وأنسجة','ماء وهواء','بروتونات فقط'],0,'تتكون الذرة من نواة تضم بروتونات ونيوترونات وتحيط بها إلكترونات.'],
-['الجسيم الذي شحنته موجبة هو:', ['الإلكترون','النيوترون','البروتون','الجزيء'],2,'البروتون موجب الشحنة، والإلكترون سالب، والنيوترون متعادل.'],
-['الجسيم المتعادل كهربائيًا هو:', ['البروتون','النيوترون','الإلكترون','الأيون الموجب'],1,'النيوترون لا يحمل شحنة كهربائية.'],
-['توجد معظم كتلة الذرة في:', ['النواة','الإلكترونات','الفراغ','الغلاف الخارجي فقط'],0,'النواة تضم البروتونات والنيوترونات وهما يمثلان معظم الكتلة.'],
-['ترتب العناصر في الجدول الدوري الحديث حسب:', ['الكتلة فقط','العدد الذري','الحجم','اللون'],1,'الترتيب الحديث يعتمد على العدد الذري تصاعديًا.'],
-['العناصر التي تقع في المجموعة الواحدة غالبًا تتشابه في:', ['عدد مستويات الطاقة','خواصها الكيميائية','كتلتها دائمًا','حالتها فقط'],1,'لها عدد متساوٍ من إلكترونات مستوى الطاقة الخارجي غالبًا، فتتشابه خواصها.'],
-['القوة هي:', ['مؤثر يغير أو يحاول تغيير حالة حركة الجسم','نوع من المادة','وحدة زمن','شكل من أشكال الضوء'],0,'القوة مؤثر قد يغير حركة الجسم أو شكله.'],
-['وحدة قياس القوة هي:', ['المتر','الثانية','النيوتن','الكيلوجرام'],2,'تقاس القوة في النظام الدولي بالنيوتن.'],
-['القوة التي تعوق حركة جسمين متلامسين هي:', ['الجاذبية','الاحتكاك','المغناطيسية','الطفو'],1,'الاحتكاك ينشأ بين السطوح المتلامسة ويقاوم الحركة.'],
-['تجذب الأرض الأجسام نحوها بسبب:', ['الاحتكاك','الجاذبية','الكهرباء','الضوء'],1,'الجاذبية قوة جذب بين الأجسام ذات الكتلة.'],
-['من أمثلة التغير الكيميائي:', ['انصهار الثلج','تقطيع الورق','صدأ الحديد','تبخر الماء'],2,'الصدأ مادة جديدة تتكون نتيجة تفاعل الحديد مع الأكسجين والرطوبة.'],
-['الخلية هي الوحدة الأساسية في بناء:', ['الصخور','الكائنات الحية','المعادن','الهواء'],1,'الخلية الوحدة التركيبية والوظيفية الأساسية للكائن الحي.'],
-['الجزء الذي يتحكم في أنشطة الخلية هو:', ['النواة','الغشاء فقط','الفجوة','الجدار الخلوي'],0,'النواة تحتوي المادة الوراثية وتتحكم في كثير من أنشطة الخلية.'],
-['الغشاء البلازمي وظيفته الأساسية:', ['إنتاج الضوء','تنظيم دخول وخروج المواد','تكوين العظام','هضم الطعام خارج الجسم'],1,'ينظم تبادل المواد بين الخلية والبيئة المحيطة.'],
-['توجد البلاستيدات الخضراء في:', ['الخلايا النباتية','كل الخلايا الحيوانية','البكتيريا فقط','خلايا الدم الحمراء'],0,'توجد في الخلايا النباتية وتحتوي الكلوروفيل اللازم للبناء الضوئي.'],
-['القوة التي تغير سرعة الجسم أو اتجاهه قد تسبب:', ['تغير الحركة','اختفاء الكتلة','تغير العدد الذري','توقف الزمن'],0,'القوة المحصلة قد تغير مقدار السرعة أو اتجاه الحركة.'],
-['المادة التي لها حجم وشكل ثابتان غالبًا هي:', ['الغاز','السائل','الصلب','البخار'],2,'المادة الصلبة تحتفظ بشكلها وحجمها في الظروف المعتادة.'],
-['انتقال الحرارة في الفراغ يتم غالبًا عن طريق:', ['التوصيل','الحمل','الإشعاع','الاحتكاك'],2,'الإشعاع لا يحتاج إلى وسط مادي، لذلك ينتقل عبر الفراغ.'],
-['من أمثلة مصادر الطاقة المتجددة:', ['الفحم','النفط','الشمس','الغاز الطبيعي'],2,'الطاقة الشمسية تتجدد باستمرار، بخلاف الوقود الأحفوري.']
-].forEach(x=>add(S,...x));
-[
-['تقع مصر في الركن الشمالي الشرقي من قارة:', ['آسيا','أفريقيا','أوروبا','أستراليا'],1,'تقع معظم مساحة مصر في أفريقيا، بينما تمتد سيناء في آسيا.'],
-['يحد مصر من الشمال:', ['البحر الأحمر','البحر المتوسط','السودان','ليبيا'],1,'البحر المتوسط هو الحد الشمالي لمصر.'],
-['تقع شبه جزيرة سيناء في قارة:', ['أفريقيا','أوروبا','آسيا','أمريكا'],2,'سيناء جزء من قارة آسيا، وتربط بين قارتي آسيا وأفريقيا.'],
-['من دوائر العرض المهمة التي تمر بمصر:', ['خط الاستواء','مدار السرطان','الدائرة القطبية','مدار الجدي'],1,'يمر مدار السرطان بأجزاء من جنوب مصر.'],
-['يساعد الموقع الفلكي لمصر على تنوع:', ['المناخ','اللغة فقط','الصخور فقط','عدد القارات'],0,'الموقع بالنسبة لدوائر العرض يؤثر في درجات الحرارة والمناخ.'],
-['أطول أنهار مصر هو:', ['النيل','الفرات','دجلة','الأمازون'],0,'نهر النيل هو النهر الرئيس في مصر.'],
-['تتركز أغلب مساحة السكان في مصر حول:', ['الصحراء الغربية','وادي النيل والدلتا','جبال البحر الأحمر','سيناء فقط'],1,'تتركز التجمعات السكانية حول النيل بسبب المياه والتربة وفرص العمل.'],
-['من العوامل الطبيعية المؤثرة في توزيع السكان:', ['المناخ والمياه','ألوان الملابس','نوع الموسيقى','أسماء المدن'],0,'المناخ وتوافر المياه والتربة من العوامل الطبيعية المؤثرة.'],
-['المسطح المائي الذي يفصل مصر عن شبه الجزيرة العربية هو:', ['البحر المتوسط','البحر الأحمر','المحيط الأطلسي','بحر قزوين'],1,'يفصل البحر الأحمر بين مصر وشبه الجزيرة العربية.'],
-['من الدول التي تحد مصر غربًا:', ['السودان','ليبيا','فلسطين','الأردن'],1,'ليبيا تقع غرب مصر.'],
-['بدأت الحضارة المصرية القديمة على ضفاف:', ['نهر النيل','نهر دجلة','نهر الفرات','نهر الأمازون'],0,'وفر النيل الماء والتربة الخصبة ووسائل النقل، فساعد على قيام الحضارة.'],
-['من أسباب استقرار المصري القديم قرب النيل:', ['توافر المياه والتربة الخصبة','كثرة الثلوج','البعد عن الزراعة','ندرة الأسماك'],0,'النيل وفر المياه والطمي اللازمين للزراعة.'],
-['وحد الملك مينا القطرين في:', ['العصر الحديث','عصر الأسرات المبكر','العصر الروماني','العصر البطلمي'],1,'ينسب إلى الملك مينا توحيد مصر وبداية عصر الأسرات.'],
-['كانت الكتابة المصرية القديمة تسمى:', ['المسمارية','الهيروغليفية','اللاتينية','الفينيقية'],1,'الهيروغليفية من أشهر نظم الكتابة في مصر القديمة.'],
-['من أشهر آثار المصريين القدماء:', ['الأهرامات','الكولوسيوم','سور الصين','برج إيفل'],0,'الأهرامات من أبرز آثار الحضارة المصرية القديمة.'],
-['اعتمد المصري القديم في الزراعة على:', ['فيضان النيل','الأمطار الثلجية','مياه المحيط','الأنهار الجليدية'],0,'كان فيضان النيل يروي الأرض ويترك الطمي الخصيب.'],
-['كان الوزير في مصر القديمة يساعد الملك في:', ['إدارة شؤون البلاد','قيادة السفن الفضائية','صناعة الحواسيب','رسم الخرائط الحديثة فقط'],0,'الوزير كان من كبار رجال الدولة ويساعد في الإدارة.'],
-['من نتائج قيام الزراعة قرب النيل:', ['ظهور القرى والاستقرار','اختفاء السكان','انعدام التجارة','ترك الأرض'],0,'ساعدت الزراعة على الاستقرار ونشوء القرى وتقسيم الأعمال.'],
-['استخدم المصري القديم نهر النيل في:', ['النقل والتجارة','الطيران','الاتصالات الرقمية','توليد الإنترنت'],0,'كان النيل طريقًا مهمًا للنقل والتبادل التجاري.'],
-['تدل المعابد والمقابر القديمة على تقدم المصريين في:', ['العمارة والفنون','الفضاء الحديث','الصناعة الرقمية','الطباعة الإلكترونية'],0,'تعكس الآثار مهارة المصريين القدماء في البناء والفنون.']
-].forEach(x=>add(D,...x));
+// @ts-nocheck
+const questions = [{"subject": "عربي", "q": "أي الكلمات الآتية فعل لازم؟", "choices": ["نام", "كتب", "فتح", "حمل"], "answer": 0, "explain": "الفعل نام يكتفي بالفاعل ولا يحتاج إلى مفعول به."}, {"subject": "عربي", "q": "أي الأفعال الآتية فعل متعدٍّ؟", "choices": ["جلس", "ذهب", "قرأ", "نام"], "answer": 2, "explain": "قرأ يحتاج إلى مفعول به مثل: قرأ الطالب الدرس."}, {"subject": "عربي", "q": "الفعل «استخرج» من حيث الزيادة هو:", "choices": ["مجرد ثلاثي", "مزيد بحرف", "مزيد بحرفين", "مزيد بثلاثة أحرف"], "answer": 3, "explain": "استخرج مزيد بثلاثة أحرف هي الألف والسين والتاء."}, {"subject": "عربي", "q": "الفعل «أكرم» مزيد بـ:", "choices": ["همزة", "تاء", "ألف", "سين"], "answer": 0, "explain": "أكرم أصله كرم وزيدت فيه الهمزة."}, {"subject": "عربي", "q": "أي الأفعال الآتية صحيح سالم؟", "choices": ["وعد", "قال", "كتب", "سعى"], "answer": 2, "explain": "كتب خلت أصوله من حروف العلة والهمز والتضعيف."}, {"subject": "عربي", "q": "الفعل «وعد» فعل:", "choices": ["صحيح مهموز", "معتل مثال", "معتل أجوف", "معتل ناقص"], "answer": 1, "explain": "لأن حرف العلة في أوله."}, {"subject": "عربي", "q": "الفعل «قال» فعل معتل:", "choices": ["مثال", "أجوف", "ناقص", "لفيف"], "answer": 1, "explain": "لأن حرف العلة في وسطه."}, {"subject": "عربي", "q": "الفعل «دعا» فعل معتل:", "choices": ["مثال", "أجوف", "ناقص", "صحيح"], "answer": 2, "explain": "لأن حرف العلة في آخره."}, {"subject": "عربي", "q": "أي الكلمات همزتها متوسطة على ألف؟", "choices": ["سأل", "مؤمن", "بئر", "رئة"], "answer": 0, "explain": "سأل كتبت همزته المتوسطة على ألف."}, {"subject": "عربي", "q": "تكتب الهمزة المتوسطة على نبرة في كلمة:", "choices": ["رأس", "سؤال", "بئر", "مؤمن"], "answer": 2, "explain": "كسرة الهمزة أو ما قبلها تناسب النبرة في بئر."}, {"subject": "عربي", "q": "الفعل اللازم هو الذي:", "choices": ["ينصب مفعولين", "لا يحتاج إلى مفعول به", "يبدأ بهمزة", "يدل على المستقبل"], "answer": 1, "explain": "الفعل اللازم يتم معناه بالفاعل."}, {"subject": "عربي", "q": "في جملة «شرب الطفل اللبن» المفعول به هو:", "choices": ["شرب", "الطفل", "اللبن", "لا يوجد"], "answer": 2, "explain": "اللبن هو ما وقع عليه فعل الشرب."}, {"subject": "عربي", "q": "الفعل «تعلّم» مزيد بـ:", "choices": ["حرف واحد", "حرفين", "ثلاثة أحرف", "لا زيادة فيه"], "answer": 1, "explain": "أصله علم وزيدت التاء والتضعيف."}, {"subject": "عربي", "q": "أي الأفعال الآتية معتل ناقص؟", "choices": ["وجد", "باع", "رمى", "كتب"], "answer": 2, "explain": "رمى ينتهي بحرف علة."}, {"subject": "عربي", "q": "أي الأفعال الآتية مهموز؟", "choices": ["أخذ", "وعد", "قال", "سعى"], "answer": 0, "explain": "أخذ يحتوي على همزة أصلية."}, {"subject": "عربي", "q": "في «فتح الحارس الباب» الفعل:", "choices": ["لازم", "متعدٍّ", "معتل", "جامد"], "answer": 1, "explain": "تعدى إلى المفعول به الباب."}, {"subject": "عربي", "q": "الفعل «انطلق» مزيد بـ:", "choices": ["حرف", "حرفين", "ثلاثة أحرف", "لا شيء"], "answer": 1, "explain": "أصله طلق وزيدت الهمزة والنون."}, {"subject": "عربي", "q": "أي الكلمات همزتها المتوسطة على واو؟", "choices": ["فئة", "رؤوس", "سأل", "بئر"], "answer": 1, "explain": "رؤوس كتبت الهمزة على واو."}, {"subject": "عربي", "q": "الفعل «مشى» معتل:", "choices": ["مثال", "أجوف", "ناقص", "صحيح"], "answer": 2, "explain": "لأن حرف العلة في آخره."}, {"subject": "عربي", "q": "أي الجمل تحتوي فعلًا لازمًا؟", "choices": ["أكل الولد التفاحة", "نام الرضيع", "كتب الطالب الواجب", "فتح الرجل النافذة"], "answer": 1, "explain": "نام لا يحتاج إلى مفعول به."}, {"subject": "عربي", "q": "الفعل المجرد هو:", "choices": ["ما زادت حروفه على الأصل", "ما خلت حروفه من الزيادة", "ما بدأ بألف", "ما انتهى بتاء"], "answer": 1, "explain": "المجرد حروفه كلها أصلية."}, {"subject": "عربي", "q": "أي الأفعال مزيد بحرف واحد؟", "choices": ["استغفر", "قاتل", "تدحرج", "انكسر"], "answer": 1, "explain": "قاتل أصله قتل وزيدت الألف."}, {"subject": "عربي", "q": "الهمزة في «مسألة» متوسطة على:", "choices": ["ألف", "واو", "نبرة", "السطر"], "answer": 0, "explain": "كتبت على ألف لأن الفتحة أقوى من السكون."}, {"subject": "عربي", "q": "أي الأفعال الآتية معتل أجوف؟", "choices": ["قال", "وعد", "رمى", "وجد"], "answer": 0, "explain": "قال حرف العلة في وسطه."}, {"subject": "عربي", "q": "في جملة «ساعدت الأم ابنتها» المفعول به:", "choices": ["ساعدت", "الأم", "ابنتها", "لا يوجد"], "answer": 2, "explain": "ابنتها وقع عليها فعل المساعدة."}, {"subject": "English", "q": "Choose the correct verb: She ____ to school every day.", "choices": ["go", "goes", "going", "gone"], "answer": 1, "explain": "مع المفرد الغائب في المضارع البسيط نضيف s."}, {"subject": "English", "q": "They ____ football now.", "choices": ["play", "plays", "are playing", "played"], "answer": 2, "explain": "now تدل غالبًا على المضارع المستمر."}, {"subject": "English", "q": "I have ____ my homework.", "choices": ["finish", "finished", "finishing", "finishes"], "answer": 1, "explain": "بعد have نستخدم التصريف الثالث."}, {"subject": "English", "q": "Choose the opposite of 'cheap'.", "choices": ["easy", "expensive", "small", "early"], "answer": 1, "explain": "expensive عكس cheap."}, {"subject": "English", "q": "The comparative form of 'tall' is:", "choices": ["tallest", "more tall", "taller", "most tall"], "answer": 2, "explain": "نضيف er للصفة القصيرة للمقارنة."}, {"subject": "English", "q": "If you study hard, you ____ pass.", "choices": ["will", "would", "are", "were"], "answer": 0, "explain": "الشرط الأول: If + present, will + infinitive."}, {"subject": "English", "q": "He is interested ____ science.", "choices": ["on", "at", "in", "for"], "answer": 2, "explain": "التعبير الصحيح interested in."}, {"subject": "English", "q": "We ____ TV yesterday.", "choices": ["watch", "watches", "watched", "watching"], "answer": 2, "explain": "yesterday تدل على الماضي البسيط."}, {"subject": "English", "q": "Choose the correct article: ____ apple a day.", "choices": ["A", "An", "The", "No article"], "answer": 1, "explain": "نستخدم An قبل صوت متحرك."}, {"subject": "English", "q": "My brother is ____ than me.", "choices": ["young", "younger", "youngest", "the young"], "answer": 1, "explain": "than تحتاج صيغة المقارنة."}, {"subject": "English", "q": "The plural of 'child' is:", "choices": ["childs", "childes", "children", "childrens"], "answer": 2, "explain": "جمع child هو children."}, {"subject": "English", "q": "You ____ wear a seat belt. It's important.", "choices": ["should", "shouldn't", "might not", "wouldn't"], "answer": 0, "explain": "should للنصيحة."}, {"subject": "English", "q": "She enjoys ____ books.", "choices": ["read", "to read", "reading", "reads"], "answer": 2, "explain": "enjoy يأتي بعدها فعل ing."}, {"subject": "English", "q": "There ____ many students in the class.", "choices": ["is", "are", "was", "be"], "answer": 1, "explain": "many students جمع، فنستخدم are."}, {"subject": "English", "q": "Choose the synonym of 'begin'.", "choices": ["finish", "start", "close", "forget"], "answer": 1, "explain": "start مرادف begin."}, {"subject": "English", "q": "I was tired, ____ I went to bed early.", "choices": ["because", "but", "so", "although"], "answer": 2, "explain": "so تربط السبب بالنتيجة."}, {"subject": "English", "q": "This is the boy ____ won the prize.", "choices": ["which", "who", "where", "when"], "answer": 1, "explain": "who تستخدم للعاقل."}, {"subject": "English", "q": "Water ____ at 100°C.", "choices": ["boil", "boils", "boiling", "boiled"], "answer": 1, "explain": "حقيقة علمية في المضارع البسيط."}, {"subject": "English", "q": "They have lived here ____ 2020.", "choices": ["for", "since", "ago", "during"], "answer": 1, "explain": "since مع نقطة بداية زمنية."}, {"subject": "English", "q": "Choose the correct spelling:", "choices": ["enviroment", "environment", "envirnment", "envaironment"], "answer": 1, "explain": "التهجئة الصحيحة environment."}, {"subject": "رياضيات", "q": "أي الأعداد الآتية عدد نسبي؟", "choices": ["√2", "π", "3/4", "√5"], "answer": 2, "explain": "العدد النسبي يمكن كتابته على صورة كسر من عددين صحيحين ومقام غير صفر."}, {"subject": "رياضيات", "q": "ناتج 1/2 + 1/3 يساوي:", "choices": ["2/5", "5/6", "1/6", "3/5"], "answer": 1, "explain": "نوحد المقام إلى 6 فنحصل على 3/6 + 2/6 = 5/6."}, {"subject": "رياضيات", "q": "ناتج (-4) × 3 يساوي:", "choices": ["12", "-12", "7", "-7"], "answer": 1, "explain": "سالب في موجب يساوي سالبًا."}, {"subject": "رياضيات", "q": "مجموعة الأعداد الصحيحة تشمل:", "choices": ["الأعداد الموجبة فقط", "الأعداد السالبة فقط", "السالبة والصفر والموجبة", "الكسور فقط"], "answer": 2, "explain": "الأعداد الصحيحة تضم السالب والصفر والموجب."}, {"subject": "رياضيات", "q": "إذا كانت أ={1,2,3} فإن عدد عناصرها:", "choices": ["1", "2", "3", "4"], "answer": 2, "explain": "تحتوي المجموعة على ثلاثة عناصر."}, {"subject": "رياضيات", "q": "ناتج 2(س + 3) هو:", "choices": ["2س + 3", "2س + 6", "س + 6", "2س + 5"], "answer": 1, "explain": "نوزع 2 على الحدين."}, {"subject": "رياضيات", "q": "حل المعادلة س + 5 = 12 هو:", "choices": ["5", "6", "7", "17"], "answer": 2, "explain": "بطرح 5 من الطرفين نجد س=7."}, {"subject": "رياضيات", "q": "حل المعادلة 3س = 18 هو:", "choices": ["3", "6", "9", "15"], "answer": 1, "explain": "نقسم الطرفين على 3."}, {"subject": "رياضيات", "q": "إذا كان س > 4 فإن العدد الذي يحقق المتباينة هو:", "choices": ["2", "3", "4", "5"], "answer": 3, "explain": "5 أكبر من 4."}, {"subject": "رياضيات", "q": "ناتج 7 - (-2) يساوي:", "choices": ["5", "-5", "9", "-9"], "answer": 2, "explain": "طرح السالب يعادل الجمع."}, {"subject": "رياضيات", "q": "أي مما يلي حد جبري؟", "choices": ["س + 2", "5س", "س = 3", "س > 1"], "answer": 1, "explain": "5س حد جبري واحد."}, {"subject": "رياضيات", "q": "ناتج 4س + 3س يساوي:", "choices": ["7", "7س", "12س", "س"], "answer": 1, "explain": "نجمع معاملات الحدود المتشابهة."}, {"subject": "رياضيات", "q": "إذا كان س=2 فإن قيمة 3س+1 تساوي:", "choices": ["5", "6", "7", "8"], "answer": 2, "explain": "3×2+1=7."}, {"subject": "رياضيات", "q": "المجموعة الخالية يرمز لها غالبًا بـ:", "choices": ["{0}", "∅", "{1}", "N"], "answer": 1, "explain": "رمز المجموعة الخالية هو ∅."}, {"subject": "رياضيات", "q": "حل المتباينة س - 2 < 5 هو:", "choices": ["س < 3", "س < 7", "س > 7", "س = 7"], "answer": 1, "explain": "بإضافة 2 للطرفين نحصل على س < 7."}, {"subject": "علوم", "q": "الوحدة الأساسية لبناء جسم الكائن الحي هي:", "choices": ["النسيج", "الخلية", "العضو", "الجهاز"], "answer": 1, "explain": "الخلية هي الوحدة التركيبية والوظيفية للكائن الحي."}, {"subject": "علوم", "q": "أي مما يلي مصدر للطاقة المتجددة؟", "choices": ["الفحم", "النفط", "الشمس", "الغاز الطبيعي"], "answer": 2, "explain": "الشمس مصدر متجدد للطاقة."}, {"subject": "علوم", "q": "تتحول المادة من الحالة الصلبة إلى السائلة بعملية:", "choices": ["التجمد", "التكاثف", "الانصهار", "التبخر"], "answer": 2, "explain": "الانصهار هو تحول الصلب إلى سائل."}, {"subject": "علوم", "q": "العضو المسؤول عن ضخ الدم هو:", "choices": ["الرئة", "القلب", "الكبد", "المعدة"], "answer": 1, "explain": "القلب يضخ الدم إلى أنحاء الجسم."}, {"subject": "علوم", "q": "أي الغازات ضروري لعملية التنفس الخلوي؟", "choices": ["الأكسجين", "النيتروجين", "الهيدروجين", "الهيليوم"], "answer": 0, "explain": "تستخدم الخلايا الأكسجين في التنفس الهوائي."}, {"subject": "علوم", "q": "تقاس القوة بوحدة:", "choices": ["الجول", "النيوتن", "الواط", "الأمبير"], "answer": 1, "explain": "وحدة قياس القوة هي النيوتن."}, {"subject": "علوم", "q": "سرعة الجسم تساوي:", "choices": ["الزمن ÷ المسافة", "المسافة ÷ الزمن", "القوة × الزمن", "الكتلة ÷ الحجم"], "answer": 1, "explain": "السرعة = المسافة المقطوعة ÷ الزمن."}, {"subject": "علوم", "q": "أي مما يلي موصل جيد للكهرباء؟", "choices": ["الخشب", "البلاستيك", "النحاس", "الزجاج"], "answer": 2, "explain": "النحاس من الفلزات الجيدة التوصيل."}, {"subject": "علوم", "q": "تنتقل الحرارة في الفراغ عن طريق:", "choices": ["التوصيل", "الحمل", "الإشعاع", "التلامس"], "answer": 2, "explain": "الإشعاع لا يحتاج إلى وسط مادي."}, {"subject": "علوم", "q": "الكوكب الأقرب إلى الشمس هو:", "choices": ["الزهرة", "الأرض", "عطارد", "المريخ"], "answer": 2, "explain": "عطارد أقرب كواكب المجموعة الشمسية إلى الشمس."}, {"subject": "علوم", "q": "أي مما يلي تغير كيميائي؟", "choices": ["انصهار الثلج", "تقطيع الورق", "صدأ الحديد", "تبخر الماء"], "answer": 2, "explain": "الصدأ مادة جديدة تتكون نتيجة تفاعل كيميائي."}, {"subject": "علوم", "q": "توجد المادة الوراثية DNA أساسًا في:", "choices": ["النواة", "الغشاء", "السيتوبلازم فقط", "الجدار الخلوي"], "answer": 0, "explain": "توجد معظم المادة الوراثية في نواة الخلية."}, {"subject": "علوم", "q": "الجهاز المسؤول عن تبادل الغازات هو:", "choices": ["الهضمي", "التنفسي", "العصبي", "العضلي"], "answer": 1, "explain": "الجهاز التنفسي يدخل الأكسجين ويخرج ثاني أكسيد الكربون."}, {"subject": "علوم", "q": "عند زيادة درجة حرارة معظم المواد فإنها:", "choices": ["تنكمش", "تتمدد", "تختفي", "تتحول دائمًا لغاز"], "answer": 1, "explain": "معظم المواد تتمدد بالحرارة."}, {"subject": "علوم", "q": "المخلوط الذي يمكن تمييز مكوناته بالعين هو:", "choices": ["محلول ملح", "ماء وسكر", "سلطة", "هواء"], "answer": 2, "explain": "يمكن رؤية مكونات السلطة منفصلة."}, {"subject": "علوم", "q": "أي مما يلي من صور الطاقة؟", "choices": ["الحرارية", "الكتلة", "الحجم", "الكثافة"], "answer": 0, "explain": "الطاقة الحرارية إحدى صور الطاقة."}, {"subject": "علوم", "q": "تسمى عملية صنع النبات لغذائه:", "choices": ["التنفس", "البناء الضوئي", "الإخراج", "الهضم"], "answer": 1, "explain": "يصنع النبات غذاءه باستخدام الضوء."}, {"subject": "علوم", "q": "وحدة قياس الكتلة في النظام الدولي:", "choices": ["المتر", "الثانية", "الكيلوجرام", "النيوتن"], "answer": 2, "explain": "الكيلوجرام وحدة قياس الكتلة."}, {"subject": "علوم", "q": "أي الكائنات التالية منتج؟", "choices": ["الأرنب", "العشب", "الثعلب", "الصقر"], "answer": 1, "explain": "النباتات تصنع غذاءها بنفسها فهي منتجات."}, {"subject": "علوم", "q": "القوة التي تجذب الأجسام نحو الأرض هي:", "choices": ["الاحتكاك", "المغناطيسية", "الجاذبية", "الكهرباء"], "answer": 2, "explain": "الجاذبية الأرضية تجذب الأجسام نحو مركز الأرض."}, {"subject": "دراسات", "q": "تقع مصر في الركن الشمالي الشرقي من قارة:", "choices": ["آسيا", "أفريقيا", "أوروبا", "أستراليا"], "answer": 1, "explain": "تقع معظم مساحة مصر في أفريقيا."}, {"subject": "دراسات", "q": "يحد مصر من الشمال:", "choices": ["البحر الأحمر", "البحر المتوسط", "السودان", "ليبيا"], "answer": 1, "explain": "البحر المتوسط يقع شمال مصر."}, {"subject": "دراسات", "q": "نهر النيل يصب في:", "choices": ["البحر الأحمر", "البحر المتوسط", "المحيط الهندي", "الخليج العربي"], "answer": 1, "explain": "يصب النيل في البحر المتوسط."}, {"subject": "دراسات", "q": "من أشهر مصادر المياه العذبة في مصر:", "choices": ["نهر النيل", "البحر المتوسط", "البحر الأحمر", "البحيرات المالحة"], "answer": 0, "explain": "نهر النيل مصدر رئيسي للمياه العذبة."}, {"subject": "دراسات", "q": "تتركز أغلب أراضي مصر الزراعية في:", "choices": ["الوادي والدلتا", "الصحراء الغربية", "جبال البحر الأحمر", "شبه جزيرة سيناء فقط"], "answer": 0, "explain": "تتركز الزراعة حول النيل في الوادي والدلتا."}, {"subject": "دراسات", "q": "عاصمة مصر هي:", "choices": ["الإسكندرية", "الأقصر", "القاهرة", "أسوان"], "answer": 2, "explain": "القاهرة عاصمة جمهورية مصر العربية."}, {"subject": "دراسات", "q": "تقع شبه جزيرة سيناء في:", "choices": ["غرب مصر", "شرق مصر", "جنوب الوادي", "غرب ليبيا"], "answer": 1, "explain": "سيناء تقع في الجزء الشرقي من مصر."}, {"subject": "دراسات", "q": "من وسائل النقل المائي:", "choices": ["القطار", "السفينة", "السيارة", "الطائرة"], "answer": 1, "explain": "السفينة وسيلة نقل مائي."}, {"subject": "دراسات", "q": "يساعد الموقع الجغرافي لمصر على:", "choices": ["العزلة", "التجارة والاتصال", "قلة الموانئ", "منع السفر"], "answer": 1, "explain": "موقع مصر بين قارات وممرات مهمة يدعم التجارة."}, {"subject": "دراسات", "q": "تقع الصحراء الغربية في:", "choices": ["شرق مصر", "غرب مصر", "شمال سيناء", "دلتا النيل"], "answer": 1, "explain": "الصحراء الغربية تقع غرب وادي النيل."}, {"subject": "دراسات", "q": "من مظاهر السطح في مصر:", "choices": ["الجبال والهضاب والسهول", "الغابات الاستوائية فقط", "الجليد الدائم", "البراكين النشطة"], "answer": 0, "explain": "تتنوع مظاهر السطح في مصر."}, {"subject": "دراسات", "q": "توجد بحيرة ناصر خلف:", "choices": ["السد العالي", "قناطر الدلتا", "قناة السويس", "بحيرة المنزلة"], "answer": 0, "explain": "تكونت بحيرة ناصر خلف السد العالي."}, {"subject": "دراسات", "q": "من الأنشطة الاقتصادية:", "choices": ["الزراعة", "النوم", "التنفس", "المشي فقط"], "answer": 0, "explain": "الزراعة نشاط اقتصادي."}, {"subject": "دراسات", "q": "تربط قناة السويس بين:", "choices": ["البحر المتوسط والبحر الأحمر", "المحيط الأطلسي والهندي", "النيل والفرات", "البحر الأسود والمتوسط"], "answer": 0, "explain": "تربط القناة البحر المتوسط بالبحر الأحمر."}, {"subject": "دراسات", "q": "من المحافظات الساحلية على البحر الأحمر:", "choices": ["الفيوم", "البحر الأحمر", "المنوفية", "الغربية"], "answer": 1, "explain": "محافظة البحر الأحمر تطل على البحر الأحمر."}, {"subject": "دراسات", "q": "تسمى المنطقة التي تتفرع عندها مياه النيل قرب مصبه:", "choices": ["الوادي", "الدلتا", "الهضبة", "الواحة"], "answer": 1, "explain": "الدلتا منطقة تفرع النيل قرب المصب."}, {"subject": "دراسات", "q": "من فوائد السد العالي:", "choices": ["تنظيم مياه النيل", "إيقاف الزراعة", "منع توليد الكهرباء", "زيادة الفيضانات"], "answer": 0, "explain": "يساعد السد العالي على تنظيم المياه وتوليد الكهرباء."}, {"subject": "دراسات", "q": "توجد الواحات البحرية في:", "choices": ["الصحراء الغربية", "دلتا النيل", "سيناء", "وادي النيل الشرقي"], "answer": 0, "explain": "الواحات البحرية تقع في الصحراء الغربية."}, {"subject": "دراسات", "q": "العملة الرسمية في مصر هي:", "choices": ["الدينار", "الريال", "الجنيه المصري", "الدرهم"], "answer": 2, "explain": "العملة الرسمية هي الجنيه المصري."}, {"subject": "دراسات", "q": "من الموارد الطبيعية:", "choices": ["المعادن", "الكتب المدرسية", "الأجهزة المصنعة", "الأثاث"], "answer": 0, "explain": "المعادن موارد طبيعية تستخرج من الأرض."}];
+let current = 0;
+const answers = new Array(questions.length).fill(-1);
+const counter = document.getElementById('counter');
+const scoreLive = document.getElementById('scoreLive');
+const bar = document.getElementById('bar');
+const subject = document.getElementById('subject');
+const question = document.getElementById('question');
+const choices = document.getElementById('choices');
+const prev = document.getElementById('prev');
+const next = document.getElementById('next');
 
-let index=0, answers=Array(Q.length).fill(null);
-const $=id=>document.getElementById(id);
-$('begin').onclick=()=>{$('start').classList.add('hidden');$('quiz').classList.remove('hidden');render()};
-function render(){
- const x=Q[index];$('subject').textContent=x.s;$('counter').textContent=`السؤال ${index+1} من ${Q.length}`;
- $('bar').style.width=((index+1)/Q.length*100)+'%';$('question').textContent=x.q;$('choices').innerHTML='';
- x.a.forEach((v,i)=>{let l=document.createElement('label');l.className='choice';let inp=document.createElement('input');inp.type='radio';inp.name='answer';inp.value=i;inp.checked=answers[index]===i;inp.onchange=()=>answers[index]=i;l.append(inp,document.createTextNode(v));$('choices').append(l)});
- $('prev').disabled=index===0;$('next').classList.toggle('hidden',index===Q.length-1);$('finish').classList.toggle('hidden',index!==Q.length-1);
+function renderQuestion() {
+  const item = questions[current];
+  counter.textContent = 'السؤال ' + (current + 1) + ' من ' + questions.length;
+  scoreLive.textContent = 'تمت الإجابة: ' + answers.filter(function(value) { return value !== -1; }).length;
+  bar.style.width = ((current + 1) / questions.length * 100) + '%';
+  subject.textContent = item.subject;
+  question.textContent = item.q;
+  choices.innerHTML = '';
+  item.choices.forEach(function(choice, index) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'choice' + (answers[current] === index ? ' selected' : '');
+    button.textContent = String.fromCharCode(65 + index) + ') ' + choice;
+    button.addEventListener('click', function() {
+      answers[current] = index;
+      renderQuestion();
+    });
+    choices.appendChild(button);
+  });
+  prev.disabled = current === 0;
+  next.textContent = current === questions.length - 1 ? 'إنهاء الامتحان' : 'التالي';
 }
-$('prev').onclick=()=>{if(index>0){index--;render()}};
-$('next').onclick=()=>{if(index<Q.length-1){index++;render()}};
-$('finish').onclick=finish;
-function finish(){
- const unanswered=answers.filter(x=>x===null).length;
- if(unanswered && !confirm(`متبقي ${unanswered} سؤال بدون إجابة. هل تريد إنهاء الامتحان؟`))return;
- let score=0;Q.forEach((q,i)=>{if(answers[i]===q.c)score++});
- $('quiz').classList.add('hidden');$('result').classList.remove('hidden');$('review').classList.remove('hidden');
- $('score').textContent=`${score} / ${Q.length}`;$('percent').textContent=`النسبة المئوية: ${score}%`;$('summary').textContent=`إجابات صحيحة: ${score} — إجابات خاطئة أو غير مجابة: ${Q.length-score}`;
- $('details').innerHTML='';
- Q.forEach((q,i)=>{
-  const ok=answers[i]===q.c;let div=document.createElement('div');div.className='review-item';
-  let title=document.createElement('b');title.textContent=`${i+1}) ${q.s} — ${q.q}`;div.append(title);
-  let yours=document.createElement('p');yours.className=ok?'correct':'wrong';yours.textContent=`إجابتك: ${answers[i]===null?'لم تجب':q.a[answers[i]]} ${ok?'✓':'✗'}`;div.append(yours);
-  let right=document.createElement('p');right.className='correct';right.textContent=`الإجابة الصحيحة: ${q.a[q.c]}`;div.append(right);
-  let ex=document.createElement('div');ex.className='explain';ex.textContent='التفسير: '+q.e+' توضيح الاختيارات الأخرى: '+q.a.map((v,j)=>j===q.c?'':`«${v}» غير صحيحة هنا.`).filter(Boolean).join(' ');div.append(ex);$('details').append(div);
- });
- window.scrollTo(0,0);
+prev.addEventListener('click', function() {
+  if (current > 0) { current--; renderQuestion(); }
+});
+next.addEventListener('click', function() {
+  if (current < questions.length - 1) {
+    current++;
+    renderQuestion();
+  } else {
+    finishExam();
+  }
+});
+function finishExam() {
+  const answered = answers.filter(function(value) { return value !== -1; }).length;
+  if (answered < questions.length) {
+    const confirmFinish = confirm('أجبت عن ' + answered + ' سؤالًا من 100. هل تريد إنهاء الامتحان؟');
+    if (!confirmFinish) return;
+  }
+  let score = 0;
+  questions.forEach(function(item, index) {
+    if (answers[index] === item.answer) score++;
+  });
+  document.getElementById('exam').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+  document.getElementById('finalScore').textContent = score + ' / 100';
+  document.getElementById('summary').textContent = 'إجابات صحيحة: ' + score + ' – إجابات خاطئة أو غير مجابة: ' + (100 - score);
+  const review = document.getElementById('review');
+  review.innerHTML = '';
+  questions.forEach(function(item, index) {
+    const box = document.createElement('div');
+    box.className = 'review ' + (answers[index] === item.answer ? 'correct' : 'wrong');
+    const yourAnswer = answers[index] === -1 ? 'لم تتم الإجابة' : item.choices[answers[index]];
+    box.textContent = (index + 1) + '. ' + item.q + ' | إجابتك: ' + yourAnswer + ' | الصحيحة: ' + item.choices[item.answer] + ' | التوضيح: ' + item.explain;
+    review.appendChild(box);
+  });
+  window.scrollTo(0,0);
 }
-</script></body></html>
+renderQuestion();
+</script>
+</body>
+</html>
