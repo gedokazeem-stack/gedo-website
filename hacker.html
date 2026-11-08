@@ -5,151 +5,188 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>جدو هاكر</title>
+
 <style>
-* { box-sizing: border-box; }
+* {box-sizing:border-box}
+
 body {
-  margin: 0;
-  padding: 25px 15px;
-  background: #080000;
-  color: #ff2222;
-  font-family: Tahoma, Arial, sans-serif;
-  text-align: center;
-  animation: glow 2s infinite alternate;
+  margin:0;
+  padding:20px 12px;
+  background:#080000;
+  color:#ff2222;
+  font-family:Tahoma,Arial;
+  text-align:center;
+  animation:bg 1s infinite alternate;
 }
-@keyframes glow {
-  from { background: #080000; }
-  to { background: #250000; }
+
+@keyframes bg {
+  from {background:#080000}
+  to {background:#350000}
 }
+
 h1 {
-  font-size: 38px;
-  text-shadow: 0 0 18px red;
+  font-size:42px;
+  text-shadow:0 0 20px red;
 }
-.panel {
-  border: 2px solid red;
-  border-radius: 14px;
-  padding: 22px 12px;
-  box-shadow: 0 0 20px red;
-  margin-top: 30px;
-}
+
 .warning {
-  font-size: 21px;
-  animation: blink 1s infinite;
+  font-size:25px;
+  font-weight:bold;
+  animation:blink .5s infinite;
 }
+
 @keyframes blink {
-  50% { opacity: .3; }
+  50% {opacity:.2}
 }
+
+.panel {
+  border:2px solid red;
+  border-radius:15px;
+  padding:20px 10px;
+  box-shadow:0 0 25px red;
+  margin-top:20px;
+}
+
 #timer {
-  font-size: 55px;
-  font-weight: bold;
-  margin: 25px 0;
-  direction: ltr;
+  font-size:60px;
+  font-weight:bold;
+  direction:ltr;
+  text-shadow:0 0 20px red;
+  margin:20px;
 }
-#output {
-  text-align: right;
-  line-height: 2.2;
-  min-height: 120px;
-  color: #ff7777;
+
+#messages {
+  min-height:220px;
+  text-align:right;
+  line-height:2.3;
+  color:#ff7777;
+  overflow-wrap:anywhere;
 }
-button {
-  background: #d00000;
-  color: white;
-  border: 1px solid red;
-  border-radius: 8px;
-  padding: 14px 25px;
-  font-size: 18px;
+
+.danger {
+  color:red;
+  font-size:25px;
+  font-weight:bold;
+  animation:blink .5s infinite;
 }
+
 #result {
-  display: none;
-  color: white;
-  background: #a00000;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px;
-  line-height: 2;
+  display:none;
+  color:white;
+  background:#a00000;
+  padding:20px;
+  border-radius:12px;
+  font-size:22px;
+  line-height:2;
+}
+
+.footer {
+  margin-top:25px;
+  padding:15px;
+  border:1px solid red;
+  color:#ffaaaa;
+  font-size:14px;
 }
 </style>
 </head>
+
 <body>
 
-<h1>جدو هاكر</h1>
-<p>مرحباً بك في عالم المحاكاة الإلكترونية</p>
+<h1>جدو هاكر 😈</h1>
 
-<div class="panel">
-  <div class="warning">⚠️ تحذير: بدأت المحاكاة ⚠️</div>
-
-  <div id="timer">05:00</div>
-
-  <div id="output">
-    النظام الافتراضي جاهز...
-  </div>
-
-  <button id="start" onclick="startSim()">
-    ابدأ المحاكاة
-  </button>
-
-  <div id="result">
-    😂 متقلقش! جهازك سليم تماماً.
-    <br>
-    دي مجرد محاكاة ومقلب من جدو عبدالله.
-  </div>
+<div class="warning">
+⚠️ تحذير! تحذير! ⚠️
 </div>
 
-<p>صناعة: جدو عبدالله</p>
-<p>محاكاة تعليمية فقط</p>
+<p>أنت الآن داخل محاكاة إلكترونية ترفيهية</p>
+
+<div class="panel">
+
+<div class="danger">خطر! خطر!</div>
+
+<div id="timer">02:00</div>
+
+<div id="messages">
+جاري تجهيز المحاكاة...
+</div>
+
+<div id="result">
+😂😂 اتخضيت؟<br>
+جهازك سليم تماماً!<br>
+كان مقلب من جدو هاكر ❤️
+</div>
+
+</div>
+
+<div class="footer">
+جدو عبدالله يقدم لك محاكاة هاكر ترفيهية فقط.
+<br>
+لا يوجد اختراق أو سرقة بيانات.
+</div>
 
 <script>
-let remaining = 300;
-let interval;
+let seconds = 120;
+
 let messages = [
- "جاري تشغيل البيئة الافتراضية...",
- "جاري فحص النظام التجريبي...",
- "جاري تحليل البيانات الوهمية...",
- "جاري فحص إعدادات المحاكاة...",
- "جاري تجهيز التقرير النهائي...",
- "النظام يعمل بصورة طبيعية..."
+"جاري تشغيل النظام الافتراضي...",
+"⚠️ تحذير! جاري فحص البيئة التجريبية",
+"جاري تحليل البيانات الوهمية...",
+"خطر! خطر! جاري تحديث المحاكاة...",
+"تم اكتشاف نشاط افتراضي...",
+"جاري اختبار النظام...",
+"تنبيه أحمر! استمر في مشاهدة المحاكاة",
+"جاري معالجة البيانات التجريبية...",
+"تم تشغيل نظام الحماية الافتراضي...",
+"جاري تجهيز التقرير النهائي...",
+"تحذير! المرحلة الأخيرة...",
+"جاري إنهاء المحاكاة..."
 ];
 
-function startSim() {
-  let button = document.getElementById("start");
-  let output = document.getElementById("output");
-  let timer = document.getElementById("timer");
-  let result = document.getElementById("result");
+let index = 0;
 
-  button.disabled = true;
-  button.style.opacity = ".5";
-  result.style.display = "none";
-  remaining = 300;
+function addMessage() {
+ let box = document.getElementById("messages");
 
-  output.innerHTML = "بدأت المحاكاة بنجاح...";
-  let i = 0;
+ let line = document.createElement("div");
+ line.textContent = messages[index % messages.length];
 
-  let msgInterval = setInterval(() => {
-    if (remaining <= 0) return;
-    output.innerHTML += "<br>" + messages[i % messages.length];
-    i++;
-  }, 12000);
+ box.prepend(line);
+ index++;
 
-  interval = setInterval(() => {
-    remaining--;
-
-    let min = Math.floor(remaining / 60);
-    let sec = remaining % 60;
-
-    timer.textContent =
-      String(min).padStart(2,"0") + ":" +
-      String(sec).padStart(2,"0");
-
-    if (remaining <= 0) {
-      clearInterval(interval);
-      clearInterval(msgInterval);
-
-      output.innerHTML = "انتهت المحاكاة بنجاح!";
-      result.style.display = "block";
-      button.disabled = false;
-      button.style.opacity = "1";
-    }
-  }, 1000);
+ if(box.children.length > 9) {
+   box.removeChild(box.lastChild);
+ }
 }
+
+function start() {
+ addMessage();
+
+ let msgTimer = setInterval(addMessage, 3500);
+
+ let countdown = setInterval(() => {
+  seconds--;
+
+  let min = Math.floor(seconds / 60);
+  let sec = seconds % 60;
+
+  document.getElementById("timer").textContent =
+   String(min).padStart(2,"0") + ":" +
+   String(sec).padStart(2,"0");
+
+  if(seconds <= 0) {
+   clearInterval(countdown);
+   clearInterval(msgTimer);
+
+   document.getElementById("messages").innerHTML =
+   "انتهت جميع مراحل المحاكاة بنجاح!";
+
+   document.getElementById("result").style.display =
+   "block";
+  }
+ },1000);
+}
+
+start();
 </script>
 
 </body>
