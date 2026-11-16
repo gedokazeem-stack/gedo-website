@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gedo Academy</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f3f6fc;
+  color: #172b4d;
+}
+
+header {
+  background: #102a50;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 21px;
+  font-weight: bold;
+  color: #55c5ff;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 5px;
+  font-size: 14px;
+}
+
+.hero {
+  background: linear-gradient(135deg,#102a50,#1765a5);
+  color: white;
+  text-align: center;
+  padding: 65px 20px;
+}
+
+.hero h1 {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  line-height: 1.9;
+  color: #dceaff;
+}
+
+.btn {
+  display: inline-block;
+  background: #16a9e0;
+  color: white;
+  padding: 13px 25px;
+  border-radius: 9px;
+  text-decoration: none;
+  margin-top: 22px;
+  border: none;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 950px;
+  margin: auto;
+  padding: 35px 18px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 25px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+  gap: 15px;
+}
+
+.card {
+  background: white;
+  padding: 25px 12px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 3px 15px #0000000c;
+  border: 1px solid #e5ebf5;
+}
+
+.card .emoji {
+  font-size: 35px;
+  margin-bottom: 12px;
+}
+
+.card h3 {
+  margin-bottom: 9px;
+}
+
+.card p {
+  color: #718096;
+  font-size: 13px;
+}
+
+footer {
+  background: #102a50;
+  color: white;
+  text-align: center;
+  padding: 22px;
+  margin-top: 30px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🎓 GEDO ACADEMY</div>
+  <nav>
+    <a href="#home">الرئيسية</a>
+    <a href="#stages">المراحل</a>
+    <a href="#subjects">المواد</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1>مرحباً بك في Gedo Academy</h1>
+  <p>
+    منصتك التعليمية المتكاملة لجميع المراحل الدراسية.
+    <br>
+    تعلم، اختبر نفسك، وحقق النجاح.
+  </p>
+  <a href="#stages" class="btn">ابدأ التعلم الآن</a>
+</section>
+
+<div class="container" id="stages">
+  <h2 class="section-title">📚 المراحل الدراسية</h2>
+
+  <div class="cards">
+    <div class="card">
+      <div class="emoji">🧒</div>
+      <h3>المرحلة الابتدائية</h3>
+      <p>تعلم أساسيات المعرفة</p>
+    </div>
+
+    <div class="card">
+      <div class="emoji">📖</div>
+      <h3>المرحلة الإعدادية</h3>
+      <p>طور مهاراتك الدراسية</p>
+    </div>
+
+    <div class="card">
+      <div class="emoji">🎓</div>
+      <h3>المرحلة الثانوية</h3>
+      <p>استعد لمستقبلك</p>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="subjects">
+  <h2 class="section-title">⭐ خدمات المنصة</h2>
+
+  <div class="cards">
+    <div class="card">
+      <div class="emoji">📚</div>
+      <h3>الدروس</h3>
+      <p>شرح وتنظيم المحتوى التعليمي</p>
+    </div>
+
+    <div class="card">
+      <div class="emoji">📝</div>
+      <h3>الامتحانات</h3>
+      <p>اختبر مستواك بنفسك</p>
+    </div>
+
+    <div class="card">
+      <div class="emoji">🏆</div>
+      <h3>النتائج</h3>
+      <p>تابع تقدمك الدراسي</p>
+    </div>
+
+    <div class="card">
+      <div class="emoji">👨‍🎓</div>
+      <h3>حساب الطالب</h3>
+      <p>مساحتك التعليمية الخاصة</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Gedo Academy</p>
+  <p>جميع الحقوق محفوظة</p>
+</footer>
+
+</body>
+</html>
