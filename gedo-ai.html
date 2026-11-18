@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gedo AI</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#080d18;color:white;
+ font-family:Arial,sans-serif;
+ min-height:100vh;
+}
+header{
+ background:#101a2b;padding:18px;
+ border-bottom:1px solid #263958;
+ display:flex;justify-content:space-between;
+ align-items:center;
+}
+.logo{font-size:25px;font-weight:bold;color:#48baff}
+.logo span{color:white}
+main{max-width:850px;margin:30px auto;padding:15px}
+.hero{text-align:center;padding:15px}
+.hero img{
+ width:180px;height:210px;object-fit:cover;
+ border-radius:20px;border:2px solid #258bd2;
+ box-shadow:0 0 25px #1479bd55;
+}
+h1{color:#48baff;font-size:34px}
+.hero p{color:#b9c9dc;line-height:1.8}
+.chat{
+ background:#111d30;border:1px solid #263b59;
+ border-radius:18px;padding:15px;min-height:190px;
+}
+.messages{min-height:130px}
+.msg{
+ padding:12px;margin:10px 0;border-radius:12px;
+ line-height:1.7;max-width:90%;
+}
+.bot{background:#1b3552}
+.user{background:#075c91;margin-right:auto}
+.input{
+ display:flex;gap:8px;margin-top:15px
+}
+input{
+ flex:1;min-width:0;padding:15px;
+ border-radius:12px;border:1px solid #385273;
+ background:#091321;color:white;font-size:16px;
+}
+button{
+ border:0;border-radius:12px;padding:13px 20px;
+ background:#168bd0;color:white;font-weight:bold;
+ cursor:pointer;
+}
+button:hover{background:#0870ad}
+footer{text-align:center;color:#8394a9;padding:25px}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">Gedo <span>AI</span> 🤖</div>
+ <div>المساعد التعليمي</div>
+</header>
+
+<main>
+ <section class="hero">
+  <img
+   src="https://commons.wikimedia.org/wiki/Special:FilePath/Zlatan_Ibrahimovic.jpg"
+   alt="Zlatan Ibrahimovic">
+  <h1>أهلاً بك في Gedo AI</h1>
+  <p>
+   اسأل عن أي حاجة في دراستك!
+   من أولى إعدادي إلى تالتة ثانوي والبكالوريا المصرية.
+   أو اسأل عن أي موضوع آخر.
+  </p>
+ </section>
+
+ <section class="chat">
+  <div class="messages" id="messages">
+   <div class="msg bot">
+    أهلاً بيك! أنا Gedo AI 👋
+    اكتب سؤالك وسنساعدك.
+   </div>
+  </div>
+
+  <div class="input">
+   <input id="question"
+    placeholder="اكتب سؤالك هنا..."
+    onkeydown="if(event.key==='Enter')send()">
+   <button onclick="send()">إرسال</button>
+  </div>
+ </section>
+</main>
+
+<footer>
+ Gedo AI © 2026
+ <br>
+ صورة زلاتان: Pascal Kirchmair،
+ <a href="https://creativecommons.org/licenses/by-sa/3.0/"
+ style="color:#48baff">CC BY-SA 3.0</a>
+</footer>
+
+<script>
+function send(){
+ const input=document.getElementById('question');
+ const messages=document.getElementById('messages');
+ const q=input.value.trim();
+ if(!q)return;
+
+ const user=document.createElement('div');
+ user.className='msg user';
+ user.textContent=q;
+ messages.appendChild(user);
+
+ const bot=document.createElement('div');
+ bot.className='msg bot';
+ bot.textContent='واجهة المحادثة جاهزة! سنوصل محرك الذكاء الاصطناعي في الخطوة التالية.';
+ messages.appendChild(bot);
+
+ input.value='';
+ messages.scrollTop=messages.scrollHeight;
+}
+</script>
+
+</body>
+</html>
