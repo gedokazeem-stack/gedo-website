@@ -1,51 +1,375 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#172554">
 <title>رفيق الطالب</title>
 <style>
-:root{--bg:#f1f5f9;--card:#fff;--text:#172554;--muted:#64748b;--primary:#2563eb;--soft:#eff6ff;--border:#e2e8f0;--green:#059669;--red:#dc2626}
-body.dark{--bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--muted:#cbd5e1;--primary:#60a5fa;--soft:#26364d;--border:#334155;--green:#34d399;--red:#f87171}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;transition:.2s}
-header{background:linear-gradient(135deg,#172554,#2563eb);color:white;padding:25px 18px 35px;border-radius:0 0 25px 25px}
-.head{display:flex;justify-content:space-between;align-items:center;gap:10px}header h1{margin:0;font-size:27px}header p{color:#dbeafe;margin:9px 0 0}
-.container{max-width:760px;margin:auto;padding:15px}.card{background:var(--card);padding:17px;border-radius:17px;margin-bottom:14px;box-shadow:0 3px 12px #00000009}
-.card h3{margin:0 0 14px}.welcome{margin-top:-15px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}
-.stat{background:var(--soft);padding:13px 5px;text-align:center;border-radius:12px}.stat strong{display:block;font-size:23px;color:var(--primary)}.stat span{font-size:12px;color:var(--muted)}
-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:17px 0}nav button,.tabbtn{border:0;border-radius:11px;padding:12px 5px;background:var(--card);color:var(--text);font-weight:bold;font-size:13px}
-nav button.active,.tabbtn.active{background:var(--primary);color:white}section{display:none}section.active{display:block}
-input,textarea,select{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px;font-size:15px;background:var(--bg);color:var(--text)}
-textarea{min-height:85px;resize:vertical}label{font-size:13px;color:var(--muted)}
-.btn{border:0;border-radius:10px;padding:11px 14px;background:var(--primary);color:white;font-weight:bold;cursor:pointer;margin:3px}.btn.full{width:100%;padding:13px}.btn.gray{background:#64748b}.btn.green{background:var(--green)}.btn.red{background:var(--red)}
-.item{padding:13px;background:var(--bg);border:1px solid var(--border);border-radius:12px;margin:9px 0;overflow-wrap:anywhere}.item strong{display:block;margin-bottom:6px}.item small{color:var(--muted)}.item button{margin-top:8px}
-.empty{text-align:center;color:var(--muted);padding:17px}.row{display:flex;gap:8px;align-items:center}.row>*{flex:1;min-width:0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.pill{display:inline-block;background:var(--soft);color:var(--primary);padding:5px 9px;border-radius:20px;font-size:12px}
-.progress{height:12px;background:var(--border);border-radius:20px;overflow:hidden;margin:12px 0}.bar{height:100%;background:var(--green);width:0%;transition:.3s}.done{text-decoration:line-through;opacity:.6}
-.timer{text-align:center}#clock{font-size:54px;font-weight:bold;color:var(--primary);text-align:center;margin:15px}
-.timer-settings{text-align:right;background:var(--soft);padding:13px;border-radius:12px;margin:12px 0}.timer-settings label{display:block;font-weight:bold;color:var(--text)}
-.timer-mode{font-weight:bold;color:var(--primary);margin:8px}.timer-hint{font-size:12px;color:var(--muted)}
-table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px;border:1px solid var(--border);text-align:center}th{background:var(--soft)}
-.option{display:block;padding:12px;border:1px solid var(--border);border-radius:10px;margin:8px 0;cursor:pointer}.option input{width:auto;margin:0 7px}
-.question{padding:14px;background:var(--bg);border-radius:12px;margin:12px 0}.result{padding:12px;border-radius:10px;background:var(--soft);margin:10px 0}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}.hidden{display:none!important}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172554}
+header{background:linear-gradient(135deg,#172554,#2563eb);color:white;padding:25px 18px 30px;border-radius:0 0 25px 25px}
+header h1{margin:0 0 8px;font-size:27px}
+header p{margin:0;color:#dbeafe}
+.container{max-width:650px;margin:auto;padding:16px}
+.welcome{background:white;padding:17px;border-radius:18px;margin-top:-12px;box-shadow:0 4px 15px #0000000c}
+.welcome h2{margin:0 0 7px;font-size:19px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:15px}
+.stat{background:#eff6ff;padding:13px 5px;border-radius:13px;text-align:center}
+.stat strong{display:block;font-size:23px;color:#2563eb}
+.stat span{font-size:12px;color:#475569}
+nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0}
+nav button{border:0;background:white;padding:12px 5px;border-radius:12px;color:#334155;font-weight:bold;font-size:13px}
+nav button.active{background:#2563eb;color:white}
+section{display:none}
+section.active{display:block}
+.panel{background:white;border-radius:17px;padding:17px;margin-bottom:14px;box-shadow:0 3px 12px #00000008}
+h3{margin:0 0 14px;font-size:18px}
+input,textarea,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;margin:6px 0 11px;font-size:15px;background:white}
+textarea{min-height:95px;resize:vertical}
+.primary{width:100%;border:0;border-radius:11px;padding:13px;background:#2563eb;color:white;font-size:15px;font-weight:bold}
+.item{padding:13px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;margin:9px 0}
+.item strong{display:block;margin-bottom:6px}
+.item small{color:#64748b}
+.item button{border:0;border-radius:8px;padding:7px 10px;margin:8px 4px 0 0;background:#dbeafe;color:#1d4ed8}
+.item button.delete{background:#fee2e2;color:#b91c1c}
+.done{text-decoration:line-through;opacity:.55}
+.empty{text-align:center;color:#94a3b8;padding:20px}
+.timer{text-align:center;padding:20px}
+#clock{font-size:55px;font-weight:bold;color:#2563eb;margin:15px}
+.timer button{width:auto;padding:12px 22px;margin:5px}
+.timer-settings{text-align:right;background:#f8fafc;padding:13px;border-radius:12px;margin:15px 0}
+.timer-settings label{display:block;font-weight:bold;margin-top:5px}
+.timer-settings input{margin-bottom:8px}
+.note{white-space:pre-wrap;overflow-wrap:anywhere}
+footer{text-align:center;color:#94a3b8;font-size:12px;padding:20px}
 </style>
 </head>
 <body>
-<header><div class="head"><div><h1>📚 رفيق الطالب</h1><p>خطّط لمذاكرتك، اختبر نفسك، وحقق أهدافك</p></div><button class="btn" onclick="toggleDark()">🌙</button></div></header>
+<header>
+  <h1>📚 رفيق الطالب</h1>
+  <p>نظّم وقتك، تابع واجباتك، وحقق أهدافك</p>
+</header>
 <div class="container">
-<div class="card welcome"><h3>أهلاً بك في رفيق الطالب 👋</h3><div id="todayText"></div><div class="stats">
-<div class="stat"><strong id="taskStat">0</strong><span>واجبات متبقية</span></div><div class="stat"><strong id="examStat">0</strong><span>امتحانات قادمة</span></div><div class="stat"><strong id="goalStat">0%</strong><span>إنجاز الأهداف</span></div>
-</div></div>
-<nav id="nav">
-<button class="active" data-page="home">🏠 الرئيسية</button><button data-page="tasks">📝 واجباتي</button><button data-page="exams">📅 امتحاناتي</button><button data-page="timetable">📚 الجدول</button><button data-page="planner">🧠 خطة المذاكرة</button><button data-page="quiz">🧪 اختبر نفسك</button><button data-page="grades">📊 درجاتي</button><button data-page="library">📁 مكتبتي</button><button data-page="goals">🎯 أهدافي</button><button data-page="notes">📒 ملاحظاتي</button><button data-page="focus">⏱️ ركّز</button>
-</nav>
-<section id="home" class="active">
-<div class="card"><h3>✨ ملخص يومك</h3><div id="homeTasks"></div></div><div class="card"><h3>📌 أقرب امتحان</h3><div id="homeExam" class="empty">لا توجد امتحانات قادمة.</div></div><div class="card"><h3>🎯 أهداف اليوم</h3><div id="homeGoals"></div></div>
-</section>
-<section id="tasks"><div class="card"><h3>➕ إضافة واجب</h3><input id="taskName" placeholder="اسم الواجب"><input id="taskSubject" placeholder="المادة"><label>موعد التسليم</label><input id="taskDate" type="date"><button class="btn full" onclick="addTask()">حفظ الواجب</button></div><div class="card"><h3>قائمة الواجبات</h3><div id="taskList"></div></div></section>
-<section id="exams"><div class="card"><h3>➕ إضافة امتحان</h3><input id="examName" placeholder="اسم المادة أو الامتحان"><input id="examDate" type="date"><button class="btn full" onclick="addExam()">حفظ الامتحان</button></div><div class="card"><h3>مواعيد الامتحانات</h3><div id="examList"></div></div></section>
-<section id="timetable"><div class="card"><h3>📚 جدول الحصص الأسبوعي</h3><label>اليوم</label><select id="classDay"><option>السبت</option><option>الأحد</option><option>الاثنين</option><option>الثلاثاء</option><option>الأربعاء</option><option>الخميس</option><option>الجمعة</option></select><input id="classSubject" placeholder="اسم المادة"><input id="classTime" type="time"><input id="classTeacher" placeholder="اسم المدرس (اختياري)"><button class="btn full" onclick="addClass()">إضافة للحصص</button></div><div class="card"><h3>جدولي</h3><div id="classList"></div></div></section>
-<section id="planner"><div class="card"><h3>🧠 خطة المذاكرة</h3><p>أضف الدروس وحدد موعد الامتحان، وساعد نفسك على تقسيم المراجعة.</p><input id="planSubject" placeholder="المادة"><input id="planLesson" placeholder="اسم الدرس"><input id="planDate" type="date"><button class="btn full" onclick="addPlan()">إضافة درس للخطة</button></div><div class="card"><h3>الدروس المخططة</h3><div id="planList"></div></div></section>
-<section id="quiz"><div class="card"><h3>🧪 مركز الاختبارات</h3><p>اختر مسارك ومادتك، ثم ابدأ التدريب.</p><label>المسار</label><select id="path"><option value="مشترك">المواد المشتركة</option><option value="هندسة وعلوم الحاسب">الهندسة وعلوم الحاسب</option><option value="طب وعلوم الحياة">الطب وعلوم الحياة</option><option value="الأعمال">الأعمال</option><option value="الآداب والفنون">الآداب والفنون</option></select><label>المادة</label><select id="subject"><option>اللغة العربية</option><option>التاريخ المصري</option><option>اللغة الإنجليزية</option><option>الرياضيات</option><option>الفيزياء</option><option>الكيمياء</option><option>البرمجة والذكاء الاصطناعي</option><option>الأحياء</option><option>الاقتصاد</option><option>الجغرافيا</option><option>الإحصاء</option><option>الثقافة المالية</option><option>علم النفس</option><option
+  <div class="welcome">
+    <h2>أهلاً بك في رفيق الطالب 👋</h2>
+    <div>كل أدواتك الدراسية في مكان واحد.</div>
+    <div class="stats">
+      <div class="stat"><strong id="taskCount">0</strong><span>واجبات متبقية</span></div>
+      <div class="stat"><strong id="examCount">0</strong><span>امتحانات قادمة</span></div>
+      <div class="stat"><strong id="doneCount">0</strong><span>واجبات مكتملة</span></div>
+    </div>
+  </div>
+  <nav>
+    <button class="active" data-tab="home">🏠 الرئيسية</button>
+    <button data-tab="tasks">📝 واجباتي</button>
+    <button data-tab="exams">📅 امتحاناتي</button>
+    <button data-tab="focus">⏱️ ركّز</button>
+    <button data-tab="notes">📒 كشكولي</button>
+    <button data-tab="progress">🏆 إنجازاتي</button>
+  </nav>
+
+  <section id="home" class="active">
+    <div class="panel">
+      <h3>✨ لوحة الطالب</h3>
+      <p>ابدأ يومك بخطوة صغيرة نحو النجاح.</p>
+      <div id="homeTasks"></div>
+    </div>
+    <div class="panel">
+      <h3>📌 أقرب امتحان</h3>
+      <div id="nextExam" class="empty">لم تضف امتحانات بعد.</div>
+    </div>
+  </section>
+
+  <section id="tasks">
+    <div class="panel">
+      <h3>➕ أضف واجباً جديداً</h3>
+      <input id="taskName" placeholder="اسم الواجب">
+      <input id="taskSubject" placeholder="المادة الدراسية">
+      <label>موعد التسليم</label>
+      <input id="taskDate" type="date">
+      <button class="primary" onclick="addTask()">إضافة الواجب</button>
+    </div>
+    <div class="panel">
+      <h3>📋 قائمة واجباتي</h3>
+      <div id="taskList"></div>
+    </div>
+  </section>
+
+  <section id="exams">
+    <div class="panel">
+      <h3>➕ أضف امتحاناً</h3>
+      <input id="examName" placeholder="اسم المادة">
+      <label>تاريخ الامتحان</label>
+      <input id="examDate" type="date">
+      <button class="primary" onclick="addExam()">إضافة الامتحان</button>
+    </div>
+    <div class="panel">
+      <h3>🗓️ مواعيد الامتحانات</h3>
+      <div id="examList"></div>
+    </div>
+  </section>
+
+  <section id="focus">
+    <div class="panel timer">
+      <h3>⏱️ وقت التركيز</h3>
+      <p>أنت من يحدد وقت المذاكرة والراحة!</p>
+
+      <div class="timer-settings">
+        <label for="studyMinutes">📚 مدة المذاكرة بالدقائق</label>
+        <input id="studyMinutes" type="number" min="1" max="1440" value="25">
+
+        <label for="breakMinutes">☕ مدة الراحة بالدقائق</label>
+        <input id="breakMinutes" type="number" min="1" max="1440" value="5">
+      </div>
+
+      <div id="clock">25:00</div>
+      <p id="timerMessage">اختر وقت المذاكرة والراحة ثم ابدأ.</p>
+
+      <button class="primary" onclick="startTimer('study')">📚 ابدأ المذاكرة</button>
+      <button class="primary" style="background:#0f766e" onclick="startTimer('break')">☕ ابدأ الراحة</button>
+      <button class="primary" style="background:#64748b" onclick="pauseTimer()">إيقاف مؤقت</button>
+      <button class="primary" style="background:#475569" onclick="resetTimer()">إعادة ضبط</button>
+    </div>
+  </section>
+
+  <section id="notes">
+    <div class="panel">
+      <h3>✍️ أضف ملاحظة</h3>
+      <input id="noteTitle" placeholder="عنوان الملاحظة">
+      <textarea id="noteText" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+      <button class="primary" onclick="addNote()">حفظ الملاحظة</button>
+    </div>
+    <div class="panel">
+      <h3>📚 ملاحظاتي</h3>
+      <div id="noteList"></div>
+    </div>
+  </section>
+
+  <section id="progress">
+    <div class="panel">
+      <h3>🏆 إنجازاتي</h3>
+      <p>تابع تقدمك الدراسي خطوة بخطوة.</p>
+      <div class="stats">
+        <div class="stat"><strong id="pDone">0</strong><span>مكتمل</span></div>
+        <div class="stat"><strong id="pTodo">0</strong><span>متبقي</span></div>
+        <div class="stat"><strong id="pPercent">0%</strong><span>نسبة الإنجاز</span></div>
+      </div>
+      <div style="background:#e2e8f0;height:13px;border-radius:20px;margin-top:18px;overflow:hidden">
+        <div id="progressBar" style="height:100%;width:0%;background:#2563eb;border-radius:20px"></div>
+      </div>
+      <p id="progressText">ابدأ بإضافة واجباتك!</p>
+    </div>
+  </section>
+
+  <footer>رفيق الطالب © 2026 — طريقك لتنظيم الدراسة والنجاح</footer>
+</div>
+
+<script>
+const getData = key => JSON.parse(localStorage.getItem(key) || "[]");
+const saveData = (key,data) => localStorage.setItem(key,JSON.stringify(data));
+
+let tasks=getData("rafiq_tasks");
+let exams=getData("rafiq_exams");
+let notes=getData("rafiq_notes");
+
+document.querySelectorAll("nav button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+    render();
+  });
+});
+
+function addTask(){
+  const name=document.getElementById("taskName").value.trim();
+  const subject=document.getElementById("taskSubject").value.trim();
+  const date=document.getElementById("taskDate").value;
+  if(!name||!subject||!date){alert("اكتب اسم الواجب والمادة والموعد.");return}
+  tasks.push({id:Date.now(),name,subject,date,done:false});
+  saveData("rafiq_tasks",tasks);
+  document.getElementById("taskName").value="";
+  document.getElementById("taskSubject").value="";
+  document.getElementById("taskDate").value="";
+  render();
+}
+
+function toggleTask(id){
+  tasks=tasks.map(t=>t.id===id?{...t,done:!t.done}:t);
+  saveData("rafiq_tasks",tasks);render();
+}
+
+function deleteTask(id){
+  tasks=tasks.filter(t=>t.id!==id);
+  saveData("rafiq_tasks",tasks);render();
+}
+
+function addExam(){
+  const name=document.getElementById("examName").value.trim();
+  const date=document.getElementById("examDate").value;
+  if(!name||!date){alert("اكتب اسم المادة وتاريخ الامتحان.");return}
+  if(date<today()){alert("اختار تاريخ اليوم أو تاريخاً قادماً.");return}
+  exams.push({id:Date.now(),name,date});
+  saveData("rafiq_exams",exams);
+  document.getElementById("examName").value="";
+  document.getElementById("examDate").value="";
+  render();
+}
+
+function deleteExam(id){
+  exams=exams.filter(e=>e.id!==id);
+  saveData("rafiq_exams",exams);render();
+}
+
+function addNote(){
+  const title=document.getElementById("noteTitle").value.trim();
+  const content=document.getElementById("noteText").value.trim();
+  if(!title||!content){alert("اكتب عنوان الملاحظة ومحتواها.");return}
+  notes.unshift({id:Date.now(),title,content});
+  saveData("rafiq_notes",notes);
+  document.getElementById("noteTitle").value="";
+  document.getElementById("noteText").value="";
+  render();
+}
+
+function deleteNote(id){
+  notes=notes.filter(n=>n.id!==id);
+  saveData("rafiq_notes",notes);render();
+}
+
+function today(){return new Date().toLocaleDateString("en-CA")}
+
+function daysLeft(date){
+  const a=new Date(today()+"T00:00:00");
+  const b=new Date(date+"T00:00:00");
+  return Math.ceil((b-a)/86400000);
+}
+
+function safe(value){
+  return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function render(){
+  const pending=tasks.filter(t=>!t.done);
+  const completed=tasks.filter(t=>t.done);
+  document.getElementById("taskCount").textContent=pending.length;
+  document.getElementById("doneCount").textContent=completed.length;
+  document.getElementById("examCount").textContent=exams.filter(e=>e.date>=today()).length;
+
+  document.getElementById("taskList").innerHTML=tasks.length?tasks.map(t=>`
+    <div class="item">
+      <strong class="${t.done?'done':''}">${safe(t.name)}</strong>
+      <small>${safe(t.subject)} • موعد التسليم: ${safe(t.date)}</small><br>
+      <button onclick="toggleTask(${t.id})">${t.done?'إلغاء الإكمال':'تم الإنجاز ✓'}</button>
+      <button class="delete" onclick="deleteTask(${t.id})">حذف</button>
+    </div>`).join(""):'<div class="empty">لا توجد واجبات حتى الآن.</div>';
+
+  const future=exams.filter(e=>e.date>=today()).sort((a,b)=>a.date.localeCompare(b.date));
+  document.getElementById("examList").innerHTML=exams.length?exams.map(e=>`
+    <div class="item">
+      <strong>${safe(e.name)}</strong>
+      <small>${safe(e.date)} — ${daysLeft(e.date)===0?'الامتحان اليوم':`متبقي ${daysLeft(e.date)} يوم`}</small><br>
+      <button class="delete" onclick="deleteExam(${e.id})">حذف</button>
+    </div>`).join(""):'<div class="empty">لم تضف امتحانات بعد.</div>';
+
+  document.getElementById("nextExam").innerHTML=future.length?
+    `<strong>${safe(future[0].name)}</strong><p>متبقي ${daysLeft(future[0].date)} يوم — ${safe(future[0].date)}</p>`:
+    'لا توجد امتحانات قادمة مسجلة.';
+
+  document.getElementById("homeTasks").innerHTML=pending.length?
+    pending.slice(0,3).map(t=>`<div class="item"><strong>${safe(t.name)}</strong><small>${safe(t.subject)} • ${safe(t.date)}</small></div>`).join(""):
+    '<div class="empty">ممتاز! لا توجد واجبات متبقية.</div>';
+
+  document.getElementById("noteList").innerHTML=notes.length?notes.map(n=>`
+    <div class="item">
+      <strong>${safe(n.title)}</strong>
+      <div class="note">${safe(n.content)}</div>
+      <button class="delete" onclick="deleteNote(${n.id})">حذف</button>
+    </div>`).join(""):'<div class="empty">لم تحفظ ملاحظات بعد.</div>';
+
+  const total=tasks.length;
+  const percent=total?Math.round(completed.length/total*100):0;
+  document.getElementById("pDone").textContent=completed.length;
+  document.getElementById("pTodo").textContent=pending.length;
+  document.getElementById("pPercent").textContent=percent+"%";
+  document.getElementById("progressBar").style.width=percent+"%";
+  document.getElementById("progressText").textContent=total?`أنجزت ${percent}% من واجباتك.`:"ابدأ بإضافة واجباتك!";
+}
+
+/* مؤقت المذاكرة والراحة */
+let remaining=25*60;
+let timer=null;
+let activeMode="study";
+
+function getSelectedMinutes(mode){
+  const id=mode==="study"?"studyMinutes":"breakMinutes";
+  const value=Number(document.getElementById(id).value);
+  if(!Number.isInteger(value)||value<1||value>1440){
+    alert("اكتب مدة صحيحة من دقيقة واحدة إلى 1440 دقيقة.");
+    return null;
+  }
+  return value;
+}
+
+function updateClock(){
+  const m=Math.floor(remaining/60);
+  const s=remaining%60;
+  document.getElementById("clock").textContent=
+    String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+}
+
+function startTimer(mode){
+  clearInterval(timer);
+  timer=null;
+
+  const minutes=getSelectedMinutes(mode);
+  if(minutes===null)return;
+
+  activeMode=mode;
+  remaining=minutes*60;
+  updateClock();
+
+  document.getElementById("timerMessage").textContent=
+    mode==="study"?"بدأت جلسة المذاكرة. بالتوفيق!":"بدأ وقت الراحة. استمتع باستراحتك!";
+
+  timer=setInterval(()=>{
+    if(remaining>0){
+      remaining--;
+      updateClock();
+    }else{
+      clearInterval(timer);
+      timer=null;
+      document.getElementById("timerMessage").textContent=
+        activeMode==="study"?"انتهى وقت المذاكرة! خذ استراحة.":"انتهى وقت الراحة! مستعد للمذاكرة؟";
+      alert(activeMode==="study"?"⏰ انتهى وقت المذاكرة! أحسنت.":"⏰ انتهى وقت الراحة! حان وقت العودة للمذاكرة.");
+    }
+  },1000);
+}
+
+function pauseTimer(){
+  if(timer){
+    clearInterval(timer);
+    timer=null;
+    document.getElementById("timerMessage").textContent="تم إيقاف المؤقت مؤقتاً.";
+  }
+}
+
+function resetTimer(){
+  clearInterval(timer);
+  timer=null;
+  const minutes=getSelectedMinutes(activeMode);
+  if(minutes===null)return;
+  remaining=minutes*60;
+  updateClock();
+  document.getElementById("timerMessage").textContent=
+    activeMode==="study"?"تم ضبط مؤقت المذاكرة من جديد.":"تم ضبط مؤقت الراحة من جديد.";
+}
+
+render();
+updateClock();
+</script>
+</body>
+</html>
