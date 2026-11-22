@@ -465,6 +465,160 @@ for item in cart:
     }
 </script>
 <!-- نهاية قسم المناهج والدروس الشاملة -->
+<!-- بداية قسم المشاريع العملية والامتحانات - Made By Gedo -->
+<style>
+    .projects-section, .exams-section {
+        margin-top: 30px;
+        background: #1e293b;
+        border-radius: 12px;
+        padding: 25px;
+        border: 1px solid #334155;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+    .project-card, .exam-card {
+        background: #0f172a;
+        border-left: 4px solid #10b981;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+    }
+    .project-card h3, .exam-card h3 {
+        color: #34d399;
+        margin-bottom: 10px;
+        font-size: 20px;
+    }
+    .question-box {
+        background: #020617;
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 12px;
+        border: 1px solid #1e293b;
+    }
+    .submit-exam-btn {
+        background: #3b82f6;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 6px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    .submit-exam-btn:hover {
+        background: #2563eb;
+    }
+</style>
+
+<!-- قسم المشاريع العملية (أكثر من 10 مشاريع) -->
+<div class="projects-section">
+    <h2 style="color: #f8fafc; margin-bottom: 20px; font-size: 26px;">🛠️ أكثر من 10 مشاريع وتطبيقات ويب عملية (خطوة بخطوة)</h2>
+
+    <div class="project-card">
+        <h3>المشروع 1: بناء آلة حاسبة ذكية (Calculator)</h3>
+        <p><strong>فكرة المشروع:</strong> تصميم واجهة باستخدام HTML/CSS وبرمجة العمليات الحسابية بـ JavaScript.</p>
+        <div class="code-snippet">
+// مثال دالة الجمع في الآلة الحاسبة
+function add(a, b) {
+    return a + b;
+}
+console.log("نتيجة الجمع: " + add(15, 25));
+        </div>
+    </div>
+
+    <div class="project-card">
+        <h3>المشروع 2: تطبيق قائمة المهام اليومية (To-Do List)</h3>
+        <p><strong>فكرة المشروع:</strong> إضافة وحذف المهام وتخزينها في ذاكرة المتصفح.</p>
+        <div class="code-snippet">
+let tasks = ["دراسة البرمجة", "تطوير موقع جدو"];
+tasks.push("رفع المشروع على جيت هَب");
+console.log("المهام الحالية:", tasks);
+        </div>
+    </div>
+
+    <div class="project-card">
+        <h3>المشروع 3: تطبيق الطقس الفوري (Weather App)</h3>
+        <p><strong>فكرة المشروع:</strong> جلب درجات الحرارة الحية من خوادم خارجية عبر Fetch API وعرضها للمستخدم.</p>
+    </div>
+
+    <div class="project-card">
+        <h3>المشروع 4: لعبة تخمين الرقم السري (Guess The Number)</h3>
+        <p><strong>فكرة المشروع:</strong> توليد رقم عشوائي ومقارنته بإدخال المستخدم مع إعطاء تلميحات (أعلى / أقل).</p>
+    </div>
+
+    <div class="project-card">
+        <h3>المشروع 5: مولد كلمات المرور الآمنة (Password Generator)</h3>
+        <p><strong>فكرة المشروع:</strong> دمج الحروف والأرقام والرموز لتوليد كلمات مرور عشوائية قوية.</p>
+    </div>
+
+    <div class="project-card">
+        <h3>المشروع 6: ساعة رقمية تفاعلية (Digital Clock)</h3>
+        <p><strong>فكرة المشروع:</strong> استخدام دوال الوقت في JavaScript لتحديث الساعة والثواني لحظياً على الشاشة.</p>
+    </div>
+
+    <div class="project-card">
+        <h3>المشروع 7: معرض صور متحرك (Image Slider / Carousel)</h3>
+        <p><strong>فكرة المشروع:</strong> التنقل بين الصور تلقائياً أو عبر أزرار التبديل باستخدام CSS و JS.</p>
+    </div>
+
+    <div class="project-card">
+        <h3>المشروع 8: نظام تقييم بالنجوم (Star Rating System)</h3>
+        <p><strong>فكرة المشروع:</strong> التفاعل مع ضغطات المستخدم لتلوين النجوم وإظهار رسالة شكر.</p>
+    </div>
+
+    <div class="project-card">
+        <h3>المشروع 9: محول العملات العالمي (Currency Converter)</h3>
+        <p><strong>فكرة المشروع:</strong> حساب أسعار الصرف وتحويل العملات بناءً على القيم المدخلة.</p>
+    </div>
+
+    <div class="project-card">
+        <h3>المשروع 10: صفحة هبوط لشركتك الشخصية (Personal Landing Page)</h3>
+        <p><strong>فكرة المشروع:</strong> دمج HTML و CSS لتصميم واجهة تعريفية متجاوبة بالكامل لـ Made By Gedo.</p>
+    </div>
+</div>
+
+<!-- قسم الامتحانات التفاعلية -->
+<div class="exams-section">
+    <h2 style="color: #f8fafc; margin-bottom: 20px; font-size: 26px;">📝 امتحان تقييم المستوى (10 أسئلة لكل لغة)</h2>
+    
+    <div class="exam-card">
+        <h3>اختبار لغة JavaScript الشامل</h3>
+        
+        <div class="question-box">
+            <p><strong>سؤال 1 (اختياري):</strong> ما هي الكلمة المفتاحية المستخدمة لتعريف متغير ثابت لا يمكن تغيير قيمته؟</p>
+            <label><input type="radio" name="q1"> أ) let</label><br>
+            <label><input type="radio" name="q1"> ب) const</label><br>
+            <label><input type="radio" name="q1"> ج) var</label>
+        </div>
+
+        <div class="question-box">
+            <p><strong>سؤال 2 (اختياري):</strong> أي من الآتي يُستخدم لطباعة النتائج في وحدة التحكم (Console)؟</p>
+            <label><input type="radio" name="q2"> أ) print()</label><br>
+            <label><input type="radio" name="q2"> ب) console.log()</label><br>
+            <label><input type="radio" name="q2"> ج) echo()</label>
+        </div>
+
+        <div class="question-box">
+            <p><strong>سؤال 3 (مقالي):</strong> اشرح باختصار الفرق بين المتغيرات في JavaScript وكيف تمنع الأخطاء البرمجية؟</p>
+            <textarea style="width:100%; height:80px; background:#0f172a; color:white; border:1px solid #475569; padding:8px; border-radius:4px;" placeholder="اكتب إجابتك المقالية هنا..."></textarea>
+        </div>
+
+        <div class="question-box">
+            <p><strong>سؤال 4 (اختياري):</strong> ما هو نوع البيانات الناتج عن التعبير: <code>let x = true;</code>؟</p>
+            <label><input type="radio" name="q4"> أ) String</label><br>
+            <label><input type="radio" name="q4"> ب) Number</label><br>
+            <label><input type="radio" name="q4"> ج) Boolean</label>
+        </div>
+
+        <div class="question-box">
+            <p><strong>سؤال 5 (اختياري):</strong> أي حلقة تكرارية تفضل استخدامها للمرور على عناصر مصفوفة معروفة الطول؟</p>
+            <label><input type="radio" name="q5"> أ) for loop</label><br>
+            <label><input type="radio" name="q5"> ب) if statement</label>
+        </div>
+
+        <button class="submit-exam-btn" onclick="alert('تم إرسال إجاباتك بنجاح! أنت مبدع يا جدو 🌟')">إرسال وتصحيح الإجابات 🚀</button>
+    </div>
+</div>
+<!-- نهاية قسم المشاريع والامتحانات -->
 
     <footer>
         جميع الحقوق محفوظة &copy; 2026 | Made By Gedo
