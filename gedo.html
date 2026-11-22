@@ -167,6 +167,304 @@
             </div>
         </div>
     </div>
+<!-- بداية قسم المناهج والدروس الشاملة - Made By Gedo -->
+<style>
+    .courses-section {
+        margin-top: 40px;
+        background: #1e293b;
+        border-radius: 12px;
+        padding: 25px;
+        border: 1px solid #334155;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+    .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #334155;
+        padding-bottom: 15px;
+    }
+    .tab-btn {
+        background: #0f172a;
+        color: #94a3b8;
+        border: 1px solid #475569;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 700;
+        transition: all 0.3s;
+    }
+    .tab-btn:hover, .tab-btn.active {
+        background: #3b82f6;
+        color: white;
+        border-color: #3b82f6;
+    }
+    .lang-content {
+        display: none;
+        animation: fadeIn 0.4s ease-in-out;
+    }
+    .lang-content.active {
+        display: block;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .lesson-card {
+        background: #0f172a;
+        border-right: 4px solid #38bdf8;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+    }
+    .lesson-card h3 {
+        color: #38bdf8;
+        margin-bottom: 10px;
+        font-size: 20px;
+    }
+    .code-snippet {
+        background: #020617;
+        color: #a5f3fc;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: monospace;
+        direction: ltr;
+        text-align: left;
+        overflow-x: auto;
+        margin: 12px 0;
+        border: 1px solid #1e293b;
+        font-size: 15px;
+    }
+    .error-box {
+        background: rgba(239, 68, 68, 0.1);
+        border-right: 4px solid #ef4444;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+    }
+    .error-box h4 {
+        color: #f87171;
+        margin-bottom: 8px;
+        font-size: 18px;
+    }
+    .summary-box {
+        background: rgba(16, 185, 129, 0.1);
+        border-right: 4px solid #10b981;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+    .summary-box h4 {
+        color: #34d399;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="courses-section">
+    <h2 style="color: #f8fafc; margin-bottom: 20px; font-size: 26px;">📚 المكتبة التعليمية الشاملة للغات البرمجة</h2>
+    
+    <!-- أزرار التنقل بين اللغات -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openLang(event, 'js-lang')">JavaScript</button>
+        <button class="tab-btn" onclick="openLang(event, 'python-lang')">Python</button>
+        <button class="tab-btn" onclick="openLang(event, 'html-lang')">HTML</button>
+        <button class="tab-btn" onclick="openLang(event, 'css-lang')">CSS</button>
+    </div>
+
+    <!-- ==================== 1. منهج JavaScript ==================== -->
+    <div id="js-lang" class="lang-content active">
+        <div class="lesson-card">
+            <h3>الدرس 1: المتغيرات وأنواع البيانات (Variables)</h3>
+            <p>المتغيرات هي أماكن في الذاكرة لتخزين البيانات. نستخدم <code>const</code> للقيم الثابتة و <code>let</code> للقيم المتغيرة.</p>
+            <div class="code-snippet">
+const siteCreator = "Gedo"; // نص ثابت
+let userPoints = 100;       // رقم متغير
+let isLogged = true;        // قيمة منطقية
+
+userPoints += 50; // زيادة النقاط
+console.log("مرحباً " + siteCreator + "، نقاطك الآن: " + userPoints);
+            </div>
+        </div>
+
+        <div class="lesson-card">
+            <h3>الدرس 2: الدوال (Functions) والعمليات المنطقية</h3>
+            <p>الدالة هي كتلة برمجية تنفذ مهمة محددة عند استدعائها، مما يمنع تكرار الكود.</p>
+            <div class="code-snippet">
+function checkDiscount(price) {
+    if (price >= 500) {
+        return "حصلت على خصم 20%! السعر الجديد: " + (price * 0.8);
+    } else {
+        return "السعر النهائي: " + price;
+    }
+}
+console.log(checkDiscount(600));
+            </div>
+        </div>
+
+        <div class="lesson-card">
+            <h3>الدرس 3: المصفوفات والحلقات التكرارية (Arrays & Loops)</h3>
+            <p>تُستخدم المصفوفات لتخزين قائمة عناصر، والحلقات للمرور عليها تلقائياً.</p>
+            <div class="code-snippet">
+let languages = ["HTML", "CSS", "JavaScript", "Python"];
+for (let i = 0; i < languages.length; i++) {
+    console.log("اللغة رقم " + (i + 1) + ": " + languages[i]);
+}
+            </div>
+        </div>
+
+        <div class="error-box">
+            <h4>⚠️ الأخطاء الشائعة في JavaScript وشرحها العميق:</h4>
+            <p><strong>1. التعديل على ثابت (TypeError):</strong> محاولة تغيير قيمة متغير تم تعريفه بـ <code>const</code> يؤدي لتوقف البرنامج فوراً. الحل: استخدم <code>let</code> لأي قيمة ستتغير.</p>
+            <p><strong>2. استخدام <code>=</code> بدل <code>===</code> في الشروط:</strong> كتابة <code>if (x = 5)</code> تقوم بتعيين الرقم 5 داخل x بدلاً من فحصه. استخدم دائماً <code>===</code> للمقارنة الدقيقة بين القيمة والنوع.</p>
+            <p><strong>3. استدعاء عناصر HTML قبل تحميلها (Null Error):</strong> محاولة الوصول لعنصر عبر <code>document.getElementById</code> في أعلى الصفحة قبل رسم العنصر يعطي نتيجة <code>null</code>.</p>
+        </div>
+
+        <div class="summary-box">
+            <h4>📝 ملخص لغة JavaScript:</h4>
+            <p>هي لغة التفاعل والذكاء في المتصفح. مسؤولة عن معالجة البيانات، التحكم في عناصر الصفحة، والتواصل مع الخوادم.</p>
+        </div>
+    </div>
+
+    <!-- ==================== 2. منهج Python ==================== -->
+    <div id="python-lang" class="lang-content">
+        <div class="lesson-card">
+            <h3>الدرس 1: أساسيات بايثون والمتغيرات</h3>
+            <p>تتميز بايثون بسهولة قراءتها وعدم حاجتها لفواصل منقوطة أو أقواس معقوفة، بل تعتمد على المسافات البادئة (Indentation).</p>
+            <div class="code-snippet">
+student_name = "أحمد"
+grade = 95.5
+passed = True
+
+print(f"الطالب {student_name} حصل على درجة {grade}")
+            </div>
+        </div>
+
+        <div class="lesson-card">
+            <h3>الدرس 2: القوائم والشروط (Lists & Conditions)</h3>
+            <p>تُستخدم القوائم لحفظ البيانات المتعددة والتعامل معها بمرونة عالية.</p>
+            <div class="code-snippet">
+cart = ["لابتوب", "ماوس", "لوحة مفاتيح"]
+if "لابتوب" in cart:
+    print("يوجد جهاز لابتوب في سلة المشتريات!")
+for item in cart:
+    print("المنتج:", item)
+            </div>
+        </div>
+
+        <div class="error-box">
+            <h4>⚠️ الأخطاء الشائعة في Python وشرحها العميق:</h4>
+            <p><strong>1. خطأ المسافات البادئة (IndentationError):</strong> بايثون صارمة جداً في المسافات بعد جملة <code>if</code> أو <code>for</code>. أي مسافة زائدة أو ناقصة توقف البرنامج.</p>
+            <p><strong>2. دمج نص مع رقم (TypeError):</strong> محاولة جمع نص ورقم مباشرة مثل <code>"العمر: " + 20</code> تسبب خطأ. يجب تحويل الرقم لنص باستخدام <code>str(20)</code>.</p>
+        </div>
+
+        <div class="summary-box">
+            <h4>📝 ملخص لغة Python:</h4>
+            <p>أقوى لغة في الذكاء الاصطناعي، تحليل البيانات، وتطوير المواقع الخلفية (Backend) بفضل بساطتها ومكتباتها الضخمة.</p>
+        </div>
+    </div>
+
+    <!-- ==================== 3. منهج HTML ==================== -->
+    <div id="html-lang" class="lang-content">
+        <div class="lesson-card">
+            <h3>الدرس 1: الهيكل الأساسي والوسوم (Tags)</h3>
+            <p>HTML هي الهيكل العظمي لأي موقع ويب، وتتكون من وسوم فتح وإغلاق.</p>
+            <div class="code-snippet">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;موقع جدو&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;عنوان رئيسي&lt;/h1&gt;
+    &lt;p&gt;فقرة نصية توضيحية للمحتوى.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+            </div>
+        </div>
+
+        <div class="lesson-card">
+            <h3>الدرس 2: النماذج والمدخلات (Forms & Inputs)</h3>
+            <p>تُستخدم لجمع البيانات من المستخدمين مثل تسجيل الدخول.</p>
+            <div class="code-snippet">
+&lt;form&gt;
+  &lt;input type="text" placeholder="اسم المستخدم" required&gt;
+  &lt;input type="password" placeholder="كلمة المرور"&gt;
+  &lt;button type="submit"&gt;دخول&lt;/button&gt;
+&lt;/form&gt;
+            </div>
+        </div>
+
+        <div class="error-box">
+            <h4>⚠️ الأخطاء الشائعة في HTML وشرحها العميق:</h4>
+            <p><strong>1. نسيان إغلاق الوسوم:</strong> فتح وسم <code>&lt;div&gt;</code> دون إغلاقه بـ <code>&lt;/div&gt;</code> يؤدي لتداخل العناصر وانهيار تصميم الصفحة بالكامل.</p>
+            <p><strong>2. تكرار نفس الـ ID:</strong> السمة <code>id</code> يجب أن تكون فريدة لعنصر واحد فقط في الصفحة، وتكرارها يربك أكواد JavaScript.</p>
+        </div>
+
+        <div class="summary-box">
+            <h4>📝 ملخص لغة HTML:</h4>
+            <p>هي لغة ترميز وليست لغة برمجة؛ وظيفتها بناء الهيكل وتنظيم المحتوى (نصوص، صور، روابط، جداول) في الصفحة.</p>
+        </div>
+    </div>
+
+    <!-- ==================== 4. منهج CSS ==================== -->
+    <div id="css-lang" class="lang-content">
+        <div class="lesson-card">
+            <h3>الدرس 1: الألوان والخطوط ونموذج الصندوق (Box Model)</h3>
+            <p>CSS هي المسؤولة عن تجميل الموقع وتنسيق الألوان والأحجام والمسافات.</p>
+            <div class="code-snippet">
+.card {
+    background-color: #1e293b;
+    color: white;
+    padding: 20px;       /* مسافة داخلية */
+    margin: 15px;        /* مسافة خارجية */
+    border-radius: 10px; /* حواف دائرية */
+}
+            </div>
+        </div>
+
+        <div class="lesson-card">
+            <h3>الدرس 2: التخطيط المرن (Flexbox)</h3>
+            <p>أهم أداة في CSS لمحاذاة العناصر وتوزيعها بمرونة على جميع الشاشات.</p>
+            <div class="code-snippet">
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+            </div>
+        </div>
+
+        <div class="error-box">
+            <h4>⚠️ الأخطاء الشائعة في CSS وشرحها العميق:</h4>
+            <p><strong>1. نسيان الفاصلة المنقوطة (<code>;</code>):</strong> عدم وضع فاصلة منقوطة في نهاية كل خاصية يعطل الخاصية التي تليها مباشرة.</p>
+            <p><strong>2. عدم استخدام <code>box-sizing: border-box</code>:</strong> بدون هذه الخاصية، إضافة <code>padding</code> تزيد من عرض العنصر الفعلي وتكسر تناسق الصفحة.</p>
+        </div>
+
+        <div class="summary-box">
+            <h4>📝 ملخص لغة CSS:</h4>
+            <p>هي لغة التنسيق البصري التي تحول الهيكل الجامد إلى تصميم عصري متجاوب مع الهواتف والحواسيب.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // دالة التبديل بين تبويبات اللغات
+    function openLang(evt, langId) {
+        let contents = document.getElementsByClassName("lang-content");
+        for (let i = 0; i < contents.length; i++) {
+            contents[i].classList.remove("active");
+        }
+        let buttons = document.getElementsByClassName("tab-btn");
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove("active");
+        }
+        document.getElementById(langId).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+</script>
+<!-- نهاية قسم المناهج والدروس الشاملة -->
 
     <footer>
         جميع الحقوق محفوظة &copy; 2026 | Made By Gedo
