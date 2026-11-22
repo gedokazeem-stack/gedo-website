@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>دولة التلاوة</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Tahoma,Arial;
+ background:#f5f7f2;
+ color:#18352d;
+}
+header{
+ background:linear-gradient(135deg,#0d3028,#1d5847);
+ color:white;
+ padding:20px 12px;
+ border-radius:0 0 25px 25px;
+}
+.top{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:8px;
+}
+.brand{font-size:23px;font-weight:bold}
+.credit{
+ color:#f4dfaa;
+ border:1px solid #d8bc75;
+ border-radius:20px;
+ padding:5px 9px;
+ font-size:12px;
+}
+main{max-width:750px;margin:auto;padding:15px}
+.panel{
+ background:white;
+ border:1px solid #e4e9e2;
+ border-radius:17px;
+ padding:16px;
+ margin:13px 0;
+}
+h2{color:#123b31;font-size:20px}
+button{
+ border:0;
+ border-radius:12px;
+ padding:12px;
+ background:#1c5948;
+ color:white;
+ font-size:15px;
+ cursor:pointer;
+}
+.secondary{background:#edf3ee;color:#123b31}
+.gold{background:#c9a34a;color:#18352d}
+.grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px;
+}
+.tile{
+ background:white;
+ color:#18352d;
+ border:1px solid #ddd;
+ text-align:right;
+}
+.tile strong{display:block}
+.tile span{font-size:12px;color:#66776f}
+.hidden{display:none!important}
+.nav{
+ display:flex;
+ gap:7px;
+ overflow:auto;
+ padding:5px 0;
+}
+.nav button{white-space:nowrap}
+input{
+ width:100%;
+ padding:12px;
+ border:1px solid #ddd;
+ border-radius:10px;
+ margin:8px 0;
+ font-size:15px;
+}
+.muted{color:#66776f;font-size:13px}
+.big-number{
+ text-align:center;
+ font-size:40px;
+ font-weight:bold;
+}
+footer{
+ text-align:center;
+ color:#66776f;
+ padding:20px;
+ font-size:12px;
+}
+body.night{background:#101b18;color:#eee}
+body.night .panel,body.night .tile{
+ background:#192923;color:#eee;border-color:#2c4037
+}
+body.night h2{color:#d7e9dc}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="top">
+  <div>
+   <div class="brand">دولة التلاوة</div>
+   <div>القراءة والتأمل والتعلّم</div>
+  </div>
+  <div class="credit">Made by Gedo (Zlatan)</div>
+ </div>
+</header>
+
+<main>
+
+<section id="chooser" class="panel">
+ <h2>أهلاً بك في دولة التلاوة</h2>
+ <p>اختار القسم الذي تريد الدخول إليه</p>
+
+ <div class="grid">
+  <button class="tile" onclick="enter('muslim')">
+   <strong>☪ القسم الإسلامي</strong>
+   <span>القرآن والأذكار والتسبيح</span>
+  </button>
+
+  <button class="tile" onclick="enter('christian')">
+   <strong>✝ القسم المسيحي</strong>
+   <span>الكتاب المقدس والتأملات</span>
+  </button>
+ </div>
+</section>
+
+<section id="app" class="hidden">
+
+ <div class="panel">
+  <h2 id="welcome"></h2>
+  <button class="secondary" onclick="showChooser()">تغيير القسم</button>
+  <button class="secondary" onclick="toggleNight()">الوضع الليلي ☾</button>
+ </div>
+
+ <div class="nav" id="nav"></div>
+ <div id="content"></div>
+
+</section>
+</main>
+
+<footer>
+ دولة التلاوة — بدون أذان أو أصوات أو إشعارات تلقائية
+</footer>
+
+<script>
+let faith="muslim";
+let tab="home";
+let tasbih=0;
+
+const quran=[
+"الفاتحة","البقرة","آل عمران","النساء","المائدة",
+"الأنعام","الأعراف","الأنفال","التوبة","يونس",
+"هود","يوسف","الرعد","إبراهيم","الحجر","النحل",
+"الإسراء","الكهف","مريم","طه","الأنبياء","الحج",
+"المؤمنون","النور","الفرقان","الشعراء","النمل",
+"القصص","العنكبوت","الروم","لقمان","السجدة",
+"الأحزاب","سبأ","فاطر","يس","الصافات","ص",
+"الزمر","غافر","فصلت","الشورى","الزخرف","الدخان",
+"الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق",
+"الذاريات","الطور","النجم","القمر","الرحمن",
+"الواقعة","الحديد","المجادلة","الحشر","الممتحنة",
+"الصف","الجمعة","المنافقون","التغابن","الطلاق",
+"التحريم","الملك","القلم","الحاقة","المعارج","نوح",
+"الجن","المزمل","المدثر","القيامة","الإنسان",
+"المرسلات","النبأ","النازعات","عبس","التكوير",
+"الانفطار","المطففين","الانشقاق","البروج","الطارق",
+"الأعلى","الغاشية","الفجر","البلد","الشمس","الليل",
+"الضحى","الشرح","التين","العلق","القدر","البينة",
+"الزلزلة","العاديات","القارعة","التكاثر","العصر",
+"الهمزة","الفيل","قريش","الماعون","الكوثر",
+"الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"
+];
+
+const bible=[
+"التكوين","الخروج","اللاويين","العدد","التثنية",
+"يشوع","القضاة","راعوث","صموئيل الأول",
+"صموئيل الثاني","الملوك الأول","الملوك الثاني",
+"المزامير","الأمثال","إشعياء","إرميا","حزقيال",
+"دانيال","متى","مرقس","لوقا","يوحنا",
+"أعمال الرسل","رومية","كورنثوس الأولى",
+"كورنثوس الثانية","غلاطية","أفسس","فيلبي",
+"كولوسي","العبرانيين","يعقوب","رؤيا يوحنا"
+];
+
+function enter(type){
+ faith=type;
+ document.getElementById("chooser").classList.add("hidden");
+ document.getElementById("app").classList.remove("hidden");
+ document.getElementById("welcome").innerText=
+ faith==="muslim"?"القسم الإسلامي":"القسم المسيحي";
+ tab="home";
+ render();
+}
+
+function showChooser(){
+ document.getElementById("app").classList.add("hidden");
+ document.getElementById("chooser").classList.remove("hidden");
+}
+
+function toggleNight(){
+ document.body.classList.toggle("night");
+}
+
+function render(){
+ let items=faith==="muslim"
+ ?["الرئيسية","القرآن","خطة الختمة","التسبيح","الأذكار","التقييم"]
+ :["الرئيسية","الكتاب المقدس","خطة القراءة","تأمل اليوم","التقييم"];
+
+ let ids=["home","reading","plan","tasbih","adhkar","quiz"];
+ if(faith==="christian") ids=["home","reading","plan","reflection","quiz"];
+
+ document.getElementById("nav").innerHTML=items.map((name,i)=>
+ `<button class="secondary" onclick="openTab('${ids[i]}')">${name}</button>`
+ ).join("");
+
+ openTab(tab);
+}
+
+function openTab(id){
+ tab=id;
+ let c="";
+
+ if(id==="home"){
+ c=`
+ <div class="panel">
+ <h2>مرحباً بك في دولة التلاوة</h2>
+ <p>اختر الخدمة التي تريد استخدامها.</p>
+ <div class="grid">
+ <button onclick="openTab('reading')">📖 القراءة</button>
+ <button onclick="openTab('plan')">🗓️ خطة القراءة</button>
+ ${faith==="muslim"?`
+ <button onclick="openTab('tasbih')">📿 التسبيح</button>
+ <button onclick="openTab('adhkar')">🤲 الأذكار</button>
+ `:`
+ <button onclick="openTab('reflection')">🕊️ تأمل اليوم</button>
+ `}
+ </div>
+ </div>`;
+ }
+
+ if(id==="reading"){
+ let books=faith==="muslim"?quran:bible;
+ c=`
+ <div class="panel">
+ <h2>${faith==="muslim"?"اختر سورة":"اختر سفراً"}</h2>
+ <input id="search" placeholder="ابحث هنا..." oninput="searchBooks()">
+ <div id="books" class="grid">
+ ${books.map(x=>`<button class="secondary" onclick="chooseBook('${x}')">${x}</button>`).join("")}
+ </div>
+ <p class="muted">الفهرس متاح، والنصوص الكاملة ستحتاج إلى ربط بمصدر موثوق.</p>
+ <p id="selected"></p>
+ </div>`;
+ }
+
+ if(id==="plan"){
+ c=`
+ <div class="panel">
+ <h2>${faith==="muslim"?"خطة ختم القرآن":"خطة القراءة"}</h2>
+ <label>عدد الأيام:</label>
+ <input id="days" type="number" value="30" min="1" max="365">
+ <button onclick="calculate()">احسب خطتي</button>
+ <p id="result"></p>
+ <hr>
+ <button onclick="completeDay()">أنجزت قراءة اليوم ✓</button>
+ <p id="completed"></p>
+ </div>`;
+ }
+
+ if(id==="tasbih"){
+ c=`
+ <div class="panel">
+ <h2>عداد التسبيح</h2>
+ <div class="big-number" id="count">${tasbih}</div>
+ <button class="gold" onclick="addTasbih()">سبّح +1</button>
+ <button class="secondary" onclick="resetTasbih()">إعادة العداد</button>
+ </div>`;
+ }
+
+ if(id==="adhkar"){
+ c=`
+ <div class="panel">
+ <h2>الأذكار</h2>
+ <p>سبحان الله</p>
+ <p>الحمد لله</p>
+ <p>لا إله إلا الله</p>
+ <p>الله أكبر</p>
+ <p>أستغفر الله</p>
+ </div>`;
+ }
+
+ if(id==="reflection"){
+ c=`
+ <div class="panel">
+ <h2>تأمل اليوم</h2>
+ <p>خصص وقتاً للتفكير في المحبة والرحمة ومساعدة الآخرين.</p>
+ </div>`;
+ }
+
+ if(id==="quiz"){
+ c=`
+ <div class="panel">
+ <h2>تقييم سريع</h2>
+ <p>${faith==="muslim"?"ما السورة التي تبدأ بها المصاحف؟":"ما القسمان الرئيسيان للكتاب المقدس؟"}</p>
+ ${faith==="muslim"?`
+ <button class="secondary" onclick="check(true)">الفاتحة</button>
+ <button class="secondary" onclick="check(false)">البقرة</button>
+ `:`
+ <button class="secondary" onclick="check(true)">العهد القديم والعهد الجديد</button>
+ <button class="secondary" onclick="check(false)">المزامير والأمثال فقط</button>
+ `}
+ <p id="answer"></p>
+ </div>`;
+ }
+
+ document.getElementById("content").innerHTML=c;
+}
+
+function searchBooks(){
+ let value=document.getElementById("search").value;
+ let books=faith==="muslim"?quran:bible;
+ document.getElementById("books").innerHTML=
+ books.filter(x=>x.includes(value)).map(x=>
+ `<button class="secondary" onclick="chooseBook('${x}')">${x}</button>`
+ ).join("");
+}
+
+function chooseBook(name){
+ document.getElementById("selected").innerText=
+ "اختيارك: "+name+" — سيتم ربط النص الكامل بمصدر موثوق.";
+}
+
+function calculate(){
+ let days=Number(document.getElementById("days").value);
+ if(!days||days<1){days=1}
+ document.getElementById("result").innerText=
+ faith==="muslim"
+ ? "اقرأ حوالي "+Math.ceil(604/days)+" صفحة يومياً."
+ : "قسّم القراءة إلى "+days+" فترة يومية مناسبة لك.";
+}
+
+function completeDay(){
+ let key="completed_"+faith;
+ let n=Number(localStorage.getItem(key)||0)+1;
+ localStorage.setItem(key,n);
+ document.getElementById("completed").innerText=
+ "الأيام المكتملة: "+n;
+}
+
+function addTasbih(){
+ tasbih++;
+ document.getElementById("count").innerText=tasbih;
+}
+
+function resetTasbih(){
+ tasbih=0;
+ document.getElementById("count").innerText=tasbih;
+}
+
+function check(correct){
+ document.getElementById("answer").innerText=
+ correct?"إجابة صحيحة، أحسنت!":"حاول مرة أخرى.";
+}
+</script>
+
+</body>
+</html>
