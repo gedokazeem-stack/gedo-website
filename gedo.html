@@ -3,267 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gedo Code Academy</title>
+    <title>عالم البرمجة | Programming World</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --secondary: #1e40af;
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
             --accent: #f59e0b;
-            --bg: #0f172a;
-            --card: #1e293b;
+            --bg: #0b1120;
+            --surface: #1e293b;
+            --surface-light: #334155;
             --text: #f8fafc;
             --muted: #94a3b8;
             --success: #10b981;
             --danger: #ef4444;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-        body { background: var(--bg); color: var(--text); padding-bottom: 70px; line-height: 1.6; }
-        
-        /* Top Banner - Made By Gedo */
-        .top-badge {
-            background: linear-gradient(90deg, #f59e0b, #d97706);
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, 'Segoe UI', Tahoma, sans-serif; }
+        body { background: var(--bg); color: var(--text); line-height: 1.75; padding-bottom: 60px; }
+
+        .made-by-bar {
+            background: linear-gradient(90deg, #f59e0b, #ea580c);
             color: #000;
             text-align: center;
-            padding: 8px;
+            padding: 7px;
             font-weight: 900;
-            font-size: 1.1rem;
+            font-size: 1rem;
             letter-spacing: 1px;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.6);
         }
 
         header {
-            background: var(--card);
-            padding: 15px;
+            background: radial-gradient(circle at top, #1e3a8a, var(--bg));
+            padding: 25px 15px;
             text-align: center;
-            border-bottom: 2px solid var(--primary);
+            border-bottom: 1px solid var(--surface-light);
         }
-        header h1 { font-size: 1.5rem; color: var(--accent); }
-        header p { color: var(--muted); font-size: 0.9rem; }
+        header h1 { font-size: 2rem; color: #fff; margin-bottom: 5px; }
+        header p { color: var(--muted); font-size: 1rem; max-width: 600px; margin: 0 auto; }
 
-        /* Navigation Tabs */
-        .nav-tabs {
+        .search-box {
+            max-width: 600px;
+            margin: 15px auto 0;
             display: flex;
-            overflow-x: auto;
-            background: #162032;
-            padding: 10px;
             gap: 8px;
-            border-bottom: 1px solid #334155;
         }
-        .nav-btn {
-            background: var(--card);
-            color: var(--text);
-            border: 1px solid #334155;
-            padding: 8px 14px;
+        .search-box input {
+            flex: 1;
+            padding: 10px 15px;
             border-radius: 8px;
-            cursor: pointer;
-            white-space: nowrap;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-        .nav-btn.active { background: var(--primary); border-color: var(--accent); }
-
-        .container { max-width: 900px; margin: 15px auto; padding: 0 15px; }
-        .section { display: none; animation: fadeIn 0.3s ease; }
-        .section.active { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Cards & Code Blocks */
-        .card {
-            background: var(--card);
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 15px;
-            border: 1px solid #334155;
-        }
-        .card h3 { color: var(--accent); margin-bottom: 8px; font-size: 1.2rem; }
-        .real-world {
-            background: rgba(37, 99, 235, 0.15);
-            border-right: 4px solid var(--primary);
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 4px;
+            border: 1px solid var(--surface-light);
+            background: var(--surface);
+            color: white;
             font-size: 0.95rem;
         }
-        pre {
-            background: #090d16;
-            color: #38bdf8;
+
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
             padding: 12px;
-            border-radius: 8px;
+            background: #111827;
+            border-bottom: 1px solid var(--surface-light);
+        }
+        .nav-btn {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--surface-light);
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+        .nav-btn:hover { border-color: var(--primary); }
+        .nav-btn.active { background: var(--primary); border-color: #60a5fa; color: #fff; }
+
+        .container { max-width: 950px; margin: 20px auto; padding: 0 15px; }
+        .section { display: none; animation: fade 0.3s ease; }
+        .section.active { display: block; }
+        @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card {
+            background: var(--surface);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 18px;
+            border: 1px solid var(--surface-light);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .card h2 { color: var(--accent); margin-bottom: 10px; font-size: 1.35rem; }
+        .card h3 { color: #60a5fa; margin-bottom: 8px; font-size: 1.15rem; }
+        
+        .analogy-box {
+            background: rgba(59, 130, 246, 0.12);
+            border-right: 4px solid var(--primary);
+            padding: 12px 15px;
+            margin: 12px 0;
+            border-radius: 6px;
+            color: #e2e8f0;
+        }
+        .tip-box {
+            background: rgba(245, 158, 11, 0.12);
+            border-right: 4px solid var(--accent);
+            padding: 12px 15px;
+            margin: 12px 0;
+            border-radius: 6px;
+            color: #fde68a;
+        }
+
+        pre {
+            background: #060913;
+            color: #38bdf8;
+            padding: 14px;
+            border-radius: 10px;
             overflow-x: auto;
             direction: ltr;
             text-align: left;
-            font-family: monospace;
-            font-size: 0.9rem;
-            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.92rem;
+            margin: 12px 0;
             border: 1px solid #1e293b;
+            line-height: 1.5;
         }
+
         .btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
+            padding: 9px 16px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            margin-top: 5px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
+        .btn:hover { background: var(--primary-dark); }
         .btn-success { background: var(--success); }
         .btn-warning { background: var(--accent); color: #000; }
 
-        /* Smart Code Editor */
-        textarea.code-input {
+        textarea.code-editor {
             width: 100%;
-            height: 180px;
-            background: #090d16;
-            color: #a7f3d0;
-            border: 2px solid #334155;
-            border-radius: 8px;
-            padding: 12px;
+            height: 210px;
+            background: #060913;
+            color: #6ee7b7;
+            border: 2px solid var(--surface-light);
+            border-radius: 10px;
+            padding: 14px;
             font-family: monospace;
             font-size: 1rem;
             direction: ltr;
             text-align: left;
+            resize: vertical;
         }
-        .status-box {
-            padding: 12px;
-            border-radius: 8px;
-            margin-top: 10px;
+        .result-banner {
+            padding: 14px;
+            border-radius: 10px;
+            margin-top: 12px;
             font-weight: bold;
             display: none;
         }
-        .status-ok { background: rgba(16, 185, 129, 0.2); border: 1px solid var(--success); color: #6ee7b7; }
-        .status-err { background: rgba(239, 68, 68, 0.2); border: 1px solid var(--danger); color: #fca5a5; }
-        iframe.preview-frame {
+        .res-pass { background: rgba(16, 185, 129, 0.18); border: 1px solid var(--success); color: #6ee7b7; }
+        .res-fail { background: rgba(239, 68, 68, 0.18); border: 1px solid var(--danger); color: #fca5a5; }
+        iframe.live-out {
             width: 100%;
-            height: 200px;
-            background: white;
-            border-radius: 8px;
-            margin-top: 10px;
+            height: 230px;
+            background: #fff;
+            border-radius: 10px;
+            margin-top: 12px;
             border: 2px solid var(--primary);
         }
 
-        /* Quiz Styling */
-        .quiz-option {
+        .q-option {
             display: block;
             background: #0f172a;
-            padding: 10px;
-            margin: 6px 0;
-            border-radius: 6px;
-            border: 1px solid #334155;
+            padding: 11px 14px;
+            margin: 7px 0;
+            border-radius: 8px;
+            border: 1px solid var(--surface-light);
             cursor: pointer;
         }
-        .essay-input {
+        .essay-box {
             width: 100%;
             padding: 10px;
             background: #0f172a;
             color: white;
-            border: 1px solid #334155;
-            border-radius: 6px;
-            margin-top: 5px;
+            border: 1px solid var(--surface-light);
+            border-radius: 8px;
+            margin-top: 6px;
         }
-        .model-answer {
+        .answer-reveal {
             display: none;
             background: rgba(16, 185, 129, 0.15);
-            padding: 10px;
+            border: 1px solid var(--success);
+            padding: 12px;
             margin-top: 8px;
-            border-radius: 6px;
-            color: #6ee7b7;
-            font-size: 0.9rem;
+            border-radius: 8px;
+            color: #a7f3d0;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            background: var(--primary);
+            color: white;
+            margin-bottom: 8px;
         }
     </style>
 </head>
 <body>
 
-<div class="top-badge">🚀 Made By Gedo 🚀</div>
+<div class="made-by-bar">Made by Gedo</div>
 
 <header>
-    <h1></h1>
-    <p> | HTML • CSS • JS • Python</p>
+    <h1>🌐 عالم البرمجة</h1>
+    <p>منصتك الشاملة لتعلم لغات البرمجة وبناء المشاريع من الصفر حتى الاحتراف (تعمل بدون إنترنت)</p>
+    <div class="search-box">
+        <input type="text" id="global-search" onkeyup="filterContent()" placeholder="🔍 ابحث عن درس، وسم، أو مشروع (مثال: متغيرات، آلة حاسبة، for، مصفوفات)...">
+    </div>
 </header>
 
-<div class="nav-tabs">
-    <button class="nav-btn active" onclick="showTab('lessons')">📚 الدروس والامتحانات</button>
-    <button class="nav-btn" onclick="showTab('editor')">💻 محرر الأكواد الذكي</button>
-    <button class="nav-btn" onclick="showTab('errors')">🐞 موسوعة الأخطاء الشائعة</button>
-    <button class="nav-btn" onclick="showTab('projects')">🛠️ +10 مشاريع عملية</button>
-</div>
+<nav class="main-nav">
+    <button class="nav-btn active" onclick="switchSection('courses', this)">📚 المناهج والدروس</button>
+    <button class="nav-btn" onclick="switchSection('projects', this)">🚀 15 مشروعًا عمليًا</button>
+    <button class="nav-btn" onclick="switchSection('errors', this)">🐞 الأخطاء الشائعة</button>
+    <button class="nav-btn" onclick="switchSection('playground', this)">💻 محرر الأكواد المستقل</button>
+</nav>
 
 <div class="container">
 
-    <!-- 1. قسم الدروس والامتحانات -->
-    <div id="lessons" class="section active">
-        <div class="nav-tabs" style="border-radius: 8px; margin-bottom: 15px;">
-            <button class="nav-btn active" onclick="loadLang('js')">JavaScript</button>
-            <button class="nav-btn" onclick="loadLang('html')">HTML</button>
-            <button class="nav-btn" onclick="loadLang('css')">CSS</button>
-            <button class="nav-btn" onclick="loadLang('py')">Python</button>
+    <!-- 1. قسم الدروس والمناهج -->
+    <div id="courses" class="section active">
+        <div class="main-nav" style="border-radius: 12px; margin-bottom: 20px; background: var(--surface);">
+            <button class="nav-btn active" onclick="renderLanguage('js', this)">JavaScript (التفاعل)</button>
+            <button class="nav-btn" onclick="renderLanguage('py', this)">Python (الذكاء والبساطة)</button>
+            <button class="nav-btn" onclick="renderLanguage('html', this)">HTML (هيكل الويب)</button>
+            <button class="nav-btn" onclick="renderLanguage('css', this)">CSS (التصميم)</button>
         </div>
-        <div id="lang-content"></div>
+        <div id="course-container"></div>
     </div>
 
-    <!-- 2. محرر الأكواد المستقل الذكي -->
-    <div id="editor" class="section">
-        <div class="card">
-            <h3>💻 محرر الأكواد المستقل ومُكتشف الأخطاء الذكي</h3>
-            <p style="color: var(--muted); margin-bottom: 10px;">اكتب كود HTML أو CSS أو JavaScript في الخانة بالأسفل، وسيقوم النظام بفحصه وإخبارك هل هو صحيح أم خطأ ولماذا!</p>
-            <select id="editor-lang" style="padding: 8px; border-radius: 6px; margin-bottom: 10px; background: #0f172a; color: white; border: 1px solid #334155;">
-                <option value="html">فحص وتشغيل كود HTML / CSS</option>
-                <option value="js">فحص وتشغيل كود JavaScript</option>
-            </select>
-            <textarea id="code-area" class="code-input" placeholder="اكتب الكود هنا... مثال:
-<h1></h1>
-<p>هذا التطبيق من تصميم Gedo</p>"></textarea>
-            <button class="btn btn-success" onclick="runAndCheckCode()">▶️ تشغيل وفحص الكود</button>
-            <button class="btn btn-warning" onclick="clearEditor()">🗑️ مسح</button>
-            
-            <div id="code-status" class="status-box"></div>
-            <iframe id="output-frame" class="preview-frame"></iframe>
-        </div>
-    </div>
-
-    <!-- 3. موسوعة الأخطاء الشائعة -->
-    <div id="errors" class="section">
-        <div id="errors-list"></div>
-    </div>
-
-    <!-- 4. المشاريع العملية -->
+    <!-- 2. قسم الـ 15 مشروعًا عمليًا -->
     <div id="projects" class="section">
-        <div id="projects-list"></div>
+        <div id="projects-container"></div>
     </div>
 
-</div>
+    <!-- 3. قسم الأخطاء الشائعة المفصل -->
+    <div id="errors" class="section">
+        <div id="errors-container"></div>
+    </div>
 
-<script>
-// التنقل بين الأقسام
-function showTab(tabId) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.nav-tabs > .nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
-    event.target.classList.add('active');
-}
+    <!-- 4. محرر الأكواد المستقل -->
+    <div id="playground" class="section">
+        <div class="card">
+            <h2>💻 محرر الأكواد المستقل وفاحص الأخطاء</h2>
+            <p style="color: var(--muted); margin-bottom: 12px;">اكتب كودك بحرية في المساحة بالأسفل، ثم اضغط "تشغيل وفحص الكود" ليعرض لك النتيجة ويخبرك إذا كان كودك سليمًا أم به خطأ ولماذا.</p>
+            
+            <div style="margin-bottom: 10px;">
+                <label>اختر نوع الكود: </label>
+                <select id="code-type" style="padding: 8px 12px; border-radius: 8px; background: #0f172a; color: white; border: 1px solid var(--surface-light);">
+                    <option value="html">HTML / CSS (تصميم صفحات ويب)</option>
+                    <option value="js">JavaScript (منطق برمجي وحسابات)</option>
+                </select>
+            </div>
 
-// قاعدة بيانات الدروس والامتحانات (5 اختياري + 5 مقالي لكل لغة)
-const curriculum = {
-    js: {
-        title: "لغة JavaScript (عقل صفحات الويب)",
-        lessons: [
-            {
-                name: "1. المتغيرات (Variables)",
-                explain: "المتغيرات هي أماكن في ذاكرة الكمبيوتر نُخزن فيها البيانات (أرقام، نصوص، إلخ) باستخدام let أو const.",
-                real: "💡 مثال واقعي: تخيل أن المتغير هو 'صندوق' تكتب عليه اسمًا من الخارج (مثل: درجة_الطالب) وتضع بداخله الرقم (95).",
-                code: "let studentName = 'Gedo';\nconst maxScore = 100;\nconsole.log('الطالب: ' + studentName);"
-            },
-            {
-                name: "2. الجمل الشرطية (If / Else)",
-                explain: "تُستخدم لاتخاذ قرارات داخل البرنامج بناءً على تحقق شرط معين.",
-                real: "💡 مثال واقعي: إشارة المرور! إذا كانت الإشارة خضراء (تحرك)، وإلا (توقف).",
-                code: "let score = 98;\nif (score >= 50) {\n  alert('مبروك! ناجح بتفوق');\n} else {\n  alert('حاول مرة أخرى');\n}"
-            },
-            {
-                name: "3. الدوال (Functions)",
-                explain: "مجموعة من الأوامر البرمجية المجمعة تحت اسم واحد لتنفيذ مهمة محددة عند استدعائها.",
-                real: "💡 مثال واقعي: ماكينة العصير! تضع فيها الفاكهة (المدخلات) وتضغط الزر (استدعاء الدالة) فتخرج لك العصير (المخرجات).",
+            <div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="btn btn-success" onclick="executeAndValidate()">▶️ تشغيل وفحص الكود</button>
