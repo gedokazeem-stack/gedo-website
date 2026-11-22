@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -78,18 +77,12 @@ label{font-size:13px;color:var(--muted)}
  font-size:21px;line-height:2.2;text-align:justify;
  white-space:pre-wrap;
 }
-.verseNum{
- color:var(--gold);font-weight:bold;
- margin-left:7px;
-}
+.verseNum{color:var(--gold);font-weight:bold;margin-left:7px}
 .verseActions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
 .verseActions button{font-size:12px;padding:7px 10px}
 .readerTitle{text-align:center;color:var(--green)}
 .big-number{text-align:center;font-size:40px;font-weight:bold}
-.progress{
- height:9px;background:var(--soft);
- border-radius:20px;overflow:hidden;margin:10px 0;
-}
+.progress{height:9px;background:var(--soft);border-radius:20px;overflow:hidden;margin:10px 0}
 .progress span{display:block;height:100%;background:var(--gold);width:0}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 body.night{
@@ -117,7 +110,6 @@ body.night header{background:linear-gradient(135deg,#091c17,#173d30)}
 </header>
 
 <main>
-
 <section id="chooser" class="panel">
  <h2>أهلًا بك في دولة التلاوة</h2>
  <p class="muted">اختار القسم الذي تريد الدخول إليه</p>
@@ -144,11 +136,9 @@ body.night header{background:linear-gradient(135deg,#091c17,#173d30)}
   </div>
   <button class="secondary" onclick="showChooser()">تغيير القسم</button>
  </section>
-
  <div id="nav" class="nav"></div>
  <div id="content"></div>
 </section>
-
 </main>
 
 <footer>دولة التلاوة ©</footer>
@@ -181,29 +171,27 @@ const AR_BOOKS=[
 ];
 
 function getSaved(key,fallback){
- try{return JSON.parse(localStorage.getItem(key))||fallback}
- catch(e){return fallback}
+ try{
+  const value=localStorage.getItem(key);
+  return value===null?fallback:JSON.parse(value);
+ }catch(e){return fallback}
 }
 
 function save(key,value){
- localStorage.setItem(key,JSON.stringify(value));
+ try{localStorage.setItem(key,JSON.stringify(value))}
+ catch(e){console.log("تعذر الحفظ",e)}
 }
 
-async function enter(type){
+function enter(type){
  faith=type;
  tab="home";
  $("chooser").classList.add("hidden");
  $("app").classList.remove("hidden");
- $("welcome").textContent=
-  type==="muslim"?"القسم الإسلامي":"القسم المسيحي";
+ $("welcome").textContent=type==="muslim"?"القسم الإسلامي":"القسم المسيحي";
  renderNav();
  render();
-
- if(type==="muslim"){
-  loadSurahList();
- }else{
-  loadBibleBooks();
- }
+ if(type==="muslim")loadSurahList();
+ else loadBibleBooks();
 }
 
 function showChooser(){
@@ -253,7 +241,7 @@ function render(){
    <p>اختر الخدمة التي تريد استخدامها.</p>
    <div class="grid">
     <button class="tile" onclick="openTab('reading')">
-     <strong>📖 القراءة</strong><span>افتح النصوص الكاملة</span>
+     <strong>📖 القراءة</strong><span>افتح النصوص</span>
     </button>
     <button class="tile" onclick="openTab('plan')">
      <strong>🗓️ خطة القراءة</strong><span>تابع إنجازك</span>
@@ -272,9 +260,7 @@ function render(){
     `}
    </div>
    <div class="notice">
-    ${saved
-     ?"آخر موضع محفوظ: "+escapeHTML(saved.label)
-     :"لم تحفظ موضع قراءة بعد."}
+    ${saved?"آخر موضع محفوظ: "+escapeHTML(saved.label):"لم تحفظ موضع قراءة بعد."}
    </div>
    ${saved?'<button onclick="resumeReading()">متابعة القراءة</button>':''}
   `);
@@ -303,6 +289,7 @@ function render(){
   updateDone();
 
  }else if(tab==="tasbih"){
+  tasbih=Number(localStorage.getItem("tasbih_count")||0);
   c=panel("عداد التسبيح",`
    <div class="big-number" id="count">${tasbih}</div>
    <div class="row">
@@ -363,7 +350,9 @@ function openTab(id){
 async function loadSurahList(){
  const list=$("bookList");
  if(!list)return;
- list.innerHTML='<p class="muted">جاري تحميل سور القرآن...</p>';
+
+ quranSurahs=getSaved("cache_quran_surahs",[]);
+ if(quranSurahs.length)displayBooks();
 
  try{
   const response=await fetch("https://api.alquran.cloud/v1/surah");
@@ -371,16 +360,21 @@ async function loadSurahList(){
   const json=await response.json();
   if(json.code!==200)throw new Error("API error");
   quranSurahs=json.data;
+  save("cache_quran_surahs",quranSurahs);
   displayBooks();
  }catch(error){
-  list.innerHTML='<p class="notice">تعذر تحميل السور. تأكد من اتصال الإنترنت ثم أعد فتح القسم.</p>';
+  if(!quranSurahs.length){
+   list.innerHTML='<p class="notice">تعذر تحميل السور. اتصل بالإنترنت أول مرة لتحميل الفهرس.</p>';
+  }
  }
 }
 
 async function loadBibleBooks(){
  const list=$("bookList");
  if(!list)return;
- list.innerHTML='<p class="muted">جاري تحميل أسفار الكتاب المقدس...</p>';
+
+ bibleBooks=getSaved("cache_bible_books",[]);
+ if(bibleBooks.length)displayBooks();
 
  try{
   const response=await fetch("https://api.biblesupersearch.com/api/books");
@@ -394,15 +388,20 @@ async function loadBibleBooks(){
    shortname:book.shortname,
    chapters:book.chapters
   }));
+
+  save("cache_bible_books",bibleBooks);
   displayBooks();
  }catch(error){
-  list.innerHTML='<p class="notice">تعذر تحميل الأسفار. تأكد من الإنترنت وحاول مرة أخرى.</p>';
+  if(!bibleBooks.length){
+   list.innerHTML='<p class="notice">تعذر تحميل الأسفار. اتصل بالإنترنت لتحميل الفهرس.</p>';
+  }
  }
 }
 
 function displayBooks(){
  const list=$("bookList");
  if(!list)return;
+
  const search=$("bookSearch")?.value||"";
  let books=faith==="muslim"?quranSurahs:bibleBooks;
 
@@ -416,6 +415,7 @@ function displayBooks(){
     <span>${book.numberOfAyahs} آية</span>
    </button>`;
   }
+
   return `<button class="tile" onclick="chooseBibleBook(${book.id})">
    <strong>${escapeHTML(book.name)}</strong>
    <span>${book.chapters} إصحاح</span>
@@ -423,14 +423,15 @@ function displayBooks(){
  }).join("")||'<p class="muted">لا توجد نتائج.</p>';
 }
 
-function filterBooks(){
- displayBooks();
-}
+function filterBooks(){displayBooks()}
 
 async function openSurah(number){
  const reader=$("reader");
  if(!reader)return;
+
  reader.innerHTML='<div class="panel">جاري تحميل السورة...</div>';
+
+ let data=getSaved("cache_quran_surah_"+number,null);
 
  try{
   const response=await fetch(
@@ -439,37 +440,47 @@ async function openSurah(number){
   if(!response.ok)throw new Error("Network error");
   const json=await response.json();
   if(json.code!==200)throw new Error("API error");
-
-  const data=json.data;
-  currentReader={type:"quran",number,name:data.name};
-
-  let saved=getSaved("progress_muslim",null);
-  let last=saved&&saved.number===number?saved.ayah:0;
-
-  let verses=data.ayahs.map(ayah=>`
-   <article class="verse" id="verse-${ayah.numberInSurah}">
-    <div class="verseText">
-     <span class="verseNum">${ayah.numberInSurah}.</span>
-     ${escapeHTML(ayah.text)}
-    </div>
-    <div class="verseActions">
-     <button onclick="saveQuranPosition(${number},${ayah.numberInSurah},'${escapeHTML(data.name)}')">حفظ موضعي</button>
-     <button class="secondary" onclick="addFavorite('quran','${number}:${ayah.numberInSurah}','${escapeHTML(data.name)} - آية ${ayah.numberInSurah}','${escapeHTML(ayah.text)}')">☆ المفضلة</button>
-    </div>
-   </article>
-  `).join("");
-
-  reader.innerHTML=`
-   <section class="panel">
-    <h2 class="readerTitle">${escapeHTML(data.name)}</h2>
-    <p class="muted" style="text-align:center">${data.ayahs.length} آية</p>
-    ${last?`<button class="gold" onclick="scrollToVerse(${last})">اذهب لآخر موضع محفوظ</button>`:""}
-    ${verses}
-   </section>`;
-
+  data=json.data;
+  save("cache_quran_surah_"+number,data);
  }catch(error){
-  reader.innerHTML='<div class="notice">تعذر تحميل السورة. حاول مرة أخرى.</div>';
+  if(!data){
+   reader.innerHTML='<div class="notice">لم يتم تحميل هذه السورة من قبل. اتصل بالإنترنت وافتحها أول مرة.</div>';
+   return;
+  }
  }
+
+ currentReader={
+  type:"quran",
+  number,
+  name:data.name,
+  ayahs:data.ayahs
+ };
+
+ let saved=getSaved("progress_muslim",null);
+ let last=saved&&saved.number===number?saved.ayah:0;
+
+ let verses=data.ayahs.map(ayah=>`
+  <article class="verse" id="verse-${ayah.numberInSurah}">
+   <div class="verseText">
+    <span class="verseNum">${ayah.numberInSurah}.</span>
+    ${escapeHTML(ayah.text)}
+   </div>
+   <div class="verseActions">
+    <button onclick="saveQuranPosition(${number},${ayah.numberInSurah},'${escapeHTML(data.name)}')">حفظ موضعي</button>
+    <button class="secondary" onclick="addFavorite('quran','${number}:${ayah.numberInSurah}','${escapeHTML(data.name)} - آية ${ayah.numberInSurah}','${escapeHTML(ayah.text)}')">☆ المفضلة</button>
+    <button class="gold" onclick="startRecitationTest(${ayah.numberInSurah})">🎙️ اختبر تلاوتك</button>
+   </div>
+   <div id="recitation-${ayah.numberInSurah}"></div>
+  </article>
+ `).join("");
+
+ reader.innerHTML=`
+  <section class="panel">
+   <h2 class="readerTitle">${escapeHTML(data.name)}</h2>
+   <p class="muted" style="text-align:center">${data.ayahs.length} آية</p>
+   ${last?`<button class="gold" onclick="scrollToVerse(${last})">اذهب لآخر موضع محفوظ</button>`:""}
+   ${verses}
+  </section>`;
 }
 
 function scrollToVerse(number){
@@ -482,6 +493,209 @@ function saveQuranPosition(number,ayah,name){
  });
  alert("تم حفظ موضع القراءة");
 }
+
+/* اختبار التلاوة ومقارنة الكلمات */
+
+function normalizeArabic(text){
+ return String(text)
+  .replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g,"")
+  .replace(/[أإآٱ]/g,"ا")
+  .replace(/ى/g,"ي")
+  .replace(/ؤ/g,"و")
+  .replace(/ئ/g,"ي")
+  .replace(/ـ/g,"")
+  .replace(/[^\u0621-\u064A\s]/g," ")
+  .replace(/\s+/g," ")
+  .trim();
+}
+
+function compareRecitation(expectedText,spokenText){
+ const a=normalizeArabic(expectedText).split(" ").filter(Boolean);
+ const b=normalizeArabic(spokenText).split(" ").filter(Boolean);
+
+ const m=a.length,n=b.length;
+ const dp=Array.from({length:m+1},()=>Array(n+1).fill(0));
+
+ for(let i=0;i<=m;i++)dp[i][0]=i;
+ for(let j=0;j<=n;j++)dp[0][j]=j;
+
+ for(let i=1;i<=m;i++){
+  for(let j=1;j<=n;j++){
+   dp[i][j]=Math.min(
+    dp[i-1][j]+1,
+    dp[i][j-1]+1,
+    dp[i-1][j-1]+(a[i-1]===b[j-1]?0:1)
+   );
+  }
+ }
+
+ let i=m,j=n,correct=0,details=[];
+
+ while(i>0||j>0){
+  if(i>0&&j>0&&dp[i][j]===dp[i-1][j-1]+(a[i-1]===b[j-1]?0:1)){
+   if(a[i-1]===b[j-1]){
+    details.unshift("✅ "+escapeHTML(a[i-1]));
+    correct++;
+   }else{
+    details.unshift("❌ قلت: "+escapeHTML(b[j-1])+" — الصحيح: "+escapeHTML(a[i-1]));
+   }
+   i--;j--;
+  }else if(i>0&&dp[i][j]===dp[i-1][j]+1){
+   details.unshift("⚠️ كلمة ناقصة: "+escapeHTML(a[i-1]));
+   i--;
+  }else{
+   details.unshift("➕ كلمة زائدة أو مكررة: "+escapeHTML(b[j-1]));
+   j--;
+  }
+ }
+
+ return {
+  score:a.length?Math.round(correct/a.length*100):0,
+  details
+ };
+}
+
+async function startRecitationTest(ayahNumber){
+ const box=$("recitation-"+ayahNumber);
+ const ayah=currentReader?.ayahs?.find(x=>x.numberInSurah===ayahNumber);
+
+ if(!box||!ayah)return;
+
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+
+ if(!SR){
+  box.innerHTML='<div class="notice">المتصفح لا يدعم التعرف على الصوت. جرّب متصفحًا آخر.</div>';
+  return;
+ }
+
+ box.innerHTML='<div class="notice">جاري التحقق من دعم التعرف الصوتي المحلي...</div>';
+
+ if(typeof SR.available==="function"&&typeof SR.install==="function"){
+  try{
+   const status=await SR.available({
+    langs:["ar-SA"],
+    processLocally:true,
+    quality:"dictation"
+   });
+
+   if(status==="available"){
+    launchRecognition(SR,ayahNumber,true);
+    return;
+   }
+
+   if(status==="downloadable"||status==="downloading"){
+    box.innerHTML=`
+     <div class="notice">
+      حزمة اللغة العربية المحلية غير مثبتة.
+      اضغط لتنزيلها أول مرة، وقد تحتاج اتصالًا بالإنترنت.
+     </div>
+     <button class="gold" onclick="installArabicPack(${ayahNumber})">تنزيل حزمة العربية</button>`;
+    return;
+   }
+
+   showOnlineChoice(ayahNumber);
+   return;
+
+  }catch(error){
+   showOnlineChoice(ayahNumber);
+   return;
+  }
+ }
+
+ showOnlineChoice(ayahNumber);
+}
+
+async function installArabicPack(ayahNumber){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ const box=$("recitation-"+ayahNumber);
+
+ if(!SR||typeof SR.install!=="function"){
+  showOnlineChoice(ayahNumber);
+  return;
+ }
+
+ box.innerHTML='<div class="notice">جاري محاولة تنزيل حزمة اللغة العربية...</div>';
+
+ try{
+  const installed=await SR.install({
+   langs:["ar-SA"],
+   quality:"dictation"
+  });
+
+  if(installed){
+   box.innerHTML=`
+    <div class="notice">تم تثبيت الحزمة. اضغط الآن لبدء الاختبار.</div>
+    <button class="gold" onclick="startRecitationTest(${ayahNumber})">ابدأ الاختبار</button>`;
+  }else{
+   box.innerHTML='<div class="notice">لم نتمكن من تثبيت الحزمة. قد لا يدعم المتصفح العربية محليًا.</div>';
+  }
+ }catch(error){
+  box.innerHTML='<div class="notice">تعذر تنزيل الحزمة. تأكد من اتصال الإنترنت ودعم المتصفح.</div>';
+ }
+}
+
+function showOnlineChoice(ayahNumber){
+ const box=$("recitation-"+ayahNumber);
+ box.innerHTML=`
+  <div class="notice">
+   التعرف الصوتي العربي المحلي غير متاح في هذا المتصفح.
+   يمكنك تجربة الاختبار عبر الإنترنت، وقد يُرسل الصوت إلى خدمة التعرف الصوتي.
+  </div>
+  <button class="secondary" onclick="startOnlineRecitation(${ayahNumber})">اختبار عبر الإنترنت</button>`;
+}
+
+function startOnlineRecitation(ayahNumber){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ launchRecognition(SR,ayahNumber,false);
+}
+
+function launchRecognition(SR,ayahNumber,local){
+ const box=$("recitation-"+ayahNumber);
+ const ayah=currentReader?.ayahs?.find(x=>x.numberInSurah===ayahNumber);
+
+ if(!box||!ayah)return;
+
+ try{
+  const recognition=new SR();
+  recognition.lang="ar-SA";
+  recognition.continuous=false;
+  recognition.interimResults=false;
+  recognition.maxAlternatives=1;
+
+  if(local)recognition.processLocally=true;
+
+  box.innerHTML='<div class="notice">🎙️ جاري الاستماع... اقرأ الآية بوضوح.</div>';
+
+  recognition.onresult=function(event){
+   const spoken=event.results[0][0].transcript;
+   const result=compareRecitation(ayah.text,spoken);
+
+   box.innerHTML=`
+    <div class="verse">
+     <h3>نتيجة اختبار الآية ${ayahNumber}</h3>
+     <div class="big-number">${result.score}%</div>
+     <p><strong>الذي سمعه التطبيق:</strong></p>
+     <p>${escapeHTML(spoken)}</p>
+     <hr>
+     ${result.details.map(x=>"<p>"+x+"</p>").join("")}
+     <p class="muted">النتيجة تقريبية؛ قد يخطئ التعرف الصوتي في بعض الكلمات.</p>
+     <button class="secondary" onclick="startRecitationTest(${ayahNumber})">إعادة الاختبار</button>
+    </div>`;
+  };
+
+  recognition.onerror=function(){
+   box.innerHTML='<div class="notice">لم نتمكن من سماع القراءة. تأكد من السماح باستخدام الميكروفون وحاول مرة أخرى.</div>';
+  };
+
+  recognition.onend=function(){};
+  recognition.start();
+
+ }catch(error){
+  box.innerHTML='<div class="notice">تعذر بدء التسجيل. حاول مرة أخرى.</div>';
+ }
+}
+
+/* الكتاب المقدس */
 
 async function chooseBibleBook(id){
  const book=bibleBooks.find(x=>x.id===id);
@@ -516,7 +730,12 @@ async function openBibleChapter(bookId){
  const chapter=Number($("chapterSelect").value);
  const output=$("bibleText");
 
+ if(!book||!output)return;
+
  output.innerHTML='<p class="muted">جاري تحميل الإصحاح...</p>';
+
+ const cacheKey="cache_bible_"+bookId+"_"+chapter;
+ let verses=getSaved(cacheKey,null);
 
  try{
   const reference=book.shortname+" "+chapter;
@@ -530,38 +749,44 @@ async function openBibleChapter(bookId){
 
   const response=await fetch(url);
   if(!response.ok)throw new Error("Network error");
+
   const json=await response.json();
+  if(json.errors&&json.errors.length)throw new Error("API error");
 
-  if(json.errors&&json.errors.length)throw new Error(json.errors.join(", "));
+  const fresh=json.results&&json.results.svd;
+  if(!fresh||!fresh.length)throw new Error("No verses");
 
-  const verses=json.results&&json.results.svd;
-  if(!verses||!verses.length)throw new Error("No verses");
-
-  currentReader={type:"bible",bookId,chapter};
-
-  let saved=getSaved("progress_christian",null);
-  let last=saved&&saved.bookId===bookId&&saved.chapter===chapter?saved.verse:0;
-
-  output.innerHTML=`
-   <h3 class="readerTitle">${escapeHTML(book.name)} - الإصحاح ${chapter}</h3>
-   ${last?`<button class="gold" onclick="scrollToVerse(${last})">اذهب لآخر موضع محفوظ</button>`:""}
-   ${verses.map(v=>`
-    <article class="verse" id="verse-${v.verse}">
-     <div class="verseText">
-      <span class="verseNum">${v.verse}.</span>
-      ${escapeHTML(v.text)}
-     </div>
-     <div class="verseActions">
-      <button onclick="saveBiblePosition(${bookId},${chapter},${v.verse},'${escapeHTML(book.name)}')">حفظ موضعي</button>
-      <button class="secondary" onclick="addFavorite('bible','${bookId}:${chapter}:${v.verse}','${escapeHTML(book.name)} ${chapter}:${v.verse}','${escapeHTML(v.text)}')">☆ المفضلة</button>
-     </div>
-    </article>
-   `).join("")}
-  `;
+  verses=fresh;
+  save(cacheKey,verses);
 
  }catch(error){
-  output.innerHTML='<div class="notice">لم نتمكن من تحميل الإصحاح. حاول مرة أخرى بعد التأكد من الإنترنت.</div>';
+  if(!verses){
+   output.innerHTML='<div class="notice">لم يتم تحميل هذا الإصحاح من قبل. اتصل بالإنترنت وافتحه أول مرة.</div>';
+   return;
+  }
  }
+
+ currentReader={type:"bible",bookId,chapter};
+
+ let saved=getSaved("progress_christian",null);
+ let last=saved&&saved.bookId===bookId&&saved.chapter===chapter?saved.verse:0;
+
+ output.innerHTML=`
+  <h3 class="readerTitle">${escapeHTML(book.name)} - الإصحاح ${chapter}</h3>
+  ${last?`<button class="gold" onclick="scrollToVerse(${last})">اذهب لآخر موضع محفوظ</button>`:""}
+  ${verses.map(v=>`
+   <article class="verse" id="verse-${v.verse}">
+    <div class="verseText">
+     <span class="verseNum">${v.verse}.</span>
+     ${escapeHTML(v.text)}
+    </div>
+    <div class="verseActions">
+     <button onclick="saveBiblePosition(${bookId},${chapter},${v.verse},'${escapeHTML(book.name)}')">حفظ موضعي</button>
+     <button class="secondary" onclick="addFavorite('bible','${bookId}:${chapter}:${v.verse}','${escapeHTML(book.name)} ${chapter}:${v.verse}','${escapeHTML(v.text)}')">☆ المفضلة</button>
+    </div>
+   </article>
+  `).join("")}
+ `;
 }
 
 function saveBiblePosition(bookId,chapter,verse,name){
@@ -575,33 +800,39 @@ function saveBiblePosition(bookId,chapter,verse,name){
 function resumeReading(){
  let saved=getSaved("progress_"+faith,null);
  if(!saved)return;
+
  openTab("reading");
 
  setTimeout(()=>{
   if(faith==="muslim"){
-   openSurah(saved.number);
-   setTimeout(()=>scrollToVerse(saved.ayah),1500);
+   openSurah(saved.number).then(()=>{
+    setTimeout(()=>scrollToVerse(saved.ayah),500);
+   });
   }else{
    chooseBibleBook(saved.bookId);
    setTimeout(()=>{
     if($("chapterSelect")){
      $("chapterSelect").value=saved.chapter;
      openBibleChapter(saved.bookId).then(()=>{
-      setTimeout(()=>scrollToVerse(saved.verse),800);
+      setTimeout(()=>scrollToVerse(saved.verse),500);
      });
     }
    },500);
   }
- },700);
+ },500);
 }
+
+/* المفضلة */
 
 function addFavorite(type,id,label,text){
  let key="favorites_"+faith;
  let items=getSaved(key,[]);
+
  if(items.some(x=>x.id===id&&x.type===type)){
   alert("موجودة بالفعل في المفضلة");
   return;
  }
+
  items.push({type,id,label,text});
  save(key,items);
  alert("تمت الإضافة إلى المفضلة");
@@ -610,11 +841,14 @@ function addFavorite(type,id,label,text){
 function renderFavorites(){
  const box=$("favoritesList");
  if(!box)return;
+
  let items=getSaved("favorites_"+faith,[]);
+
  if(!items.length){
   box.innerHTML='<p class="muted">لم تضف أي آيات إلى المفضلة بعد.</p>';
   return;
  }
+
  box.innerHTML=items.map((item,index)=>`
   <div class="verse">
    <strong>${escapeHTML(item.label)}</strong>
@@ -632,8 +866,11 @@ function removeFavorite(index){
  renderFavorites();
 }
 
+/* الخطط والعداد والتقييم */
+
 function calculatePlan(){
  const days=Math.max(1,Math.min(365,Number($("days").value)||1));
+
  $("planResult").textContent=faith==="muslim"
   ?`لختم القرآن في ${days} يومًا، اقرأ حوالي ${Math.ceil(604/days)} صفحة يوميًا.`
   :`قسّم قراءتك على ${days} يومًا، واختر عددًا مناسبًا من الإصحاحات يوميًا.`;
@@ -653,11 +890,13 @@ function updateDone(){
 
 function addTasbih(){
  tasbih++;
+ localStorage.setItem("tasbih_count",tasbih);
  $("count").textContent=tasbih;
 }
 
 function resetTasbih(){
  tasbih=0;
+ localStorage.setItem("tasbih_count",0);
  $("count").textContent=0;
 }
 
