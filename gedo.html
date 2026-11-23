@@ -1,665 +1,1492 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة تعلم البرمجة الاحترافية</title>
-    <!-- استيراد خط عربي مميز -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-        }
-        body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            line-height: 1.6;
-        }
-        /* الشريط العلوي */
-        header {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border-bottom: 2px solid #3b82f6;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: 900;
-            color: #38bdf8;
-        }
-        .creator-badge {
-            background: #3b82f6;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 14px;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
-        }
-        /* المحتوى الرئيسي */
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        .hero {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .hero h1 {
-            font-size: 38px;
-            margin-bottom: 10px;
-            color: #f1f5f9;
-        }
-        .hero p {
-            color: #94a3b8;
-            font-size: 18px;
-        }
-        /* قسم محرر الأكواد */
-        .editor-section {
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            border: 1px solid #334155;
-        }
-        .editor-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: #38bdf8;
-        }
-        .editor-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        @media (max-width: 768px) {
-            .editor-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        textarea {
-            width: 100%;
-            height: 250px;
-            background: #0f172a;
-            color: #38bdf8;
-            border: 1px solid #475569;
-            border-radius: 8px;
-            padding: 15px;
-            font-size: 16px;
-            font-family: monospace;
-            resize: none;
-        }
-        textarea:focus {
-            outline: none;
-            border-color: #3b82f6;
-        }
-        .output-box {
-            background: #0f172a;
-            border: 1px solid #475569;
-            border-radius: 8px;
-            padding: 15px;
-            height: 250px;
-            overflow-y: auto;
-            color: #10b981;
-            font-family: monospace;
-            font-size: 16px;
-        }
-        .run-btn {
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 16px;
-            font-weight: 700;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: background 0.3s;
-        }
-        .run-btn:hover {
-            background: #059669;
-        }
-        /* الحقوق */
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #64748b;
-            margin-top: 50px;
-            border-top: 1px solid #1e293b;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gedo Code Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&family=Reem+Kufi:wght@600;700&display=swap">
+<style>
+/* concept: كراسة رسم بياني للطالب. ورق مربعات، حدود حبر سميكة، ظلال صلبة، ماركر أصفر للتمييز */
+:root{
+  --paper:#F2F5FB; --ink:#14213D; --mute:#55658A; --line:#D3DDF0; --card:#FFFFFF; --edge:#14213D;
+  --acc:#2B4BFF; --acc-ink:#FFFFFF; --hl:#FFE14D; --hl-ink:#14213D;
+  --ok:#0B7F58; --okbg:#DDF5EA; --bad:#C0283A; --badbg:#FDE4E7; --warn:#8A5A00; --warnbg:#FFF1CC;
+  --code:#EDF1FF; --codeink:#14213D; --tk:#C2255C; --ts:#0B7A4B; --tn:#B45309; --tc:#7585A6;
+  --display:'Reem Kufi','Cairo',system-ui,sans-serif; --body:'Cairo',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0B1330; --ink:#E8EDFF; --mute:#9DAAD0; --line:#1B2A58; --card:#111B40; --edge:#4A5EA8;
+  --acc:#8BA5FF; --acc-ink:#0B1330; --hl:#FFD93D; --hl-ink:#14213D;
+  --ok:#4ADE9A; --okbg:#0F3A2C; --bad:#FF8A95; --badbg:#3F1822; --warn:#FFD27A; --warnbg:#3A2C0C;
+  --code:#0A1127; --codeink:#DCE5FF; --tk:#FF8FB3; --ts:#7EE6B0; --tn:#FFC36B; --tc:#7585B0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0B1330; --ink:#E8EDFF; --mute:#9DAAD0; --line:#1B2A58; --card:#111B40; --edge:#4A5EA8;
+  --acc:#8BA5FF; --acc-ink:#0B1330; --hl:#FFD93D; --hl-ink:#14213D;
+  --ok:#4ADE9A; --okbg:#0F3A2C; --bad:#FF8A95; --badbg:#3F1822; --warn:#FFD27A; --warnbg:#3A2C0C;
+  --code:#0A1127; --codeink:#DCE5FF; --tk:#FF8FB3; --ts:#7EE6B0; --tn:#FFC36B; --tc:#7585B0; color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background-color:var(--paper);color:var(--ink);font:16px/1.85 var(--body);direction:rtl;
+  background-image:linear-gradient(color-mix(in srgb,var(--line) 70%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--line) 70%,transparent) 1px,transparent 1px);background-size:28px 28px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--card)}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--acc)}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--card);border-bottom:2px solid var(--edge)}
+.top .row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding-block:10px}
+.brand{font:700 24px/1 var(--display);display:flex;align-items:center;gap:8px;margin-inline-end:auto}
+.brand i{font:600 18px var(--mono);font-style:normal;background:var(--acc);color:var(--acc-ink);padding:3px 7px;border-radius:5px;direction:ltr}
+.by{direction:ltr;font:800 14px/1 var(--body);background:var(--hl);color:var(--hl-ink);border:2px solid #14213D;border-radius:999px;padding:7px 14px;box-shadow:2px 2px 0 #14213D;white-space:nowrap}
+.langs{display:flex;gap:6px;flex-wrap:wrap}
+.lang{font:700 13px var(--mono);direction:ltr;border:2px solid var(--edge);border-radius:6px;padding:3px 10px;background:var(--card);color:var(--ink)}
+.lang.on{background:var(--acc);color:var(--acc-ink)}
+.lang.soon{opacity:.5;border-style:dashed}
+.btn{font:700 15px var(--body);border:2px solid var(--edge);background:var(--card);color:var(--ink);padding:5px 14px;border-radius:6px;cursor:pointer;box-shadow:2px 2px 0 var(--edge)}
+.btn:active{transform:translate(2px,2px);box-shadow:none}
+.btn.pri{background:var(--acc);color:var(--acc-ink)}
+.btn.sm{font-size:13px;padding:2px 10px}
+.views{display:flex;gap:8px;overflow-x:auto;padding-block:14px 6px}
+.views a{flex:none;text-decoration:none;color:var(--ink);font:700 16px var(--display);padding:6px 16px;border:2px solid var(--edge);border-radius:6px;background:var(--card)}
+.views a.on{background:var(--hl);color:var(--hl-ink);box-shadow:3px 3px 0 var(--edge)}
+
+main{padding-block:14px 40px;min-height:70vh}
+h1,h2,h3{font-family:var(--display);line-height:1.35;text-wrap:balance;margin:0 0 .4em}
+h1{font-size:clamp(28px,5vw,42px)}
+h2{font-size:24px}
+h3{font-size:19px}
+.mk{background:linear-gradient(transparent 58%,var(--hl) 58%);padding-inline:4px}
+.card{background:var(--card);border:2px solid var(--edge);border-radius:8px;box-shadow:4px 4px 0 var(--edge);padding:16px 18px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.hero{padding-block:18px 8px;max-width:720px}
+.hero p{font-size:18px;color:var(--mute);margin:0}
+.lcard{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink);min-width:0}
+.lcard:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--edge)}
+.lcard .num{font:700 34px/1 var(--mono);color:var(--acc);direction:ltr;text-align:right}
+.lcard small{color:var(--mute);direction:ltr;text-align:right;font-family:var(--mono)}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.pill{font:700 12px var(--body);border:2px solid var(--edge);border-radius:999px;padding:0 10px}
+.pill.ok{background:var(--okbg);color:var(--ok);border-color:var(--ok)}
+
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-block:4px 12px}
+.tabs button{flex:none;font:700 15px var(--body);border:2px solid var(--edge);background:var(--card);color:var(--ink);border-radius:6px;padding:4px 14px;cursor:pointer}
+.tabs button.on{background:var(--acc);color:var(--acc-ink)}
+.crumb{font:600 14px var(--mono);color:var(--mute);direction:ltr;text-align:right}
+.analogy{background:var(--warnbg);color:var(--ink);border:2px dashed var(--warn);border-radius:8px;padding:12px 16px}
+.part{min-width:0}
+.part p{margin:.2em 0 .8em}
+pre.code{direction:ltr;text-align:left;background:var(--code);color:var(--codeink);border:2px solid var(--edge);border-radius:6px;padding:12px 14px;overflow-x:auto;font:13.5px/1.7 var(--mono);margin:0;tab-size:2}
+.t-c{color:var(--tc);font-style:italic}.t-s{color:var(--ts)}.t-k{color:var(--tk);font-weight:600}.t-n{color:var(--tn)}
+.cb{min-width:0;display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.cb .bar{display:flex;gap:8px;align-items:center}
+.cb .bar span{margin-inline-end:auto;font:600 12px var(--mono);color:var(--mute)}
+.out{direction:ltr;text-align:left;white-space:pre-wrap;word-break:break-word;background:#0A1127;color:#B9F5D0;border-radius:6px;padding:10px 12px;font:13px/1.6 var(--mono);margin:0;border:2px solid var(--edge)}
+.out .e{color:#FF9AA5}
+.frame{width:100%;border:2px solid var(--edge);border-radius:6px;background:#fff}
+.bad,.good{border-radius:6px;padding:2px 8px;font:700 13px var(--body);display:inline-block}
+.bad{background:var(--badbg);color:var(--bad)}.good{background:var(--okbg);color:var(--ok)}
+.mis .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+
+.editor{border:2px solid var(--edge);border-radius:8px;background:var(--card);box-shadow:4px 4px 0 var(--edge);overflow:hidden}
+.ed-head{display:flex;gap:10px;align-items:center;padding:8px 14px;border-bottom:2px solid var(--edge);background:var(--hl);color:var(--hl-ink)}
+.ed-head b{margin-inline-end:auto}
+.ed-head .mode{font:700 12px var(--mono);border:2px solid #14213D;border-radius:5px;padding:0 6px}
+.editor textarea{display:block;width:100%;min-height:210px;resize:vertical;direction:ltr;text-align:left;border:0;outline:0;background:var(--code);color:var(--codeink);font:14px/1.7 var(--mono);padding:12px 14px;tab-size:2}
+.ed-btns{display:flex;flex-wrap:wrap;gap:8px;padding:10px 14px;border-top:2px solid var(--edge)}
+.ed-body{padding:0 14px 14px;display:flex;flex-direction:column;gap:10px}
+.task{padding:12px 14px;border-bottom:2px dashed var(--edge)}
+.verdict{border:2px solid var(--edge);border-radius:8px;padding:10px 14px}
+.verdict.ok{background:var(--okbg);border-color:var(--ok);color:var(--ink)}
+.verdict.no{background:var(--badbg);border-color:var(--bad);color:var(--ink)}
+.verdict h3{margin:0 0 4px}
+.verdict ul{margin:4px 0 0;padding-inline-start:20px}
+.note{background:var(--warnbg);border:2px dashed var(--warn);border-radius:8px;padding:8px 12px}
+
+.q{padding:14px 16px;min-width:0}
+.q .qt{font-weight:700;margin-bottom:6px}
+.q label{display:flex;gap:8px;align-items:flex-start;padding:4px 0;cursor:pointer}
+.q textarea{width:100%;min-height:90px;font:15px/1.7 var(--body);background:var(--paper);color:var(--ink);border:2px solid var(--edge);border-radius:6px;padding:8px 10px;resize:vertical}
+.q.ok{border-color:var(--ok);background:var(--okbg)}.q.no{border-color:var(--bad);background:var(--badbg)}
+.q .why{margin-top:6px;font-size:15px}
+.score{font:700 40px var(--display)}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+details.proj{padding:0}
+details.proj>summary{list-style:none;cursor:pointer;padding:14px 18px;display:flex;gap:12px;align-items:center}
+details.proj>summary::-webkit-details-marker{display:none}
+details.proj>summary .n{font:700 26px var(--mono);color:var(--acc);direction:ltr}
+details.proj>summary b{font:700 19px var(--display);margin-inline-end:auto}
+details.proj .inner{padding:0 18px 18px;display:flex;flex-direction:column;gap:12px}
+details.proj ol,.sumlist{margin:0;padding-inline-start:22px}
+.cheat{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+footer{border-top:2px solid var(--edge);background:var(--card);padding-block:18px;text-align:center;font-weight:700}
+footer .by{display:inline-block}
+@media (max-width:560px){.top .row{gap:8px}.brand{font-size:20px}.by{font-size:12px;padding:6px 10px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
 </head>
 <body>
-
-    <!-- الشريط العلوي مع اسمك -->
-    <header>
-        <div class="logo">🚀 Gedo Code Academy</div>
-        <div class="creator-badge">Made By Gedo</div>
-    </header>
-
-    <div class="container">
-        <div class="hero">
-            <h1>مرحباً بك في عالم الاحتراف البرمجي</h1>
-            <p>تعلم لغات البرمجة من الصفر حتى الاحتراف مع الشرح والأمثلة والأخطاء الشائعة</p>
-        </div>
-
-        <!-- محرر الأكواد المستقل -->
-        <div class="editor-section">
-            <div class="editor-title">💻 محرر الأكواد التفاعلي (JavaScript)</div>
-            <div class="editor-grid">
-                <div>
-                    <label style="display:block; margin-bottom:8px; color:#cbd5e1;">اكتب كود الجافاسكريبت هنا:</label>
-                    <textarea id="code-input" placeholder="مثال: console.log('مرحباً يا جدو');"></textarea>
-                    <button class="run-btn" onclick="runCode()">تشغيل الكود ⚡</button>
-                </div>
-                <div>
-                    <label style="display:block; margin-bottom:8px; color:#cbd5e1;">نتيجة التنفيذ:</label>
-                    <div id="output" class="output-box">النتائج ستظهر هنا...</div>
-                </div>
-            </div>
-        </div>
-    </div>
-<!-- بداية قسم المناهج والدروس الشاملة - Made By Gedo -->
-<style>
-    .courses-section {
-        margin-top: 40px;
-        background: #1e293b;
-        border-radius: 12px;
-        padding: 25px;
-        border: 1px solid #334155;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-    }
-    .tabs {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 25px;
-        border-bottom: 2px solid #334155;
-        padding-bottom: 15px;
-    }
-    .tab-btn {
-        background: #0f172a;
-        color: #94a3b8;
-        border: 1px solid #475569;
-        padding: 12px 24px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: 700;
-        transition: all 0.3s;
-    }
-    .tab-btn:hover, .tab-btn.active {
-        background: #3b82f6;
-        color: white;
-        border-color: #3b82f6;
-    }
-    .lang-content {
-        display: none;
-        animation: fadeIn 0.4s ease-in-out;
-    }
-    .lang-content.active {
-        display: block;
-    }
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .lesson-card {
-        background: #0f172a;
-        border-right: 4px solid #38bdf8;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 8px;
-    }
-    .lesson-card h3 {
-        color: #38bdf8;
-        margin-bottom: 10px;
-        font-size: 20px;
-    }
-    .code-snippet {
-        background: #020617;
-        color: #a5f3fc;
-        padding: 15px;
-        border-radius: 6px;
-        font-family: monospace;
-        direction: ltr;
-        text-align: left;
-        overflow-x: auto;
-        margin: 12px 0;
-        border: 1px solid #1e293b;
-        font-size: 15px;
-    }
-    .error-box {
-        background: rgba(239, 68, 68, 0.1);
-        border-right: 4px solid #ef4444;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 8px;
-    }
-    .error-box h4 {
-        color: #f87171;
-        margin-bottom: 8px;
-        font-size: 18px;
-    }
-    .summary-box {
-        background: rgba(16, 185, 129, 0.1);
-        border-right: 4px solid #10b981;
-        padding: 20px;
-        border-radius: 8px;
-        margin-top: 20px;
-    }
-    .summary-box h4 {
-        color: #34d399;
-        margin-bottom: 10px;
-    }
-</style>
-
-<div class="courses-section">
-    <h2 style="color: #f8fafc; margin-bottom: 20px; font-size: 26px;">📚 المكتبة التعليمية الشاملة للغات البرمجة</h2>
-    
-    <!-- أزرار التنقل بين اللغات -->
-    <div class="tabs">
-        <button class="tab-btn active" onclick="openLang(event, 'js-lang')">JavaScript</button>
-        <button class="tab-btn" onclick="openLang(event, 'python-lang')">Python</button>
-        <button class="tab-btn" onclick="openLang(event, 'html-lang')">HTML</button>
-        <button class="tab-btn" onclick="openLang(event, 'css-lang')">CSS</button>
-    </div>
-
-    <!-- ==================== 1. منهج JavaScript ==================== -->
-    <div id="js-lang" class="lang-content active">
-        <div class="lesson-card">
-            <h3>الدرس 1: المتغيرات وأنواع البيانات (Variables)</h3>
-            <p>المتغيرات هي أماكن في الذاكرة لتخزين البيانات. نستخدم <code>const</code> للقيم الثابتة و <code>let</code> للقيم المتغيرة.</p>
-            <div class="code-snippet">
-const siteCreator = "Gedo"; // نص ثابت
-let userPoints = 100;       // رقم متغير
-let isLogged = true;        // قيمة منطقية
-
-userPoints += 50; // زيادة النقاط
-console.log("مرحباً " + siteCreator + "، نقاطك الآن: " + userPoints);
-            </div>
-        </div>
-
-        <div class="lesson-card">
-            <h3>الدرس 2: الدوال (Functions) والعمليات المنطقية</h3>
-            <p>الدالة هي كتلة برمجية تنفذ مهمة محددة عند استدعائها، مما يمنع تكرار الكود.</p>
-            <div class="code-snippet">
-function checkDiscount(price) {
-    if (price >= 500) {
-        return "حصلت على خصم 20%! السعر الجديد: " + (price * 0.8);
-    } else {
-        return "السعر النهائي: " + price;
-    }
-}
-console.log(checkDiscount(600));
-            </div>
-        </div>
-
-        <div class="lesson-card">
-            <h3>الدرس 3: المصفوفات والحلقات التكرارية (Arrays & Loops)</h3>
-            <p>تُستخدم المصفوفات لتخزين قائمة عناصر، والحلقات للمرور عليها تلقائياً.</p>
-            <div class="code-snippet">
-let languages = ["HTML", "CSS", "JavaScript", "Python"];
-for (let i = 0; i < languages.length; i++) {
-    console.log("اللغة رقم " + (i + 1) + ": " + languages[i]);
-}
-            </div>
-        </div>
-
-        <div class="error-box">
-            <h4>⚠️ الأخطاء الشائعة في JavaScript وشرحها العميق:</h4>
-            <p><strong>1. التعديل على ثابت (TypeError):</strong> محاولة تغيير قيمة متغير تم تعريفه بـ <code>const</code> يؤدي لتوقف البرنامج فوراً. الحل: استخدم <code>let</code> لأي قيمة ستتغير.</p>
-            <p><strong>2. استخدام <code>=</code> بدل <code>===</code> في الشروط:</strong> كتابة <code>if (x = 5)</code> تقوم بتعيين الرقم 5 داخل x بدلاً من فحصه. استخدم دائماً <code>===</code> للمقارنة الدقيقة بين القيمة والنوع.</p>
-            <p><strong>3. استدعاء عناصر HTML قبل تحميلها (Null Error):</strong> محاولة الوصول لعنصر عبر <code>document.getElementById</code> في أعلى الصفحة قبل رسم العنصر يعطي نتيجة <code>null</code>.</p>
-        </div>
-
-        <div class="summary-box">
-            <h4>📝 ملخص لغة JavaScript:</h4>
-            <p>هي لغة التفاعل والذكاء في المتصفح. مسؤولة عن معالجة البيانات، التحكم في عناصر الصفحة، والتواصل مع الخوادم.</p>
-        </div>
-    </div>
-
-    <!-- ==================== 2. منهج Python ==================== -->
-    <div id="python-lang" class="lang-content">
-        <div class="lesson-card">
-            <h3>الدرس 1: أساسيات بايثون والمتغيرات</h3>
-            <p>تتميز بايثون بسهولة قراءتها وعدم حاجتها لفواصل منقوطة أو أقواس معقوفة، بل تعتمد على المسافات البادئة (Indentation).</p>
-            <div class="code-snippet">
-student_name = "أحمد"
-grade = 95.5
-passed = True
-
-print(f"الطالب {student_name} حصل على درجة {grade}")
-            </div>
-        </div>
-
-        <div class="lesson-card">
-            <h3>الدرس 2: القوائم والشروط (Lists & Conditions)</h3>
-            <p>تُستخدم القوائم لحفظ البيانات المتعددة والتعامل معها بمرونة عالية.</p>
-            <div class="code-snippet">
-cart = ["لابتوب", "ماوس", "لوحة مفاتيح"]
-if "لابتوب" in cart:
-    print("يوجد جهاز لابتوب في سلة المشتريات!")
-for item in cart:
-    print("المنتج:", item)
-            </div>
-        </div>
-
-        <div class="error-box">
-            <h4>⚠️ الأخطاء الشائعة في Python وشرحها العميق:</h4>
-            <p><strong>1. خطأ المسافات البادئة (IndentationError):</strong> بايثون صارمة جداً في المسافات بعد جملة <code>if</code> أو <code>for</code>. أي مسافة زائدة أو ناقصة توقف البرنامج.</p>
-            <p><strong>2. دمج نص مع رقم (TypeError):</strong> محاولة جمع نص ورقم مباشرة مثل <code>"العمر: " + 20</code> تسبب خطأ. يجب تحويل الرقم لنص باستخدام <code>str(20)</code>.</p>
-        </div>
-
-        <div class="summary-box">
-            <h4>📝 ملخص لغة Python:</h4>
-            <p>أقوى لغة في الذكاء الاصطناعي، تحليل البيانات، وتطوير المواقع الخلفية (Backend) بفضل بساطتها ومكتباتها الضخمة.</p>
-        </div>
-    </div>
-
-    <!-- ==================== 3. منهج HTML ==================== -->
-    <div id="html-lang" class="lang-content">
-        <div class="lesson-card">
-            <h3>الدرس 1: الهيكل الأساسي والوسوم (Tags)</h3>
-            <p>HTML هي الهيكل العظمي لأي موقع ويب، وتتكون من وسوم فتح وإغلاق.</p>
-            <div class="code-snippet">
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;موقع جدو&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;عنوان رئيسي&lt;/h1&gt;
-    &lt;p&gt;فقرة نصية توضيحية للمحتوى.&lt;/p&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-            </div>
-        </div>
-
-        <div class="lesson-card">
-            <h3>الدرس 2: النماذج والمدخلات (Forms & Inputs)</h3>
-            <p>تُستخدم لجمع البيانات من المستخدمين مثل تسجيل الدخول.</p>
-            <div class="code-snippet">
-&lt;form&gt;
-  &lt;input type="text" placeholder="اسم المستخدم" required&gt;
-  &lt;input type="password" placeholder="كلمة المرور"&gt;
-  &lt;button type="submit"&gt;دخول&lt;/button&gt;
-&lt;/form&gt;
-            </div>
-        </div>
-
-        <div class="error-box">
-            <h4>⚠️ الأخطاء الشائعة في HTML وشرحها العميق:</h4>
-            <p><strong>1. نسيان إغلاق الوسوم:</strong> فتح وسم <code>&lt;div&gt;</code> دون إغلاقه بـ <code>&lt;/div&gt;</code> يؤدي لتداخل العناصر وانهيار تصميم الصفحة بالكامل.</p>
-            <p><strong>2. تكرار نفس الـ ID:</strong> السمة <code>id</code> يجب أن تكون فريدة لعنصر واحد فقط في الصفحة، وتكرارها يربك أكواد JavaScript.</p>
-        </div>
-
-        <div class="summary-box">
-            <h4>📝 ملخص لغة HTML:</h4>
-            <p>هي لغة ترميز وليست لغة برمجة؛ وظيفتها بناء الهيكل وتنظيم المحتوى (نصوص، صور، روابط، جداول) في الصفحة.</p>
-        </div>
-    </div>
-
-    <!-- ==================== 4. منهج CSS ==================== -->
-    <div id="css-lang" class="lang-content">
-        <div class="lesson-card">
-            <h3>الدرس 1: الألوان والخطوط ونموذج الصندوق (Box Model)</h3>
-            <p>CSS هي المسؤولة عن تجميل الموقع وتنسيق الألوان والأحجام والمسافات.</p>
-            <div class="code-snippet">
-.card {
-    background-color: #1e293b;
-    color: white;
-    padding: 20px;       /* مسافة داخلية */
-    margin: 15px;        /* مسافة خارجية */
-    border-radius: 10px; /* حواف دائرية */
-}
-            </div>
-        </div>
-
-        <div class="lesson-card">
-            <h3>الدرس 2: التخطيط المرن (Flexbox)</h3>
-            <p>أهم أداة في CSS لمحاذاة العناصر وتوزيعها بمرونة على جميع الشاشات.</p>
-            <div class="code-snippet">
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-            </div>
-        </div>
-
-        <div class="error-box">
-            <h4>⚠️ الأخطاء الشائعة في CSS وشرحها العميق:</h4>
-            <p><strong>1. نسيان الفاصلة المنقوطة (<code>;</code>):</strong> عدم وضع فاصلة منقوطة في نهاية كل خاصية يعطل الخاصية التي تليها مباشرة.</p>
-            <p><strong>2. عدم استخدام <code>box-sizing: border-box</code>:</strong> بدون هذه الخاصية، إضافة <code>padding</code> تزيد من عرض العنصر الفعلي وتكسر تناسق الصفحة.</p>
-        </div>
-
-        <div class="summary-box">
-            <h4>📝 ملخص لغة CSS:</h4>
-            <p>هي لغة التنسيق البصري التي تحول الهيكل الجامد إلى تصميم عصري متجاوب مع الهواتف والحواسيب.</p>
-        </div>
-    </div>
+<header class="top"><div class="wrap">
+  <div class="row">
+    <div class="brand"><i>&lt;/&gt;</i><span>Gedo Code Academy</span></div>
+    <span class="by">Made By Gedo</span>
+    <button class="btn sm" id="themeBtn" type="button" aria-label="تبديل الوضع الليلي">الوضع الليلي</button>
+  </div>
+  <div class="langs" style="padding-bottom:6px">
+    <span class="lang on">JavaScript</span>
+    <span class="lang soon" title="قريبًا">HTML · قريبًا</span>
+    <span class="lang soon" title="قريبًا">CSS · قريبًا</span>
+    <span class="lang soon" title="قريبًا">Python · قريبًا</span>
+  </div>
+</div></header>
+<div class="wrap">
+  <nav class="views" id="views" aria-label="الأقسام"></nav>
+  <main id="main"></main>
 </div>
+<footer><div class="wrap"><span class="by">Made By Gedo</span></div></footer>
 
 <script>
-    // دالة التبديل بين تبويبات اللغات
-    function openLang(evt, langId) {
-        let contents = document.getElementsByClassName("lang-content");
-        for (let i = 0; i < contents.length; i++) {
-            contents[i].classList.remove("active");
-        }
-        let buttons = document.getElementsByClassName("tab-btn");
-        for (let i = 0; i < buttons.length; i++) {
-            buttons[i].classList.remove("active");
-        }
-        document.getElementById(langId).classList.add("active");
-        evt.currentTarget.classList.add("active");
-    }
-</script>
-<!-- نهاية قسم المناهج والدروس الشاملة -->
-<!-- بداية قسم المشاريع العملية والامتحانات - Made By Gedo -->
-<style>
-    .projects-section, .exams-section {
-        margin-top: 30px;
-        background: #1e293b;
-        border-radius: 12px;
-        padding: 25px;
-        border: 1px solid #334155;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-    }
-    .project-card, .exam-card {
-        background: #0f172a;
-        border-left: 4px solid #10b981;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 8px;
-    }
-    .project-card h3, .exam-card h3 {
-        color: #34d399;
-        margin-bottom: 10px;
-        font-size: 20px;
-    }
-    .question-box {
-        background: #020617;
-        padding: 15px;
-        border-radius: 6px;
-        margin-bottom: 12px;
-        border: 1px solid #1e293b;
-    }
-    .submit-exam-btn {
-        background: #3b82f6;
-        color: white;
-        border: none;
-        padding: 10px 25px;
-        border-radius: 6px;
-        font-weight: 700;
-        cursor: pointer;
-        margin-top: 10px;
-    }
-    .submit-exam-btn:hover {
-        background: #2563eb;
-    }
-</style>
+const C=s=>s.replace(/§/g,'`').replace(/¤/g,'$');
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const h=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!==undefined)e.innerHTML=html;return e};
+const store={get(){try{return JSON.parse(localStorage.getItem('gedo-progress')||'{}')}catch(e){return{}}},set(o){try{localStorage.setItem('gedo-progress',JSON.stringify(o))}catch(e){}}};
+let prog=store.get();prog.ex=prog.ex||{};prog.quiz=prog.quiz||{};
+const save=()=>store.set(prog);
 
-<!-- قسم المشاريع العملية (أكثر من 10 مشاريع) -->
-<div class="projects-section">
-    <h2 style="color: #f8fafc; margin-bottom: 20px; font-size: 26px;">🛠️ أكثر من 10 مشاريع وتطبيقات ويب عملية (خطوة بخطوة)</h2>
+/* ---------- تلوين الكود ---------- */
+const HLRX=/(\/\/.*|\/\*[\s\S]*?\*\/)|("(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'|`(?:\\.|[^`\\])*`)|\b(const|let|var|function|return|if|else|for|while|do|switch|case|break|continue|new|class|this|try|catch|finally|throw|async|await|true|false|null|undefined|typeof|of|in)\b|\b(\d+(?:\.\d+)?)\b/g;
+function hl(code){let out='',last=0,m;HLRX.lastIndex=0;while((m=HLRX.exec(code))){out+=esc(code.slice(last,m.index));const c=m[1]?'c':m[2]?'s':m[3]?'k':'n';out+='<span class="t-'+c+'">'+esc(m[0])+'</span>';last=HLRX.lastIndex}return out+esc(code.slice(last))}
 
-    <div class="project-card">
-        <h3>المشروع 1: بناء آلة حاسبة ذكية (Calculator)</h3>
-        <p><strong>فكرة المشروع:</strong> تصميم واجهة باستخدام HTML/CSS وبرمجة العمليات الحسابية بـ JavaScript.</p>
-        <div class="code-snippet">
-// مثال دالة الجمع في الآلة الحاسبة
-function add(a, b) {
-    return a + b;
+/* ---------- تشغيل JavaScript داخل Worker ---------- */
+const PRE="const __p=(t,v)=>self.postMessage({t,v});const __f=(x,d=0)=>{if(typeof x==='string')return d?\"'\"+x+\"'\":x;if(typeof x==='function')return '[Function: '+(x.name||'anonymous')+']';if(x instanceof Promise)return 'Promise { <pending> }';if(x instanceof Error)return x.name+': '+x.message;if(Array.isArray(x))return d>2?'[Array]':(x.length?'[ '+x.map(y=>__f(y,d+1)).join(', ')+' ]':'[]');if(x&&typeof x==='object'){if(d>2)return '[Object]';const k=Object.keys(x);return k.length?'{ '+k.map(q=>q+': '+__f(x[q],d+1)).join(', ')+' }':'{}'}return String(x)};console.log=(...a)=>__p('l',a.map(x=>__f(x)).join(' '));console.info=console.log;console.warn=console.log;console.error=(...a)=>__p('l','خطأ: '+a.map(x=>__f(x)).join(' '));addEventListener('unhandledrejection',e=>{const r=e.reason;__p('e',r&&r.message?(r.name+': '+r.message):String(r))});\n";
+function runJS(code,timeout=3500){
+  return new Promise(resolve=>{
+    const out=[];let err=null,synced=false,done=false,idle=null,w=null,cap=null;
+    const finish=loop=>{if(done)return;done=true;clearTimeout(idle);clearTimeout(cap);try{w&&w.terminate()}catch(e){}resolve({out,err,loop})};
+    const settle=()=>{clearTimeout(idle);idle=setTimeout(()=>finish(false),700)};
+    try{
+      const url=URL.createObjectURL(new Blob([PRE+code+"\n;__p('s')"],{type:'text/javascript'}));
+      w=new Worker(url);
+    }catch(e){err={msg:'Error: المتصفح منع تشغيل الكود هنا'};return finish(false)}
+    w.onmessage=e=>{const{t,v}=e.data;if(t==='l')out.push(v);else if(t==='e'){err=err||{msg:v}}else if(t==='s'){synced=true}if(synced)settle()};
+    w.onerror=e=>{e.preventDefault();err={msg:e.message||'Error',line:e.lineno?e.lineno-1:null};finish(false)};
+    cap=setTimeout(()=>finish(!synced),timeout);
+  });
 }
-console.log("نتيجة الجمع: " + add(15, 25));
-        </div>
-    </div>
+function explainErr(msg){
+  const m=String(msg||'');
+  if(/is not defined/.test(m)){const n=(m.match(/(\S+) is not defined/)||[])[1]||'';return 'ReferenceError: جافاسكريبت مش لاقية حاجة اسمها «'+esc(n)+'». غالبًا الاسم مكتوب غلط (الحروف الكبيرة والصغيرة بتفرق)، أو لسه ما عرّفتهاش، أو معرّفة جوه دالة أو بلوك تاني ومش شايفاها من هنا.'}
+  if(/Assignment to constant/.test(m))return 'TypeError: حاولت تغيّر قيمة متغير معرّف بـ const. const معناها ثابت. لو القيمة هتتغير عرّفها بـ let.';
+  if(/before initialization/.test(m))return 'ReferenceError: بتستخدم متغير (let أو const) قبل السطر اللي بيعرّفه. انقل التعريف فوق السطر اللي بيستخدمه.';
+  if(/Cannot read propert/.test(m)){const p=(m.match(/reading '([^']+)'/)||[])[1];return 'TypeError: بتحاول تقرا الخاصية «'+esc(p||'')+'» من حاجة قيمتها undefined أو null. يعني الكائن أو العنصر مش موجود أصلًا. اطبعه قبل السطر ده وتأكد إنه اتعرّف، أو استخدم ?. للأمان.'}
+  if(/is not a function/.test(m)){const n=(m.match(/(\S+) is not a function/)||[])[1]||'';return 'TypeError: «'+esc(n)+'» مش دالة وانت بتناديها بأقواس (). راجع الاسم، أو إن الحاجة دي فعلًا دالة وإنها اتعرّف صح.'}
+  if(/already been declared/.test(m))return 'SyntaxError: عرّفت نفس المتغير بـ let أو const مرتين في نفس المكان. غيّر الاسم أو شيل التعريف المكرر.';
+  if(/Maximum call stack/.test(m))return 'RangeError: الدالة بتنادي نفسها بلا نهاية (تكرار ذاتي من غير حالة توقف).';
+  if(/Syntax|Unexpected|Invalid or unexpected|missing|expected/i.test(m))return 'SyntaxError: في خطأ في كتابة الكود نفسه. شوف: قوس أو أقواس ناقصة أو زيادة ) } ]، علامة تنصيص مش مقفولة، فاصلة في مكان غلط، أو كلمة مكتوبة غلط.';
+  return 'حصل خطأ وقت التشغيل. اقرا رسالة الخطأ بالإنجليزي: غالبًا فيها اسم المشكلة والمكان.';
+}
+const normAr=s=>String(s).toLowerCase().replace(/[ً-ْـ]/g,'').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/\s+/g,' ');
+function diffHint(got,exp){
+  const g=got.split('\n'),e=exp.split('\n'),hs=[];
+  if(g.length!==e.length)hs.push('عدد الأسطر اللي طبعتها '+g.length+' والمطلوب '+e.length+'.');
+  for(let i=0;i<Math.max(g.length,e.length);i++){
+    if(g[i]!==e[i]){
+      hs.push('أول اختلاف في السطر '+(i+1)+': انت طبعت «'+esc(g[i]??'(لا شيء)')+'» والمطلوب «'+esc(e[i]??'(لا شيء)')+'».');
+      const a=g[i],b=e[i];
+      if(a!==undefined&&b!==undefined){
+        if(a==='undefined')hs.push('ظهرت undefined: غالبًا نسيت return في الدالة، أو بتقرا خاصية مش موجودة.');
+        else if(a==='NaN')hs.push('ظهرت NaN: عملية حسابية على نص أو قيمة مش رقم. حوّل القيمة لرقم الأول.');
+        else if(a.trim()===b.trim())hs.push('الفرق في مسافات زيادة أو ناقصة.');
+        else if(a.toLowerCase()===b.toLowerCase())hs.push('الفرق في الحروف الكبيرة والصغيرة.');
+        else if(a!==''&&b!==''&&!isNaN(a)&&!isNaN(b))hs.push('الرقم مختلف: راجع المعادلة أو الشرط أو حدود الحلقة (< أو <=).');
+        else if(/^\[|^\{/.test(a)&&!/^\[|^\{/.test(b))hs.push('طبعت مصفوفة أو كائن، والمطلوب قيمة واحدة.');
+      }
+      break;
+    }
+  }
+  return hs;
+}
 
-    <div class="project-card">
-        <h3>المشروع 2: تطبيق قائمة المهام اليومية (To-Do List)</h3>
-        <p><strong>فكرة المشروع:</strong> إضافة وحذف المهام وتخزينها في ذاكرة المتصفح.</p>
-        <div class="code-snippet">
-let tasks = ["دراسة البرمجة", "تطوير موقع جدو"];
-tasks.push("رفع المشروع على جيت هَب");
-console.log("المهام الحالية:", tasks);
-        </div>
-    </div>
+/* ---------- عناصر الواجهة ---------- */
+function copyText(text,pre){
+  const fallback=()=>{const r=document.createRange();r.selectNodeContents(pre);const s=getSelection();s.removeAllRanges();s.addRange(r)};
+  try{navigator.clipboard.writeText(text).catch(fallback)}catch(e){fallback()}
+}
+function htmlFrame(code,height){
+  const f=document.createElement('iframe');f.className='frame';f.setAttribute('sandbox','allow-scripts allow-same-origin');f.style.height=(height||230)+'px';
+  f.srcdoc='<meta charset="utf-8"><style>body{font-family:sans-serif;padding:12px;direction:rtl}</style><script>onerror=function(m){parent.postMessage({gerr:String(m)},"*")}<\/script>'+code;
+  return f;
+}
+function codeBlock(code,{run='js',label=''}={}){
+  const box=h('div','cb');
+  const bar=h('div','bar');bar.append(h('span','',label||(run==='html'?'HTML':'JavaScript')));
+  const pre=h('pre','code');pre.innerHTML=run==='html'?esc(code):hl(code);
+  const cp=h('button','btn sm','نسخ');cp.type='button';cp.onclick=()=>{copyText(code,pre);cp.textContent='اتنسخ';setTimeout(()=>cp.textContent='نسخ',1200)};
+  if(run){
+    const go=h('button','btn sm pri','شغّل ▶');go.type='button';
+    let area=null;
+    go.onclick=async()=>{
+      if(area)area.remove();
+      if(run==='html'){area=h('div');const f=htmlFrame(code);area.append(f);const er=h('div','note','');er.hidden=true;area.append(er);
+        const on=e=>{if(e.source===f.contentWindow&&e.data&&e.data.gerr){er.hidden=false;er.textContent='خطأ في الكود: '+e.data.gerr}};addEventListener('message',on);box.append(area);return}
+      area=h('pre','out','...');box.append(area);
+      const r=await runJS(code);
+      let t=esc(r.out.join('\n'));
+      if(r.err)t+=(t?'\n':'')+'<span class="e">'+esc(r.err.msg)+(r.err.line?' (سطر '+r.err.line+')':'')+'</span>';
+      if(r.loop)t+=(t?'\n':'')+'<span class="e">الكود فضل شغال بلا نهاية فاتوقّف (حلقة لانهائية غالبًا)</span>';
+      area.innerHTML=t||'(الكود اشتغل ومطبعش حاجة)';
+    };
+    bar.append(go);
+  }
+  bar.append(cp);box.append(bar,pre);
+  return box;
+}
+function verdict(ok,title,items){
+  const v=h('div','verdict '+(ok?'ok':'no'));
+  v.innerHTML='<h3>'+(ok?'✅ ':'❌ ')+title+'</h3>'+(items&&items.length?'<ul>'+items.map(i=>'<li>'+i+'</li>').join('')+'</ul>':'');
+  return v;
+}
+/* محرر مستقل: تمرين فيه تصحيح، أو محرر حر */
+function Editor(o){
+  const box=h('div','editor');
+  const isHtml=o.mode==='html';
+  box.append(h('div','ed-head','<b>'+esc(o.title||'المحرر')+'</b><span class="mode">'+(isHtml?'HTML + JS':'JavaScript')+'</span>'));
+  if(o.task)box.append(h('div','task',o.task));
+  const ta=h('textarea');ta.spellcheck=false;ta.value=o.starter||'';ta.setAttribute('aria-label','اكتب الكود هنا');
+  ta.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const s=ta.selectionStart;ta.value=ta.value.slice(0,s)+'  '+ta.value.slice(ta.selectionEnd);ta.selectionStart=ta.selectionEnd=s+2}});
+  box.append(ta);
+  const btns=h('div','ed-btns');
+  const run=h('button','btn pri',o.expected!==undefined||o.test?'شغّل وصحّح ▶':'شغّل ▶');run.type='button';
+  const reset=h('button','btn','إعادة');reset.type='button';
+  btns.append(run,reset);
+  let hintB=null,solB=null;
+  if(o.hint){hintB=h('button','btn','تلميح');hintB.type='button';btns.append(hintB)}
+  if(o.sol){solB=h('button','btn','الحل');solB.type='button';btns.append(solB)}
+  box.append(btns);
+  const body=h('div','ed-body');box.append(body);
+  const clear=()=>{body.innerHTML=''};
+  reset.onclick=()=>{ta.value=o.starter||'';clear()};
+  if(hintB)hintB.onclick=()=>{body.prepend(h('div','note','💡 '+o.hint))};
+  if(solB)solB.onclick=()=>{clear();body.append(h('div','note','الحل النموذجي (حاول بنفسك الأول):'));body.append(codeBlock(o.sol,{run:false,label:'حل'}))};
+  run.onclick=async()=>{
+    clear();const code=ta.value;
+    if(isHtml){
+      const f=htmlFrame(code,o.height||200);const er=h('div','note','');er.hidden=true;
+      const on=e=>{if(e.source===f.contentWindow&&e.data&&e.data.gerr){er.hidden=false;er.textContent='خطأ في الكود: '+e.data.gerr}};addEventListener('message',on);
+      body.append(f,er);
+      if(o.test){
+        f.onload=()=>setTimeout(()=>{
+          let msg;try{msg=o.test(f.contentDocument)}catch(x){msg='حصل خطأ وقت الاختبار: '+x.message}
+          if(!msg){body.append(verdict(true,'صح! الكود شغّال زي المطلوب',['اتأكدت إن الزرار بيشتغل لما اتضغط.']));if(o.id){prog.ex[o.id]=true;save();}}
+          else body.append(verdict(false,'لسه مش صح',[msg]));
+        },80);
+      }
+      return;
+    }
+    const res=await runJS(code+(o.after?'\n'+o.after:''));
+    const outPre=h('pre','out');
+    let t=esc(res.out.join('\n'));
+    if(res.err)t+=(t?'\n':'')+'<span class="e">'+esc(res.err.msg)+'</span>';
+    outPre.innerHTML=t||'(مفيش طباعة)';
+    body.append(outPre);
+    if(res.err){
+      body.append(verdict(false,'الكود فيه خطأ'+(res.err.line?' (قريب من السطر '+res.err.line+')':''),[explainErr(res.err.msg)]));return}
+    if(res.loop){body.append(verdict(false,'الكود فضل شغال بلا نهاية',['غالبًا عندك حلقة شرطها مش بيبقى false أبدًا. اتأكد إنك بتغيّر العدّاد جوه الحلقة (مثلًا i++) وإن الشرط ممكن يخلص.']));return}
+    if(o.expected===undefined)return;
+    const got=res.out.join('\n').trim(),exp=o.expected.trim();
+    if(!got){body.append(verdict(false,'الكود اشتغل بس ما طبعش حاجة',['استخدم console.log(...) عشان تطبع النتيجة. الناتج المطلوب:<br><code>'+esc(exp)+'</code>']));return}
+    if(got!==exp){
+      const hs=diffHint(got,exp);
+      body.append(verdict(false,'الناتج غلط',['المطلوب:<br><code>'+esc(exp).replace(/\n/g,'<br>')+'</code>','اللي طلع منك:<br><code>'+esc(got).replace(/\n/g,'<br>')+'</code>',...hs]));return}
+    const miss=(o.need||[]).filter(([re])=>!re.test(code)).map(([,m])=>m);
+    if(miss.length){body.append(verdict(false,'الناتج صح لكن طريقة الحل مش المطلوبة',miss));return}
+    body.append(verdict(true,'صح! الناتج مظبوط والكود مطابق للمطلوب',['كمّل للدرس اللي بعده أو جرّب الامتحان.']));
+    if(o.id){prog.ex[o.id]=true;save();}
+  };
+  return box;
+}
 
-    <div class="project-card">
-        <h3>المشروع 3: تطبيق الطقس الفوري (Weather App)</h3>
-        <p><strong>فكرة المشروع:</strong> جلب درجات الحرارة الحية من خوادم خارجية عبر Fetch API وعرضها للمستخدم.</p>
-    </div>
+/* ---------- الامتحان: 5 اختياري + 5 مقالي ---------- */
+function Quiz(L){
+  const box=h('div','stack');
+  const qs=L.quiz;const total=qs.mcq.length+qs.es.length;
+  const items=[];
+  box.append(h('div','card','<h2>امتحان: '+esc(L.t)+'</h2><p style="margin:0">10 أسئلة: 5 اختياري و5 مقالي. المقالي بيتصحح بالكلمات المفتاحية للمفاهيم، وبعد التصحيح هتشوف الإجابة النموذجية.</p>'));
+  qs.mcq.forEach((q,i)=>{
+    const c=h('div','card q');c.innerHTML='<div class="qt">'+(i+1)+'. (اختياري) '+esc(q[0])+'</div>'+q[1].map((o,k)=>'<label><input type="radio" name="q'+L.id+'_'+i+'" value="'+k+'"><span style="direction:auto">'+esc(o)+'</span></label>').join('');
+    box.append(c);items.push({kind:'m',c,q,i});
+  });
+  qs.es.forEach((q,i)=>{
+    const c=h('div','card q');c.innerHTML='<div class="qt">'+(qs.mcq.length+i+1)+'. (مقالي) '+esc(q[0])+'</div><textarea aria-label="إجابة السؤال"></textarea>';
+    box.append(c);items.push({kind:'e',c,q,i});
+  });
+  const res=h('div','card');res.hidden=true;
+  const act=h('div','ed-btns');act.style.cssText='border:0;padding:0';
+  const go=h('button','btn pri','صحّح الامتحان');go.type='button';const rs=h('button','btn','إعادة المحاولة');rs.type='button';
+  act.append(go,rs);box.append(act,res);
+  go.onclick=()=>{
+    let score=0;
+    items.forEach(it=>{
+      it.c.classList.remove('ok','no');const old=it.c.querySelector('.why');if(old)old.remove();
+      let ok=false,html='';
+      if(it.kind==='m'){
+        const sel=it.c.querySelector('input:checked');ok=!!sel&&+sel.value===it.q[2];
+        html=(sel?'':'<b>ما اخترتش إجابة. </b>')+'الإجابة الصحيحة: <b>'+esc(it.q[1][it.q[2]])+'</b><br>'+esc(it.q[3]);
+      }else{
+        const ans=normAr(it.c.querySelector('textarea').value);
+        const groups=it.q[1].map(g=>{const p=g.split('|');return{label:p[0],alts:(p.length>1?p.slice(1):[p[0]]).map(normAr)}});
+        const hit=groups.filter(g=>g.alts.some(a=>a&&ans.includes(a)));
+        const need=Math.ceil(groups.length*0.6);ok=hit.length>=need&&ans.length>8;
+        const miss=groups.filter(g=>!hit.includes(g)).map(g=>g.label);
+        html=(ok?'إجابتك غطّت المفاهيم المطلوبة.':'إجابتك ناقصها مفاهيم أساسية.')+(miss.length?' <b>ما ذكرتش:</b> '+miss.map(esc).join('، ')+'.':'')+'<br><b>إجابة نموذجية:</b> '+it.q[2];
+      }
+      if(ok)score++;
+      it.c.classList.add(ok?'ok':'no');it.c.append(h('div','why',(ok?'✅ صح. ':'❌ غلط. ')+html));
+    });
+    prog.quiz[L.id]=Math.max(prog.quiz[L.id]||0,score);save();
+    res.hidden=false;
+    const pc=score/total;
+    res.innerHTML='<div class="score">'+score+' / '+total+'</div><p style="margin:0">'+(pc>=.9?'ممتاز! انت متمكن من الدرس ده.':pc>=.7?'كويس جدًا. راجع الأسئلة الغلط وهتبقى 10 من 10.':pc>=.5?'مقبول. ارجع لتبويب الشرح والأخطاء الشائعة وجرّب تاني.':'محتاج مراجعة. اقرا الدرس تاني وجرّب التمرين وبعدين اعد الامتحان.')+'</p>';
+    res.scrollIntoView({behavior:'smooth',block:'center'});
+  };
+  rs.onclick=()=>{items.forEach(it=>{it.c.classList.remove('ok','no');const w=it.c.querySelector('.why');if(w)w.remove();it.c.querySelectorAll('input').forEach(i=>i.checked=false);const t=it.c.querySelector('textarea');if(t)t.value=''});res.hidden=true;box.scrollIntoView({behavior:'smooth'})};
+  return box;
+}
 
-    <div class="project-card">
-        <h3>المشروع 4: لعبة تخمين الرقم السري (Guess The Number)</h3>
-        <p><strong>فكرة المشروع:</strong> توليد رقم عشوائي ومقارنته بإدخال المستخدم مع إعطاء تلميحات (أعلى / أقل).</p>
-    </div>
+const $=s=>document.querySelector(s);
+function fixStrings(o){
+  const f=s=>s.replace(/§/g,'`').replace(/¤/g,'$');
+  if(Array.isArray(o)){o.forEach((v,i)=>{if(typeof v==='string')o[i]=f(v);else if(v&&typeof v==='object'&&!(v instanceof RegExp))fixStrings(v)})}
+  else if(o&&typeof o==='object'){for(const k in o){const v=o[k];if(typeof v==='string')o[k]=f(v);else if(v&&typeof v==='object'&&!(v instanceof RegExp))fixStrings(v)}}
+}
 
-    <div class="project-card">
-        <h3>المشروع 5: مولد كلمات المرور الآمنة (Password Generator)</h3>
-        <p><strong>فكرة المشروع:</strong> دمج الحروف والأرقام والرموز لتوليد كلمات مرور عشوائية قوية.</p>
-    </div>
 
-    <div class="project-card">
-        <h3>المشروع 6: ساعة رقمية تفاعلية (Digital Clock)</h3>
-        <p><strong>فكرة المشروع:</strong> استخدام دوال الوقت في JavaScript لتحديث الساعة والثواني لحظياً على الشاشة.</p>
-    </div>
+/* ================= محتوى JavaScript: الدروس ================= */
+const LESSONS=[
+{id:1,t:'المتغيرات',sub:'let / const / var',lang:'js',
+intro:`تخيّل علب في المطبخ مكتوب على كل علبة اسمها: «سكر»، «رز»، «شاي». لما تحتاج السكر مش بتفتح كل العلب، بتنده على العلبة باسمها. المتغير في البرمجة هو العلبة دي بالظبط: <b>اسم</b> بنحط جواه <b>قيمة</b> ونرجعلها بالاسم وقت ما نحتاجها.`,
+parts:[
+{h:'let: قيمة ممكن تتغير',p:`بنستخدم <code>let</code> لما القيمة هتتغير بعدين، زي رصيد محفظتك أو نقط لاعب في لعبة. الإشارة <code>=</code> هنا معناها «خزّن القيمة اللي على اليمين في الاسم اللي على الشمال» ومش معناها يساوي في الرياضة.`,c:`let score = 0;
+console.log("النقط:", score);
+score = score + 10;      // غيّرنا القيمة
+console.log("بعد ما كسبت:", score);`},
+{h:'const: قيمة ثابتة',p:`<code>const</code> للقيم اللي ما بتتغيرش زي اسم الموقع أو نسبة الضريبة. لو حاولت تغيّرها هتطلع رسالة خطأ، وده في صالحك لأنه بيحميك من تغيير قيمة مهمة بالغلط. القاعدة المفيدة: ابدأ بـ const دايمًا، ولو احتجت تغيّر القيمة بدّلها لـ let.`,c:`const siteName = "Gedo Academy";
+const taxRate = 0.14;
+console.log(siteName, taxRate);
+console.log("السعر بعد الضريبة:", 100 + 100 * taxRate);`},
+{h:'قواعد تسمية المتغيرات',p:`الاسم يبدأ بحرف أو <code>_</code> أو <code>$</code>، مفيهوش مسافات، ومينفعش يبقى كلمة محجوزة زي <code>let</code>. وجافاسكريبت <b>حساسة لحالة الحروف</b> يعني <code>age</code> غير <code>Age</code>. والأسلوب الشائع اسمه camelCase: أول كلمة صغيرة وكل كلمة بعدها بحرف كبير، زي <code>userName</code>. اختار أسماء بتشرح نفسها: <code>totalPrice</code> أحسن من <code>x</code>.`,c:`let userName = "Ahmed";
+let user_age = 17;
+let $price = 99;
+let totalPrice = 250;
+console.log(userName, user_age, $price, totalPrice);`},
+{h:'var: القديم',p:`<code>var</code> كان الأساس قبل سنة 2015، لكن له سلوك مربك: بيفضل ظاهر بره البلوك <code>{ }</code> اللي اتعرّف فيه. عشان كده الكود الحديث بيستخدم <code>let</code> و<code>const</code> وتشوف var في كود قديم بس.`,c:`if (true) {
+  var a = 1;   // بيظهر بره البلوك (غريب)
+  let b = 2;   // محصور جوه البلوك (صح)
+}
+console.log(a);
+console.log(typeof b);`}
+],
+mis:[
+{h:'تغيير قيمة const',p:`أكتر خطأ بيقابل المبتدئين. لما تعرّف <code>const</code> انت بتقول لجافاسكريبت «القيمة دي مش هتتغير». لو بعد كده كتبت <code>tax = 0.15</code> هتطلع رسالة <code>Assignment to constant variable</code>. الحل واحد من اتنين: لو القيمة فعلًا ثابتة سيبها وماتغيّرهاش، ولو عارف إنها هتتغير عرّفها من الأول بـ <code>let</code>. ملحوظة مهمة: const بتمنع إعادة الإسناد بس، لكن لو القيمة مصفوفة أو كائن تقدر تعدّل جواها.`,bad:`const tax = 0.14;
+tax = 0.15;
+console.log(tax);`,good:`let tax = 0.14;
+tax = 0.15;
+console.log(tax);`},
+{h:'استخدام المتغير قبل تعريفه',p:`جافاسكريبت بتقرا الكود من فوق لتحت. لو ناديت على متغير (let أو const) في سطر قبل السطر اللي عرّفته فيه هتطلع <code>Cannot access 'x' before initialization</code>. التفسير إن المتغير موجود بس في «منطقة ميتة» من أول البلوك لحد سطر تعريفه. اتعوّد تعرّف المتغيرات في الأول وبعدين تستخدمها.`,bad:`console.log(x);
+let x = 5;`,good:`let x = 5;
+console.log(x);`},
+{h:'غلط في حالة الحروف أو التهجئة',p:`<code>userName</code> و<code>username</code> بالنسبة لجافاسكريبت اسمين مختلفين خالص. لو عرّفت واحد ونديت التاني هتطلع <code>is not defined</code>. نصيحة عملية: لما تلاقي الخطأ ده راجع الاسم حرف حرف، وخلي المحرر يكمّل الأسماء بدل ما تكتبها بإيدك.`,bad:`let userName = "Mona";
+console.log(username);`,good:`let userName = "Mona";
+console.log(userName);`}
+],
+ex:{id:'e1',task:`<b>التمرين:</b> عرّف <code>const price</code> بقيمة 200 و<code>let discount</code> بقيمة 50، وبعدين اطبع السعر بعد الخصم (<code>price - discount</code>).`,starter:`// اكتب كودك هنا
+`,expected:'150',need:[[/const\s+price/,'لازم تعرّف price بـ const'],[/let\s+discount/,'لازم تعرّف discount بـ let']],hint:`const price = 200; ثم let discount = 50; وبعدها console.log(price - discount);`,sol:`const price = 200;
+let discount = 50;
+console.log(price - discount);`},
+quiz:{mcq:[
+['أي كلمة تستخدمها لتعريف قيمة ثابتة لا تتغير؟',['var','let','const','static'],2,'const معناها ثابت ومينفعش تعيد إسنادها.'],
+['إيه ناتج: let x = 5; x = 8; console.log(x);',['5','8','خطأ','undefined'],1,'let بتسمح بتغيير القيمة فآخر قيمة هي 8.'],
+['أي اسم متغير غير صحيح؟',['userName','_total','2name','$price'],2,'اسم المتغير مينفعش يبدأ برقم.'],
+['هل age و Age نفس المتغير؟',['أيوه نفس المتغير','لأ، جافاسكريبت حساسة لحالة الحروف','بيتحسبوا نفس القيمة','بيطلع خطأ دايمًا'],1,'الحروف الكبيرة والصغيرة بتفرق في الأسماء.'],
+['أنسب كلمتين لتعريف المتغيرات في الكود الحديث؟',['let و const','var فقط','int و float','define و set'],0,'let و const هما المعيار الحديث وvar قديمة.']
+],es:[
+['اشرح الفرق بين let و const.',['let','const','تتغير|تغير|تعديل','ثابت|لا تتغير|مش هتتغير'],'let للقيم اللي بتتغير بعد كده، و const للقيم الثابتة اللي ماينفعش نعيد إسنادها.'],
+['يعني إيه متغير؟ مثّل بتشبيه من الواقع.',['اسم','قيمة|بيانات','تخزين|يخزن|نحط|علبة|وعاء'],'المتغير اسم بنخزّن جواه قيمة، زي علبة عليها اسم وجواها حاجة.'],
+['ليه بنتجنب var في الكود الحديث؟',['var','بلوك|block|نطاق|scope','let|const'],'لأن var مش بتحترم حدود البلوك وبتسبب أخطاء مربكة، فاستبدلناها بـ let و const.'],
+['اذكر ثلاث قواعد لتسمية المتغيرات.',['مسافة|مسافات','رقم|ارقام','حساسة|حروف كبيرة|كبيرة وصغيرة|case'],'مفيش مسافات، ما يبدأش برقم، حساس لحالة الحروف، وبنستخدم camelCase وأسماء واضحة.'],
+['إيه اللي بيحصل لو غيّرت قيمة متغير const؟',['خطا|error|typeerror','const'],'بيحصل خطأ TypeError: Assignment to constant variable.']
+]},
+sum:['المتغير اسم بنخزن فيه قيمة.','<code>let</code> لقيمة بتتغير، <code>const</code> لقيمة ثابتة، و<code>var</code> قديمة نتجنبها.','الأسماء حساسة لحالة الحروف وبتبدأ بحرف أو _ أو $.','استخدم camelCase وأسماء واضحة.','لا تستخدم المتغير قبل تعريفه.']},
 
-    <div class="project-card">
-        <h3>المشروع 7: معرض صور متحرك (Image Slider / Carousel)</h3>
-        <p><strong>فكرة المشروع:</strong> التنقل بين الصور تلقائياً أو عبر أزرار التبديل باستخدام CSS و JS.</p>
-    </div>
+{id:2,t:'أنواع البيانات',sub:'string / number / boolean',lang:'js',
+intro:`في محفظتك فلوس وكروت وصور. كل حاجة ليها نوع وطريقة استخدام. كمان في البرمجة: الرقم 5 غير النص "5". النوع هو اللي بيحدد إيه اللي تقدر تعمله بالقيمة، فتقدر تجمع رقمين لكن بتلصق نصين.`,
+parts:[
+{h:'الأرقام والنصوص',p:`الرقم (<code>number</code>) من غير علامات تنصيص، سواء صحيح أو عشري. النص (<code>string</code>) بين علامتين <code>" "</code> أو <code>' '</code>. وتقدر تعرف نوع أي قيمة بـ <code>typeof</code>.`,c:`let age = 17;
+let price = 99.5;
+let name = "Mona";
+console.log(typeof age, typeof price, typeof name);`},
+{h:'القيم المنطقية',p:`النوع <code>boolean</code> ليه قيمتين بس: <code>true</code> و<code>false</code>. بنستخدمه في الشروط والقرارات، وناتج أي مقارنة بيكون boolean.`,c:`let isStudent = true;
+console.log(isStudent, typeof isStudent);
+console.log(10 > 3);
+console.log(5 === 7);`},
+{h:'null و undefined',p:`<code>undefined</code> معناها «المتغير اتعرّف لكن لسه ما اتحطش في قيمة». أما <code>null</code> فبنكتبها <b>إحنا بقصد</b> لما نقول «مفيش قيمة». ومن العجايب القديمة إن <code>typeof null</code> بترجع <code>"object"</code>، وده خطأ تاريخي في اللغة.`,c:`let a;
+let b = null;
+console.log(a, b);
+console.log(typeof a, typeof b);`},
+{h:'قوالب النصوص والدوال الجاهزة',p:`بدل ما تلصق النصوص بـ <code>+</code> استخدم قالب النص بعلامة الـ backtick <code>§</code> وحط المتغير جوه <code>¤{ }</code>. وللنصوص دوال جاهزة كتير زي <code>toUpperCase()</code> و<code>length</code> و<code>split()</code>.`,c:`const name = "Omar";
+const grade = 95;
+console.log(§اسمي ¤{name} ودرجتي ¤{grade}§);
+console.log("hello".toUpperCase());
+console.log("Hello".length);
+console.log("a-b-c".split("-"));`},
+{h:'تحويل الأنواع',p:`أحيانًا بنحتاج نحوّل نص لرقم أو العكس. الأدوات: <code>Number()</code> و<code>parseInt()</code> و<code>parseFloat()</code> و<code>String()</code>. لو التحويل فشل بتاخد <code>NaN</code> ومعناها «ليست رقمًا».`,c:`console.log(Number("42") + 8);
+console.log(parseInt("12px"));
+console.log(String(10) + 5);
+console.log(Number("hello"));`}
+],
+mis:[
+{h:'جمع رقم مع نص',p:`لما نستخدم <code>+</code> مع نص، جافاسكريبت بتعتبرها عملية «لصق» مش جمع. فـ <code>"5" + 3</code> بتطلع <code>"53"</code>. المشكلة بتظهر كتير لما تاخد قيمة من خانة إدخال (input) لأنها دايمًا بتيجي نص. الحل إنك تحوّل القيمة لرقم الأول بـ <code>Number()</code> قبل أي حساب. أما الطرح والضرب والقسمة فبتحوّل النص لرقم لوحدها، وده بيخلي الغلط مش واضح.`,bad:`const a = "5";
+console.log(a + 3);
+console.log(a - 3);`,good:`const a = "5";
+console.log(Number(a) + 3);`},
+{h:'الاعتماد على typeof مع null',p:`لو عايز تتأكد إن القيمة كائن بجد وجربت <code>typeof x === "object"</code> هتتفاجئ إن <code>null</code> كمان بتدي object. لازم تفحص null بشكل منفصل. وللمصفوفات استخدم <code>Array.isArray()</code> لأن typeof بترجع object لهم برضه.`,bad:`let user = null;
+console.log(typeof user);
+console.log(typeof []);`,good:`let user = null;
+console.log(user === null);
+console.log(Array.isArray([]));`},
+{h:'مشكلة الأعداد العشرية',p:`الكمبيوتر بيخزّن الأرقام العشرية بصيغة ثنائية، فبعض القيم زي 0.1 مش بتتخزن بالظبط. النتيجة إن <code>0.1 + 0.2</code> مش بتساوي <code>0.3</code> بالظبط. دي مش غلطتك ولا غلطة جافاسكريبت وحدها، لغات كتير بتعمل كده. لما تعمل حسابات فلوس قرّب النتيجة بـ <code>toFixed(2)</code> أو اشتغل بالقروش كأرقام صحيحة.`,bad:`console.log(0.1 + 0.2);
+console.log(0.1 + 0.2 === 0.3);`,good:`console.log((0.1 + 0.2).toFixed(2));
+console.log(Math.abs(0.1 + 0.2 - 0.3) < 0.0001);`}
+],
+ex:{id:'e2',task:`<b>التمرين:</b> عندك <code>a = "10"</code> (نص) و<code>b = 5</code> (رقم). اطبع مجموعهم كرقم، يعني النتيجة <code>15</code>.`,starter:`const a = "10";
+const b = 5;
+// اطبع مجموعهم هنا
+`,expected:'15',need:[[/Number\(|parseInt\(|parseFloat\(|\+\s*a\b/,'لازم تحوّل النص a لرقم الأول']],hint:`حوّل a لرقم بـ Number(a) وبعدين اجمع.`,sol:`const a = "10";
+const b = 5;
+console.log(Number(a) + b);`},
+quiz:{mcq:[
+['ناتج typeof "hello" هو؟',['string','text','char','word'],0,'النصوص نوعها string.'],
+['ناتج "5" + 3 هو؟',['8','53','خطأ','NaN'],1,'مع النص + بتلصق، فالنتيجة نص "53".'],
+['أيهم ليس من الأنواع الأساسية في جافاسكريبت؟',['number','boolean','string','integer'],3,'اللغة فيها number بس، مفيش نوع اسمه integer.'],
+['ناتج typeof null هو؟',['null','undefined','object','number'],2,'خطأ تاريخي في اللغة بيرجع object.'],
+['أنسب طريقة لدمج متغير جوه نص؟',['علامات تنصيص فقط','backtick مع ¤{ }','علامة # ','أقواس { } فقط'],1,'قالب النص: backtick وجواه ¤{اسم_المتغير}.']
+],es:[
+['اذكر أنواع البيانات الأساسية في جافاسكريبت مع مثال لكل نوع.',['string|نص|نصوص','number|رقم|ارقام','boolean|منطقي|true','null','undefined'],'string مثل "Ali"، number مثل 25، boolean مثل true، null للقيمة الفارغة بقصد، undefined للمتغير بلا قيمة.'],
+['ما الفرق بين null و undefined؟',['null','undefined','قصد|عمدا|فارغ|فاضي','لم تحدد|معرف|ماتحطش|اتحطش|بدون قيمة'],'undefined يعني المتغير معرّف بلا قيمة، وnull قيمة فارغة بنحطها بقصد.'],
+['ليه "5" + 3 بتدي "53"؟',['نص|string','دمج|لصق|concat|يلصق|ضم','تحويل|يحول|بيحول'],'لأن أحد الطرفين نص فبتحصل عملية دمج (لصق) والرقم بيتحوّل لنص.'],
+['إزاي تحوّل نص لرقم؟',['number','parseint|parsefloat','نص|string'],'بنستخدم Number("42") أو parseInt أو parseFloat.'],
+['إيه فايدة قوالب النصوص (template literals)؟',['متغير|متغيرات|دمج|ادخال','backtick|`|علامات','سطر|اسطر|اكثر من سطر|اسهل|اوضح'],'بتخلينا ندمج المتغيرات داخل النص بسهولة بـ ¤{ } وتدعم أكتر من سطر.']
+]},
+sum:['الأنواع الأساسية: string, number, boolean, null, undefined.','typeof بتعرّفك نوع القيمة (وtypeof null بترجع object).','"5" + 3 = "53" لأن + مع النص معناها لصق.','حوّل بـ Number() أو parseInt().','قوالب النصوص بعلامة backtick و ¤{متغير}.']},
 
-    <div class="project-card">
-        <h3>المشروع 8: نظام تقييم بالنجوم (Star Rating System)</h3>
-        <p><strong>فكرة المشروع:</strong> التفاعل مع ضغطات المستخدم لتلوين النجوم وإظهار رسالة شكر.</p>
-    </div>
+{id:3,t:'العمليات والمقارنات',sub:'+ - * / % === && ||',lang:'js',
+intro:`وانت بتحاسب في السوبرماركت بتعمل عمليات حساب (جمع وخصم) ومقارنات (هل معايا فلوس كفاية؟) وقرارات مركبة (لو معايا فلوس <b>و</b> العرض لسه شغال). العمليات في البرمجة هي نفس الحاجات دي.`,
+parts:[
+{h:'العمليات الحسابية',p:`الجمع <code>+</code> والطرح <code>-</code> والضرب <code>*</code> والقسمة <code>/</code>، والباقي <code>%</code> (مفيد جدًا لمعرفة العدد الزوجي)، والأُس <code>**</code>. وفي اختصارات زي <code>+=</code> و<code>++</code>.`,c:`console.log(7 + 3, 7 - 3, 7 * 3);
+console.log(7 / 2);       // 3.5
+console.log(7 % 2);       // باقي القسمة = 1
+console.log(2 ** 3);      // 8
+let n = 5;
+n += 2;                   // n = n + 2
+n++;                      // زيادة بواحد
+console.log(n);`},
+{h:'عوامل المقارنة',p:`بترجع <code>true</code> أو <code>false</code>: <code>></code> <code><</code> <code>>=</code> <code><=</code>. وللمساواة في عاملين: <code>==</code> (يساوي بعد تحويل النوع) و<code>===</code> (يساوي بالقيمة <b>والنوع</b>). استخدم <code>===</code> دايمًا.`,c:`console.log(10 > 5);
+console.log("5" == 5);    // true (بيحوّل النوع)
+console.log("5" === 5);   // false (النوع مختلف)
+console.log(5 !== 6);`},
+{h:'العوامل المنطقية',p:`<code>&&</code> معناها «و» (الاتنين لازم يتحققوا)، <code>||</code> معناها «أو» (واحد يكفي)، و<code>!</code> بتعكس القيمة. بنستخدمهم لما الشرط يكون مركب.`,c:`const age = 20, hasId = true;
+console.log(age >= 18 && hasId);   // true
+console.log(age < 18 || hasId);    // true
+console.log(!hasId);               // false`},
+{h:'العامل الثلاثي',p:`اختصار لـ if/else بسطر واحد: <code>شرط ? قيمة_لو_صح : قيمة_لو_غلط</code>.`,c:`const score = 72;
+const result = score >= 50 ? "ناجح" : "راسب";
+console.log(result);`}
+],
+mis:[
+{h:'الخلط بين == و ===',p:`<code>==</code> بتحاول تحوّل الأنواع لبعض قبل المقارنة، فبتدي نتايج مش متوقعة: <code>0 == ""</code> و<code>"1" == 1</code> كلهم true. ده بيخبّي أخطاء في الكود. القاعدة البسيطة: استخدم <code>===</code> و<code>!==</code> في كل المقارنات وماتفكرش في الباقي.`,bad:`console.log(0 == "");
+console.log("1" == 1);`,good:`console.log(0 === "");
+console.log("1" === 1);`},
+{h:'استخدام = بدل === في الشرط',p:`علامة <code>=</code> الواحدة معناها «خزّن»، مش «قارن». لو كتبت <code>if (x = 5)</code> انت بتحط 5 في x وبعدين بتسأل: هل 5 قيمة صحيحة؟ وده دايمًا true. فالشرط هيتنفذ مهما كانت قيمة x الأصلية. دقق في عدد علامات التساوي.`,bad:`let x = 3;
+if (x = 5) { console.log("اتنفّذ رغم إن x كانت 3!"); }
+console.log(x);`,good:`let x = 3;
+if (x === 5) { console.log("اتنفّذ"); }
+console.log(x);`},
+{h:'توقع قسمة صحيحة',p:`في لغات تانية <code>7 / 2</code> بتدي 3. في جافاسكريبت كل الأرقام من نوع واحد فالنتيجة 3.5. لو محتاج الجزء الصحيح استخدم <code>Math.floor()</code>، ولو محتاج الباقي استخدم <code>%</code>.`,bad:`console.log(7 / 2);`,good:`console.log(Math.floor(7 / 2));
+console.log(7 % 2);`}
+],
+ex:{id:'e3',task:`<b>التمرين:</b> عندك <code>n = 17</code>. اطبع في سطر أول هل n عدد زوجي (<code>true</code> أو <code>false</code>)، وفي سطر تاني باقي قسمة n على 5.`,starter:`const n = 17;
+// اطبع السطرين هنا
+`,expected:'false\n2',need:[[/%/,'لازم تستخدم عامل الباقي %']],hint:`n % 2 === 0 بتقولك هل زوجي. و n % 5 بتدي الباقي.`,sol:`const n = 17;
+console.log(n % 2 === 0);
+console.log(n % 5);`},
+quiz:{mcq:[
+['إيه ناتج 7 % 3 ؟',['2','1','3','0'],1,'7 ÷ 3 = 2 والباقي 1.'],
+['إيه ناتج  "5" == 5 ؟',['true','false','خطأ','undefined'],0,'== بتحوّل النوع فبتساوي.'],
+['إيه ناتج  "5" === 5 ؟',['true','false','خطأ','undefined'],1,'=== بتقارن النوع كمان، نص مقابل رقم.'],
+['أي عامل يعني «و» المنطقي؟',['||','&&','!','??'],1,'&& معناها AND.'],
+['إيه ناتج: 10 > 5 ? "yes" : "no" ؟',['yes','no','true','خطأ'],0,'الشرط صح فبيرجع القيمة الأولى.']
+],es:[
+['اشرح الفرق بين == و ===.',['==|يساوي','===|صارم|strict','النوع|type|تحويل|نوع'],'== بتحوّل الأنواع قبل المقارنة، و=== بتقارن القيمة والنوع بدون تحويل ولذلك هي الأفضل.'],
+['اشرح العوامل المنطقية && و || و !.',['and|&&|و ','or|او','not|!|عكس|نفي'],'&& تتحقق لما الاتنين صح، || لما واحد على الأقل صح، و! بتعكس القيمة.'],
+['إيه استخدام عامل الباقي % ؟ مع مثال.',['باقي|الباقي','قسمة|قسمه','زوجي|فردي|مثال'],'بيرجع باقي القسمة، ومنه نعرف الزوجي: n % 2 === 0.'],
+['ما هو العامل الثلاثي (ternary)؟',['شرط|condition','?|ternary|ثلاثي','بديل|مختصر|if'],'اختصار لـ if/else في سطر: شرط ? لو_صح : لو_غلط.'],
+['ما الفرق بين = و == ؟',['اسناد|تعيين|assign|تخزين|يخزن|بيحط|بتحط','مقارنة|يقارن|بتقارن|compare','=='],'= بتخزن قيمة في متغير، و== بتقارن بين قيمتين.']
+]},
+sum:['العمليات: + - * / % **.','قارن دايمًا بـ === و !==.','&& (و)، || (أو)، ! (عكس).','العامل الثلاثي: شرط ? أ : ب.','= للإسناد و === للمقارنة.']},
 
-    <div class="project-card">
-        <h3>المشروع 9: محول العملات العالمي (Currency Converter)</h3>
-        <p><strong>فكرة المشروع:</strong> حساب أسعار الصرف وتحويل العملات بناءً على القيم المدخلة.</p>
-    </div>
+{id:4,t:'الشروط',sub:'if / else / switch',lang:'js',
+intro:`إشارة المرور: لو الإشارة <b>حمرا</b> وقّف، وإلا لو <b>صفرا</b> استعد، وإلا اعدّي. الكود كمان بياخد قرارات حسب حالة معينة، وده اللي بنسميه الشروط.`,
+parts:[
+{h:'if و else if و else',p:`الكود جوه <code>if</code> بيتنفذ لو الشرط <code>true</code>. بنزوّد <code>else if</code> لشروط إضافية، و<code>else</code> للحالة الأخيرة. جافاسكريبت بتفحص من فوق لتحت وبتقف عند أول شرط يتحقق.`,c:`const temp = 32;
+if (temp > 35) {
+  console.log("حر شديد");
+} else if (temp > 25) {
+  console.log("جو دافئ");
+} else {
+  console.log("جو لطيف");
+}`},
+{h:'القيم truthy و falsy',p:`في الشرط أي قيمة بتتحول لـ true أو false. القيم الـ <b>falsy</b> هي: <code>false</code> و<code>0</code> و<code>""</code> (نص فاضي) و<code>null</code> و<code>undefined</code> و<code>NaN</code>. أي حاجة غيرها truthy حتى <code>"0"</code> و<code>[]</code>.`,c:`const values = [0, "", null, "hi", 5, [], undefined];
+for (const v of values) {
+  if (v) console.log(v, "→ truthy");
+  else console.log(v, "→ falsy");
+}`},
+{h:'switch للحالات الكتير',p:`لما بتقارن متغير واحد بقيم كتير، <code>switch</code> أنضف من if كتير. كل <code>case</code> لازم ينتهي بـ <code>break</code> وإلا الكود هيكمل للحالة اللي بعده. <code>default</code> للحالة اللي مفيش فيها تطابق.`,c:`const day = 5;
+switch (day) {
+  case 5:
+    console.log("الجمعة");
+    break;
+  case 6:
+    console.log("السبت");
+    break;
+  default:
+    console.log("يوم تاني");
+}`}
+],
+mis:[
+{h:'ترتيب else if غلط',p:`جافاسكريبت بتنفذ أول شرط صحيح وبتتجاهل الباقي. لو بدأت بالشرط الأوسع (درجة أكبر من 50) هو هيتحقق لأي درجة عالية ومش هتوصل للشروط الأدق. رتّب الشروط من الأدق للأعم: الأعلى قيمة الأول.`,bad:`const score = 95;
+if (score >= 50) console.log("ناجح");
+else if (score >= 90) console.log("ممتاز");`,good:`const score = 95;
+if (score >= 90) console.log("ممتاز");
+else if (score >= 50) console.log("ناجح");`},
+{h:'نسيان break في switch',p:`من غير <code>break</code> بيحصل «السقوط» (fall-through): بعد ما الحالة تتحقق الكود بيكمل ينفذ الحالات اللي تحتها كلها لحد ما يقابل break. أحيانًا ده بيكون مقصود، لكن غالبًا بيكون خطأ. اتعوّد تكتب break في آخر كل case.`,bad:`const x = 1;
+switch (x) {
+  case 1: console.log("واحد");
+  case 2: console.log("اتنين");
+  default: console.log("غيرهم");
+}`,good:`const x = 1;
+switch (x) {
+  case 1: console.log("واحد"); break;
+  case 2: console.log("اتنين"); break;
+  default: console.log("غيرهم");
+}`},
+{h:'اعتبار "false" أو "0" نصًا falsy',p:`النص <code>"false"</code> والنص <code>"0"</code> truthy لأنهم نصوص مش فاضية! الغلط ده بيظهر لما تقرا قيمة من مكان بتيجي نص. لازم تقارن القيمة صراحة: <code>value === "false"</code> أو تحوّلها لرقم الأول.`,bad:`const flag = "false";
+if (flag) console.log("اتنفّذ رغم إنها false!");`,good:`const flag = "false";
+if (flag === "true") console.log("مفعّل");
+else console.log("مش مفعّل");`}
+],
+ex:{id:'e4',task:`<b>التمرين:</b> اكتب دالة <code>grade(score)</code> ترجع <code>"A"</code> لو الدرجة 90 أو أكتر، و<code>"B"</code> لو 75 أو أكتر، وغير كده <code>"C"</code>. (الاستدعاءات مكتوبة تحت لوحدها.)`,starter:`function grade(score) {
+  // اكتب الشروط هنا
+}
+`,after:`console.log(grade(95));
+console.log(grade(80));
+console.log(grade(40));`,expected:'A\nB\nC',need:[[/if/,'استخدم if / else if']],hint:`ابدأ بالأكبر: if (score >= 90) return "A"; وبعدين else if (score >= 75) ... وأخيرًا return "C".`,sol:`function grade(score) {
+  if (score >= 90) return "A";
+  else if (score >= 75) return "B";
+  return "C";
+}`},
+quiz:{mcq:[
+['أي كلمة تستخدم للحالة البديلة لو الشرط الأول فشل؟',['else','otherwise','elif','then'],0,'else (وجافاسكريبت مفيهاش elif، بنكتب else if).'],
+['أي قيمة من دول falsy؟',["'hello'",'0','[]','{}'],1,'الصفر falsy. المصفوفة والكائن truthy.'],
+['switch من غير break بيعمل إيه؟',['يوقف','يكمل للحالة اللي بعدها (fall-through)','يطلع خطأ','يرجع للأول'],1,'بيكمل تنفيذ الحالات اللي تحته.'],
+['ناتج الشرط (5 > 3 && 2 > 4) هو؟',['true','false','خطأ','undefined'],1,'الجزء التاني false فالنتيجة false.'],
+['أنسب أداة لو بتقارن قيمة واحدة بحالات كتير؟',['switch','for','while','try'],0,'switch معمول للحالات المتعددة.']
+],es:[
+['اشرح if و else if و else بمثال.',['if','else if|elseif','else|والا|غير كده','شرط|condition'],'if للشرط الأول، else if لشروط إضافية، else لما مفيش شرط اتحقق. مثال: if (x>10) ... else if (x>5) ... else ...'],
+['اذكر القيم falsy في جافاسكريبت.',['0','false','null','undefined','nan|""|نص فاضي'],'false و0 و"" و null و undefined و NaN.'],
+['إمتى نستخدم switch بدل if؟',['قيمة|متغير واحد|متغير','حالات|case|خيارات','switch'],'لما نقارن متغير واحد بحالات مختلفة كتير، بتبقى أوضح من if كتيرة.'],
+['ليه ترتيب else if مهم؟',['اول|الاول|ترتيب|بالترتيب','شرط|شروط|conditions','يتوقف|يتنفذ|ينفذ|مطابق|اول شرط'],'لأن جافاسكريبت بتنفذ أول شرط يتحقق وبتتجاهل الباقي، فلازم الشروط الأدق تيجي الأول.'],
+['إيه دور break في switch؟',['break','يوقف|يخرج|ينهي|بيوقف','fall|يكمل|الحالة اللي بعدها|بعدها'],'بتوقف تنفيذ الـ switch بعد الحالة المطابقة عشان الكود ما يكملش للحالات اللي بعدها.']
+]},
+sum:['if / else if / else بتفحص من فوق لتحت وتقف عند أول شرط صحيح.','falsy: false, 0, "", null, undefined, NaN.','switch للمقارنة بحالات كتير، ولازم break.','رتّب الشروط من الأدق للأعم.']},
 
-    <div class="project-card">
-        <h3>المשروع 10: صفحة هبوط لشركتك الشخصية (Personal Landing Page)</h3>
-        <p><strong>فكرة المشروع:</strong> دمج HTML و CSS لتصميم واجهة تعريفية متجاوبة بالكامل لـ Made By Gedo.</p>
-    </div>
-</div>
+{id:5,t:'الحلقات',sub:'for / while / for…of',lang:'js',
+intro:`لو طلب منك المدرس تكتب اسمك 100 مرة مش هتكتبه بإيدك مية مرة وهتدور على طريقة أسرع. الحلقة هي طريقة تقول فيها للكمبيوتر: كرر الحاجة دي كذا مرة أو لحد ما يحصل شرط معين.`,
+parts:[
+{h:'for: لما نعرف عدد المرات',p:`فيها تلات أجزاء: <code>بداية; شرط; تحديث</code>. مثلًا <code>let i = 0; i &lt; 5; i++</code> يعني ابدأ من 0 وكرر طول ما i أصغر من 5 وزوّد i بواحد كل مرة.`,c:`for (let i = 1; i <= 5; i++) {
+  console.log("الدور رقم", i);
+}`},
+{h:'while و do…while',p:`<code>while</code> بتكرر طول ما الشرط صح ومناسبة لما منعرفش عدد المرات. و<code>do…while</code> بتنفذ مرة واحدة على الأقل وبعدين تفحص الشرط.`,c:`let money = 100;
+while (money > 30) {
+  money -= 25;
+  console.log("فاضل", money);
+}
+let k = 10;
+do { console.log("بتتنفذ مرة على الأقل", k); } while (k < 5);`},
+{h:'for…of للمرور على عناصر',p:`لما تحب تمر على كل عنصر في مصفوفة أو نص من غير ما تحتاج العدّاد.`,c:`const fruits = ["تفاح", "موز", "برتقال"];
+for (const f of fruits) {
+  console.log(f);
+}
+for (const ch of "abc") console.log(ch);`},
+{h:'break و continue',p:`<code>break</code> بتخرج من الحلقة نهائيًا. <code>continue</code> بتتخطى الدورة الحالية وتروح للي بعدها.`,c:`for (let i = 1; i <= 8; i++) {
+  if (i === 3) continue;   // اتخطى 3
+  if (i === 6) break;      // اخرج عند 6
+  console.log(i);
+}`}
+],
+mis:[
+{h:'الحلقة اللانهائية',p:`لو شرط الحلقة فضل <code>true</code> للأبد (غالبًا لأنك نسيت تحدّث العدّاد) المتصفح هيهنّج. مثال: while (i &lt; 5) من غير i++ جواها. قبل ما تشغّل أي حلقة اسأل نفسك: إيه اللي هيخلي الشرط يبقى false في الآخر؟ (المحرر هنا بيوقف الكود بعد ثواني لو دخل في حلقة بلا نهاية.)`,bad:`let i = 0;
+while (i < 5) {
+  console.log(i);
+}`,good:`let i = 0;
+while (i < 5) {
+  console.log(i);
+  i++;
+}`},
+{h:'خطأ بواحد (Off-by-one)',p:`أشهر خطأ في الحلقات. المصفوفة اللي طولها 3 عناصرها أرقامها 0 و1 و2. لو كتبت <code>i &lt;= arr.length</code> هتوصل لـ arr[3] وده مش موجود فيطلع undefined. استخدم <code>&lt;</code> مع الـ length.`,bad:`const a = ["x", "y", "z"];
+for (let i = 0; i <= a.length; i++) {
+  console.log(a[i]);
+}`,good:`const a = ["x", "y", "z"];
+for (let i = 0; i < a.length; i++) {
+  console.log(a[i]);
+}`},
+{h:'استخدام var جوه حلقة مع دوال مؤجلة',p:`مع <code>var</code> فيه نسخة واحدة من المتغير للحلقة كلها. لما الدوال المؤجلة (setTimeout) تتنفذ تكون الحلقة خلصت وقيمة i بقت 3 للكل. <code>let</code> بيعمل نسخة جديدة في كل دورة فبيشتغل صح.`,bad:`for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 0);
+}`,good:`for (let i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 0);
+}`}
+],
+ex:{id:'e5',task:`<b>التمرين:</b> اطبع مجموع الأرقام من 1 لـ 10 (يعني <code>55</code>) باستخدام حلقة.`,starter:`let sum = 0;
+// اكتب الحلقة هنا
 
-<!-- قسم الامتحانات التفاعلية -->
-<div class="exams-section">
-    <h2 style="color: #f8fafc; margin-bottom: 20px; font-size: 26px;">📝 امتحان تقييم المستوى (10 أسئلة لكل لغة)</h2>
-    
-    <div class="exam-card">
-        <h3>اختبار لغة JavaScript الشامل</h3>
-        
-        <div class="question-box">
-            <p><strong>سؤال 1 (اختياري):</strong> ما هي الكلمة المفتاحية المستخدمة لتعريف متغير ثابت لا يمكن تغيير قيمته؟</p>
-            <label><input type="radio" name="q1"> أ) let</label><br>
-            <label><input type="radio" name="q1"> ب) const</label><br>
-            <label><input type="radio" name="q1"> ج) var</label>
-        </div>
+console.log(sum);
+`,expected:'55',need:[[/for|while/,'لازم تستخدم حلقة for أو while']],hint:`for (let i = 1; i <= 10; i++) { sum += i; }`,sol:`let sum = 0;
+for (let i = 1; i <= 10; i++) {
+  sum += i;
+}
+console.log(sum);`},
+quiz:{mcq:[
+['كام مرة هتتنفذ: for (let i = 0; i < 5; i++) ؟',['4','5','6','بلا نهاية'],1,'من 0 لـ 4 يعني 5 مرات.'],
+['أي أمر بيخرج من الحلقة نهائيًا؟',['continue','break','stop','exit'],1,'break بتنهي الحلقة.'],
+['أي حلقة بتتنفذ مرة واحدة على الأقل؟',['for','while','do...while','for...of'],2,'do...while بتنفذ الأول وبعدين بتفحص.'],
+['for...of بنستخدمها مع؟',['مصفوفات ونصوص','أرقام فقط','دوال','لا شيء'],0,'للمرور على عناصر قابلة للتكرار.'],
+['إيه سبب إن while (i < 5) { console.log(i) } لا تنتهي؟',['الشرط بيفضل صح للأبد','كتابة خاطئة','i غير معرف','مفيش مشكلة'],0,'محدش بيزوّد i فالشرط مش بيبقى false.']
+],es:[
+['اشرح الفرق بين for و while.',['for','while','عدد|معروف|مرات','شرط'],'for لما نعرف عدد التكرارات، و while لما التكرار يعتمد على شرط مش معروف عدد مراته.'],
+['اشرح الفرق بين break و continue.',['break','continue','يخرج|يوقف|ينهي|بيخرج|بتخرج','يتخطى|يكمل|الحالية|التالية|تتخطى'],'break بتخرج من الحلقة كلها، continue بتتخطى الدورة الحالية وتكمل للتالية.'],
+['اكتب (كنص) كود يجمع الأرقام من 1 لـ 10 واشرحه.',['حلقة|for|while','مجموع|sum|total|جمع','+=|+'],'let sum=0; for(let i=1;i<=10;i++){ sum+=i; } console.log(sum); بنزوّد كل رقم على المجموع.'],
+['إيه هي الحلقة اللانهائية وإزاي نتجنبها؟',['لانهاية|لا نهاية|infinite|تفضل|للابد|بلا نهاية','شرط','i++|زيادة|تحديث|عداد'],'حلقة شرطها دايمًا صح. بنتجنبها بإننا نغيّر العدّاد داخلها ونتأكد إن الشرط هيبقى false.'],
+['إمتى نستخدم for...of؟',['مصفوفة|مصفوفات|array','عناصر|عنصر|قيم','for'],'لما نعوز نمر على كل عناصر مصفوفة أو نص من غير عدّاد.']
+]},
+sum:['for لما نعرف العدد، while لما الشرط هو الأساس.','for…of للمرور على عناصر المصفوفة والنصوص.','break تخرج، continue تتخطى الدورة.','احذر الحلقة اللانهائية وخطأ الواحد (<= مع length).','استخدم let جوه الحلقات مش var.']},
 
-        <div class="question-box">
-            <p><strong>سؤال 2 (اختياري):</strong> أي من الآتي يُستخدم لطباعة النتائج في وحدة التحكم (Console)؟</p>
-            <label><input type="radio" name="q2"> أ) print()</label><br>
-            <label><input type="radio" name="q2"> ب) console.log()</label><br>
-            <label><input type="radio" name="q2"> ج) echo()</label>
-        </div>
+{id:6,t:'الدوال',sub:'function / arrow / scope',lang:'js',
+intro:`ماكينة العصير: بتحط فاكهة (مدخلات)، بتضغط زرار، وبيطلع عصير (مخرجات). مش بتفكر في إزاي بتشتغل جواها وتقدر تستخدمها كل مرة. الدالة هي ماكينة كود: بنكتبها مرة واحدة وبنستخدمها بعدد مرات غير محدود.`,
+parts:[
+{h:'تعريف الدالة واستدعاؤها',p:`بنعرّف الدالة بـ <code>function</code> واسم وأقواس وجسم بين <code>{ }</code>. التعريف لوحده مبينفذش حاجة، لازم <b>نستدعيها</b> بالاسم وأقواس <code>()</code>. الكلمة <code>return</code> بترجّع النتيجة وبتوقف الدالة.`,c:`function greet(name) {
+  return "أهلاً يا " + name;
+}
+console.log(greet("Ali"));
+console.log(greet("Mona"));`},
+{h:'المعاملات والقيم الافتراضية',p:`الأسماء اللي بين الأقواس وقت التعريف اسمها <b>معاملات (parameters)</b>، والقيم اللي بنبعتها وقت الاستدعاء اسمها <b>وسائط (arguments)</b>. ولو عايز قيمة افتراضية لما المستخدم ميبعتش حاجة حطها بعلامة <code>=</code>.`,c:`function price(base, tax = 0.14) {
+  return base + base * tax;
+}
+console.log(price(100));
+console.log(price(100, 0.05));`},
+{h:'الدوال السهمية (Arrow)',p:`صيغة مختصرة وحديثة. لو الجسم تعبير واحد تقدر تشيل الأقواس <code>{ }</code> و<code>return</code> وهي هترجّع النتيجة لوحدها.`,c:`const square = (n) => n * n;
+const add = (a, b) => a + b;
+const hello = () => {
+  console.log("مرحبا");
+};
+console.log(square(5), add(2, 3));
+hello();`},
+{h:'النطاق (Scope)',p:`المتغير المعرّف <b>جوه</b> الدالة بيعيش جواها بس ومش ظاهر بره. المتغير المعرّف بره بتشوفه الدالة. كل دالة عندها «عالمها الخاص» وده بيحمي الكود من التداخل.`,c:`const outside = "أنا بره";
+function test() {
+  const inside = "أنا جوه";
+  console.log(outside);
+  console.log(inside);
+}
+test();
+console.log(typeof inside);`},
+{h:'الدالة كقيمة (Callback)',p:`في جافاسكريبت الدالة قيمة عادية تقدر تبعتها لدالة تانية. الدالة اللي بتتبعت اسمها callback، وده أساس كل التعامل مع الأحداث والبيانات المتأخرة.`,c:`function repeat(n, action) {
+  for (let i = 1; i <= n; i++) action(i);
+}
+repeat(3, (i) => console.log("المرة", i));`}
+],
+mis:[
+{h:'نسيان return',p:`لو الدالة خلصت من غير <code>return</code> هترجع <code>undefined</code> حتى لو حسبت النتيجة صح جواها. <code>console.log</code> جوه الدالة بتطبع بس لكنها مش بترجّع قيمة تقدر تستخدمها في مكان تاني. افصل بين «الطباعة» و«الإرجاع».`,bad:`function add(a, b) {
+  a + b;
+}
+console.log(add(2, 3));`,good:`function add(a, b) {
+  return a + b;
+}
+console.log(add(2, 3));`},
+{h:'استدعاء الدالة من غير أقواس',p:`<code>greet</code> هي الدالة نفسها كقيمة، و<code>greet()</code> هي اللي بتنفذها. لو كتبت الاسم من غير أقواس مش هتحصل الحاجة المطلوبة وهتتطبع الدالة بدل نتيجتها.`,bad:`function greet() { return "hi"; }
+console.log(greet);`,good:`function greet() { return "hi"; }
+console.log(greet());`},
+{h:'استخدام متغير الدالة بره الدالة',p:`المتغير اللي اتعرّف جوه دالة بيموت لما الدالة تخلص. لو عايز تستخدم القيمة بره ارجعها بـ <code>return</code> وخزنها في متغير بره.`,bad:`function calc() {
+  const result = 10 * 2;
+}
+calc();
+console.log(result);`,good:`function calc() {
+  return 10 * 2;
+}
+const result = calc();
+console.log(result);`}
+],
+ex:{id:'e6',task:`<b>التمرين:</b> اكتب دالة <code>add(a, b)</code> ترجّع مجموع الرقمين. (الاستدعاءات مكتوبة تحت لوحدها.)`,starter:`function add(a, b) {
+  // اكتب هنا
+}
+`,after:`console.log(add(2, 3));
+console.log(add(-1, 1));`,expected:'5\n0',need:[[/return/,'الدالة لازم ترجّع النتيجة بـ return']],hint:`return a + b;`,sol:`function add(a, b) {
+  return a + b;
+}`},
+quiz:{mcq:[
+['إيه اللي بترجعه الدالة لو مفيهاش return؟',['0','null','undefined','نص فاضي'],2,'الدالة من غير return بترجع undefined.'],
+['أي صيغة arrow function صحيحة؟',['(a, b) => a + b','function => (a, b)','a, b -> a + b','=> a + b (a, b)'],0,'الصيغة (معاملات) => تعبير.'],
+['المتغير المعرّف جوه دالة بـ let بيتشاف؟',['في كل مكان','جوه الدالة بس','في الملف كله','بعد استدعاء الدالة بس'],1,'نطاقه محصور داخل الدالة.'],
+['function f(a, b = 2) { return a + b } ... f(1) بتساوي؟',['3','NaN','1','undefined'],0,'b بياخد القيمة الافتراضية 2 فالنتيجة 3.'],
+['إيه الفرق بين f و f() ؟',['مفيش فرق','f هي الدالة نفسها وf() بتنفذها','f() أسرع','f خطأ'],1,'الأقواس هي اللي بتستدعي الدالة.']
+],es:[
+['إيه هي الدالة ولماذا نستخدمها؟',['كود|اوامر|تعليمات|كتلة','اعادة|تكرار|مرة تانية|reuse|نستخدمها كتير','اسم|ننادي|استدعاء'],'كتلة كود بنكتبها مرة وبنستدعيها بالاسم أكتر من مرة، فبتقلل التكرار وبتنظم الكود.'],
+['اشرح الفرق بين parameter و argument.',['parameter|بارامتر|معامل','argument|ارجيومنت|وسيط|قيمة','تعريف|استدعاء'],'parameter اسم بنكتبه وقت تعريف الدالة، و argument القيمة الفعلية اللي بنبعتها وقت الاستدعاء.'],
+['اشرح وظيفة return.',['return','قيمة|ترجع|نتيجة|ترجّع','يوقف|تنتهي|ينهي|توقف'],'return بترجّع قيمة من الدالة وبتوقف تنفيذها عند السطر ده.'],
+['إيه هو الـ scope؟',['scope|نطاق|مجال','داخل|جوه','خارج|برا|بره'],'النطاق هو المكان اللي المتغير بيكون شايفه فيه؛ المتغير داخل الدالة مش ظاهر خارجها.'],
+['اكتب arrow function بتضرب رقمين واشرح صيغتها.',['=>','*','سهم|arrow|دالة'],'const mul = (a, b) => a * b; السهم => بيفصل المعاملات عن الجسم، ومن غير أقواس بيرجّع الناتج تلقائيًا.']
+]},
+sum:['الدالة كود قابل لإعادة الاستخدام، بتتعرّف مرة وتتستدعى بـ ().','return بترجّع النتيجة وبتوقف الدالة.','المعاملات وقت التعريف، والوسائط وقت الاستدعاء، ويمكن إعطاء قيم افتراضية.','Arrow function: (a, b) => a + b.','المتغيرات جوه الدالة مش ظاهرة بره.']},
 
-        <div class="question-box">
-            <p><strong>سؤال 3 (مقالي):</strong> اشرح باختصار الفرق بين المتغيرات في JavaScript وكيف تمنع الأخطاء البرمجية؟</p>
-            <textarea style="width:100%; height:80px; background:#0f172a; color:white; border:1px solid #475569; padding:8px; border-radius:4px;" placeholder="اكتب إجابتك المقالية هنا..."></textarea>
-        </div>
+{id:7,t:'المصفوفات',sub:'Arrays + map / filter / reduce',lang:'js',
+intro:`قطار عربياته مرقمة من الأول للآخر وكل عربية فيها حاجة. المصفوفة هي كده: قائمة مرتبة من القيم، وكل قيمة ليها رقم بيبدأ من <b>صفر</b> مش من واحد.`,
+parts:[
+{h:'إنشاء مصفوفة والوصول لعناصرها',p:`بنكتبها بين <code>[ ]</code> والعناصر بينها فاصلة. أول عنصر رقمه <code>0</code> وآخر عنصر رقمه <code>length - 1</code>.`,c:`const fruits = ["تفاح", "موز", "برتقال"];
+console.log(fruits[0]);
+console.log(fruits.length);
+console.log(fruits[fruits.length - 1]);`},
+{h:'الإضافة والحذف',p:`<code>push</code> تضيف في الآخر، <code>pop</code> تشيل من الآخر، <code>unshift</code> تضيف في الأول، <code>shift</code> تشيل من الأول. ولفحص عنصر: <code>includes</code> و<code>indexOf</code>، ولقص جزء: <code>slice</code>.`,c:`const a = [1, 2, 3];
+a.push(4);
+a.unshift(0);
+console.log(a);
+a.pop();
+a.shift();
+console.log(a);
+console.log(a.includes(2), a.indexOf(3));
+console.log(a.slice(1, 3));`},
+{h:'map و filter و reduce',p:`أقوى ثلاث أدوات للتعامل مع القوائم. <code>map</code> بتحوّل كل عنصر وترجع مصفوفة جديدة بنفس الطول. <code>filter</code> بتختار العناصر اللي بتحقق شرط. <code>reduce</code> بتجمّع كل العناصر في قيمة واحدة (زي المجموع). و<code>find</code> بترجع أول عنصر يطابق الشرط.`,c:`const nums = [1, 2, 3, 4, 5, 6];
+const doubled = nums.map((n) => n * 2);
+const evens = nums.filter((n) => n % 2 === 0);
+const total = nums.reduce((sum, n) => sum + n, 0);
+const firstBig = nums.find((n) => n > 3);
+console.log(doubled);
+console.log(evens);
+console.log(total);
+console.log(firstBig);`},
+{h:'الترتيب والدمج',p:`<code>sort()</code> بترتب، و<code>join()</code> بتجمع العناصر في نص، و<code>forEach</code> بتنفذ دالة لكل عنصر. وانتبه إن sort من غير دالة مقارنة بترتب كنصوص.`,c:`const names = ["Sara", "Ali", "Mona"];
+console.log(names.sort().join(", "));
+const nums = [10, 9, 1];
+console.log(nums.sort((a, b) => a - b));
+["x", "y"].forEach((v, i) => console.log(i, v));`}
+],
+mis:[
+{h:'ترتيب الأرقام بـ sort() العادية',p:`الدالة <code>sort()</code> من غير تعليمات بتحوّل العناصر لنصوص وبترتبها أبجديًا. فالرقم 10 بيجي قبل 9 لأن النص "10" بيبدأ بـ "1". لازم تديها دالة مقارنة: <code>(a, b) => a - b</code> للترتيب التصاعدي.`,bad:`console.log([10, 9, 1].sort());`,good:`console.log([10, 9, 1].sort((a, b) => a - b));`},
+{h:'نسخ مصفوفة بـ =',p:`المصفوفة بتتخزن كـ «مرجع». لما تكتب <code>b = a</code> انت مش بتعمل نسخة، انت بتعمل اسم تاني لنفس المصفوفة. فأي تعديل على b هيغير a كمان. لعمل نسخة حقيقية استخدم <code>[...a]</code> أو <code>a.slice()</code>.`,bad:`const a = [1, 2];
+const b = a;
+b.push(3);
+console.log(a);`,good:`const a = [1, 2];
+const b = [...a];
+b.push(3);
+console.log(a, b);`},
+{h:'التعامل مع دالة map كأنها بتعدّل الأصل',p:`<code>map</code> و<code>filter</code> بيرجعوا مصفوفة <b>جديدة</b> ومبيغيروش الأصلية. لو ما خزنتش الناتج في متغير هتضيع النتيجة وتفتكر إن الكود مش شغال.`,bad:`const a = [1, 2, 3];
+a.map((n) => n * 2);
+console.log(a);`,good:`const a = [1, 2, 3];
+const b = a.map((n) => n * 2);
+console.log(b);`}
+],
+ex:{id:'e7',task:`<b>التمرين:</b> عندك <code>nums = [1,2,3,4,5,6]</code>. اطبع مجموع الأرقام <b>الزوجية</b> فقط (النتيجة <code>12</code>).`,starter:`const nums = [1, 2, 3, 4, 5, 6];
+// اكتب هنا
+`,expected:'12',need:[[/filter|for|while|reduce|forEach/,'استخدم filter/reduce أو حلقة']],hint:`nums.filter(n => n % 2 === 0).reduce((s, n) => s + n, 0)`,sol:`const nums = [1, 2, 3, 4, 5, 6];
+const sum = nums
+  .filter((n) => n % 2 === 0)
+  .reduce((s, n) => s + n, 0);
+console.log(sum);`},
+quiz:{mcq:[
+['رقم (index) أول عنصر في المصفوفة؟',['0','1','-1','first'],0,'الترقيم بيبدأ من الصفر.'],
+['أي دالة بتضيف عنصر في آخر المصفوفة؟',['push','pop','shift','add'],0,'push تضيف في الآخر.'],
+['ناتج [1,2,3].map(x => x * 2) ؟',['[2,4,6]','[1,2,3]','6','undefined'],0,'map بتطبّق الدالة على كل عنصر.'],
+['ناتج [10,9,1].sort() ؟',['[1,9,10]','[1,10,9]','[10,9,1]','[9,10,1]'],1,'sort بترتب كنصوص فـ "10" قبل "9".'],
+['أي دالة بتختار العناصر اللي بتحقق شرط؟',['filter','map','reduce','join'],0,'filter بترجع المطابق للشرط بس.']
+],es:[
+['اشرح push و pop و shift و unshift.',['push','pop','shift','unshift','اخر|نهاية|بداية|اول|الاول'],'push تضيف في الآخر، pop تشيل من الآخر، unshift تضيف في الأول، shift تشيل من الأول.'],
+['ما الفرق بين map و filter؟',['map','filter','يحول|تحويل|يغير|كل عنصر|بتحول','يختار|شرط|يفلتر|تصفية|بتختار|بتحقق'],'map بتحوّل كل عنصر لقيمة جديدة وتحافظ على الطول، filter بتختار العناصر اللي بتحقق شرط.'],
+['إزاي تحسب مجموع مصفوفة؟',['reduce|for|حلقة','مجموع|جمع|sum|+','صفر|0|بداية|accumulator'],'بـ arr.reduce((sum, n) => sum + n, 0) أو بحلقة for وجمع كل عنصر.'],
+['ليه sort() بتدي نتيجة غريبة مع الأرقام؟',['نص|string|نصوص','ترتيب|يقارن|الابجدي|ابجدي|قاموسي','a-b|دالة مقارنة|compare'],'لأنها بتحوّل العناصر لنصوص وبترتب أبجديًا. الحل دالة مقارنة (a, b) => a - b.'],
+['إيه المشكلة لو كتبت b = a لمصفوفة؟',['مرجع|reference|نفس','تعديل|يتغير|اتعدل|يتأثر|تتأثر','نسخة|slice|spread|...'],'b بيشاور على نفس المصفوفة، فأي تعديل في واحدة بيظهر في التانية. للنسخة استخدم [...a].']
+]},
+sum:['المصفوفة قائمة مرتبة والترقيم بيبدأ من 0.','push/pop في الآخر، unshift/shift في الأول.','map تحوّل، filter تختار، reduce تجمّع، find تدور.','sort بدون دالة مقارنة بترتب كنصوص.','b = a مش نسخة؛ استخدم [...a].']},
 
-        <div class="question-box">
-            <p><strong>سؤال 4 (اختياري):</strong> ما هو نوع البيانات الناتج عن التعبير: <code>let x = true;</code>؟</p>
-            <label><input type="radio" name="q4"> أ) String</label><br>
-            <label><input type="radio" name="q4"> ب) Number</label><br>
-            <label><input type="radio" name="q4"> ج) Boolean</label>
-        </div>
+{id:8,t:'الكائنات و JSON',sub:'Objects',lang:'js',
+intro:`بطاقة الرقم القومي: فيها اسم وسن وعنوان وتاريخ ميلاد. كل معلومة ليها <b>عنوان</b> (مفتاح) و<b>قيمة</b>. الكائن (Object) هو بطاقة بيانات لأي حاجة: طالب، منتج، سيارة.`,
+parts:[
+{h:'إنشاء كائن والوصول لخصائصه',p:`بنكتبها بين <code>{ }</code> وكل خاصية <code>مفتاح: قيمة</code>. بنوصل للقيمة بالنقطة <code>obj.name</code> أو بالأقواس <code>obj["name"]</code>. والأقواس مفيدة لما اسم الخاصية في متغير.`,c:`const student = { name: "Sara", age: 17, grades: [90, 85] };
+console.log(student.name);
+console.log(student["age"]);
+student.city = "Cairo";   // إضافة
+student.age = 18;         // تعديل
+delete student.grades;    // حذف
+console.log(student);`},
+{h:'الدوال داخل الكائن و this',p:`لو خاصية قيمتها دالة بنسميها method. وجواها بنستخدم <code>this</code> للإشارة للكائن نفسه.`,c:`const car = {
+  brand: "Toyota",
+  speed: 0,
+  accelerate() {
+    this.speed += 10;
+    return this.speed;
+  }
+};
+console.log(car.accelerate());
+console.log(car.accelerate());`},
+{h:'Object.keys / values / entries',p:`لمعرفة مفاتيح الكائن أو قيمه أو الاتنين مع بعض والمرور عليهم بحلقة.`,c:`const p = { a: 1, b: 2 };
+console.log(Object.keys(p), Object.values(p));
+for (const [k, v] of Object.entries(p)) {
+  console.log(k, v);
+}`},
+{h:'JSON والتفكيك والنسخ',p:`<b>JSON</b> صيغة نص لتبادل البيانات بين البرامج (السيرفر والمتصفح). <code>JSON.stringify</code> بتحوّل الكائن لنص و<code>JSON.parse</code> بترجعه. و<b>التفكيك (destructuring)</b> بيطلّع القيم في متغيرات بسطر واحد، و<code>...</code> (spread) بتنسخ وتدمج كائنات.`,c:`const user = { name: "Omar", age: 20 };
+const text = JSON.stringify(user);
+console.log(text);
+console.log(JSON.parse(text).name);
+const { name, age } = user;
+console.log(name, age);
+const copy = { ...user, age: 21 };
+console.log(copy);`}
+],
+mis:[
+{h:'القراءة من كائن غير موجود',p:`أشهر رسالة خطأ في جافاسكريبت: <code>Cannot read properties of undefined</code>. بتحصل لما تحاول تقرا خاصية من حاجة قيمتها undefined، زي <code>user.address.city</code> لو user ملوش address. الحل الحديث هو <code>?.</code> (optional chaining) اللي بترجع undefined بدل ما تضرب خطأ، ويمكن تعمل فحص بـ if.`,bad:`const user = { name: "Ali" };
+console.log(user.address.city);`,good:`const user = { name: "Ali" };
+console.log(user.address?.city);
+console.log(user.address?.city ?? "مفيش عنوان");`},
+{h:'مقارنة كائنين بـ ===',p:`الكائنات بتتقارن بالمرجع مش بالمحتوى. حتى لو كائنين شبه بعض تمامًا هم اتنين مختلفين في الذاكرة فالنتيجة false. لو عايز تقارن المحتوى حوّلهم لنص بـ JSON.stringify أو قارن الخصائص واحدة واحدة.`,bad:`console.log({ a: 1 } === { a: 1 });`,good:`console.log(JSON.stringify({ a: 1 }) === JSON.stringify({ a: 1 }));`},
+{h:'استخدام النقطة مع اسم خاصية في متغير',p:`<code>obj.key</code> بتدور على خاصية اسمها حرفيًا «key» مش على القيمة اللي في المتغير key. لو الاسم جوه متغير لازم تستخدم الأقواس <code>obj[key]</code>.`,bad:`const obj = { name: "Sara" };
+const key = "name";
+console.log(obj.key);`,good:`const obj = { name: "Sara" };
+const key = "name";
+console.log(obj[key]);`}
+],
+ex:{id:'e8',task:`<b>التمرين:</b> عندك كائن الطالب. اطبع <b>متوسط</b> درجاته (النتيجة <code>90</code>).`,starter:`const student = { name: "Sara", grades: [80, 90, 100] };
+// اكتب هنا
+`,expected:'90',need:[[/grades/,'استخدم student.grades']],hint:`اجمع الدرجات (reduce أو حلقة) ثم اقسم على student.grades.length`,sol:`const student = { name: "Sara", grades: [80, 90, 100] };
+const sum = student.grades.reduce((s, g) => s + g, 0);
+console.log(sum / student.grades.length);`},
+quiz:{mcq:[
+['إزاي توصل لقيمة name في الكائن user؟',['user.name','user->name','user(name)','user..name'],0,'بالنقطة user.name أو user["name"].'],
+['Object.keys(obj) بترجع؟',['القيم','المفاتيح (أسماء الخصائص)','JSON','عدد الخصائص'],1,'مصفوفة بأسماء الخصائص.'],
+['JSON.stringify بتعمل إيه؟',['تحوّل كائن لنص JSON','تحوّل نص لكائن','تمسح الكائن','تطبعه'],0,'stringify = كائن إلى نص، و parse العكس.'],
+['ناتج {a:1} === {a:1} ؟',['true','false','خطأ','undefined'],1,'الكائنات بتتقارن بالمرجع فهما مختلفان.'],
+['أي صيغة تفكيك (destructuring) صحيحة؟',['const { name } = user;','const name <- user;','let user => name;','const user.name;'],0,'const { name } = user بتسحب خاصية name.']
+],es:[
+['إيه هو الكائن؟ وإمتى نستخدمه بدل المصفوفة؟',['خصائص|property|مفتاح|key|مفاتيح','قيمة|value|قيم','وصف|شيء واحد|بيانات مرتبطة|كيان'],'الكائن مجموعة خصائص (مفتاح وقيمة) بتوصف شيء واحد، بنستخدمه لما البيانات مرتبطة ومسماة بدل قائمة مرتبة.'],
+['اشرح الفرق بين النقطة والأقواس للوصول لخاصية.',['نقطة|dot','اقواس|bracket|[','متغير|ديناميك|مسافة|اسم متغير'],'obj.name للأسماء الثابتة، و obj[key] لما الاسم في متغير أو فيه مسافة.'],
+['إيه هو JSON؟',['نص|string|text','تبادل|بيانات|نقل|سيرفر','stringify|parse'],'صيغة نصية لتبادل البيانات. بنحوّل بـ JSON.stringify ونرجّع بـ JSON.parse.'],
+['إزاي تضيف وتعدّل وتحذف خاصية؟',['delete|حذف|مسح','اضافة|تضيف|obj.|اسناد جديد','تعديل|تغيير|=|اسناد'],'obj.x = 1 للإضافة أو التعديل، و delete obj.x للحذف.'],
+['اشرح الـ method في كائن واستخدام this.',['دالة|function|method','this','الكائن|نفسه|نفس الكائن'],'method دالة داخل كائن، و this بتشير للكائن نفسه علشان نوصل لخصائصه.']
+]},
+sum:['الكائن مفاتيح وقيم: { name: "Ali" }.','نوصل بالنقطة أو الأقواس، ونضيف ونعدّل ونحذف بسهولة.','Object.keys/values/entries للمرور على الخصائص.','JSON.stringify/parse لتبادل البيانات.','?. تحميك من أخطاء القراءة من undefined.']},
 
-        <div class="question-box">
-            <p><strong>سؤال 5 (اختياري):</strong> أي حلقة تكرارية تفضل استخدامها للمرور على عناصر مصفوفة معروفة الطول؟</p>
-            <label><input type="radio" name="q5"> أ) for loop</label><br>
-            <label><input type="radio" name="q5"> ب) if statement</label>
-        </div>
+{id:9,t:'DOM والأحداث',sub:'تحكّم في صفحة الويب',lang:'html',
+intro:`صفحة الويب زي بيت: فيها أوض (عناصر) وأثاث. الـ DOM هو «خريطة» البيت دي اللي جافاسكريبت بتشوفها. تقدر تروح لأي أوضة، تغيّر لون الحيطة، تضيف أو تشيل أثاث، وتعمل جرس: لما حد يضغط (حدث) يحصل رد فعل.`,
+parts:[
+{h:'اختيار العناصر وتعديلها',p:`<code>getElementById</code> لعنصر له id، و<code>querySelector</code> بيرجع أول عنصر يطابق محدد CSS، و<code>querySelectorAll</code> بترجع كلهم. بعدها غيّر <code>textContent</code> أو <code>style</code> أو <code>classList</code>. (ملاحظة: الأمثلة هنا بتشتغل في معاينة صفحة ويب.)`,c:`<h1 id="title">أهلاً</h1>
+<p class="note">فقرة عادية</p>
+<script>
+const t = document.getElementById("title");
+const n = document.querySelector(".note");
+t.textContent = "اتغيّر من JavaScript";
+n.style.color = "crimson";
+n.classList.add("done");
+<\/script>`},
+{h:'الأحداث',p:`بنربط دالة بحدث بـ <code>addEventListener</code>. أشهر الأحداث: <code>click</code> و<code>input</code> و<code>submit</code> و<code>keydown</code>. الدالة بتتنفذ كل مرة الحدث يحصل.`,c:`<button id="btn">اضغط عليا</button>
+<p id="out">العدّاد: 0</p>
+<script>
+let count = 0;
+const btn = document.getElementById("btn");
+const out = document.getElementById("out");
+btn.addEventListener("click", () => {
+  count++;
+  out.textContent = "العدّاد: " + count;
+});
+<\/script>`},
+{h:'إنشاء عناصر جديدة',p:`<code>createElement</code> بتعمل عنصر جديد، تحط فيه محتوى، وبعدين <code>append</code> بتحطه في الصفحة. بكده بتبني قوائم ديناميكية.`,c:`<input id="name" placeholder="اسم">
+<button id="add">أضف</button>
+<ul id="list"></ul>
+<script>
+const input = document.getElementById("name");
+const list = document.getElementById("list");
+document.getElementById("add").addEventListener("click", () => {
+  if (!input.value.trim()) return;
+  const li = document.createElement("li");
+  li.textContent = input.value;
+  list.append(li);
+  input.value = "";
+});
+<\/script>`},
+{h:'الفورم و preventDefault',p:`لما بنعمل submit للفورم المتصفح بيعيد تحميل الصفحة. بنمنع ده بـ <code>event.preventDefault()</code> وبنتعامل مع البيانات بنفسنا.`,c:`<form id="f">
+  <input id="who" placeholder="اسمك">
+  <button>ارسل</button>
+</form>
+<p id="msg"></p>
+<script>
+document.getElementById("f").addEventListener("submit", (e) => {
+  e.preventDefault();
+  document.getElementById("msg").textContent = "أهلاً يا " + document.getElementById("who").value;
+});
+<\/script>`}
+],
+mis:[
+{h:'تشغيل السكريبت قبل ما العناصر تتحمّل',p:`المتصفح بيقرا الصفحة من فوق لتحت. لو السكريبت جه <b>قبل</b> العنصر اللي بتدور عليه، <code>getElementById</code> هترجع <code>null</code> وأي استخدام بعدها هيطلّع خطأ. الحل: ضع السكريبت في آخر <code>body</code> أو استخدم <code>defer</code> أو حدث <code>DOMContentLoaded</code>.`,norun:true,bad:`<script>
+  document.getElementById("a").textContent = "x"; // null!
+<\/script>
+<p id="a"></p>`,good:`<p id="a"></p>
+<script>
+  document.getElementById("a").textContent = "x";
+<\/script>`},
+{h:'استخدام innerHTML مع مدخلات المستخدم',p:`لو حطيت نص كتبه المستخدم جوه <code>innerHTML</code> والمستخدم كتب كود HTML أو سكريبت، المتصفح هينفذه. دي ثغرة اسمها XSS وبتسمح بسرقة بيانات. القاعدة: للنصوص العادية استخدم <code>textContent</code> دايمًا.`,norun:true,bad:`el.innerHTML = userInput;`,good:`el.textContent = userInput;`},
+{h:'نسيان preventDefault في الفورم',p:`من غير <code>preventDefault()</code> الصفحة بتتحمل من جديد بعد الضغط على الزرار وكل حاجة كتبتها بتضيع قبل ما كودك يكمل. دايمًا اكتبها في أول معالج submit لما تحب تتحكم في الفورم بجافاسكريبت.`,norun:true,bad:`form.addEventListener("submit", () => {
+  console.log("هتختفي بعد إعادة التحميل");
+});`,good:`form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  console.log("اتنفّذ والصفحة مش بتتحمل تانيعية");
+});`}
+],
+ex:{id:'e9',mode:'html',height:150,task:`<b>التمرين:</b> اكتب كود جافاسكريبت بحيث لما يتضغط الزرار <code>#btn</code> يتغيّر نص الفقرة <code>#msg</code> ويبقى <code>Done</code> بالظبط. اضغط «شغّل وصحّح» وهتتأكد الصفحة بنفسها بتضغط الزرار.`,starter:`<button id="btn">اضغط</button>
+<p id="msg">لسه</p>
+<script>
+// اكتب الكود هنا
+<\/script>`,test:d=>{const b=d.getElementById('btn'),m=d.getElementById('msg');if(!b||!m)return 'مش لاقي العنصر #btn أو #msg. ما تغيّرش الـ id بتاعهم.';const before=m.textContent.trim();b.click();const t=m.textContent.trim();if(t==='Done')return null;if(t===before)return 'لما اتضغط الزرار النص ما اتغيّرش. اتأكد إنك ربطت حدث click بالزرار وغيّرت textContent.';return 'بعد الضغط النص بقى «'+t+'» والمطلوب «Done» بالظبط.'},hint:`const btn = document.getElementById("btn"); btn.addEventListener("click", () => { document.getElementById("msg").textContent = "Done"; });`,sol:`<button id="btn">اضغط</button>
+<p id="msg">لسه</p>
+<script>
+document.getElementById("btn").addEventListener("click", () => {
+  document.getElementById("msg").textContent = "Done";
+});
+<\/script>`},
+quiz:{mcq:[
+['أي دالة بتجيب عنصر بالـ id؟',['getElementById','getId','findById','select'],0,'document.getElementById.'],
+['إيه الفرق بين textContent و innerHTML؟',['textContent بتعامل المدخل كنص عادي وinnerHTML بتحلله كـ HTML','نفس الحاجة','innerHTML أكتر أمانًا','textContent للأرقام فقط'],0,'innerHTML بينفذ HTML فبيكون خطر مع مدخلات المستخدم.'],
+['إزاي تربط حدث ضغط بزرار؟',["el.addEventListener('click', fn)",'el.press(fn)','onclick{ }','click(el)'],0,'addEventListener هي الطريقة المعيارية.'],
+['event.preventDefault() بتمنع؟',['السلوك الافتراضي زي إعادة تحميل الفورم','الكود كله','الأخطاء','الكتابة'],0,'بتلغي السلوك الافتراضي للحدث.'],
+['ليه بنحط السكريبت في آخر body غالبًا؟',['عشان العناصر تكون اتحمّلت قبل ما الكود يدور عليها','عشان الألوان','عشان أسرع بس','مش مهم'],0,'لو السكريبت قبل العناصر هيلاقي null.']
+],es:[
+['إيه هو الـ DOM؟',['شجرة|tree|هيكل','صفحة|html|document','عناصر|elements|nodes|عقد','جافاسكريبت|js|تعديل|نتحكم|تتحكم'],'تمثيل لصفحة HTML على هيئة شجرة عناصر، بتسمح لجافاسكريبت إنها تقرا وتعدّل الصفحة.'],
+['اشرح addEventListener بمثال.',['addeventlistener','حدث|event|click','دالة|function|callback'],'btn.addEventListener("click", () => {...}) بتنفذ الدالة كل مرة الحدث يحصل.'],
+['إزاي تضيف عنصر جديد للصفحة؟',['createelement','append|appendchild','textcontent|innerhtml|محتوى'],'document.createElement("li") ثم نحط محتوى بـ textContent ونضيفه بـ parent.append(li).'],
+['ليه استخدام innerHTML مع مدخلات المستخدم خطر؟',['xss|اختراق|سكريبت|كود ضار|ثغرة','مدخلات|المستخدم|input|بيكتب','textcontent|تنظيف|escape'],'لأن المستخدم ممكن يكتب كود HTML أو سكريبت وينفذ (ثغرة XSS). الأفضل textContent.'],
+['ما الفرق بين querySelector و querySelectorAll؟',['queryselector','queryselectorall','اول|عنصر واحد','كل|جميع|قائمة|nodelist'],'querySelector بترجع أول عنصر مطابق، و querySelectorAll بترجع كل العناصر المطابقة كقائمة.'],
+]},
+sum:['DOM شجرة عناصر الصفحة اللي جافاسكريبت بتتحكم فيها.','getElementById و querySelector لاختيار العناصر.','textContent للنص الآمن، innerHTML بحذر.','addEventListener لربط الأحداث، و preventDefault لإيقاف السلوك الافتراضي.','createElement + append لبناء عناصر جديدة.']},
 
-        <button class="submit-exam-btn" onclick="alert('تم إرسال إجاباتك بنجاح! أنت مبدع يا جدو 🌟')">إرسال وتصحيح الإجابات 🚀</button>
-    </div>
-</div>
-<!-- نهاية قسم المشاريع والامتحانات -->
+{id:10,t:'الكود غير المتزامن والأخطاء',sub:'Promise / async / try-catch',lang:'js',
+intro:`بتطلب أكل من مطعم. هل بتفضل واقف قدام الشباك مش بتعمل حاجة؟ لأ، بتطلب وتقعد تعمل حاجات تانية وبيندهوا عليك لما الأكل يجهز. ده الكود غير المتزامن: بنبدأ عملية بطيئة (تحميل بيانات من سيرفر) ونكمل شغلنا، والنتيجة ترجع لما تجهز.`,
+parts:[
+{h:'الكود المتزامن وغير المتزامن',p:`الكود العادي بيتنفذ سطر ورا سطر. لكن <code>setTimeout</code> بتأجل دالة لوقت معين من غير ما توقف الباقي. فالترتيب اللي بيتنفذ بيه الكود مش دايمًا ترتيب الكتابة.`,c:`console.log("1) طلبت الأكل");
+setTimeout(() => console.log("3) الأكل وصل"), 1000);
+console.log("2) بعمل حاجات تانية وأنا مستني");`},
+{h:'الوعد (Promise)',p:`<code>Promise</code> هو «وعد» بنتيجة هتيجي بعدين. له تلات حالات: <b>pending</b> (لسه شغال)، <b>fulfilled</b> (نجح بنتيجة)، <b>rejected</b> (فشل بخطأ). بنستقبل النتيجة بـ <code>then</code> والخطأ بـ <code>catch</code> و<code>finally</code> بتتنفذ في الحالتين.`,c:`const p = new Promise((resolve, reject) => {
+  setTimeout(() => resolve("تمت العملية"), 500);
+});
+p.then((v) => console.log(v))
+ .catch((e) => console.log("فشل", e))
+ .finally(() => console.log("خلصنا"));`},
+{h:'async / await',p:`طريقة أبسط لكتابة نفس الشيء: <code>async</code> قبل الدالة، و<code>await</code> قبل أي Promise بتخلي الدالة «تستنى» النتيجة وتكمل بعدها، وبكده بيبان الكود كأنه متزامن.`,c:`function wait(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+async function main() {
+  console.log("بدأنا");
+  await wait(500);
+  console.log("بعد نص ثانية");
+  return "تمام";
+}
+main().then((r) => console.log(r));`},
+{h:'try / catch / finally',p:`بنحط الكود الخطر جوه <code>try</code> ولو حصل خطأ بيروح لـ <code>catch</code> وبيمسكه ويكمل البرنامج بدل ما ينهار. و<code>finally</code> بتتنفذ دايمًا. وبنقدر نرمي خطأ بنفسنا بـ <code>throw new Error()</code>.`,c:`function parse(text) {
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    console.log("JSON غلط:", e.name);
+    return null;
+  } finally {
+    console.log("خلّصت المحاولة");
+  }
+}
+console.log(parse('{"a":1}'));
+console.log(parse("{bad"));`},
+{h:'جلب البيانات من الإنترنت بـ fetch',p:`<code>fetch</code> بتطلب بيانات من سيرفر وبترجع Promise. بنستخدمها مع <code>await</code> داخل try/catch. (الكود ده للتعلم: المحرر هنا مش بيفتح الإنترنت، فجرّبه في مشروعك الخاص.)`,run:false,c:`async function loadUser() {
+  try {
+    const res = await fetch("https://jsonplaceholder.typicode.com/users/1");
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const user = await res.json();
+    console.log(user.name);
+  } catch (err) {
+    console.log("حصلت مشكلة:", err.message);
+  }
+}
+loadUser();`}
+],
+mis:[
+{h:'نسيان await',p:`لو نديت دالة async أو Promise من غير <code>await</code> هتاخد الوعد نفسه (<code>Promise { &lt;pending&gt; }</code>) مش النتيجة. وبعدين لو حاولت تقرا خاصية منه هتلاقي undefined. اكتب await قدام أي حاجة بترجع Promise لما تحتاج نتيجتها.`,bad:`function getNum() { return new Promise((r) => setTimeout(() => r(5), 100)); }
+async function main() {
+  const n = getNum();
+  console.log(n);
+}
+main();`,good:`function getNum() { return new Promise((r) => setTimeout(() => r(5), 100)); }
+async function main() {
+  const n = await getNum();
+  console.log(n);
+}
+main();`},
+{h:'try/catch مش بتمسك خطأ Promise من غير await',p:`الخطأ جوه دالة async بيتحول لـ Promise مرفوض. لو ما استخدمتش <code>await</code> الخطأ بيحصل بعد ما try/catch تخلص، فمبتمسكوش وبيظهر كخطأ غير معالج. استخدم await جوه try أو أضف <code>.catch()</code>.`,bad:`async function risky() { throw new Error("boom"); }
+try {
+  risky();
+} catch (e) {
+  console.log("اتمسك");
+}
+console.log("after");`,good:`async function risky() { throw new Error("boom"); }
+async function main() {
+  try {
+    await risky();
+  } catch (e) {
+    console.log("اتمسك:", e.message);
+  }
+}
+main();`},
+{h:'توقع ترتيب التنفيذ بترتيب الكتابة',p:`حتى <code>setTimeout</code> بتأخير <code>0</code> بتتنفذ <b>بعد</b> ما الكود العادي كله يخلص لأنها بتدخل طابور الانتظار. ده سبب لغبطة كبيرة للمبتدئين، فاحفظ: الكود المتزامن الأول وبعدين المؤجل.`,bad:`console.log(1);
+setTimeout(() => console.log(2), 0);
+console.log(3);`,good:`console.log(1);
+setTimeout(() => console.log(2), 0);
+console.log(3);
+// الترتيب 1 ثم 3 ثم 2 هو الطبيعي`}
+],
+ex:{id:'e10',task:`<b>التمرين:</b> دالة <code>getData()</code> بترجّع Promise فيه النص <code>"data"</code> بعد 100 ملّي ثانية. اكتب دالة <code>async</code> تستخدم <code>await</code> وتطبع النتيجة، وبعدين نادي عليها.`,starter:`function getData() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve("data"), 100);
+  });
+}
 
-    <footer>
-        جميع الحقوق محفوظة &copy; 2026 | Made By Gedo
-    </footer>
+// اكتب دالة async هنا ونادي عليها
+`,expected:'data',need:[[/async/,'استخدم async قبل الدالة'],[/await/,'استخدم await قبل getData()']],hint:`async function main() { const r = await getData(); console.log(r); } main();`,sol:`function getData() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve("data"), 100);
+  });
+}
 
-    <script>
-        // دالة تشغيل الكود وفحص الأخطاء داخل المحرر
-        function runCode() {
-            const code = document.getElementById('code-input').value;
-            const outputBox = document.getElementById('output');
-            outputBox.innerHTML = "";
+async function main() {
+  const result = await getData();
+  console.log(result);
+}
+main();`},
+quiz:{mcq:[
+['setTimeout(fn, 1000) بتنفذ fn بعد كام؟',['ثانية واحدة','1000 ثانية','فورًا','كل ثانية'],0,'الرقم بالملّي ثانية.'],
+['كلمة await بتشتغل جوه؟',['دالة async','أي دالة','حلقة for فقط','class فقط'],0,'await بتتكتب جوه دالة async.'],
+['حالات الـ Promise هي؟',['pending / fulfilled / rejected','true / false','open / closed','start / stop'],0,'انتظار، نجاح، فشل.'],
+['إيه ترتيب الطباعة: console.log(1); setTimeout(()=>console.log(2),0); console.log(3);',['1 ثم 2 ثم 3','1 ثم 3 ثم 2','3 ثم 2 ثم 1','2 ثم 1 ثم 3'],1,'المؤجل بيتنفذ بعد الكود العادي.'],
+['أي كلمة بتمسك الخطأ؟',['catch','grab','handle','rescue'],0,'try / catch.']
+],es:[
+['اشرح الفرق بين الكود المتزامن وغير المتزامن.',['متزامن|sync|بالترتيب|سطر ورا سطر|واحدة واحدة','غير متزامن|async|مش بيستنى|مش بيوقف|متأخر|مؤجل','مثال|طلب|مطعم|settimeout'],'المتزامن بيتنفذ سطر ورا سطر ويستنى كل سطر. غير المتزامن بيبدأ عملية بطيئة ويكمل الباقي وبيرجع النتيجة لما تجهز.'],
+['اشرح الـ Promise وحالاته.',['promise|وعد','pending|انتظار|معلق','fulfilled|resolve|نجاح','rejected|reject|فشل'],'Promise وعد بنتيجة في المستقبل وله حالات pending وfulfilled وrejected.'],
+['إزاي بتبسّط async/await الكود؟',['async','await','promise|then','ينتظر|يستنى|اوضح|ابسط|اسهل|بيستنى'],'بتخلينا نكتب كود غير متزامن بشكل خطي بدل then متداخلة، فيبقى أسهل في القراءة.'],
+['اشرح try و catch و finally.',['try','catch','finally','خطأ|error'],'try للكود الخطر، catch بتمسك الخطأ، finally بتتنفذ دايمًا في الآخر.'],
+['إيه هو fetch وإزاي نستخدمه؟',['fetch','api|سيرفر|بيانات|رابط|url','await|then','json'],'بنطلب بيانات من سيرفر بـ await fetch(url) ثم await res.json() داخل try/catch.'],
+]},
+sum:['الكود غير المتزامن بيسمح بالانتظار من غير ما نوقف الصفحة.','Promise: pending / fulfilled / rejected.','async/await أبسط طريقة للتعامل مع الـ Promise.','try / catch / finally لمعالجة الأخطاء بدل انهيار البرنامج.','fetch لجلب البيانات من الإنترنت.']}
+];
 
-            // إعادة توجيه الـ console.log لعرض النتيجة في الصفحة
-            let originalLog = console.log;
-            let logs = [];
-            console.log = function(...args) {
-                logs.push(args.join(' '));
-            };
+/* ================= المشاريع العملية ================= */
+const PROJECTS=[
+{t:'حاسبة بسيطة',lvl:'مبتدئ',d:'حاسبة بأزرار تعمل عملية واحدة (جمع، طرح، ضرب، قسمة).',learn:'DOM، الأحداث، التعابير النمطية البسيطة، الكائنات كجدول بحث.',
+steps:['اعمل خانة عرض (input) وحاوية للأزرار.','اعمل مصفوفة بأسماء الأزرار وكرّر عليها بـ forEach لإنشاء زرار لكل عنصر.','لما يتضغط زرار رقم أو عملية: ضيف رمزه لخانة العرض. و C تمسح.','عند = استخدم تعبيرًا نمطيًا يفصل الرقم الأول والعملية والرقم الثاني، واحسب بـ كائن {+: ..., -: ...}.'],
+code:`<div style="max-width:260px;margin:auto">
+<input id="d" disabled style="width:100%;font-size:24px;text-align:right;direction:ltr">
+<div id="k"></div></div>
+<script>
+const keys=['7','8','9','/','4','5','6','*','1','2','3','-','0','.','=','+','C'];
+const d=document.getElementById('d'),k=document.getElementById('k');
+function calc(){
+  const m=d.value.match(/^(-?[\\d.]+)([-+*/])([\\d.]+)$/);
+  if(!m){d.value='خطأ';return}
+  const a=Number(m[1]),b=Number(m[3]);
+  d.value={'+':a+b,'-':a-b,'*':a*b,'/':a/b}[m[2]];
+}
+keys.forEach(x=>{
+  const b=document.createElement('button');
+  b.textContent=x;b.style.cssText='width:25%;height:46px;font-size:18px';
+  b.onclick=()=>{ if(x==='C')d.value=''; else if(x==='=')calc(); else d.value+=x };
+  k.append(b);
+});
+<\/script>`},
+{t:'قائمة المهام (To-Do)',lvl:'مبتدئ',d:'أضف مهام، علّمها كمنتهية بالضغط عليها، واحذفها.',learn:'المصفوفات، الكائنات داخلها، دالة رسم القائمة من البيانات.',
+steps:['خزّن المهام في مصفوفة كائنات: {text, done}.','اعمل دالة draw() تمسح القائمة وترسمها من المصفوفة من جديد.','زرار الإضافة يضيف كائن جديد ويستدعي draw().','الضغط على المهمة يقلب done، وزرار الحذف يستخدم splice. استخدم stopPropagation عشان الحذف ما يقلبش done.'],
+code:`<input id="t" placeholder="مهمة جديدة"> <button id="add">إضافة</button>
+<ul id="l"></ul>
+<script>
+const t=document.getElementById('t'),l=document.getElementById('l');
+const tasks=[];
+function draw(){
+  l.innerHTML='';
+  tasks.forEach((x,i)=>{
+    const li=document.createElement('li');
+    li.textContent=x.text;
+    li.style.cursor='pointer';
+    li.style.textDecoration=x.done?'line-through':'none';
+    li.onclick=()=>{x.done=!x.done;draw()};
+    const del=document.createElement('button');
+    del.textContent='حذف';
+    del.onclick=e=>{e.stopPropagation();tasks.splice(i,1);draw()};
+    li.append(' ',del);
+    l.append(li);
+  });
+}
+document.getElementById('add').onclick=()=>{
+  if(!t.value.trim())return;
+  tasks.push({text:t.value,done:false});
+  t.value='';draw();
+};
+<\/script>`},
+{t:'ساعة رقمية وساعة إيقاف',lvl:'مبتدئ',d:'ساعة بتتحدث كل ثانية وساعة إيقاف بتبدأ وتوقف وتصفّر.',learn:'setInterval و clearInterval، كائن Date، تنسيق الأرقام.',
+steps:['استخدم new Date().toLocaleTimeString() داخل setInterval كل 1000 ملّي ثانية.','للإيقاف خزّن وقت البداية Date.now() وحسب الفرق كل 100 ملّي ثانية.','زرار واحد يبدأ ويوقف حسب هل المؤقت شغال.','زرار التصفير بيوقف المؤقت ويرجع القيم للصفر.'],
+code:`<h2 id="clock" style="font-size:38px;margin:0"></h2>
+<h3 id="sw" style="font-size:28px">00:00.0</h3>
+<button id="go">ابدأ</button> <button id="rs">صفّر</button>
+<script>
+const clock=document.getElementById('clock'),sw=document.getElementById('sw'),go=document.getElementById('go');
+function tick(){clock.textContent=new Date().toLocaleTimeString('en-GB')}
+tick();setInterval(tick,1000);
+let t0=0,timer=null,passed=0;
+go.onclick=()=>{
+  if(timer){clearInterval(timer);timer=null;passed+=Date.now()-t0;go.textContent='كمّل';return}
+  t0=Date.now();go.textContent='وقّف';
+  timer=setInterval(()=>{
+    const ms=passed+Date.now()-t0;
+    sw.textContent=String(Math.floor(ms/60000)).padStart(2,'0')+':'+(ms%60000/1000).toFixed(1).padStart(4,'0');
+  },100);
+};
+document.getElementById('rs').onclick=()=>{clearInterval(timer);timer=null;passed=0;sw.textContent='00:00.0';go.textContent='ابدأ'};
+<\/script>`},
+{t:'لعبة تخمين الرقم',lvl:'مبتدئ',d:'الكمبيوتر بيختار رقم سري من 1 لـ 100 وانت بتخمّنه بتلميحات.',learn:'Math.random، الشروط، العدّادات.',
+steps:['اختار رقم عشوائي: Math.floor(Math.random()*100)+1.','لما تضغط خمّن حوّل المدخل لرقم بـ Number وقارنه بالرقم السري.','اعرض «أكبر» أو «أصغر» أو «صح» حسب المقارنة.','زوّد عدّاد المحاولات، ولما يكسب اختار رقم جديد وصفّر العدّاد.'],
+code:`<h3>خمّن رقم من 1 لـ 100</h3>
+<input id="g" type="number"> <button id="b">خمّن</button>
+<p id="m"></p><p id="c">المحاولات: 0</p>
+<script>
+const g=document.getElementById('g'),m=document.getElementById('m'),c=document.getElementById('c');
+let secret=Math.floor(Math.random()*100)+1,tries=0;
+document.getElementById('b').onclick=()=>{
+  const n=Number(g.value);
+  if(!n)return;
+  tries++;
+  m.textContent=n===secret?'🎉 صح! كسبت':n<secret?'أكبر ⬆️':'أصغر ⬇️';
+  c.textContent='المحاولات: '+tries;
+  if(n===secret){secret=Math.floor(Math.random()*100)+1;tries=0}
+};
+<\/script>`},
+{t:'محوّل وحدات',lvl:'مبتدئ',d:'حوّل كم لميل، مئوية لفهرنهايت، وكيلو لرطل بخانة واحدة.',learn:'الكائنات التي قيمها دوال، أحداث input و change.',
+steps:['اعمل كائن مفاتيحه أنواع التحويل وقيمه دوال تحوّل الرقم.','اعمل select بخيارات مطابقة للمفاتيح.','عند تغيير الرقم أو الاختيار استدعي دالة calc.','اعرض الناتج بـ toFixed(2).'],
+code:`<input id="v" type="number" value="10">
+<select id="t"><option value="km">كم → ميل</option><option value="c">مئوية → فهرنهايت</option><option value="kg">كجم → رطل</option></select>
+<h3 id="r"></h3>
+<script>
+const v=document.getElementById('v'),t=document.getElementById('t'),r=document.getElementById('r');
+const f={km:x=>x*0.621371,c:x=>x*9/5+32,kg:x=>x*2.20462};
+const unit={km:'ميل',c:'°F',kg:'رطل'};
+function calc(){r.textContent=f[t.value](Number(v.value)).toFixed(2)+' '+unit[t.value]}
+v.oninput=calc;t.onchange=calc;calc();
+<\/script>`},
+{t:'تطبيق اختبار أسئلة (Quiz)',lvl:'متوسط',d:'أسئلة اختيار من متعدد بنتيجة نهائية.',learn:'مصفوفة كائنات، ترتيب الأسئلة بالتتابع، إعادة رسم الواجهة.',
+steps:['خزّن الأسئلة في مصفوفة: {q, o: [الخيارات], a: رقم الإجابة الصحيحة}.','متغيرات i للسؤال الحالي و score للنتيجة.','دالة show() بترسم السؤال وخياراته كأزرار.','كل زرار بيزوّد score لو صح وبيزوّد i وبيعيد show(). لما i يوصل للنهاية اعرض النتيجة.'],
+code:`<div id="box"></div>
+<script>
+const qs=[
+  {q:'ناتج 2 + "2" ؟',o:['4','22','خطأ'],a:1},
+  {q:'أي كلمة لتعريف قيمة ثابتة؟',o:['let','const','var'],a:1},
+  {q:'نوع المصفوفة بـ typeof ؟',o:['array','object','list'],a:1}
+];
+const box=document.getElementById('box');
+let i=0,score=0;
+function show(){
+  if(i>=qs.length){box.innerHTML='<h3>نتيجتك '+score+' من '+qs.length+'</h3>';return}
+  const q=qs[i];
+  box.innerHTML='<h3>'+q.q+'</h3>';
+  q.o.forEach((text,k)=>{
+    const b=document.createElement('button');
+    b.textContent=text;b.style.cssText='display:block;margin:6px 0;padding:8px 16px';
+    b.onclick=()=>{if(k===q.a)score++;i++;show()};
+    box.append(b);
+  });
+}
+show();
+<\/script>`},
+{t:'معرض مع فلتر',lvl:'متوسط',d:'عناصر ملونة تقدر تفلترها حسب التصنيف.',learn:'filter، Set لاستخراج التصنيفات، رسم ديناميكي.',
+steps:['اعمل مصفوفة عناصر لكل واحد اسم وتصنيف ولون.','استخرج التصنيفات الفريدة بـ new Set(items.map(...)).','اعمل زرار لكل تصنيف وزرار «الكل».','دالة draw(cat) تستخدم filter وتعرض العناصر المطابقة.'],
+code:`<div id="f"></div>
+<div id="g" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"></div>
+<script>
+const items=[
+  {n:'تفاح',c:'فاكهة',col:'#e63946'},{n:'موز',c:'فاكهة',col:'#f4d35e'},
+  {n:'جزر',c:'خضار',col:'#f77f00'},{n:'خيار',c:'خضار',col:'#2a9d8f'},
+  {n:'لبن',c:'ألبان',col:'#cfd8dc'},{n:'جبنة',c:'ألبان',col:'#ffd166'}
+];
+const f=document.getElementById('f'),g=document.getElementById('g');
+const cats=['الكل',...new Set(items.map(x=>x.c))];
+function draw(cat){
+  g.innerHTML='';
+  items.filter(x=>cat==='الكل'||x.c===cat).forEach(x=>{
+    const d=document.createElement('div');
+    d.textContent=x.n;
+    d.style.cssText='padding:20px 24px;border-radius:8px;color:#000;background:'+x.col;
+    g.append(d);
+  });
+}
+cats.forEach(c=>{const b=document.createElement('button');b.textContent=c;b.onclick=()=>draw(c);f.append(b)});
+draw('الكل');
+<\/script>`},
+{t:'متابع المصروفات',lvl:'متوسط',d:'سجّل مصروفاتك وشوف الإجمالي لحظيًا.',learn:'reduce، التحقق من المدخلات، تحديث الواجهة.',
+steps:['خانتين: اسم البند والمبلغ وزرار إضافة.','تحقق إن الاسم مش فاضي والمبلغ رقم صحيح قبل الإضافة.','خزّن كل مصروف في مصفوفة.','دالة draw ترسم القائمة وتحسب الإجمالي بـ reduce.'],
+code:`<input id="n" placeholder="البند"> <input id="a" type="number" placeholder="المبلغ"> <button id="add">أضف</button>
+<ul id="l"></ul><h3 id="tot"></h3>
+<script>
+const n=document.getElementById('n'),a=document.getElementById('a'),l=document.getElementById('l'),tot=document.getElementById('tot');
+const list=[];
+function draw(){
+  l.innerHTML='';
+  list.forEach(x=>{const li=document.createElement('li');li.textContent=x.n+' — '+x.a+' ج';l.append(li)});
+  tot.textContent='الإجمالي: '+list.reduce((s,x)=>s+x.a,0)+' جنيه';
+}
+document.getElementById('add').onclick=()=>{
+  const v=Number(a.value);
+  if(!n.value.trim()||!v)return;
+  list.push({n:n.value,a:v});n.value='';a.value='';draw();
+};
+draw();
+<\/script>`},
+{t:'لعبة الذاكرة',lvl:'متوسط',d:'اقلب الكروت وطابق الأزواج بأقل محاولات.',learn:'خلط مصفوفة، setTimeout، حالة اللعبة (first, lock).',
+steps:['كرّر الرموز مرتين واخلطها بـ sort(() => Math.random() - 0.5).','اعمل زرار لكل كارت مكتوب عليه علامة استفهام.','أول كارت اتقلب خزّنه، التاني قارنه بالأول.','لو اتطابقوا سيبهم، ولو لا استنى 700 ملّي ثانية واقلبهم تاني، وخلال الانتظار امنع الضغط (lock).'],
+code:`<div id="board" style="display:grid;grid-template-columns:repeat(4,70px);gap:8px"></div>
+<p id="s"></p>
+<script>
+const icons=['🍎','🚀','🎧','🐱'];
+const cards=[...icons,...icons].sort(()=>Math.random()-0.5);
+const board=document.getElementById('board'),s=document.getElementById('s');
+let first=null,lock=false,found=0,moves=0;
+cards.forEach(ic=>{
+  const b=document.createElement('button');
+  b.style.cssText='height:70px;font-size:30px';b.textContent='?';
+  b.onclick=()=>{
+    if(lock||b.textContent!=='?')return;
+    b.textContent=ic;
+    if(!first){first=b;return}
+    moves++;
+    if(first.textContent===ic){
+      found++;first=null;
+      if(found===icons.length)s.textContent='كسبت في '+moves+' محاولة!';
+    }else{
+      lock=true;const a=first;
+      setTimeout(()=>{a.textContent='?';b.textContent='?';first=null;lock=false},700);
+    }
+  };
+  board.append(b);
+});
+<\/script>`},
+{t:'تطبيق الطقس',lvl:'متوسط',d:'اختار مدينة وشوف الطقس. بيانات تجريبية، ومعاه كود fetch للبيانات الحقيقية.',learn:'الكائنات المتداخلة، for…in، وفكرة الاتصال بـ API.',
+steps:['اعمل كائن بيانات: لكل مدينة درجة وحالة.','املا الـ select بأسماء المدن بـ for…in.','عند الاختيار اعرض بيانات المدينة.','استبدل البيانات التجريبية لاحقًا بطلب fetch من خدمة طقس مجانية.'],
+code:`<select id="c"></select>
+<div id="o" style="font-size:22px;margin-top:12px"></div>
+<script>
+const data={'القاهرة':{t:29,s:'مشمس'},'الإسكندرية':{t:25,s:'غائم'},'أسوان':{t:36,s:'حار جدًا'}};
+const c=document.getElementById('c'),o=document.getElementById('o');
+for(const city in data){c.add(new Option(city,city))}
+function show(){const w=data[c.value];o.textContent=c.value+': '+w.t+'°C - '+w.s}
+c.onchange=show;show();
+// للبيانات الحقيقية: fetch(url).then(r => r.json()).then(show)
+<\/script>`},
+{t:'مولّد كلمات المرور',lvl:'مبتدئ',d:'اختار الطول وولّد كلمة مرور عشوائية قوية.',learn:'حلقات for، النصوص كمصفوفات حروف، Math.random.',
+steps:['اكتب نص فيه كل الحروف والأرقام والرموز المسموحة.','خانة للطول وزرار توليد.','داخل حلقة اختار حرف عشوائي: chars[Math.floor(Math.random()*chars.length)].','اعرض الناتج وولّد واحدة أول ما الصفحة تفتح.'],
+code:`<input id="len" type="number" value="12" min="6" max="40"> <button id="gen">ولّد</button>
+<h3 id="out" style="font-family:monospace;word-break:break-all"></h3>
+<script>
+const chars='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*';
+const len=document.getElementById('len'),out=document.getElementById('out'),gen=document.getElementById('gen');
+gen.onclick=()=>{
+  let p='';
+  for(let i=0;i<Number(len.value);i++){p+=chars[Math.floor(Math.random()*chars.length)]}
+  out.textContent=p;
+};
+gen.click();
+<\/script>`},
+{t:'عدّاد الكلمات والحروف',lvl:'مبتدئ',d:'اكتب نص وشوف عدد الحروف والكلمات والأسطر لحظيًا.',learn:'حدث input، دوال النصوص، التعابير النمطية.',
+steps:['textarea وفقرة للنتيجة.','اربط حدث input عشان النتيجة تتحدث مع كل حرف.','عدد الحروف = value.length.','الكلمات: بعد trim اعمل split على المسافات، والأسطر: split على سطر جديد.'],
+code:`<textarea id="t" rows="5" style="width:100%"></textarea>
+<p id="r"></p>
+<script>
+const t=document.getElementById('t'),r=document.getElementById('r');
+function count(){
+  const x=t.value;
+  const words=x.trim()?x.trim().split(/\\s+/).length:0;
+  r.textContent='حروف: '+x.length+' | كلمات: '+words+' | أسطر: '+x.split('\\n').length;
+}
+t.oninput=count;count();
+<\/script>`}
+];
 
-            try {
-                // تنفيذ الكود المكتوب
-                let result = eval(code);
-                
-                if (logs.length > 0) {
-                    outputBox.innerHTML = logs.join('<br>');
-                } else if (result !== undefined) {
-                    outputBox.innerHTML = result;
-                } else {
-                    outputBox.innerHTML = "تم تنفيذ الكود بنجاح (بدون مخرجات نصية)";
-                }
-                outputBox.style.color = "#10b981"; // لون أخضر للنجاح
-            } catch (error) {
-                // إذا كان هناك خطأ، يعرضه مع السبب بدقة
-                outputBox.style.color = "#ef4444"; // لون أحمر للخطأ
-                outputBox.innerHTML = "⚠️ خطأ في الكود:<br>" + error.message + "<br><br><span style='color:#f59e0b;'>تأكد من كتابة الأقواس أو الأحرف بشكل صحيح!</span>";
-            }
+fixStrings(LESSONS);fixStrings(PROJECTS);
 
-            // استعادة الـ console الأصلي
-            console.log = originalLog;
-        }
-    </script>
+/* ================= الصفحات ================= */
+const VIEWS=[['lessons','الدروس'],['projects','المشاريع (12)'],['play','المحرر الحر'],['summary','ملخص اللغة']];
+function setNav(active){$('#views').innerHTML=VIEWS.map(([k,t])=>'<a href="#'+k+'" class="'+(k===active?'on':'')+'">'+t+'</a>').join('')}
+const main=()=>$('#main');
 
+function renderHome(){
+  const m=main();m.innerHTML='';
+  const hero=h('div','hero','<div class="crumb">JavaScript · من الصفر للمشاريع</div><h1>تعلّم <span class="mk">JavaScript</span> خطوة بخطوة</h1><p>10 دروس بشرح بأمثلة من الواقع، وأخطاء شائعة بالتفصيل، وتمرين بمحرر أكواد بيصحّح ويقولك ليه غلطت، وامتحان من 10 أسئلة بعد كل درس، و12 مشروع تتعمل بإيدك.</p>');
+  m.append(hero);
+  const done=LESSONS.filter(L=>prog.ex[L.ex.id]).length;
+  const grid=h('div','grid');grid.style.marginTop='18px';
+  LESSONS.forEach(L=>{
+    const a=h('a','card lcard');a.href='#l'+L.id;
+    const q=prog.quiz[L.id];
+    a.innerHTML='<span class="num">'+String(L.id).padStart(2,'0')+'</span><h3 style="margin:0">'+esc(L.t)+'</h3><small>'+esc(L.sub)+'</small><div class="badges">'+(prog.ex[L.ex.id]?'<span class="pill ok">تمرين ✓</span>':'')+(q!==undefined?'<span class="pill ok">امتحان '+q+'/10</span>':'')+'</div>';
+    grid.append(a);
+  });
+  m.append(grid);
+  m.append(h('p','note','تقدمك: أنهيت '+done+' من '+LESSONS.length+' تمارين. الأقسام الجاية: HTML وCSS وPython بنفس الشكل.'));
+  m.lastChild.style.marginTop='18px';
+}
+
+function renderLesson(id){
+  const L=LESSONS.find(x=>x.id===id);if(!L)return renderHome();
+  const m=main();m.innerHTML='';
+  m.append(h('div','hero','<div class="crumb">JavaScript / الدرس '+id+' من '+LESSONS.length+'</div><h1><span class="mk">'+esc(L.t)+'</span></h1>'));
+  const tabs=h('div','tabs'),body=h('div','stack');
+  const T=[['learn','الشرح والأمثلة'],['mist','الأخطاء الشائعة'],['ex','تمرين بمحرر'],['quiz','الامتحان'],['sum','الملخص']];
+  const runMode=L.lang==='html'?'html':'js';
+  function show(k){
+    tabs.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
+    body.innerHTML='';
+    if(k==='learn'){
+      body.append(h('div','analogy','<b>مثال من الواقع:</b> '+L.intro));
+      L.parts.forEach(p=>{
+        const c=h('div','card part','<h3>'+esc(p.h)+'</h3><p>'+p.p+'</p>');
+        c.append(codeBlock(p.c,{run:p.run===undefined?runMode:p.run}));
+        body.append(c);
+      });
+    }else if(k==='mist'){
+      body.append(h('div','note','الأخطاء دي بتقابل أي مبتدئ. اقرا الشرح وشغّل الكود الغلط وشوف رسالة الخطأ بنفسك، وبعدين شغّل الصح.'));
+      L.mis.forEach((x,i)=>{
+        const c=h('div','card mis part','<h3>'+(i+1)+'. '+esc(x.h)+'</h3><p>'+x.p+'</p>');
+        const cols=h('div','cols');
+        const r=x.norun?false:runMode;
+        const a=h('div');a.append(h('span','bad','❌ غلط'),codeBlock(x.bad,{run:r}));
+        const b=h('div');b.append(h('span','good','✅ صح'),codeBlock(x.good,{run:r}));
+        cols.append(a,b);c.append(cols);body.append(c);
+      });
+    }else if(k==='ex'){
+      body.append(Editor(Object.assign({title:'تمرين: '+L.t,mode:L.ex.mode||'js'},L.ex)));
+    }else if(k==='quiz'){
+      body.append(Quiz(L));
+    }else{
+      const c=h('div','card');c.innerHTML='<h2>ملخص: '+esc(L.t)+'</h2><ul class="sumlist">'+L.sum.map(s=>'<li>'+s+'</li>').join('')+'</ul>';
+      body.append(c);
+    }
+  }
+  T.forEach(([k,t])=>{const b=h('button','',t);b.type='button';b.dataset.k=k;b.onclick=()=>show(k);tabs.append(b)});
+  m.append(tabs,body);
+  const pager=h('div','pager');
+  const prev=h('a','btn',id>1?'← الدرس السابق':'← كل الدروس');prev.href=id>1?'#l'+(id-1):'#lessons';prev.style.textDecoration='none';
+  const next=h('a','btn pri',id<LESSONS.length?'الدرس التالي →':'المشاريع →');next.href=id<LESSONS.length?'#l'+(id+1):'#projects';next.style.textDecoration='none';
+  pager.append(prev,next);m.append(pager);
+  show('learn');
+}
+
+function renderProjects(){
+  const m=main();m.innerHTML='';
+  m.append(h('div','hero','<div class="crumb">مشاريع عملية</div><h1>اتعلّم بالبناء: <span class="mk">12 مشروع</span></h1><p>كل مشروع صفحة ويب كاملة في ملف واحد. افتحه، شوف الخطوات، شغّله، وبعدين عدّل فيه وطوّره بإيدك.</p>'));
+  const st=h('div','stack');st.style.marginTop='18px';
+  PROJECTS.forEach((p,i)=>{
+    const d=h('details','card proj');
+    d.innerHTML='<summary><span class="n">'+String(i+1).padStart(2,'0')+'</span><b>'+esc(p.t)+'</b><span class="pill">'+esc(p.lvl)+'</span></summary>';
+    const inner=h('div','inner');
+    inner.append(h('p','',esc(p.d)),h('p','','<b>هتتعلم:</b> '+esc(p.learn)),h('div','','<b>خطوات البناء:</b><ol>'+p.steps.map(s=>'<li>'+esc(s)+'</li>').join('')+'</ol>'));
+    let built=false;
+    d.addEventListener('toggle',()=>{if(d.open&&!built){built=true;inner.append(codeBlock(p.code,{run:'html',label:'HTML + JavaScript (ملف واحد)'}))}});
+    d.append(inner);st.append(d);
+  });
+  m.append(st);
+}
+
+function renderPlay(){
+  const m=main();m.innerHTML='';
+  m.append(h('div','hero','<div class="crumb">محرر مستقل</div><h1><span class="mk">المحرر الحر</span></h1><p>اكتب أي كود وشغّله وشوف النتيجة. اختار JavaScript للتجارب السريعة أو HTML لصفحة كاملة.</p>'));
+  const holder=h('div');holder.style.marginTop='18px';
+  const bar=h('div','tabs');
+  const samples={js:`const names = ["Ali", "Mona", "Omar"];
+for (const n of names) {
+  console.log("Hello " + n);
+}
+console.log("عدد الأسماء:", names.length);`,html:`<h2 id="t">مرحبا</h2>
+<button id="b">اضغط</button>
+<script>
+document.getElementById("b").onclick = () => {
+  document.getElementById("t").textContent = "Made By Gedo";
+};
+<\/script>`};
+  const mk=mode=>{
+    bar.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.k===mode));
+    holder.innerHTML='';holder.append(Editor({title:'محرر حر',mode,starter:samples[mode],height:260}));
+  };
+  [['js','JavaScript'],['html','HTML + JS']].forEach(([k,t])=>{const b=h('button','',t);b.type='button';b.dataset.k=k;b.onclick=()=>mk(k);bar.append(b)});
+  m.append(bar,holder);mk('js');
+}
+
+function renderSummary(){
+  const m=main();m.innerHTML='';
+  m.append(h('div','hero','<div class="crumb">مراجعة سريعة</div><h1>ملخص لغة <span class="mk">JavaScript</span></h1><p>أهم ما في كل درس، وتحتها ورقة غش بالصيغ الأساسية.</p>'));
+  const g=h('div','cheat');g.style.marginTop='18px';
+  LESSONS.forEach(L=>{
+    const c=h('div','card');c.innerHTML='<h3><a href="#l'+L.id+'" style="color:inherit">'+L.id+'. '+esc(L.t)+'</a></h3><ul class="sumlist">'+L.sum.map(s=>'<li>'+s+'</li>').join('')+'</ul>';
+    g.append(c);
+  });
+  m.append(g);
+  const sheet=h('div','card');sheet.style.marginTop='18px';sheet.append(h('h2','','ورقة الغش'));
+  sheet.append(codeBlock(C(`// المتغيرات
+let x = 1;  const PI = 3.14;
+// الأنواع
+typeof "a"; Number("5"); String(5); §hi ¤{x}§
+// شروط وحلقات
+if (a > b) {} else if (a === b) {} else {}
+for (let i = 0; i < n; i++) {}   for (const v of arr) {}   while (cond) {}
+// دوال
+function f(a, b = 1) { return a + b }   const g = (a) => a * 2;
+// مصفوفات
+arr.push(1); arr.map(f); arr.filter(f); arr.reduce((s, n) => s + n, 0);
+// كائنات
+const { name } = obj;  obj?.a?.b;  Object.entries(obj);  JSON.stringify(obj);
+// DOM
+document.querySelector("#id").addEventListener("click", () => {});
+// غير متزامن
+async function run() { try { const r = await fetch(url); } catch (e) {} }`),{run:false,label:'JavaScript cheat sheet'}));
+  m.append(sheet);
+}
+
+function route(){
+  const hs=location.hash.slice(1)||'lessons';const lm=hs.match(/^l(\d+)$/);
+  if(lm){setNav('lessons');renderLesson(+lm[1])}
+  else if(hs==='projects'){setNav('projects');renderProjects()}
+  else if(hs==='play'){setNav('play');renderPlay()}
+  else if(hs==='summary'){setNav('summary');renderSummary()}
+  else{setNav('lessons');renderHome()}
+  window.scrollTo(0,0);
+}
+$('#themeBtn').onclick=()=>{
+  const root=document.documentElement;
+  const cur=root.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  root.dataset.theme=cur==='dark'?'light':'dark';
+};
+addEventListener('hashchange',route);
+route();
+</script>
 </body>
 </html>
