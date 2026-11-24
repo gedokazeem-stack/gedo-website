@@ -1,846 +1,936 @@
-<!DOCTYPE html>  <html lang="ar" dir="rtl">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width,initial-scale=1">  
-<meta name="theme-color" content="#10234b">  
-<meta name="description" content="سَنَد - دليلك للحياة اليومية">  
-<title>سَنَد | SANAD</title>  
-<style>  
-:root{--bg:#f2f5fb;--card:#fff;--text:#17243d;--muted:#748197;--primary:#173b72;--accent:#0d9488;--line:#e2e9f2;--danger:#dc3545;--shadow:0 5px 22px #17243d0b}  
-.dark{--bg:#101827;--card:#1c293d;--text:#edf3ff;--muted:#a9b6ca;--primary:#7ba8ed;--accent:#35c6b4;--line:#34445a;--shadow:0 5px 22px #0003}  
-*{box-sizing:border-box}  
-body{margin:0;background:var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif;transition:.2s}  
-button,input,select,textarea{font:inherit}  
-button{cursor:pointer}  
-header{background:linear-gradient(130deg,#10234b,#174b78);color:white;padding:18px 5% 24px}  
-.top{display:flex;justify-content:space-between;align-items:center;gap:10px}  
-.made{font-size:11px;letter-spacing:2px;color:#9ed9e9;font-weight:bold}  
-.logo{font-size:29px;font-weight:900;margin-top:7px}  
-.logo small{display:block;font-size:11px;color:#c2d9eb;font-weight:normal}  
-.top button{background:#ffffff20;color:white;border:1px solid #ffffff40;padding:9px 12px;border-radius:12px}  
-.hero{padding:23px 0 0}  
-.hero h1{font-size:clamp(23px,5vw,36px);margin:0 0 10px}  
-.hero p{color:#d4e4f5;line-height:1.8;margin:0}  
-.search{width:100%;margin-top:18px;padding:15px;border:0;border-radius:13px;outline:none;background:white;color:#17243d}  
-.container{max-width:1050px;margin:auto;padding:18px 14px 100px}  
-.section-title{font-size:20px;margin:24px 0 13px}  
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}  
-@media(min-width:700px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}  
-.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:16px;box-shadow:var(--shadow)}  
-.tile{cursor:pointer;min-height:135px;transition:.2s}  
-.tile:hover{transform:translateY(-3px)}  
-.emoji{font-size:28px;margin-bottom:9px}  
-.tile b{display:block;font-size:15px}  
-.tile small{display:block;color:var(--muted);margin-top:7px;line-height:1.6}  
-.page{display:none}  
-.page.active{display:block}  
-button.primary{background:var(--primary);color:white;border:0;padding:11px 15px;border-radius:10px}  
-button.secondary{background:var(--bg);color:var(--text);border:1px solid var(--line);padding:10px 13px;border-radius:10px}  
-button.success{background:var(--accent);color:white;border:0;padding:11px 14px;border-radius:10px}  
-button.danger{background:var(--danger);color:white;border:0;padding:10px 14px;border-radius:10px}  
-.back{margin-bottom:16px}  
-.muted{color:var(--muted);font-size:13px;line-height:1.8}  
-input,select,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);margin:6px 0 12px;outline:none}  
-label{font-size:13px;color:var(--muted)}  
-.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}  
-.row>*{flex:1}  
-.item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:13px 0;border-bottom:1px solid var(--line)}  
-.item:last-child{border:0}  
-.number{font-size:23px;font-weight:bold;direction:ltr;display:inline-block}  
-.call{background:#dc3545;color:white;padding:9px 12px;border-radius:9px;text-decoration:none;font-size:13px}  
-.copy{background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:8px 12px}  
-.notice{background:#fff3d9;color:#79551c;padding:13px;border-radius:12px;line-height:1.9;font-size:13px;margin:12px 0}  
-.dark .notice{background:#493a20;color:#ffe2a0}  
-.result{font-size:18px;font-weight:bold;color:var(--accent);margin:13px 0}  
-.clock{background:linear-gradient(140deg,#173b72,#0d9488);color:white;border:0;text-align:center}  
-.clock .time{font-size:27px;font-weight:bold;direction:ltr}  
-.clock .date{font-size:12px;opacity:.85;margin-top:7px}  
-.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:9px 2px calc(9px + env(safe-area-inset-bottom));z-index:5}  
-.tabs button{border:0;background:none;color:var(--muted);font-size:11px;display:flex;flex-direction:column;align-items:center;gap:4px}  
-.tabs button span{font-size:20px}  
-.tabs button.selected{color:var(--accent);font-weight:bold}  
-.hidden{display:none!important}  
-hr{border:0;border-top:1px solid var(--line);margin:15px 0}  
-footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}  
-.smallbtn{font-size:12px;padding:7px 10px!important}  
-.tag{display:inline-block;padding:4px 8px;border-radius:8px;background:var(--bg);font-size:11px;color:var(--muted)}  
-</style>  
-</head>  
-<body>  <header>  
-<div class="top">  
-<div>  
-<div class="made">✦ MADE BY GEDO ✦</div>  
-<div class="logo">سَـنَـد <small>SANAD | دليلك للحياة اليومية</small></div>  
-</div>  
-<button onclick="toggleDark()">🌙 الوضع الليلي</button>  
-</div>  
-<div class="hero">  
-<h1>المعلومة الصح في الوقت الصح.</h1>  
-<p>خدمات وأدوات ومعلومات تساعدك في حياتك اليومية.</p>  
-<input class="search" id="search" placeholder="🔍 ابحث عن خدمة أو معلومة..." oninput="searchAll(this.value)">  
-</div>  
-</header>  <main class="container">  <section class="page active" id="home">  
-<h2 class="section-title">ماذا تحتاج اليوم؟</h2>  
-<div class="grid" id="mainTiles">  <div class="card tile" data-search="طوارئ إسعاف شرطة مطافئ"><div class="emoji">🚨</div><b>أرقام الطوارئ</b><small>أرقام مهمة في مصر.</small><button class="primary" onclick="showPage('emergency')">افتح القسم</button></div>  <div class="card tile" data-search="إسعافات حروق إغماء اختناق تشنجات حريق"><div class="emoji">🩺</div><b>التصرف وقت الخطر</b><small>إرشادات أولية للمواقف المفاجئة.</small><button class="primary" onclick="showPage('firstaid')">افتح القسم</button></div>  <div class="card tile" data-search="فودافون اورنج اتصالات وي أكواد رصيد"><div class="emoji">📱</div><b>أكواد الشبكات</b><small>شركات المحمول المصرية.</small><button class="primary" onclick="showPage('codes')">افتح القسم</button></div>  <div class="card tile" data-search="العمر ميلاد تاريخ سنة شهر"><div class="emoji">🎂</div><b>احسب عمرك</b><small>عمرك ومفاجأة يوم ميلادك.</small><button class="primary" onclick="showPage('age')">احسب الآن</button></div>  <div class="card tile" data-search="QR كيو ار رابط نص"><div class="emoji">🔳</div><b>صانع QR</b><small>إنشاء رموز QR للنصوص والروابط.</small><button class="primary" onclick="showPage('qr')">افتح القسم</button></div>  <div class="card tile" data-search="ساعة عالمية توقيت القاهرة نيوزيلندا نزلة سلمان"><div class="emoji">🌍</div><b>الساعة العالمية</b><small>اعرف الوقت في مدن العالم ونزلة سلمان.</small><button class="primary" onclick="showPage('world')">افتح الساعة</button></div>  <div class="card tile" data-search="حاسبة حساب آلة حاسبة"><div class="emoji">🧮</div><b>الحاسبة</b><small>عمليات حسابية سريعة.</small><button class="primary" onclick="showPage('calculator')">افتح الحاسبة</button></div>  <div class="card tile" data-search="تحويل وحدات طول وزن حرارة مساحة"><div class="emoji">📏</div><b>محوّل الوحدات</b><small>تحويل وحدات القياس.</small><button class="primary" onclick="showPage('convert')">افتح المحوّل</button></div>  <div class="card tile" data-search="كلمة مرور باسورد"><div class="emoji">🔐</div><b>مولّد كلمات المرور</b><small>إنشاء كلمات مرور عشوائية.</small><button class="primary" onclick="showPage('password')">افتح القسم</button></div>  <div class="card tile" data-search="مناسبات عداد وقت"><div class="emoji">⏳</div><b>عداد المناسبات</b><small>احسب الوقت المتبقي لأي موعد.</small><button class="primary" onclick="showPage('countdown')">افتح القسم</button></div>  <div class="card tile" data-search="تاريخ الأيام حاسبة تاريخ"><div class="emoji">📅</div><b>حاسبة التاريخ</b><small>الفرق بين تاريخين.</small><button class="primary" onclick="showPage('datecalc')">افتح القسم</button></div>  <div class="card tile" data-search="ملاحظات خزنة بيانات"><div class="emoji">📝</div><b>ملاحظاتي</b><small>احفظ ملاحظاتك على جهازك.</small><button class="primary" onclick="showPage('notes')">افتح القسم</button></div>  <div class="card tile" data-search="مصاريف ميزانية فلوس"><div class="emoji">💰</div><b>حاسبة المصروفات</b><small>تابع ميزانيتك ومصروفاتك.</small><button class="primary" onclick="showPage('budget')">افتح القسم</button></div>  <div class="card tile" data-search="سفر قائمة تجهيز"><div class="emoji">🧳</div><b>قائمة السفر</b><small>جهز أغراضك قبل السفر.</small><button class="primary" onclick="showPage('travel')">افتح القسم</button></div>  <div class="card tile" data-search="بطاقة طوارئ شخصية"><div class="emoji">🪪</div><b>بطاقة الطوارئ</b><small>جهز بطاقة قابلة للطباعة.</small><button class="primary" onclick="showPage('card')">افتح القسم</button></div>  <div class="card tile" data-search="دليل حكومي خدمات"><div class="emoji">🏛️</div><b>دليل الخدمات</b><small>معلومات عن جهات وخدمات عامة.</small><button class="primary" onclick="showPage('services')">افتح القسم</button></div>  <div class="card tile" data-search="حماية رقمية خصوصية احتيال تصيد أمان"><div class="emoji">🛡️</div><b>مركز الحماية الرقمية</b><small>احمِ حساباتك وبياناتك من الاحتيال.</small><button class="primary" onclick="showPage('security')">افتح القسم</button></div>  <div class="card tile" data-search="محافظ إلكترونية انستا باي فودافون كاش اورنج كاش تحويل توعية"><div class="emoji">💳</div><b>دليل المحافظ والتحويلات</b><small>معلومات توعوية وأمان مالي.</small><button class="primary" onclick="showPage('wallets')">افتح القسم</button></div>  </div>  <h2 class="section-title">معلومة اليوم</h2>  
-<div class="card"><div style="font-size:28px">💡</div><b id="dailyFact">المعرفة تبدأ بسؤال!</b><p class="muted">افتح الموقع كل يوم لاكتشاف معلومة جديدة.</p></div>  
-</section>  <section class="page" id="emergency">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>🚨 أرقام الطوارئ المصرية</h2>  
-<div class="notice">إذا كان هناك خطر مباشر، اتصل بالجهة المختصة فورًا. لا تؤخر الاتصال من أجل استخدام الموقع.</div>  
-<div class="card" id="emergencyList"></div>  
-<p class="muted">تحقق من الأرقام من الجهات الرسمية عند الحاجة.</p>  
-</section>  <section class="page" id="firstaid">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>🩺 التصرف في المواقف الحرجة</h2>  
-<div class="notice">معلومات توعوية أولية وليست بديلًا عن الإسعاف أو الطبيب. في الحالات الخطرة اتصل بالإسعاف 123 واتبع تعليمات المجيب.</div>  
-<div class="grid" id="aidList"></div>  
-<div class="card" style="margin-top:14px"><b>معلومة عن «بلع اللسان»</b><p class="muted">لا تضع يدك أو أي شيء في الفم، ولا تحاول سحب اللسان. اطلب الإسعاف واتبع تعليمات المختص.</p></div>  
-</section>  <section class="page" id="codes">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>📱 أكواد شركات المحمول المصرية</h2>  
-<p class="muted">الأكواد قد تتغير أو تختلف حسب نظام الخط. تحقق من الشركة قبل استخدام خدمة مدفوعة.</p>  
-<div class="row"><button class="primary" onclick="showCodes('vodafone')">فودافون</button><button class="primary" onclick="showCodes('orange')">أورنج</button></div>  
-<div class="row" style="margin-top:8px"><button class="primary" onclick="showCodes('etisalat')">اتصالات</button><button class="primary" onclick="showCodes('we')">WE</button></div>  
-<div class="card" id="codeResult" style="margin-top:15px"><p class="muted">اختر شركة لعرض الأكواد.</p></div>  
-</section>  <section class="page" id="age">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>🎂 احسب عمرك</h2>  
-<div class="card"><label>تاريخ ميلادك</label><input type="date" id="birth"><button class="primary" onclick="calculateAge()">احسب عمري</button><div id="ageResult"></div></div>  
-</section>  <section class="page" id="qr">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>🔳 صانع QR Code</h2>  
-<div class="card">  
-<p class="muted">إنشاء رمز QR للنصوص والروابط القصيرة. الحد الأقصى 53 بايت.</p>  
-<label>اكتب نصًا أو رابطًا قصيرًا</label>  
-<textarea id="qrText" rows="3" maxlength="53" placeholder="مثال: https://example.com"></textarea>  
-<button class="primary" onclick="makeQR()">إنشاء QR</button>  
-<div id="qrOutput" style="text-align:center;margin-top:18px"></div>  
-</div>  
-</section>  <section class="page" id="world">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>🌍 الساعة العالمية</h2>  
-<p class="muted">نزلة سلمان والقاهرة على توقيت مصر نفسه.</p>  
-<div class="grid" id="clocks"></div>  
-</section>  <section class="page" id="calculator">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>🧮 الحاسبة</h2>  
-<div class="card">  
-<input id="calcDisplay" readonly placeholder="0" style="font-size:25px;text-align:left;direction:ltr">  
-<div class="grid">  
-<button class="secondary" onclick="calc('7')">7</button><button class="secondary" onclick="calc('8')">8</button><button class="secondary" onclick="calc('9')">9</button><button class="secondary" onclick="calc('/')">÷</button>  
-<button class="secondary" onclick="calc('4')">4</button><button class="secondary" onclick="calc('5')">5</button><button class="secondary" onclick="calc('6')">6</button><button class="secondary" onclick="calc('*')">×</button>  
-<button class="secondary" onclick="calc('1')">1</button><button class="secondary" onclick="calc('2')">2</button><button class="secondary" onclick="calc('3')">3</button><button class="secondary" onclick="calc('-')">−</button>  
-<button class="secondary" onclick="calc('0')">0</button><button class="secondary" onclick="calc('.')">.</button><button class="secondary" onclick="calculate()">=</button><button class="secondary" onclick="calc('+')">+</button>  
-</div>  
-<div class="row"><button class="secondary" onclick="calc('(')">(</button><button class="secondary" onclick="calc(')')">)</button><button class="danger" onclick="clearCalc()">مسح</button></div>  
-</div>  
-</section>  <section class="page" id="convert">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>📏 محوّل الوحدات</h2>  
-<div class="card">  
-<label>نوع التحويل</label>  
-<select id="unitType" onchange="updateUnits()"><option value="length">الطول</option><option value="weight">الوزن</option><option value="temp">درجة الحرارة</option></select>  
-<div class="row"><div><label>من</label><select id="unitFrom"></select></div><div><label>إلى</label><select id="unitTo"></select></div></div>  
-<label>القيمة</label><input id="unitValue" type="number" placeholder="اكتب القيمة">  
-<button class="primary" onclick="convertUnit()">تحويل</button>  
-<div class="result" id="unitResult"></div>  
-</div>  
-</section>  <section class="page" id="password">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>🔐 مولّد كلمات المرور</h2>  
-<div class="card">  
-<label>طول كلمة المرور</label><input id="passLength" type="number" min="8" max="40" value="16">  
-<button class="primary" onclick="makePassword()">إنشاء كلمة مرور</button>  
-<input id="passResult" readonly placeholder="كلمة المرور ستظهر هنا" dir="ltr">  
-<button class="secondary" onclick="copyText($('passResult').value)">نسخ</button>  
-<p class="muted">لا تشارك كلمة المرور مع الآخرين.</p>  
-</div>  
-</section>  <section class="page" id="countdown">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>⏳ عداد المناسبات</h2>  
-<div class="card">  
-<label>اسم المناسبة</label><input id="eventName" placeholder="عيد ميلادي مثلًا">  
-<label>موعد المناسبة</label><input type="datetime-local" id="eventDate">  
-<button class="primary" onclick="startCountdown()">احسب الوقت</button>  
-<div id="countResult" class="result"></div>  
-</div>  
-</section>  <section class="page" id="datecalc">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>📅 حاسبة التاريخ</h2>  
-<div class="card">  
-<label>التاريخ الأول</label><input type="date" id="dateOne">  
-<label>التاريخ الثاني</label><input type="date" id="dateTwo">  
-<button class="primary" onclick="dateDifference()">احسب الفرق</button>  
-<div class="result" id="dateResult"></div>  
-</div>  
-</section>  <section class="page" id="notes">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>📝 ملاحظاتي</h2>  
-<div class="card">  
-<label>اكتب ملاحظتك</label><textarea id="noteText" rows="4" placeholder="اكتب هنا..."></textarea>  
-<button class="primary" onclick="saveNote()">حفظ الملاحظة</button>  
-<div id="noteList"></div>  
-<p class="muted">تحفظ الملاحظات على هذا الجهاز والمتصفح فقط. لا تضع كلمات مرور هنا.</p>  
-</div>  
-</section>  <section class="page" id="budget">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>💰 حاسبة المصروفات</h2>  
-<div class="card">  
-<label>ميزانيتك</label><input type="number" id="budgetTotal" placeholder="مثال: 1000">  
-<label>المبلغ المصروف</label><input type="number" id="budgetSpent" placeholder="مثال: 250">  
-<button class="primary" onclick="budgetCalc()">احسب المتبقي</button>  
-<div class="result" id="budgetResult"></div>  
-</div>  
-</section>  <section class="page" id="travel">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>🧳 قائمة السفر</h2>  
-<div class="card">  
-<div id="travelList"></div>  
-<label>أضف غرضًا</label><input id="travelNew" placeholder="مثال: شاحن الهاتف">  
-<button class="primary" onclick="addTravel()">إضافة</button>  
-<button class="secondary" onclick="resetTravel()">إعادة القائمة</button>  
-</div>  
-</section>  <section class="page" id="card">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>🪪 بطاقة الطوارئ الشخصية</h2>  
-<div class="card">  
-<label>الاسم</label><input id="cardName" placeholder="اسمك">  
-<label>رقم شخص للتواصل معه</label><input id="cardPhone" type="tel" placeholder="رقم الهاتف">  
-<label>ملاحظات اختيارية</label><textarea id="cardNotes" placeholder="معلومات تود إضافتها"></textarea>  
-<button class="primary" onclick="printCard()">طباعة البطاقة</button>  
-<p class="muted">لا تضف معلومات حساسة إلا عند الحاجة.</p>  
-</div>  
-</section>  <section class="page" id="services">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>🏛️ دليل الخدمات</h2>  
-<div class="card">  
-<div class="item"><b>منظومة الشكاوى الحكومية</b><a href="https://www.shakwa.eg/" target="_blank" rel="noopener">زيارة الموقع</a></div>  
-<div class="item"><b>بوابة مصر الرقمية</b><a href="https://digital.gov.eg/" target="_blank" rel="noopener">زيارة الموقع</a></div>  
-<div class="item"><b>الجهاز القومي لتنظيم الاتصالات</b><a href="https://www.tra.gov.eg/" target="_blank" rel="noopener">زيارة الموقع</a></div>  
-<div class="item"><b>وزارة الصحة والسكان</b><a href="https://www.mohp.gov.eg/" target="_blank" rel="noopener">زيارة الموقع</a></div>  
-<div class="item"><b>وزارة الداخلية</b><a href="https://moi.gov.eg/" target="_blank" rel="noopener">زيارة الموقع</a></div>  
-</div>  
-</section>  <section class="page" id="security">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>🛡️ مركز الحماية الرقمية</h2>  
-<div class="notice">هدف المركز التوعية. لا يوجد فحص فعلي للجهاز أو الحسابات، ولا يطلب منك إدخال كلمات مرورك أو رموز التحقق.</div>  
-<div class="grid" id="securityList"></div>  
-<div class="card" style="margin-top:12px">  
-<h3>قائمة فحص أمانك</h3>  
-<div id="securityChecks"></div>  
-<p class="muted">علامات الاختيار تُحفظ على جهازك فقط.</p>  
-</div>  
-<div class="card">  
-<h3>ماذا تفعل لو شككت في رسالة احتيالية؟</h3>  
-<ol class="muted">  
-<li>لا تضغط الرابط ولا تفتح المرفق.</li>  
-<li>لا ترسل رمز تحقق أو كلمة مرور أو بيانات بطاقة.</li>  
-<li>تحقق من الجهة عبر تطبيقها أو موقعها الرسمي الذي تكتبه بنفسك.</li>  
-<li>احظر الحساب وبلّغ عنه من داخل التطبيق.</li>  
-<li>أخبر شخصًا بالغًا موثوقًا إذا كان هناك تهديد أو ابتزاز.</li>  
-</ol>  
-</div>  
-</section>  <section class="page" id="wallets">  
-<button class="secondary back" onclick="showPage('home')">← الرئيسية</button>  
-<h2>💳 دليل المحافظ والتحويلات</h2>  
-<div class="notice">هذا القسم للتوعية فقط، ولا ينفذ تحويلات أو مدفوعات. أي معاملة مالية يجب أن تتم بواسطة صاحب الحساب وبمساعدة ولي أمر موثوق عند الحاجة.</div>  
-<div class="card">  
-<h3>ما الفرق بين الخدمات؟</h3>  
-<p class="muted"><b>المحافظ الإلكترونية:</b> خدمات تقدمها شركات المحمول أو البنوك لإدارة رصيد محفظة مرتبطة برقم الهاتف وفق شروط مقدم الخدمة.</p>  
-<p class="muted"><b>InstaPay:</b> تطبيق يتيح خدمات ربط وتحويل بين حسابات بنكية وجهات مدعومة وفق ضوابط البنك المركزي ومقدم الخدمة.</p>  
-</div>  
-<div class="grid" id="walletInfo"></div>  
-<div class="card">  
-<h3>قواعد أمان أساسية</h3>  
-<ul class="muted">  
-<li>لا تشارك الرقم السري أو رمز OTP مع أي شخص، حتى لو ادعى أنه موظف خدمة عملاء.</li>  
-<li>لا تنفذ تحويلًا بناءً على مكالمة أو رسالة مستعجلة.</li>  
-<li>تحقق من اسم المستفيد والمبلغ مع ولي أمرك قبل أي إجراء.</li>  
-<li>استخدم التطبيق الرسمي فقط، ولا تثبّت ملفات مجهولة.</li>  
-<li>في حالة الشك، تواصل مع البنك أو الشركة من قنواتها الرسمية.</li>  
-</ul>  
-</div>  
-</section>  <footer>سَنَد | SANAD<br>MADE BY GEDO ❤️<br>المعلومة الصح في الوقت الصح.</footer>  
-</main>  <nav class="tabs">  
-<button class="selected" onclick="showPage('home',this)"><span>🏠</span>الرئيسية</button>  
-<button onclick="showPage('emergency',this)"><span>🚨</span>الطوارئ</button>  
-<button onclick="showPage('world',this)"><span>🌍</span>الساعة</button>  
-<button onclick="showPage('age',this)"><span>🎂</span>العمر</button>  
-<button onclick="showPage('qr',this)"><span>🔳</span>QR</button>  
-</nav>  <script>  
-const $=id=>document.getElementById(id);  
-  
-function showPage(id,btn){  
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));  
-$(id).classList.add('active');  
-document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('selected'));  
-if(btn)btn.classList.add('selected');  
-else{  
-const map={home:0,emergency:1,world:2,age:3,qr:4};  
-document.querySelectorAll('.tabs button')[map[id]??0].classList.add('selected');  
-}  
-window.scrollTo(0,0);  
-}  
-  
-function toggleDark(){  
-document.body.classList.toggle('dark');  
-localStorage.setItem('sanadDark',document.body.classList.contains('dark'));  
-}  
-if(localStorage.getItem('sanadDark')==='true')document.body.classList.add('dark');  
-  
-function copyText(t){  
-if(!t)return;  
-if(navigator.clipboard&&window.isSecureContext){  
-navigator.clipboard.writeText(t).then(()=>alert('تم النسخ!')).catch(()=>fallbackCopy(t));  
-}else fallbackCopy(t);  
-}  
-function fallbackCopy(t){  
-const x=document.createElement('textarea');  
-x.value=t;document.body.appendChild(x);x.select();  
-try{document.execCommand('copy');alert('تم النسخ!')}catch(e){alert('تعذر النسخ')}  
-x.remove();  
-}  
-  
-function searchAll(q){  
-q=q.trim().toLowerCase();  
-document.querySelectorAll('#mainTiles .tile').forEach(t=>{  
-t.style.display=(!q||t.dataset.search.toLowerCase().includes(q)||t.innerText.toLowerCase().includes(q))?'':'none';  
-});  
-if(q)showPage('home');  
-}  
-  
-const emergencies=[  
-['الإسعاف','123'],['الشرطة','122'],['الحماية المدنية / المطافئ','180'],  
-['طوارئ الكهرباء','121'],['طوارئ الغاز','129'],['شرطة المرور','128'],  
-['نجدة الطفل','16000'],['شكاوى الاتصالات','155']  
-];  
-$('emergencyList').innerHTML=emergencies.map(x=>`<div class="item"><div><b>${x[0]}</b><br><span class="number">${x[1]}</span></div><a class="call" href="tel:${x[1]}">اتصال</a></div>`).join('');  
-  
-const aid=[  
-['🔥 الحريق','غادر المكان إذا كان ذلك آمنًا، ولا تستخدم المصعد. لا تعد إلى المبنى. اتصل بالحماية المدنية 180.'],  
-['😵 الإغماء','تأكد من أمان المكان. إذا لم يستعد الشخص وعيه سريعًا أو كان تنفسه غير طبيعي فاتصل بالإسعاف. لا تعطِ فاقد الوعي طعامًا أو شرابًا.'],  
-['🫁 الاختناق','إذا كان يسعل ويتنفس شجعه على السعال. إذا لم يستطع التنفس أو الكلام اطلب الإسعاف فورًا واتبع تعليمات المجيب. لا تدخل أصابعك عشوائيًا في فمه.'],  
-['🔥 الحروق','برّد الحرق بماء جارٍ معتدل البرودة لمدة 20 دقيقة. لا تستخدم الثلج أو معجون الأسنان أو الزيوت. اطلب المساعدة للحروق الكبيرة أو العميقة.'],  
-['🩸 النزيف','اطلب المساعدة الطبية عند النزيف الشديد، واضغط مباشرة بقطعة قماش نظيفة إن أمكن. لا تنزع جسمًا مغروسًا.'],  
-['⚡ الصعق الكهربائي','لا تلمس المصاب ما دام مصدر الكهرباء متصلًا. افصل التيار إن أمكن بأمان واتصل بالطوارئ.'],  
-['🧠 التشنجات','أبعد الأشياء الخطرة واحمِ الرأس بشيء لين. لا تثبته ولا تضع شيئًا في فمه. اطلب الإسعاف إذا كانت أول نوبة أو طالت أو تكررت.'],  
-['☠️ التسمم','اتصل بالطوارئ أو مركز السموم. لا تحاول إجبار المصاب على القيء ولا تعطِه وصفات منزلية. احتفظ بعبوة المادة.'],  
-['🚗 حادث طريق','أمّن المكان واتصل بالإسعاف والشرطة عند الحاجة. لا تحرك مصابًا يُشتبه في إصابة رقبته أو ظهره إلا عند خطر مباشر.'],  
-['🫀 ألم الصدر','عند ألم صدر شديد أو ضيق نفس مفاجئ اتصل بالإسعاف فورًا ولا تدع المصاب يقود.'],  
-['🌡️ ارتفاع الحرارة','انقل الشخص لمكان معتدل واطلب المشورة الطبية، خصوصًا للأطفال أو عند اضطراب الوعي أو صعوبة التنفس.'],  
-['🥶 انخفاض حرارة الجسم','انقله لمكان دافئ وجاف وغطّه ببطانية. اطلب المساعدة الطبية إذا كان مشوشًا أو شديد البرودة.'],  
-['🐝 لسعة حشرة','ابتعد عن مصدر اللسع. اطلب الإسعاف فورًا عند صعوبة التنفس أو تورم الوجه أو اللسان.'],  
-['🐍 عضة حيوان','ابتعد عن الحيوان واطلب تقييمًا طبيًا سريعًا، خصوصًا إذا كان الحيوان مجهولًا أو غير مطعّم.'],  
-['👁️ جسم غريب بالعين','لا تفرك العين ولا تحاول إزالة جسم مغروس. اطلب تقييمًا طبيًا إذا استمر الألم أو تأثرت الرؤية.'],  
-['👃 نزيف الأنف','اجلس مع إمالة الرأس قليلًا للأمام واضغط برفق على الجزء الطري من الأنف. اطلب المساعدة إذا كان شديدًا أو مستمرًا.'],  
-['🦴 اشتباه كسر','قلل حركة الجزء المصاب ولا تحاول تعديل العظم. اطلب المساعدة الطبية.'],  
-['🤕 إصابة الرأس','اطلب تقييمًا طبيًا عند فقدان الوعي أو القيء المتكرر أو التشوش أو الصداع الشديد. لا تترك المصاب وحده.'],  
-['🧊 التواء المفصل','أرح المفصل وتجنب الضغط عليه، واستخدم كمادة باردة ملفوفة بقماش لفترات قصيرة. اطلب تقييمًا إذا كان الألم شديدًا.'],  
-['🌊 حادث غرق','اطلب الطوارئ ولا تدخل الماء إذا كان ذلك يعرّضك للخطر. استخدم وسيلة آمنة لمد شيء للشخص وانتظر المختصين.'],  
-['🧪 تعرض لمادة كيميائية','ابتعد عن المصدر واتبع تعليمات ملصق المنتج أو الطوارئ. لا تخلط مواد تنظيف ولا تحاول معادلة المادة بمادة أخرى.'],  
-['🌫️ استنشاق دخان','انتقل لهواء نقي إذا كان ذلك آمنًا واتصل بالطوارئ عند السعال الشديد أو ضيق النفس أو الدوار.'],  
-['🥵 إجهاد حراري','انتقل لمكان بارد وخفف الملابس الزائدة واطلب مساعدة طبية إذا ساءت الحالة أو ظهر اضطراب وعي.'],  
-['🧊 قضمة برد','انتقل لمكان دافئ ولا تفرك المنطقة المصابة. اطلب تقييمًا طبيًا.'],  
-['🦷 ألم أو إصابة الأسنان','تجنب العبث بالسن واطلب طبيب أسنان، وبالأخص بعد إصابة أو نزيف مستمر.'],  
-['🤢 قيء أو إسهال','اهتم بالسوائل المناسبة واطلب المشورة الطبية عند الجفاف أو الدم أو الألم الشديد أو استمرار الأعراض.'],  
-['🐟 حساسية طعام','توقف عن تناول الطعام المشتبه به. صعوبة التنفس أو تورم اللسان حالة طارئة تستلزم الإسعاف.'],  
-['🧴 تهيج الجلد','أبعد المادة المسببة واغسل الجلد بالماء الجاري. اطلب المشورة إذا كان التهيج شديدًا أو واسعًا.'],  
-['🧠 دوار مفاجئ','اجلس أو استلقِ في مكان آمن وتجنب القيادة. اطلب الإسعاف عند ضعف مفاجئ أو اضطراب الكلام أو ألم الصدر.'],  
-['👂 جسم بالأذن','لا تدخل أدوات أو أعوادًا في الأذن. اطلب مساعدة طبية لإزالته بأمان.']  
-];  
-$('aidList').innerHTML=aid.map(x=>`<div class="card"><b>${x[0]}</b><p class="muted">${x[1]}</p></div>`).join('');  
-  
-const networkCodes={  
-vodafone:[['خدمة العملاء','888'],['خدمة العملاء من أي رقم','16888'],['معرفة الرصيد','*868*1#'],['شحن كارت','*858*رقم الكارت#'],['قائمة خدمات فودافون','*888#'],['فودافون كاش - القائمة','*9#'],['خدمة عملاء فودافون كاش','7001']],  
-orange:[['خدمة العملاء','110'],['خدمة العملاء من أي خط أرضي','16110'],['معرفة الرصيد والخدمات','#100#'],['قائمة أورنج كاش','#7115#'],['خدمة عملاء أورنج كاش','7770'],['معرفة بعض تفاصيل الحساب','#16#'],['خدمة العملاء من شبكة أخرى','01223202110']],  
-etisalat:[['خدمة العملاء','333'],['خدمة العملاء من أي خط أرضي','0235346333'],['معرفة الرصيد','*555#'],['قائمة e& money','*777#'],['خدمة عملاء e& money','778'],['شحن كارت','*556*رقم الكارت#']],  
-we:[['خدمة العملاء','111'],['خدمة العملاء من الموبايل','01555000111'],['قائمة WE Pay','*7#'],['معرفة الرصيد','*550#'],['خدمة عملاء WE Pay','565']]  
-};  
-const networkNames={vodafone:'فودافون',orange:'أورنج',etisalat:'اتصالات / e&',we:'WE'};  
-  
-function showCodes(n){  
-$('codeResult').innerHTML='<h3>'+networkNames[n]+'</h3>'+networkCodes[n].map(x=>`<div class="item"><div><b>${x[0]}</b><br><span class="number">${x[1]}</span></div><button class="copy" onclick="copyText(${JSON.stringify(x[1])})">نسخ</button></div>`).join('')+'<p class="muted">الأكواد قد تتغير حسب نظام الخط. النسخ لا يشغّل الكود ولا يشترك في خدمة.</p>';  
-}  
-  
-function calculateAge(){  
-const val=$('birth').value;  
-if(!val)return alert('اختر تاريخ ميلادك');  
-const b=new Date(val+'T00:00:00'),now=new Date();  
-if(b>now)return alert('تاريخ الميلاد لا يمكن أن يكون في المستقبل');  
-let years=now.getFullYear()-b.getFullYear(),months=now.getMonth()-b.getMonth(),days=now.getDate()-b.getDate();  
-if(days<0){months--;days+=new Date(now.getFullYear(),now.getMonth(),0).getDate()}  
-if(months<0){years--;months+=12}  
-const total=Math.floor((now-b)/86400000);  
-let next=new Date(now.getFullYear(),b.getMonth(),b.getDate());  
-if(next<new Date(now.getFullYear(),now.getMonth(),now.getDate()))next.setFullYear(next.getFullYear()+1);  
-const left=Math.ceil((next-now)/86400000);  
-const weekday=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'][b.getDay()];  
-$('ageResult').innerHTML=`<div class="result">🎉 عمرك ${years} سنة و${months} شهر و${days} يوم</div><div class="card"><b>📆 يوم ميلادك:</b> ${weekday}<hr><b>⏱️ عشت تقريبًا:</b> ${total.toLocaleString('ar-EG')} يوم<hr><b>🎂 عيد ميلادك القادم بعد:</b> ${left} يوم</div>`;  
-}  
-  
-const cities=[  
-['🇪🇬 القاهرة','Africa/Cairo'],  
-['🇪🇬 نزلة سلمان – أسيوط','Africa/Cairo'],  
-['🇸🇦 الرياض','Asia/Riyadh'],  
-['🇸🇦 مكة المكرمة','Asia/Riyadh'],  
-['🇦🇪 دبي','Asia/Dubai'],  
-['🇫🇷 باريس','Europe/Paris'],  
-['🇬🇧 لندن','Europe/London'],  
-['🇺🇸 نيويورك','America/New_York'],  
-['🇺🇸 لوس أنجلوس','America/Los_Angeles'],  
-['🇯🇵 طوكيو','Asia/Tokyo'],  
-['🇳🇿 أوكلاند – نيوزيلندا','Pacific/Auckland']  
-];  
-  
-function updateClocks(){  
-$('clocks').innerHTML=cities.map((c,i)=>{  
-const now=new Date();  
-const time=new Intl.DateTimeFormat('ar-EG',{timeZone:c[1],hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}).format(now);  
-const date=new Intl.DateTimeFormat('ar-EG',{timeZone:c[1],weekday:'long',day:'numeric',month:'long'}).format(now);  
-return `<div class="card clock"><b>${c[0]}</b><div class="time">${time}</div><div class="date">${date}</div>${i===1?'<small>⭐ قريتنا في الساعة العالمية</small>':''}</div>`;  
-}).join('');  
-}  
-updateClocks();  
-setInterval(updateClocks,1000);  
-  
-function makeQR(){  
-const text=$('qrText').value;  
-if(!text)return alert('اكتب نصًا أو رابطًا أولًا');  
-const bytes=new TextEncoder().encode(text);  
-if(bytes.length>53)return alert('النص طويل. الحد الأقصى 53 بايت.');  
-try{  
-const matrix=qrEncode(bytes),scale=7,pad=4,n=matrix.length,canvas=document.createElement('canvas');  
-canvas.width=canvas.height=(n+pad*2)*scale;  
-const ctx=canvas.getContext('2d');  
-ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);  
-ctx.fillStyle='#000';  
-matrix.forEach((row,y)=>row.forEach((v,x)=>{if(v)ctx.fillRect((x+pad)*scale,(y+pad)*scale,scale,scale)}));  
-window.currentQR=canvas.toDataURL('image/png');  
-$('qrOutput').innerHTML='<img alt="QR Code" style="width:100%;max-width:280px" src="'+window.currentQR+'"><br><button class="success" onclick="downloadQR()">تحميل الصورة</button>';  
-}catch(e){alert('تعذر إنشاء الرمز. جرب نصًا أقصر.')}  
-}  
-  
-function qrEncode(bytes){  
-const n=29,dataLen=55,eccLen=15,bits=[];  
-function push(v,len){for(let i=len-1;i>=0;i--)bits.push((v>>>i)&1)}  
-push(4,4);push(bytes.length,8);bytes.forEach(b=>push(b,8));  
-for(let i=0;i<Math.min(4,dataLen*8-bits.length);i++)bits.push(0);  
-while(bits.length%8)bits.push(0);  
-let data=[];  
-for(let i=0;i<bits.length;i+=8){let v=0;for(let j=0;j<8;j++)v=(v<<1)|(bits[i+j]||0);data.push(v)}  
-let toggle=true;  
-while(data.length<dataLen){data.push(toggle?0xEC:0x11);toggle=!toggle}  
-const exp=new Array(512),log=new Array(256);  
-let x=1;  
-for(let i=0;i<255;i++){exp[i]=x;log[x]=i;x<<=1;if(x&256)x^=0x11d}  
-for(let i=255;i<512;i++)exp[i]=exp[i-255];  
-const mul=(a,b)=>a&&b?exp[log[a]+log[b]]:0;  
-let gen=[1];  
-for(let i=0;i<eccLen;i++){  
-let next=new Array(gen.length+1).fill(0);  
-gen.forEach((v,j)=>{next[j]^=v;next[j+1]^=mul(v,exp[i])});  
-gen=next;  
-}  
-let rem=new Array(eccLen).fill(0);  
-data.forEach(v=>{  
-const f=v^rem[0];rem.shift();rem.push(0);  
-for(let i=0;i<eccLen;i++)rem[i]^=mul(gen[i+1],f);  
-});  
-const all=data.concat(rem),m=Array.from({length:n},()=>Array(n).fill(null)),set=(r,c,v)=>{if(r>=0&&r<n&&c>=0&&c<n)m[r][c]=!!v};  
-function finder(r,c){  
-for(let y=-1;y<=7;y++)for(let x=-1;x<=7;x++){  
-const rr=r+y,cc=c+x;  
-if(rr<0||rr>=n||cc<0||cc>=n)continue;  
-const inside=y>=0&&y<=6&&x>=0&&x<=6,edge=y===0||y===6||x===0||x===6,center=y>=2&&y<=4&&x>=2&&x<=4;  
-set(rr,cc,inside&&(edge||center));  
-}  
-}  
-finder(0,0);finder(0,n-7);finder(n-7,0);  
-for(let i=8;i<n-8;i++){set(6,i,i%2===0);set(i,6,i%2===0)}  
-for(let y=-2;y<=2;y++)for(let x=-2;x<=2;x++){const d=Math.max(Math.abs(x),Math.abs(y));set(22+y,22+x,d===2||d===0)}  
-set(n-8,8,true);  
-const fmt=8;  
-let remf=fmt;  
-for(let i=0;i<10;i++)remf=(remf<<1)^(((remf>>>9)&1)?0x537:0);  
-const format=((fmt<<10)|remf)^0x5412;  
-for(let i=0;i<=5;i++)set(i,8,(format>>>i)&1);  
-set(7,8,(format>>>6)&1);set(8,8,(format>>>7)&1);set(8,7,(format>>>8)&1);  
-for(let i=9;i<15;i++)set(14-i,8,(format>>>i)&1);  
-for(let i=0;i<8;i++)set(8,n-1-i,(format>>>i)&1);  
-for(let i=8;i<15;i++)set(n-15+i,8,(format>>>i)&1);  
-let stream=[];  
-all.forEach(v=>{for(let i=7;i>=0;i--)stream.push((v>>>i)&1)});  
-let idx=0,up=true;  
-for(let right=n-1;right>=1;right-=2){  
-if(right===6)right--;  
-for(let j=0;j<n;j++){  
-const r=up?n-1-j:j;  
-for(let k=0;k<2;k++){  
-const c=right-k;  
-if(m[r][c]!==null)continue;  
-let v=idx<stream.length?stream[idx++]:0;  
-if((r+c)%2===0)v^=1;  
-m[r][c]=!!v;  
-}  
-}  
-up=!up;  
-}  
-return m;  
-}  
-  
-function downloadQR(){  
-if(!window.currentQR)return;  
-const a=document.createElement('a');  
-a.href=window.currentQR;a.download='sanad-qr.png';a.click();  
-}  
-  
-function calc(v){$('calcDisplay').value+=v}  
-function clearCalc(){$('calcDisplay').value=''}  
-function calculate(){  
-const s=$('calcDisplay').value;  
-if(!s||!/^[0-9+*/().\-\s]+$/.test(s))return alert('عملية غير صالحة');  
-try{  
-const result=Function('"use strict";return ('+s+')')();  
-if(!Number.isFinite(result))throw 0;  
-$('calcDisplay').value=String(Number(result.toFixed(10)));  
-}catch(e){alert('راجع العملية الحسابية')}  
-}  
-  
-const units={  
-length:{'متر':1,'كيلومتر':1000,'سنتيمتر':.01,'ملليمتر':.001,'قدم':.3048},  
-weight:{'كيلوجرام':1,'جرام':.001,'طن':1000,'رطل':.453592},  
-temp:{'مئوية':1,'فهرنهايت':2,'كلفن':3}  
-};  
-  
-function updateUnits(){  
-const keys=Object.keys(units[$('unitType').value]);  
-$('unitFrom').innerHTML=keys.map(x=>`<option>${x}</option>`).join('');  
-$('unitTo').innerHTML=keys.map(x=>`<option>${x}</option>`).join('');  
-if(keys.length>1)$('unitTo').selectedIndex=1;  
-}  
-updateUnits();  
-  
-function convertUnit(){  
-const v=Number($('unitValue').value),type=$('unitType').value;  
-if(!$('unitValue').value||!Number.isFinite(v))return alert('اكتب قيمة صحيحة');  
-const a=$('unitFrom').value,b=$('unitTo').value;  
-let out;  
-if(type==='temp'){  
-const c=a==='مئوية'?v:a==='فهرنهايت'?(v-32)*5/9:v-273.15;  
-out=b==='مئوية'?c:b==='فهرنهايت'?c*9/5+32:c+273.15;  
-}else out=v*units[type][a]/units[type][b];  
-$('unitResult').textContent=out.toLocaleString('en-US',{maximumFractionDigits:5})+' '+b;  
-}  
-  
-function makePassword(){  
-const n=Math.max(8,Math.min(40,Number($('passLength').value)||16)),chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%&*';  
-let out='';  
-const rand=new Uint32Array(n);  
-if(window.crypto&&crypto.getRandomValues)crypto.getRandomValues(rand);  
-else for(let i=0;i<n;i++)rand[i]=Math.random()*4294967296;  
-for(const x of rand)out+=chars[x%chars.length];  
-$('passResult').value=out;  
-}  
-  
-let countdownTimer=null;  
-function startCountdown(){  
-const val=$('eventDate').value,d=new Date(val);  
-if(!val||isNaN(d))return alert('اختر موعدًا');  
-if(countdownTimer)clearInterval(countdownTimer);  
-function tick(){  
-const ms=d-new Date();  
-if(ms<=0){$('countResult').textContent='🎉 حان موعد المناسبة!';clearInterval(countdownTimer);return}  
-const days=Math.floor(ms/86400000),h=Math.floor(ms%86400000/3600000),m=Math.floor(ms%3600000/60000),s=Math.floor(ms%60000/1000);  
-$('countResult').textContent=($('eventName').value||'المناسبة')+': '+days+' يوم، '+h+' ساعة، '+m+' دقيقة، '+s+' ثانية';  
-}  
-tick();  
-countdownTimer=setInterval(tick,1000);  
-}  
-  
-function dateDifference(){  
-if(!$('dateOne').value||!$('dateTwo').value)return alert('اختر التاريخين');  
-const a=new Date($('dateOne').value+'T00:00:00'),b=new Date($('dateTwo').value+'T00:00:00'),days=Math.abs(Math.round((b-a)/86400000));  
-$('dateResult').textContent='الفرق بين التاريخين: '+days+' يوم';  
-}  
-  
-function saveNote(){  
-const t=$('noteText').value.trim();  
-if(!t)return alert('اكتب الملاحظة');  
-const a=JSON.parse(localStorage.getItem('sanadNotes')||'[]');  
-a.unshift(t);localStorage.setItem('sanadNotes',JSON.stringify(a));  
-$('noteText').value='';renderNotes();  
-}  
-function renderNotes(){  
-const a=JSON.parse(localStorage.getItem('sanadNotes')||'[]');  
-$('noteList').innerHTML=a.map((t,i)=>`<div class="item"><span>${escapeHTML(t)}</span><button class="danger" onclick="deleteNote(${i})">حذف</button></div>`).join('');  
-}  
-function deleteNote(i){  
-const a=JSON.parse(localStorage.getItem('sanadNotes')||'[]');  
-a.splice(i,1);localStorage.setItem('sanadNotes',JSON.stringify(a));renderNotes();  
-}  
-function escapeHTML(s){  
-return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));  
-}  
-renderNotes();  
-  
-function budgetCalc(){  
-const av=$('budgetTotal').value,bv=$('budgetSpent').value;  
-if(av===''||bv===''||Number(av)<0||Number(bv)<0)return alert('أدخل أرقامًا صحيحة');  
-const a=Number(av),b=Number(bv),r=a-b;  
-$('budgetResult').textContent=r>=0?'المتبقي: '+r.toLocaleString('ar-EG')+' جنيه':'تجاوزت الميزانية بمقدار '+Math.abs(r).toLocaleString('ar-EG')+' جنيه';  
-}  
-  
-const defaultTravel=['بطاقة الهوية أو جواز السفر','الهاتف والشاحن','الملابس','الأدوية الشخصية إن وجدت','النقود ووسائل الدفع','مستلزمات النظافة'];  
-function getTravel(){return JSON.parse(localStorage.getItem('sanadTravel')||'null')||defaultTravel.map(name=>({name,done:false}))}  
-function renderTravel(){  
-$('travelList').innerHTML=getTravel().map((x,i)=>`<div class="item"><label><input type="checkbox" style="width:auto" ${x.done?'checked':''} onchange="checkTravel(${i},this.checked)"> ${escapeHTML(x.name)}</label><button class="copy" onclick="removeTravel(${i})">حذف</button></div>`).join('');  
-}  
-function checkTravel(i,v){  
-const a=getTravel();a[i].done=v;localStorage.setItem('sanadTravel',JSON.stringify(a));  
-}  
-function removeTravel(i){  
-const a=getTravel();a.splice(i,1);localStorage.setItem('sanadTravel',JSON.stringify(a));renderTravel();  
-}  
-function addTravel(){  
-const t=$('travelNew').value.trim();  
-if(!t)return;  
-const a=getTravel();a.push({name:t,done:false});  
-localStorage.setItem('sanadTravel',JSON.stringify(a));  
-$('travelNew').value='';renderTravel();  
-}  
-function resetTravel(){localStorage.removeItem('sanadTravel');renderTravel()}  
-renderTravel();  
-  
-function printCard(){  
-const name=escapeHTML($('cardName').value||'غير محدد'),phone=escapeHTML($('cardPhone').value||'غير محدد'),notes=escapeHTML($('cardNotes').value||'لا توجد'),w=window.open('','_blank');  
-if(!w)return alert('اسمح بفتح نافذة الطباعة');  
-w.document.write(`<html lang="ar" dir="rtl"><meta charset="UTF-8"><title>بطاقة الطوارئ</title><body style="font-family:Tahoma;padding:30px"><h1>🪪 بطاقة الطوارئ الشخصية</h1><h2>${name}</h2><h3>رقم التواصل: ${phone}</h3><p>${notes}</p><hr><h3>الإسعاف 123 | الشرطة 122 | المطافئ 180</h3><p>تم إنشاؤها بواسطة سَنَد</p></body></html>`);  
-w.document.close();w.print();  
-}  
-  
-const facts=[  
-'الماء يغطي معظم سطح كوكب الأرض.',  
-'الأخطبوط لديه ثلاثة قلوب.',  
-'ضوء الشمس يستغرق نحو 8 دقائق ليصل إلى الأرض.',  
-'القمر يبتعد عن الأرض ببطء كل عام.',  
-'النحل يتواصل باستخدام حركات تشبه الرقص.',  
-'اللغة العربية من أكثر اللغات انتشارًا في العالم.'  
-];  
-$('dailyFact').textContent=facts[new Date().getDate()%facts.length];  
-  
-const securityTips=[  
-['🔑 كلمات المرور','استخدم كلمة مرور مختلفة لكل حساب، واجعلها طويلة وصعبة التخمين. استخدم مدير كلمات مرور موثوقًا إن أمكن.'],  
-['📲 التحقق بخطوتين','فعّل التحقق بخطوتين من إعدادات الحساب الرسمية، واحتفظ برموز الاسترداد في مكان آمن.'],  
-['🎣 التصيد والروابط','لا تثق في رسائل الفوز أو التهديد أو إيقاف الحساب. افتح الموقع الرسمي بنفسك بدل الضغط على الرابط.'],  
-['🧾 البيانات الشخصية','لا تنشر عنوانك أو رقمك أو صور مستنداتك أو موقعك المباشر للعامة.'],  
-['📶 شبكات Wi-Fi','تجنب إدخال بيانات حساسة عبر شبكات عامة غير موثوقة، ولا تثبّت شهادات أو تطبيقات يطلبها مجهول.'],  
-['📱 تحديث الجهاز','ثبّت تحديثات النظام والتطبيقات من المتجر الرسمي، واحذف التطبيقات التي لا تستخدمها.'],  
-['🧑‍💻 انتحال الهوية','تحقق من هوية من يطلب المال أو البيانات عبر وسيلة أخرى موثوقة.'],  
-['🆘 الابتزاز الإلكتروني','لا تدفع ولا ترسل بيانات إضافية. احتفظ بالأدلة، واحظر وبلّغ، واستعن بشخص بالغ موثوق والجهات المختصة.']  
-];  
-$('securityList').innerHTML=securityTips.map(x=>`<div class="card"><b>${x[0]}</b><p class="muted">${x[1]}</p></div>`).join('');  
-  
-const checks=[  
-'أستخدم كلمة مرور مختلفة للحسابات المهمة',  
-'فعّلت التحقق بخطوتين',  
-'قفل الشاشة مفعل على هاتفي',  
-'تحديثات النظام والتطبيقات حديثة',  
-'لا أشارك رموز OTP أو كلمات المرور',  
-'أراجع صلاحيات التطبيقات',  
-'أعرف كيف أبلّغ عن الحسابات المزيفة'  
-];  
-$('securityChecks').innerHTML=checks.map((x,i)=>`<label class="item"><span>${x}</span><input type="checkbox" style="width:auto" data-check="${i}"></label>`).join('');  
-document.querySelectorAll('[data-check]').forEach(el=>{  
-el.checked=localStorage.getItem('sanadCheck'+el.dataset.check)==='true';  
-el.addEventListener('change',()=>localStorage.setItem('sanadCheck'+el.dataset.check,el.checked));  
-});  
-  
-const walletCards=[  
-['📱 فودافون كاش','محفظة مرتبطة بخط فودافون وفق شروط الشركة. راجع الموقع أو التطبيق الرسمي لمعرفة الشروط والرسوم.'],  
-['🟠 أورنج كاش','خدمة محفظة من أورنج. تحقق من التفاصيل والرسوم عبر القنوات الرسمية للشركة.'],  
-['🟢 e& money','خدمة محفظة إلكترونية من e&. راجع الشركة لمعرفة الخدمات المتاحة وشروطها.'],  
-['🔵 WE Pay','محفظة إلكترونية تقدمها WE. التفاصيل والأكواد قد تختلف حسب الخدمة.'],  
-['🏦 InstaPay','خدمة تحويلات ومدفوعات مرتبطة بالبنوك المشاركة. راجع البنك المركزي والبنك التابع له الحساب.']  
-];  
-$('walletInfo').innerHTML=walletCards.map(x=>`<div class="card"><b>${x[0]}</b><p class="muted">${x[1]}</p></div>`).join('');  
-  
-</script> <!-- SANAD: مشاركة الموقع -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10234b">
+<meta name="description" content="سَنَد - دليلك الشامل للحياة اليومية والطوارئ">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<title>سَنَد | SANAD - النسخة الشاملة</title>
 <style>
-.location-box{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:17px;
-  padding:18px;
-  margin-top:14px;
-  box-shadow:var(--shadow);
-}
-.location-map{
-  display:block;
-  width:100%;
-  padding:13px;
-  border-radius:10px;
-  background:var(--bg);
-  color:var(--accent);
-  text-decoration:none;
-  direction:ltr;
-  text-align:center;
-  overflow-wrap:anywhere;
-  margin:12px 0;
-}
-.location-status{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.8;
-  margin:12px 0;
-}
+:root{--bg:#f2f5fb;--card:#fff;--text:#17243d;--muted:#748197;--primary:#173b72;--accent:#0d9488;--line:#e2e9f2;--danger:#dc3545;--shadow:0 5px 22px #17243d0b}
+.dark{--bg:#101827;--card:#1c293d;--text:#edf3ff;--muted:#a9b6ca;--primary:#7ba8ed;--accent:#35c6b4;--line:#34445a;--shadow:0 5px 22px #0003}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif;transition:.2s}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+header{background:linear-gradient(130deg,#10234b,#174b78);color:white;padding:18px 5% 24px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.made{font-size:11px;letter-spacing:2px;color:#9ed9e9;font-weight:bold}
+.logo{font-size:29px;font-weight:900;margin-top:5px}
+.logo small{display:block;font-size:11px;color:#c2d9eb;font-weight:normal}
+.top button{background:#ffffff20;color:white;border:1px solid #ffffff40;padding:9px 13px;border-radius:12px}
+.hero{padding:18px 0 0}
+.hero h1{font-size:clamp(22px,4.5vw,32px);margin:0 0 8px}
+.hero p{color:#d4e4f5;line-height:1.7;margin:0;font-size:14px}
+.search{width:100%;margin-top:16px;padding:14px;border:0;border-radius:13px;outline:none;background:white;color:#17243d;font-size:15px}
+.sos-banner{display:block;background:var(--danger);color:#fff;text-align:center;padding:12px;font-weight:bold;text-decoration:none;font-size:15px;letter-spacing:.5px}
+.container{max-width:1050px;margin:auto;padding:18px 14px 100px}
+.section-title{font-size:19px;margin:22px 0 12px;color:var(--primary)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.tile{cursor:pointer;min-height:140px;transition:.2s;display:flex;flex-direction:column;justify-content:space-between;margin-bottom:0}
+.tile:hover{transform:translateY(-3px);border-color:var(--accent)}
+.emoji{font-size:28px;margin-bottom:8px}
+.tile b{display:block;font-size:15px}
+.tile small{display:block;color:var(--muted);margin:6px 0 12px;line-height:1.5;font-size:12px}
+.page{display:none}
+.page.active{display:block}
+button.primary{background:var(--primary);color:white;border:0;padding:10px 14px;border-radius:10px;width:100%;font-weight:bold}
+button.secondary{background:var(--bg);color:var(--text);border:1px solid var(--line);padding:10px 13px;border-radius:10px}
+button.success{background:var(--accent);color:white;border:0;padding:11px 15px;border-radius:10px;font-weight:bold}
+button.danger{background:var(--danger);color:white;border:0;padding:10px 14px;border-radius:10px;font-weight:bold}
+.back{margin-bottom:16px;display:inline-block}
+.muted{color:var(--muted);font-size:13px;line-height:1.8}
+input,select,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);margin:6px 0 12px;outline:none}
+label{font-size:13px;color:var(--muted);font-weight:bold}
+.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.row>*{flex:1}
+.item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border:0}
+.number{font-size:21px;font-weight:bold;direction:ltr;display:inline-block;color:var(--primary)}
+.call{background:var(--danger);color:white;padding:8px 13px;border-radius:9px;text-decoration:none;font-size:13px;font-weight:bold}
+.copy{background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13px}
+.notice{background:#fff3d9;color:#79551c;padding:13px;border-radius:12px;line-height:1.8;font-size:13px;margin:12px 0;border-right:4px solid #f59e0b}
+.dark .notice{background:#493a20;color:#ffe2a0}
+.result{font-size:17px;font-weight:bold;color:var(--accent);margin:13px 0;line-height:1.8}
+.clock{background:linear-gradient(140deg,#173b72,#0d9488);color:white;border:0;text-align:center;margin-bottom:0}
+.clock .time{font-size:25px;font-weight:bold;direction:ltr;margin:6px 0}
+.clock .date{font-size:12px;opacity:.9}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 2px calc(8px + env(safe-area-inset-bottom));z-index:5;box-shadow:0 -2px 10px #0001}
+.tabs button{border:0;background:none;color:var(--muted);font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.tabs button span{font-size:20px}
+.tabs button.selected{color:var(--accent);font-weight:bold}
+.hidden{display:none!important}
+hr{border:0;border-top:1px solid var(--line);margin:15px 0}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:24px 10px}
+ol,ul{padding-right:20px;margin:8px 0}
+li{margin:5px 0;line-height:1.7}
+details summary{cursor:pointer;font-weight:bold;font-size:15px;padding:4px 0}
+video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
+#toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:#17243de6;color:#fff;padding:10px 18px;border-radius:20px;display:none;z-index:99;font-size:13px;box-shadow:0 4px 12px #0003}
+.location-map{display:block;width:100%;padding:13px;border-radius:10px;background:var(--bg);color:var(--accent);text-decoration:none;direction:ltr;text-align:center;overflow-wrap:anywhere;margin:12px 0;font-weight:bold;border:1px solid var(--line)}
 </style>
+</head>
+<body>
+
+<header>
+  <div class="top">
+    <div>
+      <div class="made">✦ MADE BY GEDO ✦</div>
+      <div class="logo">سَـنَـد <small>SANAD | دليلك الشامل للحياة اليومية</small></div>
+    </div>
+    <button onclick="toggleDark()">🌙 الوضع الليلي</button>
+  </div>
+  <div class="hero">
+    <h1>المعلومة الصح في الوقت الصح.</h1>
+    <p>جميع أدوات الطوارئ، الصحة، الحسابات، والخدمات اليومية في تطبيق واحد يعمل بدون إنترنت.</p>
+    <input class="search" id="search" placeholder="🔍 ابحث عن خدمة، أداة، أو معلومة..." oninput="searchAll(this.value)">
+  </div>
+</header>
+
+<a class="sos-banner" href="tel:123">📞 اتصال سريع بالإسعاف 123</a>
+
+<main class="container">
+
+  <!-- الصفحة الرئيسية -->
+  <section class="page active" id="home">
+    <h2 class="section-title">ماذا تحتاج اليوم؟</h2>
+    <div class="grid" id="mainTiles">
+      
+      <div class="card tile" data-search="sos استغاثة خطر موقع طوارئ رسالة">
+        <div><div class="emoji">🆘</div><b>زر الاستغاثة SOS</b><small>أرسل موقعك الجغرافي لجهات الطوارئ فوراً.</small></div>
+        <button class="danger" onclick="showPage('sos')">فتح SOS</button>
+      </div>
+
+      <div class="card tile" data-search="بطاقة طبية فصيلة دم حساسية أدوية أمراض">
+        <div><div class="emoji">🩸</div><b>البطاقة الطبية</b><small>فصيلة الدم والحساسية والأدوية قابلة للطباعة.</small></div>
+        <button class="primary" onclick="showPage('med')">افتح البطاقة</button>
+      </div>
+
+      <div class="card tile" data-search="إسعافات حروق إغماء اختناق تشنجات حريق نزيف">
+        <div><div class="emoji">🩺</div><b>التصرف وقت الخطر</b><small>خطوات تفصيلية للإسعافات الأولية والمواقف الحرجة.</small></div>
+        <button class="primary" onclick="showPage('firstaid')">افتح الدليل</button>
+      </div>
+
+      <div class="card tile" data-search="طوارئ إسعاف شرطة مطافئ كهرباء غاز نجدة">
+        <div><div class="emoji">🚨</div><b>أرقام الطوارئ</b><small>أرقام الطوارئ والخدمات الأساسية في مصر.</small></div>
+        <button class="primary" onclick="showPage('emergency')">افتح الأرقام</button>
+      </div>
+
+      <div class="card tile" data-search="شارك موقعي مكاني موقع خرائط جوجل واتساب">
+        <div><div class="emoji">📍</div><b>شارك موقعي</b><small>حدد مكانك الحالي بدقة وشاركه مع من تختار.</small></div>
+        <button class="primary" onclick="showPage('locationShare')">افتح الخريطة</button>
+      </div>
+
+      <div class="card tile" data-search="زكاة مال ذهب نصاب تجارة">
+        <div><div class="emoji">🕋</div><b>حاسبة الزكاة</b><small>حساب زكاة المال والذهب وعروض التجارة.</small></div>
+        <button class="primary" onclick="showPage('zakat')">احسب الزكاة</button>
+      </div>
+
+      <div class="card tile" data-search="كهرباء فاتورة شرائح استهلاك كيلوواط">
+        <div><div class="emoji">⚡</div><b>فاتورة الكهرباء</b><small>تقدير قيمة الفاتورة الشهرية حسب الشرائح.</small></div>
+        <button class="primary" onclick="showPage('elec')">احسب الفاتورة</button>
+      </div>
+
+      <div class="card tile" data-search="عملات ذهب دولار يورو ريال أسعار صرف">
+        <div><div class="emoji">💱</div><b>العملات والذهب</b><small>أسعار العملات الأجنبية والذهب لحظياً (يحتاج نت).</small></div>
+        <button class="primary" onclick="showPage('money')">عرض الأسعار</button>
+      </div>
+
+      <div class="card tile" data-search="محافظ إلكترونية انستا باي فودافون كاش اورنج كاش تحويل">
+        <div><div class="emoji">💳</div><b>المحافظ والتحويلات</b><small>خطوات التحويل وأمان المحافظ و InstaPay.</small></div>
+        <button class="primary" onclick="showPage('wallets')">افتح الدليل</button>
+      </div>
+
+      <div class="card tile" data-search="فودافون اورنج اتصالات وي أكواد رصيد شحن">
+        <div><div class="emoji">📱</div><b>أكواد الشبكات</b><small>جميع أكواد شركات المحمول المصرية بضغطة زر.</small></div>
+        <button class="primary" onclick="showPage('codes')">عرض الأكواد</button>
+      </div>
+
+      <div class="card tile" data-search="وزن مثالي bmi ماء سمنة نحافة صحة">
+        <div><div class="emoji">⚖️</div><b>BMI والماء اليومي</b><small>احسب كتلة جسمك والوزن المثالي واحتياج الماء.</small></div>
+        <button class="primary" onclick="showPage('bmi')">احسب الآن</button>
+      </div>
+
+      <div class="card tile" data-search="QR كيو ار قارئ صانع كاميرا رابط">
+        <div><div class="emoji">🔳</div><b>قارئ وصانع QR</b><small>امسح رموز QR بالكاميرا أو أنشئ رمزك الخاص.</small></div>
+        <button class="primary" onclick="showPage('qr')">افتح الأداة</button>
+      </div>
+
+      <div class="card tile" data-search="ساعة عالمية توقيت القاهرة دول العالم نزلة سلمان">
+        <div><div class="emoji">🌍</div><b>الساعة العالمية</b><small>الوقت والتاريخ في عواصم العالم ونزلة سلمان.</small></div>
+        <button class="primary" onclick="showPage('world')">افتح الساعة</button>
+      </div>
+
+      <div class="card tile" data-search="العمر ميلاد تاريخ فرق عداد مناسبات">
+        <div><div class="emoji">📅</div><b>التواريخ والأعمار</b><small>احسب عمرك، الفرق بين تاريخين، وعداد المناسبات.</small></div>
+        <button class="primary" onclick="showPage('dates')">افتح القسم</button>
+      </div>
+
+      <div class="card tile" data-search="حاسبة حساب آلة حاسبة">
+        <div><div class="emoji">🧮</div><b>الحاسبة</b><small>آلة حاسبة سريعة للعمليات اليومية.</small></div>
+        <button class="primary" onclick="showPage('calculator')">افتح الحاسبة</button>
+      </div>
+
+      <div class="card tile" data-search="تحويل وحدات طول وزن حرارة قياس">
+        <div><div class="emoji">📏</div><b>محوّل الوحدات</b><small>تحويل وحدات الطول والوزن ودرجات الحرارة.</small></div>
+        <button class="primary" onclick="showPage('convert')">افتح المحوّل</button>
+      </div>
+
+      <div class="card tile" data-search="كلمة مرور باسورد حماية أمان">
+        <div><div class="emoji">🔐</div><b>مولّد كلمات المرور</b><small>إنشاء كلمات مرور قوية وعشوائية.</small></div>
+        <button class="primary" onclick="showPage('password')">افتح المولّد</button>
+      </div>
+
+      <div class="card tile" data-search="ملاحظات تدوين خزنة حفظ">
+        <div><div class="emoji">📝</div><b>ملاحظاتي</b><small>سجل ملاحظاتك السريعة واحفظها على جهازك.</small></div>
+        <button class="primary" onclick="showPage('notes')">افتح الملاحظات</button>
+      </div>
+
+      <div class="card tile" data-search="مصاريف ميزانية فلوس ادخار">
+        <div><div class="emoji">💰</div><b>حاسبة المصروفات</b><small>تابع ميزانيتك ومصروفاتك بسهولة.</small></div>
+        <button class="primary" onclick="showPage('budget')">افتح الحاسبة</button>
+      </div>
+
+      <div class="card tile" data-search="سفر قائمة تجهيز شنطة أغراض">
+        <div><div class="emoji">🧳</div><b>قائمة السفر</b><small>جهز شنطتك وأغراضك الأساسية قبل السفر.</small></div>
+        <button class="primary" onclick="showPage('travel')">افتح القائمة</button>
+      </div>
+
+      <div class="card tile" data-search="حماية رقمية خصوصية احتيال تصيد أمان">
+        <div><div class="emoji">🛡️</div><b>الحماية الرقمية</b><small>نصائح وقائمة فحص لحماية حساباتك من الاحتيال.</small></div>
+        <button class="primary" onclick="showPage('security')">افتح المركز</button>
+      </div>
+
+      <div class="card tile" data-search="دليل حكومي خدمات بوابة مصر الرقمية شكاوى">
+        <div><div class="emoji">🏛️</div><b>دليل الخدمات</b><small>روابط مباشرة لأهم المواقع والخدمات الحكومية.</small></div>
+        <button class="primary" onclick="showPage('services')">افتح الدليل</button>
+      </div>
+
+    </div>
+
+    <h2 class="section-title">معلومة اليوم</h2>
+    <div class="card">
+      <div style="font-size:28px">💡</div>
+      <b id="dailyFact">المعرفة تبدأ بسؤال!</b>
+      <p class="muted">افتح التطبيق كل يوم لاكتشاف معلومة جديدة ومفيدة.</p>
+    </div>
+  </section>
+
+  <!-- 1. زر SOS -->
+  <section class="page" id="sos">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>🆘 زر الاستغاثة SOS</h2>
+    <div class="notice">يقوم بتحديد إحداثيات موقعك (GPS) وتجهيز رسالة استغاثة فورية لإرسالها عبر SMS أو واتساب. تحديد الموقع يعمل بدون إنترنت.</div>
+    <div class="card">
+      <label>أرقام جهات الاتصال للطوارئ (اكتب كل رقم في سطر منفصل)</label>
+      <textarea id="sosC" rows="3" dir="ltr" placeholder="010xxxxxxxx&#10;011xxxxxxxx" onchange="sv('sosC',this.value)"></textarea>
+      <button class="danger" style="width:100%;font-size:17px;padding:15px" onclick="sos()">🆘 أرسل استغاثة SOS الآن</button>
+      <div id="sosR" class="muted" style="margin-top:12px"></div>
+    </div>
+  </section>
+
+  <!-- 2. البطاقة الطبية -->
+  <section class="page" id="med">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>🩸 البطاقة الطبية الشخصية</h2>
+    <div class="card">
+      <label>الاسم بالكامل</label><input id="m0" placeholder="اكتب اسمك">
+      <label>فصيلة الدم</label>
+      <select id="m1"><option value="">اختر الفصيلة</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select>
+      <label>الحساسية (أدوية / أطعمة)</label><input id="m2" placeholder="مثال: حساسية البنسلين">
+      <label>الأمراض المزمنة</label><input id="m3" placeholder="مثال: سكري، ضغط">
+      <label>الأدوية الدائمة</label><input id="m4" placeholder="أسماء الأدوية والجرعات">
+      <label>رقم شخص للتواصل في الطوارئ</label><input id="m5" type="tel" placeholder="01xxxxxxxxx">
+      <div class="row" style="margin-top:10px">
+        <button class="success" onclick="saveMed()">💾 حفظ البيانات</button>
+        <button class="secondary" onclick="printMed()">🖨️ طباعة / PDF</button>
+      </div>
+      <p class="muted">البيانات تُحفظ محلياً على جهازك فقط وتعمل بدون إنترنت.</p>
+    </div>
+  </section>
+
+  <!-- 3. التصرف وقت الخطر -->
+  <section class="page" id="firstaid">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>🩺 التصرف وقت الخطر (الإسعافات الأولية)</h2>
+    <div class="notice">إرشادات أولية للتصرف السريع وليست بديلاً عن الإسعاف 123. في الحالات الحرجة اتصل بالإسعاف أولاً.</div>
+    <div id="aidL"></div>
+  </section>
+
+  <!-- 4. أرقام الطوارئ -->
+  <section class="page" id="emergency">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>🚨 أرقام الطوارئ المصرية</h2>
+    <div class="notice">اضغط على زر "اتصال" للاتصال المباشر بالجهة المختصة فوراً.</div>
+    <div class="card" id="emergencyList"></div>
+  </section>
+
+  <!-- 5. مشاركة الموقع -->
+  <section class="page" id="locationShare">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>📍 مشاركة موقعي الحالي</h2>
+    <div class="card">
+      <div style="font-size:35px;text-align:center">🌍</div>
+      <h3 style="text-align:center">حدد مكانك وشاركه بسهولة</h3>
+      <p class="muted">اضغط لتحديد موقعك بدقة عبر GPS والحصول على رابط خرائط Google لمشاركته.</p>
+      <button class="primary" onclick="shareMyLocation()">📍 تحديد موقعي الآن</button>
+      <div id="locationStatus" class="muted" style="margin:12px 0">لم يتم تحديد الموقع بعد.</div>
+      <a id="locationMapLink" class="location-map hidden" target="_blank" rel="noopener"></a>
+      <div id="locationActions" class="hidden">
+        <button class="success" style="width:100%" onclick="shareLocationAgain()">📤 مشاركة الرابط</button>
+        <button class="secondary" style="width:100%;margin-top:8px" onclick="copyLocationLink()">📋 نسخ رابط الموقع</button>
+      </div>
+    </div>
+    <div class="notice"><b>الخصوصية:</b> لا يتم تتبعك؛ الموقع يُحدد مرة واحدة فقط عند ضغطك على الزر.</div>
+  </section>
+
+  <!-- 6. حاسبة الزكاة -->
+  <section class="page" id="zakat">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>🕋 حاسبة الزكاة</h2>
+    <div class="card">
+      <label>سعر جرام الذهب عيار 24 اليوم (بالجنيه)</label>
+      <div class="row">
+        <input id="z0" type="number" placeholder="مثال: 4500" style="margin:0">
+        <button class="secondary" style="flex:0 0 auto" onclick="goldOnline()">🌐 جلب السعر (نت)</button>
+      </div>
+      <label style="margin-top:10px;display:block">النقد والمدخرات البنكية</label><input id="z1" type="number" placeholder="0">
+      <label>وزن الذهب المدخر (بالجرام)</label><input id="z2" type="number" placeholder="0">
+      <label>عيار الذهب</label><select id="z3"><option value="24">عيار 24</option><option value="21" selected>عيار 21</option><option value="18">عيار 18</option></select>
+      <label>قيمة عروض التجارة والبضائع</label><input id="z4" type="number" placeholder="0">
+      <label>الديون المستحقة عليك (تُخصم)</label><input id="z5" type="number" placeholder="0">
+      <button class="success" style="width:100%" onclick="zakat()">احسب مقدار الزكاة</button>
+      <div id="zR" class="result"></div>
+      <p class="muted">النصاب الشرعي = قيمة 85 جرام ذهب عيار 24 بشرط مرور عام هجري كامل. المقدار الواجب 2.5%.</p>
+    </div>
+  </section>
+
+  <!-- 7. فاتورة الكهرباء -->
+  <section class="page" id="elec">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>⚡ حاسبة فاتورة الكهرباء</h2>
+    <div class="card">
+      <label>استهلاكك الشهري (كيلوواط/ساعة)</label>
+      <input id="e0" type="number" placeholder="أدخل قراءة الاستهلاك">
+      <button class="success" style="width:100%" onclick="elec()">احسب القيمة التقديرية</button>
+      <div id="eR" class="result"></div>
+      <p class="muted">الحساب تقديري وفق شرائح الاستهلاك المنزلية ولا يشمل رسوم النظافة أو الدمغات.</p>
+    </div>
+  </section>
+
+  <!-- 8. العملات والذهب -->
+  <section class="page" id="money">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>💱 أسعار العملات والذهب</h2>
+    <div class="notice">هذا القسم يتطلب اتصالاً بالإنترنت لجلب أحدث الأسعار العالمية.</div>
+    <button class="success" style="width:100%;margin-bottom:12px" onclick="rates()">🔄 تحديث الأسعار الآن</button>
+    <div class="card" id="rR"><p class="muted">اضغط على زر التحديث لعرض الأسعار.</p></div>
+  </section>
+
+  <!-- 9. المحافظ والتحويلات -->
+  <section class="page" id="wallets">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>💳 دليل المحافظ الإلكترونية و InstaPay</h2>
+    <div class="notice">تحذير أمان: لا تشارك الرقم السري للمحفظة أو رمز التحقق (OTP) مع أي شخص تحت أي ظرف.</div>
+    <div id="walL"></div>
+  </section>
+
+  <!-- 10. أكواد الشبكات -->
+  <section class="page" id="codes">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>📱 أكواد شركات المحمول المصرية</h2>
+    <div class="row" style="margin-bottom:10px">
+      <button class="primary" onclick="showCodes('vodafone')">فودافون</button>
+      <button class="primary" onclick="showCodes('orange')">أورنج</button>
+      <button class="primary" onclick="showCodes('etisalat')">اتصالات e&</button>
+      <button class="primary" onclick="showCodes('we')">WE</button>
+    </div>
+    <div class="card" id="codeResult"><p class="muted">اختر شركة لعرض الأكواد المختصرة ونسخها.</p></div>
+  </section>
+
+  <!-- 11. BMI والماء -->
+  <section class="page" id="bmi">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>⚖️ مؤشر كتلة الجسم (BMI) والماء</h2>
+    <div class="card">
+      <label>الوزن (كجم)</label><input id="b0" type="number" placeholder="مثال: 75">
+      <label>الطول (سم)</label><input id="b1" type="number" placeholder="مثال: 175">
+      <button class="success" style="width:100%" onclick="bmi()">احسب النتيجة</button>
+      <div id="bR" class="result"></div>
+    </div>
+  </section>
+
+  <!-- 12. قارئ وصانع QR -->
+  <section class="page" id="qr">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>🔳 قارئ وصانع QR Code</h2>
+    <div class="card">
+      <h3>📷 قارئ QR بالكاميرا</h3>
+      <video id="vid" playsinline hidden></video>
+      <button class="success" style="width:100%" onclick="scan()">تشغيل الكاميرا للمسح</button>
+      <div id="qrR" class="result" style="word-break:break-all"></div>
+    </div>
+    <div class="card">
+      <h3>✨ صانع QR Code</h3>
+      <label>اكتب نصًا أو رابطًا قصيرًا (حتى 53 بايت)</label>
+      <textarea id="qrT" rows="2" maxlength="53" placeholder="مثال: https://example.com"></textarea>
+      <button class="primary" onclick="makeQR()">إنشاء رمز QR</button>
+      <div id="qrOutput" style="text-align:center;margin-top:15px"></div>
+    </div>
+  </section>
+
+  <!-- 13. الساعة العالمية -->
+  <section class="page" id="world">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>🌍 الساعة العالمية</h2>
+    <div class="grid" id="clocks"></div>
+  </section>
+
+  <!-- 14. التواريخ والأعمار -->
+  <section class="page" id="dates">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>📅 حاسبة العمر والتواريخ والمناسبات</h2>
+    <div class="card">
+      <h3>🎂 احسب عمرك بالتفصيل</h3>
+      <input type="date" id="birth">
+      <button class="primary" onclick="calculateAge()">احسب عمري</button>
+      <div id="ageResult"></div>
+    </div>
+    <div class="card">
+      <h3>📆 الفرق بين تاريخين</h3>
+      <div class="row">
+        <div><label>من تاريخ</label><input type="date" id="dateOne"></div>
+        <div><label>إلى تاريخ</label><input type="date" id="dateTwo"></div>
+      </div>
+      <button class="primary" onclick="dateDifference()">احسب الفرق بالأيام</button>
+      <div id="dateResult" class="result"></div>
+    </div>
+    <div class="card">
+      <h3>⏳ عداد تنازلي لمناسبة</h3>
+      <input id="eventName" placeholder="اسم المناسبة (مثال: الامتحانات، العيد)">
+      <input type="datetime-local" id="eventDate">
+      <button class="primary" onclick="startCountdown()">ابدأ العد التنازلي</button>
+      <div id="countResult" class="result"></div>
+    </div>
+  </section>
+
+  <!-- 15. الحاسبة -->
+  <section class="page" id="calculator">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>🧮 الحاسبة</h2>
+    <div class="card">
+      <input id="calcDisplay" readonly placeholder="0" style="font-size:25px;text-align:left;direction:ltr;font-weight:bold">
+      <div class="grid" style="grid-template-columns:repeat(4,1fr);gap:8px">
+        <button class="secondary" onclick="calc('7')">7</button><button class="secondary" onclick="calc('8')">8</button><button class="secondary" onclick="calc('9')">9</button><button class="secondary" onclick="calc('/')">÷</button>
+        <button class="secondary" onclick="calc('4')">4</button><button class="secondary" onclick="calc('5')">5</button><button class="secondary" onclick="calc('6')">6</button><button class="secondary" onclick="calc('*')">×</button>
+        <button class="secondary" onclick="calc('1')">1</button><button class="secondary" onclick="calc('2')">2</button><button class="secondary" onclick="calc('3')">3</button><button class="secondary" onclick="calc('-')">−</button>
+        <button class="secondary" onclick="calc('0')">0</button><button class="secondary" onclick="calc('.')">.</button><button class="success" onclick="calculate()">=</button><button class="secondary" onclick="calc('+')">+</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="secondary" onclick="calc('(')">(</button>
+        <button class="secondary" onclick="calc(')')">)</button>
+        <button class="danger" onclick="clearCalc()">مسح (C)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16. محول الوحدات -->
+  <section class="page" id="convert">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>📏 محوّل الوحدات</h2>
+    <div class="card">
+      <label>نوع الوحدة</label>
+      <select id="unitType" onchange="updateUnits()"><option value="length">الطول</option><option value="weight">الوزن</option><option value="temp">درجة الحرارة</option></select>
+      <div class="row"><div><label>من</label><select id="unitFrom"></select></div><div><label>إلى</label><select id="unitTo"></select></div></div>
+      <label>القيمة</label><input id="unitValue" type="number" placeholder="اكتب الرقم">
+      <button class="primary" onclick="convertUnit()">تحويل</button>
+      <div class="result" id="unitResult"></div>
+    </div>
+  </section>
+
+  <!-- 17. مولد كلمات المرور -->
+  <section class="page" id="password">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>🔐 مولّد كلمات المرور القوية</h2>
+    <div class="card">
+      <label>طول كلمة المرور (من 8 إلى 40 حرف)</label>
+      <input id="passLength" type="number" min="8" max="40" value="16">
+      <button class="primary" onclick="makePassword()">إنشاء كلمة مرور عشوائية</button>
+      <input id="passResult" readonly placeholder="ستظهر كلمة المرور هنا" dir="ltr" style="font-weight:bold;text-align:center">
+      <button class="secondary" style="width:100%" onclick="copyText($('passResult').value)">📋 نسخ كلمة المرور</button>
+    </div>
+  </section>
+
+  <!-- 18. ملاحظاتي -->
+  <section class="page" id="notes">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>📝 ملاحظاتي السريعة</h2>
+    <div class="card">
+      <textarea id="noteText" rows="3" placeholder="اكتب ملاحظتك هنا..."></textarea>
+      <button class="primary" onclick="saveNote()">💾 حفظ الملاحظة</button>
+      <div id="noteList" style="margin-top:12px"></div>
+    </div>
+  </section>
+
+  <!-- 19. حاسبة المصروفات -->
+  <section class="page" id="budget">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>💰 حاسبة الميزانية والمصروفات</h2>
+    <div class="card">
+      <label>إجمالي الميزانية</label><input id="budgetTotal" type="number" placeholder="مثال: 2000">
+      <label>إجمالي المصروفات</label><input id="budgetSpent" type="number" placeholder="مثال: 650">
+      <button class="primary" onclick="budgetCalc()">احسب المتبقي</button>
+      <div class="result" id="budgetResult"></div>
+    </div>
+  </section>
+
+  <!-- 20. قائمة السفر -->
+  <section class="page" id="travel">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>🧳 قائمة تجهيز السفر</h2>
+    <div class="card">
+      <div id="travelList"></div>
+      <div class="row" style="margin-top:10px">
+        <input id="travelNew" placeholder="أضف غرضًا جديدًا..." style="margin:0">
+        <button class="success" style="flex:0 0 auto" onclick="addTravel()">إضافة</button>
+      </div>
+      <button class="secondary" style="width:100%;margin-top:10px" onclick="resetTravel()">إعادة ضبط القائمة الافتراضية</button>
+    </div>
+  </section>
+
+  <!-- 21. الحماية الرقمية -->
+  <section class="page" id="security">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>🛡️ مركز الحماية الرقمية</h2>
+    <div class="notice">نصائح عملية لحماية حساباتك الشخصية والمالية من الاختراق والاحتيال الإلكتروني.</div>
+    <div class="grid" id="securityList"></div>
+    <div class="card" style="margin-top:12px">
+      <h3>✅ قائمة فحص أمان حساباتك</h3>
+      <div id="securityChecks"></div>
+    </div>
+  </section>
+
+  <!-- 22. دليل الخدمات -->
+  <section class="page" id="services">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>🏛️ دليل الخدمات الحكومية</h2>
+    <div class="card">
+      <div class="item"><b>منظومة الشكاوى الحكومية</b><a class="copy" href="https://www.shakwa.eg/" target="_blank" rel="noopener">زيارة الموقع</a></div>
+      <div class="item"><b>بوابة مصر الرقمية</b><a class="copy" href="https://digital.gov.eg/" target="_blank" rel="noopener">زيارة الموقع</a></div>
+      <div class="item"><b>الجهاز القومي لتنظيم الاتصالات</b><a class="copy" href="https://www.tra.gov.eg/" target="_blank" rel="noopener">زيارة الموقع</a></div>
+      <div class="item"><b>وزارة الصحة والسكان</b><a class="copy" href="https://www.mohp.gov.eg/" target="_blank" rel="noopener">زيارة الموقع</a></div>
+      <div class="item"><b>وزارة الداخلية</b><a class="copy" href="https://moi.gov.eg/" target="_blank" rel="noopener">زيارة الموقع</a></div>
+    </div>
+  </section>
+
+  <footer>سَنَد | SANAD - النسخة الشاملة المدمجة<br>MADE BY GEDO ❤️<br>المعلومة الصح في الوقت الصح.</footer>
+</main>
+
+<nav class="tabs">
+  <button class="selected" onclick="showPage('home',this)"><span>🏠</span>الرئيسية</button>
+  <button onclick="showPage('sos',this)"><span>🆘</span>SOS</button>
+  <button onclick="showPage('firstaid',this)"><span>🩺</span>الخطر</button>
+  <button onclick="showPage('zakat',this)"><span>🕋</span>الزكاة</button>
+  <button onclick="showPage('qr',this)"><span>🔳</span>QR</button>
+</nav>
+
+<div id="toast"></div>
 
 <script>
-(function(){
-  const homeTiles=document.getElementById('mainTiles');
-  if(!homeTiles || document.getElementById('locationShare')) return;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ls=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
+const sv=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 
-  const tile=document.createElement('div');
-  tile.className='card tile';
-  tile.dataset.search='شارك موقعي مكاني موقع خرائط جوجل واتساب ماسنجر';
-  tile.innerHTML=`
-    <div class="emoji">📍</div>
-    <b>شارك موقعي</b>
-    <small>اعرف مكانك وشاركه مع أصدقائك بإذنك.</small>
-    <button class="primary" type="button" onclick="showPage('locationShare')">افتح القسم</button>
-  `;
-  homeTiles.appendChild(tile);
+function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';clearTimeout(t.x);t.x=setTimeout(()=>t.style.display='none',2400)}
 
-  const section=document.createElement('section');
-  section.className='page';
-  section.id='locationShare';
-  section.innerHTML=`
-    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>📍 مشاركة موقعي</h2>
+function showPage(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  $(id).classList.add('active');
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('selected'));
+  if(btn)btn.classList.add('selected');
+  else{
+    const map={home:0,sos:1,firstaid:2,zakat:3,qr:4};
+    if(id in map)document.querySelectorAll('.tabs button')[map[id]].classList.add('selected');
+  }
+  if(id==='home'){$('search').value='';searchAll('');}
+  window.scrollTo(0,0);
+}
 
-    <div class="location-box">
-      <div style="font-size:35px;text-align:center">🌍</div>
-      <h3 style="text-align:center">شارك مكانك الحالي</h3>
-      <p class="muted">
-        اضغط على الزر لتحديد موقعك الحالي. بعد ذلك يمكنك مشاركة رابط
-        خرائط Google مع شخص تختاره.
-      </p>
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  localStorage.setItem('sanadDark',document.body.classList.contains('dark'));
+}
+if(localStorage.getItem('sanadDark')==='true')document.body.classList.add('dark');
 
-      <button class="primary" style="width:100%" onclick="shareMyLocation()">
-        📍 تحديد موقعي
-      </button>
+function copyText(t){
+  if(!t)return toast('لا يوجد نص للنسخ');
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(t).then(()=>toast('✅ تم النسخ بنجاح!')).catch(()=>fallbackCopy(t));
+  }else fallbackCopy(t);
+}
+function fallbackCopy(t){
+  const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();
+  try{document.execCommand('copy');toast('✅ تم النسخ بنجاح!')}catch(e){toast('تعذر النسخ')}
+  x.remove();
+}
 
-      <div id="locationStatus" class="location-status">
-        لم يتم تحديد الموقع بعد.
-      </div>
+function searchAll(q){
+  q=q.trim().toLowerCase();
+  document.querySelectorAll('#mainTiles .tile').forEach(t=>{
+    t.style.display=(!q||t.dataset.search.toLowerCase().includes(q)||t.innerText.toLowerCase().includes(q))?'':'none';
+  });
+  if(q && !$('home').classList.contains('active'))showPage('home');
+}
 
-      <a id="locationMapLink" class="location-map hidden"
-         target="_blank" rel="noopener"></a>
-
-      <div id="locationActions" class="hidden">
-        <button class="success" style="width:100%" onclick="shareLocationAgain()">
-          مشاركة الموقع
-        </button>
-        <button class="secondary" style="width:100%;margin-top:9px"
-          onclick="copyLocationLink()">
-          نسخ رابط الموقع
-        </button>
-      </div>
-    </div>
-
-    <div class="notice">
-      <b>تنبيه للخصوصية:</b>
-      الموقع يُحدد مرة واحدة عند ضغطك على الزر. لا يوجد تتبع مستمر
-      ولا يتم إرسال موقعك تلقائيًا. أنت من يختار الشخص الذي تشاركه معه.
-    </div>
-  `;
-
-  const emergency=document.getElementById('emergency');
-  if(emergency) emergency.after(section);
-  else document.querySelector('main').appendChild(section);
-
-  window.sanadLocationLink='';
-
-  window.shareMyLocation=function(){
-    const status=document.getElementById('locationStatus');
-    const link=document.getElementById('locationMapLink');
-    const actions=document.getElementById('locationActions');
-
-    if(!navigator.geolocation){
-      status.textContent='متصفحك لا يدعم تحديد الموقع.';
-      return;
-    }
-
-    if(!window.isSecureContext){
-      status.textContent='تحديد الموقع يحتاج إلى اتصال آمن HTTPS. افتح الموقع من رابط GitHub Pages الآمن.';
-      return;
-    }
-
-    status.textContent='جارٍ طلب إذن تحديد موقعك...';
-    actions.classList.add('hidden');
-    link.classList.add('hidden');
-
-    navigator.geolocation.getCurrentPosition(
-      function(position){
-        const lat=position.coords.latitude;
-        const lon=position.coords.longitude;
-
-        window.sanadLocationLink=
-          'https://www.google.com/maps?q='+lat+','+lon;
-
-        link.href=window.sanadLocationLink;
-        link.textContent='فتح موقعي على خرائط Google';
-        link.classList.remove('hidden');
-        actions.classList.remove('hidden');
-
-        status.textContent='تم تحديد موقعك بنجاح. اختر مشاركة الموقع أو نسخ الرابط.';
-      },
-      function(error){
-        if(error.code===1)
-          status.textContent='لم تسمح بالوصول إلى الموقع. يمكنك السماح من إعدادات المتصفح.';
-        else if(error.code===2)
-          status.textContent='تعذر تحديد الموقع حاليًا. حاول مرة أخرى.';
-        else
-          status.textContent='انتهى وقت محاولة تحديد الموقع. حاول مرة أخرى.';
-      },
-      {
-        enableHighAccuracy:true,
-        timeout:20000,
-        maximumAge:0
-      }
-    );
+// 1. SOS
+$('sosC').value=ls('sosC','');
+function sos(){
+  const n=$('sosC').value.split(/\n/).map(x=>x.trim()).filter(Boolean);
+  if(!n.length)return toast('أضف رقم طوارئ أولاً');
+  $('sosR').textContent='جاري تحديد موقعك عبر GPS...';
+  const send=(loc)=>{
+    const msg='🆘 استغاثة! أنا في خطر وأحتاج مساعدة فورية!'+(loc?' موقعي الحالي: https://www.google.com/maps?q='+loc:'');
+    $('sosR').innerHTML=n.map(x=>`<a class="call" style="display:inline-block;margin:4px" href="sms:${esc(x)}?body=${encodeURIComponent(msg)}">📩 إرسال SMS إلى ${esc(x)}</a>`).join('')+
+    `<a class="call" style="display:inline-block;margin:4px;background:#25d366" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank">💬 إرسال عبر واتساب</a>`+
+    (loc?'':'<br><small>تنبيه: تعذر تحديد الإحداثيات، تأكد من تفعيل GPS.</small>');
   };
+  navigator.geolocation?navigator.geolocation.getCurrentPosition(p=>send(p.coords.latitude+','+p.coords.longitude),()=>send(''),{enableHighAccuracy:true,timeout:10000}):send('');
+}
 
-  window.shareLocationAgain=async function(){
-    const url=window.sanadLocationLink;
-    if(!url)return;
+// 2. البطاقة الطبية
+const mk=['m0','m1','m2','m3','m4','m5'];
+const md=ls('sanadMed',{});
+mk.forEach(k=>$(k).value=md[k]||'');
+function saveMed(){const o={};mk.forEach(k=>o[k]=$(k).value);sv('sanadMed',o);toast('✅ تم حفظ البطاقة الطبية')}
+function printMed(){
+  const w=window.open('','_blank');if(!w)return toast('اسمح بفتح النوافذ المنبثقة للطباعة');
+  w.document.write(`<html lang="ar" dir="rtl"><meta charset="UTF-8"><title>البطاقة الطبية</title><body style="font-family:Tahoma;padding:30px;border:2px solid #dc3545;border-radius:15px;max-width:500px;margin:20px auto">
+  <h1 style="color:#dc3545">🩸 البطاقة الطبية للطوارئ</h1><hr>
+  ${['الاسم','فصيلة الدم','الحساسية','الأمراض المزمنة','الأدوية الدائمة','رقم الطوارئ'].map((l,i)=>`<p style="font-size:16px"><b>${l}:</b> ${esc($(mk[i]).value||'لا يوجد')}</p>`).join('')}
+  <hr><p style="font-size:13px;color:#555">إسعاف 123 | شرطة 122 | مطافئ 180 — تم الإنشاء بواسطة تطبيق سَنَد</p></body></html>`);
+  w.document.close();w.print();
+}
 
-    if(navigator.share){
+// 3. الإسعافات الأولية
+const aid=[
+['🔥 حريق','لا تستخدم المصعد مطلقاً|اخرج فورًا وأغلق الأبواب خلفك لتقليل انتشار النار|ازحف قرب الأرض إذا كان الدخان كثيفًا|إذا اشتعلت ملابسك: توقف، اسقط على الأرض، غطِّ وجهك وتدحرج|لا تعد للمبنى لأي سبب|اتصل بالحماية المدنية 180'],
+['🫁 اختناق (بالغ)','اسأله: هل تختنق؟ إن كان يسعل بقوة شجعه على السعال|إن لم يستطع الكلام أو التنفس: اضرب 5 ضربات قوية بين لوحي الكتف بكعب اليد|ثم نفّذ 5 ضغطات بطنية (مناورة هايمليك) من الخلف فوق السرة|كرر التبادل حتى يخرج الجسم أو يفقد الوعي|عند فقد الوعي: اتصل 123 وابدأ الإنعاش القلبي الرئوي'],
+['👶 اختناق رضيع','ضعه على ساعدك وجهه للأسفل ورأسه أخفض من جسمه مع دعم الرقبة|اضرب 5 ضربات لطيفة بين الكتفين|اقلبه على ظهره وأجرِ 5 ضغطات بإصبعين في منتصف الصدر|كرر واتصل بالإسعاف 123 فوراً'],
+['🫀 توقف القلب / عدم الاستجابة','هز كتفه وناده بصوت عالٍ، إن لم يستجب ولا يتنفس طبيعيًا اتصل 123 فوراً|ابدأ ضغطات الصدر: في منتصف الصدر بسرعة 100-120 ضغطة/دقيقة وبعمق 5-6 سم|اترك الصدر يرتد بالكامل بين الضغطات|استمر دون توقف حتى وصول الإسعاف'],
+['💔 ألم الصدر المفاجئ','اتصل بالإسعاف 123 فورًا|اجعل المصاب يجلس في وضع مريح (نصف جالس)|فك الملابس الضيقة حول الرقبة والصدر|امنع المصاب من المشي أو القيادة نهائياً'],
+['🩸 نزيف شديد','اضغط مباشرة بقماش نظيف أو شاش معقم لمدة 10 دقائق متواصلة|ارفع العضو المصاب فوق مستوى القلب إن أمكن|لا ترفع القماش المشبع بالدم بل أضف فوقه طبقة أخرى|لا تنزع أي جسم مغروس في الجرح|اتصل بالإسعاف 123'],
+['🔥 حروق','أبعد المصاب عن مصدر الحرارة فوراً|برّد الحرق بماء جارٍ فاتر لمدة 20 دقيقة|انزع الخواتم والساعات بلطف قبل بدء التورم|ممنوع وضع الثلج أو معجون الأسنان أو الزيوت|غطِّ الحرق بشاش معقم غير لاصق ولا تفقع الفقاعات'],
+['⚡ صعق كهربائي','لا تلمس المصاب أبداً ما دام متصلاً بالكهرباء|افصل التيار من القاطع الرئيسي فوراً|أو أبعد السلك بعصا خشبية جافة تماماً|اتصل 123 وافحص التنفس وابدأ الإنعاش عند الحاجة'],
+['🧠 تشنجات (صرع)','أبعد الأجسام الصلبة والحادة من حوله|ضع وسادة أو قماشاً ليناً تحت رأسه|لا تقيد حركته ولا تضع أي شيء في فمه إطلاقاً|احسب مدة النوبة|بعد توقف التشنج ضعه على جانبه (وضعية الإفاقة)|اتصل 123 إذا زادت النوبة عن 5 دقائق'],
+['😵 إغماء','اجعله يستلقي على ظهره وارفع ساقيه قليلاً|فك الملابس الضيقة ووفّر تهوية جيدة|تأكد من انتظام تنفسه|لا تعطه أي طعام أو شراب وهو فاقد للوعي|اتصل 123 إذا لم يفق خلال دقيقة'],
+['☠️ تسمم','اتصل بالإسعاف 123 أو مركز السموم فوراً|احتفظ بعبوة المادة السامة لتعريف الأطباء بها|لا تجبر المصاب على القيء ولا تعطه لبناً أو وصفات منزلية|في حالة تسرب الغاز: افتح النوافذ ولا تشعل أي مفتاح كهرباء أو نار'],
+['☁️ تسمم أول أكسيد الكربون','اخرج فوراً إلى الهواء الطلق وافتح النوافذ والأبواب|اتصل بالإسعاف 123|أغلق مصدر الغاز أو السخان إن كان ذلك آمناً'],
+['🚗 حادث طريق','أمّن مكان الحادث بوضع مثلث التحذير|اتصل بالإسعاف 123 والشرطة 122|لا تحرك المصاب إلا إذا كان هناك خطر حريق أو انفجار|لا تنزع خوذة سائق الدراجة النارية'],
+['🦴 كسر أو التواء','ثبّت العضو المصاب في وضعه الحالي دون محاولة تعديله|ضع كمادة باردة ملفوفة بقماش لتخفيف التورم|توجه لأقرب مستشفى لعمل الأشعة'],
+['🤕 إصابة بالرأس','راقب مستوى الوعي والتركيز لمدة 24 ساعة|ضع كمادة باردة على مكان التورم|اتصل 123 فوراً عند فقد الوعي أو القيء المتكرر أو خروج دم من الأنف أو الأذن'],
+['🌡️ ضربة شمس','انقل المصاب لمكان بارد ومظلل فوراً|خفف ملابسه ورش جسمه بماء فاتر مع التهوية|أعطه ماءً للشرب إذا كان واعياً تماماً|اتصل 123 عند الهذيان أو فقد الوعي'],
+['🐝 لدغة عقرب أو ثعبان','هدّئ المصاب وامنع حركته لتقليل انتشار السم|ثبّت العضو المصاب واجعله أخفض من مستوى القلب|لا تجرح المكان ولا تحاول مص السم ولا تربط رباطاً ضاغطاً|توجه للمستشفى فوراً لأخذ المصل'],
+['🐕 عضة كلب أو حيوان','اغسل مكان الجرح بالماء الجاري والصابون جيداً لمدة 15 دقيقة|طهّر الجرح وغطّه بشاش نظيف|توجه للمستشفى فوراً لأخذ مصل السعار'],
+['👃 نزيف الأنف (الرعاف)','اجلس وأمل رأسك قليلاً للأمام (وليس للخلف)|اضغط بإصبعيك على الجزء الطري من الأنف لمدة 10 دقائق|تنفس من الفم|راجع الطبيب إذا استمر النزيف أكثر من 20 دقيقة'],
+['🥜 حساسية شديدة (تأق)','إذا كان يحمل قلم إبينفرين ساعده في استخدامه فوراً|اتصل بالإسعاف 123 دون تأخير|اجعله يستلقي ويرفع ساقيه (أو يجلس إذا كان يعاني من ضيق تنفس)'],
+['🍬 هبوط السكر الحاد','إذا كان المصاب واعياً: أعطه 15 جرام سكر سريع (نصف كوب عصير أو 3 ملاعق سكر في ماء)|أعد القياس بعد 15 دقيقة|إذا كان فاقداً للوعي: ممنوع إعطاؤه أي شيء بالفم واتصل 123 فوراً'],
+['🦷 سن مخلوع بسبب صدمة','أمسك السن من التاج (الجزء الأبيض) وتجنب لمس الجذر|اشطفه برفق بالحليب أو الماء دون فرك|حاول إعادته لمكانه برفق أو احفظه في كوب حليب|اذهب لطبيب الأسنان خلال أقل من ساعة']
+];
+$('aidL').innerHTML=aid.map(a=>`<details class="card"><summary>${a[0]}</summary><ol>${a[1].split('|').map(s=>'<li>'+s+'</li>').join('')}</ol></details>`).join('');
+
+// 4. أرقام الطوارئ
+const emergencies=[
+['الإسعاف','123'],['الشرطة / النجدة','122'],['الحماية المدنية / المطافئ','180'],
+['طوارئ الكهرباء','121'],['طوارئ الغاز الطبيعي','129'],['طوارئ مياه الشرب','125'],
+['شرطة المرور','128'],['خط نجدة الطفل','16000'],['شكاوى الاتصالات','155'],
+['مركز السموم (القاهرة)','0227595000'],['النجدة السياحية','126']
+];
+$('emergencyList').innerHTML=emergencies.map(x=>`<div class="item"><div><b>${x[0]}</b><br><span class="number">${x[1]}</span></div><a class="call" href="tel:${x[1]}">📞 اتصال</a></div>`).join('');
+
+// 5. مشاركة الموقع
+window.sanadLocationLink='';
+function shareMyLocation(){
+  const status=$('locationStatus'),link=$('locationMapLink'),actions=$('locationActions');
+  if(!navigator.geolocation){status.textContent='متصفحك لا يدعم تحديد الموقع.';return;}
+  status.textContent='⏳ جارٍ تحديد موقعك بدقة عبر GPS...';
+  actions.classList.add('hidden');link.classList.add('hidden');
+  navigator.geolocation.getCurrentPosition(
+    pos=>{
+      window.sanadLocationLink='https://www.google.com/maps?q='+pos.coords.latitude+','+pos.coords.longitude;
+      link.href=window.sanadLocationLink;
+      link.textContent='🗺️ فتح موقعي على خرائط Google';
+      link.classList.remove('hidden');actions.classList.remove('hidden');
+      status.textContent='✅ تم تحديد موقعك بنجاح! يمكنك مشاركته أو نسخه الآن.';
+    },
+    err=>{status.textContent=err.code===1?'⚠️ يرجى السماح بصلاحية الوصول للموقع من إعدادات المتصفح.':'⚠️ تعذر تحديد الموقع حالياً، تأكد من تشغيل GPS وحاول مجدداً.';},
+    {enableHighAccuracy:true,timeout:15000,maximumAge:0}
+  );
+}
+async function shareLocationAgain(){
+  if(!window.sanadLocationLink)return;
+  if(navigator.share){
+    try{await navigator.share({title:'موقعي الحالي',text:'هذا رابط موقعي على خرائط Google:',url:window.sanadLocationLink});}catch(e){}
+  }else copyLocationLink();
+}
+function copyLocationLink(){if(window.sanadLocationLink)copyText(window.sanadLocationLink);}
+
+// 6. الزكاة
+function zakat(){
+  const g=+$('z0').value;if(!g)return toast('أدخل سعر جرام الذهب عيار 24 أولاً');
+  const gold=(+$('z2').value||0)*g*(+$('z3').value)/24;
+  const tot=(+$('z1').value||0)+gold+(+$('z4').value||0)-(+$('z5').value||0);
+  const nis=85*g;
+  $('zR').innerHTML=`إجمالي الوعاء الزكوي: ${tot.toLocaleString('ar-EG',{maximumFractionDigits:2})} جنيه<br>قيمة النصاب (85 جم): ${nis.toLocaleString('ar-EG',{maximumFractionDigits:2})} جنيه<hr>`+
+  (tot>=nis?`✅ بلغت النصاب — مقدار الزكاة الواجبة (2.5%): <span style="font-size:21px">${(tot*.025).toLocaleString('ar-EG',{maximumFractionDigits:2})} جنيه</span>`:'ℹ️ لم يبلغ المال النصاب الشرعي، لا زكاة واجبة.');
+}
+async function goldOnline(){
+  toast('جاري جلب السعر...');
+  try{
+    const r=await(await fetch('https://open.er-api.com/v6/latest/USD')).json();
+    if(!r.rates.XAU)throw 0;
+    $('z0').value=Math.round(r.rates.EGP/r.rates.XAU/31.1035);
+    toast('✅ تم تحديث سعر الذهب');
+  }catch(e){toast('⚠️ تعذر الاتصال، تأكد من وجود إنترنت')}
+}
+
+// 7. الكهرباء
+function elec(){
+  let k=+$('e0').value,t=0;if(!k||k<0)return toast('أدخل استهلاكاً صحيحاً');
+  [[50,.68],[50,.78],[100,.95],[150,1.55],[300,1.95],[350,2.1],[1e9,2.23]].forEach(([c,r])=>{const u=Math.min(k,c);if(u>0){t+=u*r;k-=u}});
+  $('eR').textContent='التكلفة التقديرية للاستهلاك: '+t.toFixed(2)+' جنيه';
+}
+
+// 8. العملات والذهب
+async function rates(){
+  $('rR').innerHTML='<p class="muted">⏳ جاري جلب أحدث الأسعار...</p>';
+  try{
+    const r=(await(await fetch('https://open.er-api.com/v6/latest/USD')).json()).rates;
+    let h=[['🇺🇸 دولار أمريكي','USD'],['🇪🇺 يورو أوروبي','EUR'],['🇬🇧 جنيه إسترليني','GBP'],['🇸🇦 ريال سعودي','SAR'],['🇦🇪 درهم إماراتي','AED'],['🇰🇼 دينار كويتي','KWD']]
+    .map(x=>`<div class="item"><b>${x[0]}</b><span class="number" style="font-size:18px">${(r.EGP/r[x[1]]).toFixed(2)} ج.م</span></div>`).join('');
+    if(r.XAU){
+      const g24=Math.round(r.EGP/r.XAU/31.1035);
+      h+=`<div class="item"><b>🥇 جرام ذهب عيار 24</b><span class="number" style="font-size:18px">${g24} ج.م</span></div>
+          <div class="item"><b>🥇 جرام ذهب عيار 21</b><span class="number" style="font-size:18px">${Math.round(g24*21/24)} ج.م</span></div>`;
+    }
+    $('rR').innerHTML=h+'<p class="muted" style="margin-top:10px">الأسعار عالمية استرشادية. آخر تحديث: '+new Date().toLocaleTimeString('ar-EG')+'</p>';
+  }catch(e){$('rR').innerHTML='<p class="muted" style="color:var(--danger)">⚠️ لا يوجد اتصال بالإنترنت.</p>';}
+}
+
+// 9. المحافظ
+const W=[
+['📱 فودافون كاش','اطلب الكود *9# أو افتح تطبيق أنا فودافون|اختر خدمة تحويل الأموال|أدخل رقم هاتف المستلم بعناية|أدخل المبلغ المراد تحويله|أدخل الرقم السري للمحفظة (6 أرقام) لتأكيد العملية'],
+['🟠 أورنج كاش','اطلب الكود #7115# أو افتح تطبيق Orange Cash|اختر تحويل الأموال|اكتب رقم المستلم والمبلغ|أدخل الرقم السري لتأكيد التحويل'],
+['🟢 اتصالات كاش (e& money)','اطلب الكود *777# أو افتح تطبيق e& money|اختر تحويل أموال|أدخل رقم المستلم والمبلغ|أكد بالرقم السري'],
+['🔵 وي باي (WE Pay)','اطلب الكود *7# أو افتح تطبيق WE Pay|اختر تحويل|أدخل رقم المستلم والمبلغ|أكد بالرقم السري'],
+['🏦 تطبيق إنستا باي (InstaPay)','حمّل التطبيق الرسمي من المتجر فقط|سجل برقم هاتفك المسجل بالبنك وأنشئ عنوان الدفع (IPA)|اختر إرسال نقود (Send Money)|أدخل رقم الهاتف أو عنوان IPA أو رقم الحساب البنكي|راجع اسم المستفيد بالكامل قبل التأكيد بالرقم السري IPN PIN']
+];
+$('walL').innerHTML=W.map(a=>`<details class="card"><summary>${a[0]}</summary><ol>${a[1].split('|').map(s=>'<li>'+s+'</li>').join('')}</ol></details>`).join('');
+
+// 10. أكواد الشبكات
+const networkCodes={
+vodafone:[['خدمة العملاء','888'],['من أي خط','16888'],['معرفة الرصيد','*868*1#'],['شحن كارت','*858*رقم الكارت#'],['قائمة الخدمات','*888#'],['فودافون كاش','*9#'],['عملاء فودافون كاش','7001'],['باقات الإنترنت','*2000#'],['سلفني شكراً','*010#']],
+orange:[['خدمة العملاء','110'],['من أي خط أرضي','16110'],['معرفة الرصيد','#100#'],['شحن كارت','#102*رقم الكارت#'],['أورنج كاش','#7115#'],['عملاء أورنج كاش','7770'],['تفاصيل الحساب','#16#']],
+etisalat:[['خدمة العملاء','333'],['من خط أرضي','0235346333'],['معرفة الرصيد','*555#'],['شحن كارت','*556*رقم الكارت#'],['e& money','*777#'],['عملاء e& money','778'],['سلفني','*555*1#']],
+we:[['خدمة العملاء','111'],['من الموبايل','01555000111'],['معرفة الرصيد','*550#'],['شحن كارت','*555*رقم الكارت#'],['WE Pay','*7#'],['عملاء WE Pay','565']]
+};
+const networkNames={vodafone:'فودافون',orange:'أورنج',etisalat:'اتصالات e&',we:'WE'};
+function showCodes(n){
+  $('codeResult').innerHTML='<h3>'+networkNames[n]+'</h3>'+networkCodes[n].map(x=>`<div class="item"><div><b>${x[0]}</b><br><span class="number">${x[1]}</span></div><button class="copy" onclick="copyText(${JSON.stringify(x[1])})">📋 نسخ</button></div>`).join('');
+}
+
+// 11. BMI
+function bmi(){
+  const w=+$('b0').value,h=+$('b1').value/100;if(!w||!h)return toast('أدخل الوزن والطول');
+  const b=w/h/h;
+  const st=b<18.5?'نحافة':b<25?'وزن مثالي وطبيعي ✅':b<30?'زيادة في الوزن':'سمنة';
+  $('bR').innerHTML=`مؤشر كتلة الجسم (BMI): ${b.toFixed(1)} (${st})<br>الوزن الصحي المناسب لطولك: ${(18.5*h*h).toFixed(0)} - ${(24.9*h*h).toFixed(0)} كجم<br>💧 احتياجك اليومي من الماء: ${(w*.033).toFixed(1)} لتر تقريباً`;
+}
+
+// 12. QR
+let stream;
+async function scan(){
+  if(!('BarcodeDetector' in window))return $('qrR').textContent='⚠️ متصفحك لا يدعم القراءة المباشرة للكاميرا، جرب متصفح Chrome على الأندرويد.';
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+    const v=$('vid');v.hidden=false;v.srcObject=stream;await v.play();
+    const d=new BarcodeDetector({formats:['qr_code']});
+    const l=async()=>{
+      if(!stream)return;
       try{
-        await navigator.share({
-          title:'موقعي الحالي',
-          text:'هذا رابط موقعي على خرائط Google:',
-          url:url
-        });
-      }catch(error){
-        if(error.name!=='AbortError')
-          alert('تعذرت المشاركة. يمكنك نسخ الرابط بدلًا من ذلك.');
-      }
-    }else{
-      window.copyLocationLink();
-    }
-  };
+        const c=await d.detect(v);
+        if(c.length){
+          $('qrR').innerHTML='النتيجة: '+esc(c[0].rawValue)+` <button class="copy" onclick="copyText(${JSON.stringify(c[0].rawValue)})">نسخ</button>`;
+          stream.getTracks().forEach(t=>t.stop());stream=null;v.hidden=true;return;
+        }
+      }catch(e){}
+      setTimeout(l,300);
+    };l();
+  }catch(e){$('qrR').textContent='⚠️ تعذر الوصول للكاميرا.';}
+}
+function makeQR(){
+  const text=$('qrT').value;if(!text)return toast('اكتب نصًا أو رابطًا أولاً');
+  const bytes=new TextEncoder().encode(text);if(bytes.length>53)return toast('النص طويل جداً (الحد الأقصى 53 بايت)');
+  const matrix=qrEncode(bytes),scale=7,pad=4,n=matrix.length,canvas=document.createElement('canvas');
+  canvas.width=canvas.height=(n+pad*2)*scale;
+  const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#000';
+  matrix.forEach((row,y)=>row.forEach((v,x)=>{if(v)ctx.fillRect((x+pad)*scale,(y+pad)*scale,scale,scale)}));
+  window.currentQR=canvas.toDataURL('image/png');
+  $('qrOutput').innerHTML='<img alt="QR" style="width:100%;max-width:250px;border-radius:12px;border:1px solid var(--line)" src="'+window.currentQR+'"><br><button class="success" style="margin-top:10px" onclick="downloadQR()">⬇️ تحميل الصورة</button>';
+}
+function downloadQR(){if(!window.currentQR)return;const a=document.createElement('a');a.href=window.currentQR;a.download='sanad-qr.png';a.click();}
+function qrEncode(bytes){
+  const n=29,D=55,E=15,bits=[];const push=(v,l)=>{for(let i=l-1;i>=0;i--)bits.push((v>>>i)&1)};
+  push(4,4);push(bytes.length,8);bytes.forEach(b=>push(b,8));
+  for(let i=0;i<Math.min(4,D*8-bits.length);i++)bits.push(0);while(bits.length%8)bits.push(0);
+  let data=[];for(let i=0;i<bits.length;i+=8){let v=0;for(let j=0;j<8;j++)v=(v<<1)|(bits[i+j]||0);data.push(v)}
+  let tg=true;while(data.length<D){data.push(tg?236:17);tg=!tg}
+  const ex=[],lg=[];let x=1;for(let i=0;i<255;i++){ex[i]=x;lg[x]=i;x<<=1;if(x&256)x^=285}
+  for(let i=255;i<512;i++)ex[i]=ex[i-255];const mul=(a,b)=>a&&b?ex[lg[a]+lg[b]]:0;
+  let gen=[1];for(let i=0;i<E;i++){let nx=Array(gen.length+1).fill(0);gen.forEach((v,j)=>{nx[j]^=v;nx[j+1]^=mul(v,ex[i])});gen=nx}
+  let rem=Array(E).fill(0);data.forEach(v=>{const f=v^rem[0];rem.shift();rem.push(0);for(let i=0;i<E;i++)rem[i]^=mul(gen[i+1],f)});
+  const all=data.concat(rem),m=Array.from({length:n},()=>Array(n).fill(null)),set=(r,c,v)=>{if(r>=0&&r<n&&c>=0&&c<n)m[r][c]=!!v};
+  const fnd=(r,c)=>{for(let y=-1;y<=7;y++)for(let x=-1;x<=7;x++){const ins=y>=0&&y<=6&&x>=0&&x<=6,ed=y==0||y==6||x==0||x==6,ce=y>=2&&y<=4&&x>=2&&x<=4;set(r+y,c+x,ins&&(ed||ce))}};
+  fnd(0,0);fnd(0,n-7);fnd(n-7,0);
+  for(let i=8;i<n-8;i++){set(6,i,i%2==0);set(i,6,i%2==0)}
+  for(let y=-2;y<=2;y++)for(let x=-2;x<=2;x++){const d=Math.max(Math.abs(x),Math.abs(y));set(22+y,22+x,d==2||d==0)}
+  set(n-8,8,true);let rf=8;for(let i=0;i<10;i++)rf=(rf<<1)^(((rf>>>9)&1)?0x537:0);
+  const f=((8<<10)|rf)^0x5412;
+  for(let i=0;i<=5;i++)set(i,8,(f>>>i)&1);set(7,8,(f>>>6)&1);set(8,8,(f>>>7)&1);set(8,7,(f>>>8)&1);
+  for(let i=9;i<15;i++)set(14-i,8,(f>>>i)&1);for(let i=0;i<8;i++)set(8,n-1-i,(f>>>i)&1);for(let i=8;i<15;i++)set(n-15+i,8,(f>>>i)&1);
+  let st=[];all.forEach(v=>{for(let i=7;i>=0;i--)st.push((v>>>i)&1)});let ix=0,up=true;
+  for(let R=n-1;R>=1;R-=2){if(R==6)R--;for(let j=0;j<n;j++){const r=up?n-1-j:j;for(let k=0;k<2;k++){const c=R-k;if(m[r][c]!==null)continue;let v=ix<st.length?st[ix++]:0;if((r+c)%2==0)v^=1;m[r][c]=!!v}}up=!up}
+  return m;
+}
 
-  window.copyLocationLink=function(){
-    if(!window.sanadLocationLink)return;
-    if(typeof copyText==='function'){
-      copyText(window.sanadLocationLink);
-    }else{
-      navigator.clipboard.writeText(window.sanadLocationLink)
-        .then(()=>alert('تم نسخ رابط الموقع!'))
-        .catch(()=>alert('تعذر النسخ. افتح رابط الخريطة وانسخه.'));
-    }
-  };
-})();
-</script>  </body>  
-</html>  
+// 13. الساعة العالمية
+const cities=[
+['🇪🇬 القاهرة','Africa/Cairo'],['🇪🇬 نزلة سلمان – أسيوط','Africa/Cairo'],['🇸🇦 الرياض','Asia/Riyadh'],
+['🇸🇦 مكة المكرمة','Asia/Riyadh'],['🇦🇪 دبي','Asia/Dubai'],['🇰🇼 الكويت','Asia/Kuwait'],
+['🇶🇦 الدوحة','Asia/Qatar'],['🇯🇴 عمّان','Asia/Amman'],['🇲🇦 الرباط','Africa/Casablanca'],
+['🇹🇷 إسطنبول','Europe/Istanbul'],['🇩🇪 برلين','Europe/Berlin'],['🇫🇷 باريس','Europe/Paris'],
+['🇬🇧 لندن','Europe/London'],['🇺🇸 نيويورك','America/New_York'],['🇺🇸 لوس أنجلوس','America/Los_Angeles'],
+['🇯🇵 طوكيو','Asia/Tokyo'],['🇦🇺 سيدني','Australia/Sydney'],['🇳🇿 أوكلاند','Pacific/Auckland']
+];
+function updateClocks(){
+  const now=new Date();
+  $('clocks').innerHTML=cities.map((c,i)=>{
+    const time=new Intl.DateTimeFormat('ar-EG',{timeZone:c[1],hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}).format(now);
+    const date=new Intl.DateTimeFormat('ar-EG',{timeZone:c[1],weekday:'long',day:'numeric',month:'long'}).format(now);
+    return `<div class="card clock"><b>${c[0]}</b><div class="time">${time}</div><div class="date">${date}</div>${i===1?'<small>⭐ قريتنا</small>':''}</div>`;
+  }).join('');
+}
+updateClocks();setInterval(updateClocks,1000);
+
+// 14. التواريخ
+function calculateAge(){
+  const val=$('birth').value;if(!val)return toast('اختر تاريخ ميلادك');
+  const b=new Date(val+'T00:00:00'),now=new Date();if(b>now)return toast('تاريخ الميلاد في المستقبل!');
+  let y=now.getFullYear()-b.getFullYear(),m=now.getMonth()-b.getMonth(),d=now.getDate()-b.getDate();
+  if(d<0){m--;d+=new Date(now.getFullYear(),now.getMonth(),0).getDate()}if(m<0){y--;m+=12}
+  const total=Math.floor((now-b)/86400000);
+  let next=new Date(now.getFullYear(),b.getMonth(),b.getDate());
+  if(next<new Date(now.getFullYear(),now.getMonth(),now.getDate()))next.setFullYear(next.getFullYear()+1);
+  const left=Math.ceil((next-now)/86400000);
+  const weekday=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'][b.getDay()];
+  $('ageResult').innerHTML=`<div class="result">🎉 عمرك: ${y} سنة و ${m} شهر و ${d} يوم</div><p class="muted"><b>📆 يوم ميلادك:</b> ${weekday} | <b>⏱️ عشت:</b> ${total.toLocaleString('ar-EG')} يوم | <b>🎂 عيد ميلادك القادم بعد:</b> ${left} يوم</p>`;
+}
+function dateDifference(){
+  if(!$('dateOne').value||!$('dateTwo').value)return toast('اختر التاريخين');
+  const days=Math.abs(Math.round((new Date($('dateTwo').value)-new Date($('dateOne').value))/86400000));
+  $('dateResult').textContent='الفرق بين التاريخين: '+days.toLocaleString('ar-EG')+' يوم';
+}
+let countdownTimer=null;
+function startCountdown(){
+  const val=$('eventDate').value,d=new Date(val);if(!val||isNaN(d))return toast('اختر موعد المناسبة');
+  if(countdownTimer)clearInterval(countdownTimer);
+  const tick=()=>{
+    const ms=d-new Date();if(ms<=0){$('countResult').textContent='🎉 حان موعد المناسبة الآن!';clearInterval(countdownTimer);return}
+    const days=Math.floor(ms/86400000),h=Math.floor(ms%86400000/3600000),m=Math.floor(ms%3600000/60000),s=Math.floor(ms%60000/1000);
+    $('countResult').textContent=($('eventName').value||'المناسبة')+': '+days+' يوم، '+h+' ساعة، '+m+' دقيقة، '+s+' ثانية';
+  };tick();countdownTimer=setInterval(tick,1000);
+}
+
+// 15. الحاسبة
+function calc(v){$('calcDisplay').value+=v}
+function clearCalc(){$('calcDisplay').value=''}
+function calculate(){
+  const s=$('calcDisplay').value;if(!s||!/^[0-9+*/().\-\s]+$/.test(s))return toast('عملية غير صالحة');
+  try{const r=Function('"use strict";return ('+s+')')();if(!Number.isFinite(r))throw 0;$('calcDisplay').value=String(Number(r.toFixed(10)));}
+  catch(e){toast('راجع العملية الحسابية')}
+}
+
+// 16. الوحدات
+const units={length:{'متر':1,'كيلومتر':1000,'سنتيمتر':.01,'ملليمتر':.001,'قدم':.3048},weight:{'كيلوجرام':1,'جرام':.001,'طن':1000,'رطل':.453592},temp:{'مئوية':1,'فهرنهايت':2,'كلفن':3}};
+function updateUnits(){
+  const keys=Object.keys(units[$('unitType').value]);
+  $('unitFrom').innerHTML=keys.map(x=>`<option>${x}</option>`).join('');
+  $('unitTo').innerHTML=keys.map(x=>`<option>${x}</option>`).join('');
+  if(keys.length>1)$('unitTo').selectedIndex=1;
+}
+updateUnits();
+function convertUnit(){
+  const v=Number($('unitValue').value),type=$('unitType').value;if(!$('unitValue').value||!Number.isFinite(v))return toast('اكتب قيمة صحيحة');
+  const a=$('unitFrom').value,b=$('unitTo').value;let out;
+  if(type==='temp'){const c=a==='مئوية'?v:a==='فهرنهايت'?(v-32)*5/9:v-273.15;out=b==='مئوية'?c:b==='فهرنهايت'?c*9/5+32:c+273.15;}
+  else out=v*units[type][a]/units[type][b];
+  $('unitResult').textContent=out.toLocaleString('en-US',{maximumFractionDigits:5})+' '+b;
+}
+
+// 17. الباسورد
+function makePassword(){
+  const n=Math.max(8,Math.min(40,Number($('passLength').value)||16)),chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%&*';
+  const rand=crypto.getRandomValues(new Uint32Array(n));
+  $('passResult').value=[...rand].map(x=>chars[x%chars.length]).join('');
+}
+
+// 18. الملاحظات
+function saveNote(){const t=$('noteText').value.trim();if(!t)return toast('اكتب الملاحظة أولاً');const a=ls('sanadNotes',[]);a.unshift(t);sv('sanadNotes',a);$('noteText').value='';renderNotes();toast('تم حفظ الملاحظة')}
+function renderNotes(){$('noteList').innerHTML=ls('sanadNotes',[]).map((t,i)=>`<div class="item"><span>${esc(t)}</span><button class="danger" style="padding:6px 10px" onclick="deleteNote(${i})">حذف</button></div>`).join('')}
+function deleteNote(i){const a=ls('sanadNotes',[]);a.splice(i,1);sv('sanadNotes',a);renderNotes()}
+renderNotes();
+
+// 19. الميزانية
+function budgetCalc(){
+  const av=$('budgetTotal').value,bv=$('budgetSpent').value;if(av===''||bv==='')return toast('أدخل الأرقام');
+  const r=Number(av)-Number(bv);
+  $('budgetResult').textContent=r>=0?'✅ المتبقي من الميزانية: '+r.toLocaleString('ar-EG')+' جنيه':'⚠️ تجاوزت الميزانية بمقدار: '+Math.abs(r).toLocaleString('ar-EG')+' جنيه';
+}
+
+// 20. السفر
+const defaultTravel=['بطاقة الهوية أو جواز السفر','الهاتف والشاحن والباور بانك','الملابس المناسبة','الأدوية الشخصية','النقود والبطاقات البنكية','مستلزمات النظافة الشخصية'];
+function getTravel(){return ls('sanadTravel',null)||defaultTravel.map(name=>({name,done:false}))}
+function renderTravel(){$('travelList').innerHTML=getTravel().map((x,i)=>`<div class="item"><label style="color:var(--text)"><input type="checkbox" style="width:auto;margin-left:8px" ${x.done?'checked':''} onchange="checkTravel(${i},this.checked)"> ${esc(x.name)}</label><button class="copy" onclick="removeTravel(${i})">حذف</button></div>`).join('')}
+function checkTravel(i,v){const a=getTravel();a[i].done=v;sv('sanadTravel',a)}
+function removeTravel(i){const a=getTravel();a.splice(i,1);sv('sanadTravel',a);renderTravel()}
+function addTravel(){const t=$('travelNew').value.trim();if(!t)return;const a=getTravel();a.push({name:t,done:false});sv('sanadTravel',a);$('travelNew').value='';renderTravel()}
+function resetTravel(){localStorage.removeItem('sanadTravel');renderTravel();toast('تمت إعادة ضبط القائمة')}
+renderTravel();
+
+// 21. الحماية الرقمية ومعلومة اليوم
+const facts=['الماء يغطي نحو 71% من سطح كوكب الأرض.','الأخطبوط لديه ثلاثة قلوب وتسعة أدمغة.','ضوء الشمس يستغرق نحو 8 دقائق و20 ثانية ليصل إلى الأرض.','النحل يتواصل مع بعضه باستخدام حركات راقصة دقيقة.','اللغة العربية يتحدث بها أكثر من 400 مليون إنسان حول العالم.'];
+$('dailyFact').textContent=facts[new Date().getDate()%facts.length];
+
+const securityTips=[
+['🔑 كلمات المرور','استخدم كلمة مرور قوية ومختلفة لكل حساب مهم.'],
+['📲 التحقق بخطوتين (2FA)','فعّل المصادقة الثنائية لحماية حساباتك حتى لو سُرقت كلمة المرور.'],
+['🎣 روابط التصيد','لا تضغط على روابط الجوائز الوهمية أو رسائل إيقاف الحسابات البنكية.'],
+['🆘 الابتزاز الإلكتروني','لا ترضخ ولا تدفع، احتفظ بالأدلة وأبلغ الجهات المختصة فوراً.']
+];
+$('securityList').innerHTML=securityTips.map(x=>`<div class="card" style="margin-bottom:0"><b>${x[0]}</b><p class="muted">${x[1]}</p></div>`).join('');
+
+const checks=['أستخدم كلمة مرور قوية ومختلفة لحساباتي','فعّلت التحقق بخطوتين (2FA)','أقفل شاشة هاتفي برمز سري أو بصمة','لا أشارك رمز OTP مع أي شخص أبداً','أحدّث نظام الهاتف والتطبيقات باستمرار'];
+$('securityChecks').innerHTML=checks.map((x,i)=>`<label class="item" style="color:var(--text)"><span>${x}</span><input type="checkbox" style="width:auto" data-check="${i}"></label>`).join('');
+document.querySelectorAll('[data-check]').forEach(el=>{
+  el.checked=localStorage.getItem('sanadCheck'+el.dataset.check)==='true';
+  el.addEventListener('change',()=>localStorage.setItem('sanadCheck'+el.dataset.check,el.checked));
+});
+
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
