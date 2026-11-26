@@ -7,7 +7,7 @@
 <meta name="description" content="سَنَد - دليلك الشامل للحياة اليومية والطوارئ">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
-<title>سَنَد | SANAD - النسخة الشاملة</title>
+<title>سَنَد | SANAD - النسخة المطورة</title>
 <style>
 :root{--bg:#f2f5fb;--card:#fff;--text:#17243d;--muted:#748197;--primary:#173b72;--accent:#0d9488;--line:#e2e9f2;--danger:#dc3545;--shadow:0 5px 22px #17243d0b}
 .dark{--bg:#101827;--card:#1c293d;--text:#edf3ff;--muted:#a9b6ca;--primary:#7ba8ed;--accent:#35c6b4;--line:#34445a;--shadow:0 5px 22px #0003}
@@ -72,7 +72,24 @@ details summary{cursor:pointer;font-weight:bold;font-size:15px;padding:4px 0}
 video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
 #toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:#17243de6;color:#fff;padding:10px 18px;border-radius:20px;display:none;z-index:99;font-size:13px;box-shadow:0 4px 12px #0003}
 .location-map{display:block;width:100%;padding:13px;border-radius:10px;background:var(--bg);color:var(--accent);text-decoration:none;direction:ltr;text-align:center;overflow-wrap:anywhere;margin:12px 0;font-weight:bold;border:1px solid var(--line)}
+
+.tile.is-hidden{display:none!important}
+.chat-box{height:300px;overflow:auto;background:var(--bg);border:1px solid var(--line);border-radius:13px;padding:10px;margin:12px 0}
+.chat-msg{padding:10px 12px;border-radius:13px;margin:7px 0;max-width:88%;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+.chat-msg.user{background:var(--primary);color:#fff;margin-right:auto}
+.chat-msg.bot{background:var(--card);border:1px solid var(--line);margin-left:auto}
+.mini-stat{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+.mini-stat strong{display:block;font-size:20px;color:var(--primary);margin-top:5px}
+.bar-track{height:9px;background:var(--line);border-radius:20px;overflow:hidden;flex:1}
+.bar-fill{height:100%;background:var(--accent);border-radius:20px}
+.profile-card{background:linear-gradient(135deg,#10234b,#176b78);color:white;border-radius:18px;padding:20px;max-width:460px;margin:12px auto;text-align:center;box-shadow:0 10px 28px #10234b30}
+.profile-card .avatar{width:68px;height:68px;border-radius:50%;background:#ffffff22;display:grid;place-items:center;font-size:30px;margin:0 auto 10px}
+#focusClock{font-size:48px;font-weight:900;text-align:center;direction:ltr;color:var(--primary);padding:16px}
+.qr-result-img{width:100%;max-width:300px;image-rendering:pixelated;border:10px solid #fff;border-radius:8px}
+@media(max-width:420px){.tabs button{font-size:10px}.profile-card{padding:15px}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 </head>
 <body>
 
@@ -82,16 +99,16 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
       <div class="made">✦ MADE BY GEDO ✦</div>
       <div class="logo">سَـنَـد <small>SANAD | دليلك الشامل للحياة اليومية</small></div>
     </div>
-    <button onclick="toggleDark()">🌙 الوضع الليلي</button>
+    <div class="row" style="flex:0 0 auto"><button onclick="showPage('customize')">⚙️ تخصيص</button><button onclick="toggleDark()">🌙 الوضع الليلي</button></div>
   </div>
   <div class="hero">
     <h1>المعلومة الصح في الوقت الصح.</h1>
-    <p>جميع أدوات الطوارئ، الصحة، الحسابات، والخدمات اليومية في تطبيق واحد يعمل بدون إنترنت.</p>
+    <p>أدوات ومساعدات يومية في مكان واحد — سَنَد يتطور معك.</p>
     <input class="search" id="search" placeholder="🔍 ابحث عن خدمة، أداة، أو معلومة..." oninput="searchAll(this.value)">
   </div>
 </header>
 
-<a class="sos-banner" href="tel:123">📞 اتصال سريع بالإسعاف 123</a>
+<div class="sos-banner"><a href="tel:123" style="color:#fff;text-decoration:none">🚑 الإسعاف 123</a>　|　<a href="tel:180" style="color:#fff;text-decoration:none">🚒 المطافئ 180</a></div>
 
 <main class="container">
 
@@ -150,10 +167,6 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
         <button class="primary" onclick="showPage('codes')">عرض الأكواد</button>
       </div>
 
-      <div class="card tile" data-search="وزن مثالي bmi ماء سمنة نحافة صحة">
-        <div><div class="emoji">⚖️</div><b>BMI والماء اليومي</b><small>احسب كتلة جسمك والوزن المثالي واحتياج الماء.</small></div>
-        <button class="primary" onclick="showPage('bmi')">احسب الآن</button>
-      </div>
 
       <div class="card tile" data-search="QR كيو ار قارئ صانع كاميرا رابط">
         <div><div class="emoji">🔳</div><b>قارئ وصانع QR</b><small>امسح رموز QR بالكاميرا أو أنشئ رمزك الخاص.</small></div>
@@ -170,46 +183,55 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
         <button class="primary" onclick="showPage('dates')">افتح القسم</button>
       </div>
 
-      <div class="card tile" data-search="حاسبة حساب آلة حاسبة">
-        <div><div class="emoji">🧮</div><b>الحاسبة</b><small>آلة حاسبة سريعة للعمليات اليومية.</small></div>
-        <button class="primary" onclick="showPage('calculator')">افتح الحاسبة</button>
-      </div>
 
-      <div class="card tile" data-search="تحويل وحدات طول وزن حرارة قياس">
-        <div><div class="emoji">📏</div><b>محوّل الوحدات</b><small>تحويل وحدات الطول والوزن ودرجات الحرارة.</small></div>
-        <button class="primary" onclick="showPage('convert')">افتح المحوّل</button>
-      </div>
 
       <div class="card tile" data-search="كلمة مرور باسورد حماية أمان">
         <div><div class="emoji">🔐</div><b>مولّد كلمات المرور</b><small>إنشاء كلمات مرور قوية وعشوائية.</small></div>
         <button class="primary" onclick="showPage('password')">افتح المولّد</button>
       </div>
 
-      <div class="card tile" data-search="ملاحظات تدوين خزنة حفظ">
-        <div><div class="emoji">📝</div><b>ملاحظاتي</b><small>سجل ملاحظاتك السريعة واحفظها على جهازك.</small></div>
-        <button class="primary" onclick="showPage('notes')">افتح الملاحظات</button>
-      </div>
 
-      <div class="card tile" data-search="مصاريف ميزانية فلوس ادخار">
-        <div><div class="emoji">💰</div><b>حاسبة المصروفات</b><small>تابع ميزانيتك ومصروفاتك بسهولة.</small></div>
-        <button class="primary" onclick="showPage('budget')">افتح الحاسبة</button>
-      </div>
 
       <div class="card tile" data-search="سفر قائمة تجهيز شنطة أغراض">
         <div><div class="emoji">🧳</div><b>قائمة السفر</b><small>جهز شنطتك وأغراضك الأساسية قبل السفر.</small></div>
         <button class="primary" onclick="showPage('travel')">افتح القائمة</button>
       </div>
 
-      <div class="card tile" data-search="حماية رقمية خصوصية احتيال تصيد أمان">
-        <div><div class="emoji">🛡️</div><b>الحماية الرقمية</b><small>نصائح وقائمة فحص لحماية حساباتك من الاحتيال.</small></div>
-        <button class="primary" onclick="showPage('security')">افتح المركز</button>
-      </div>
 
       <div class="card tile" data-search="دليل حكومي خدمات بوابة مصر الرقمية شكاوى">
         <div><div class="emoji">🏛️</div><b>دليل الخدمات</b><small>روابط مباشرة لأهم المواقع والخدمات الحكومية.</small></div>
         <button class="primary" onclick="showPage('services')">افتح الدليل</button>
       </div>
 
+
+      <div class="card tile" data-search="مساعد سند الذكي اسئلة مساعدة كتابة تلخيص" data-feature="assistant">
+        <div><div class="emoji">🤖</div><b>مساعد سَنَد الذكي</b><small>واجهة محادثة ومساعدة جاهزة للتوصيل بمحرك ذكاء اصطناعي.</small></div>
+        <button class="primary" onclick="showPage('assistant')">ابدأ المحادثة</button>
+      </div>
+      <div class="card tile" data-search="خزنة خاصة سرية ملفات كلمات مرور تشفير" data-feature="vault">
+        <div><div class="emoji">🔒</div><b>الخزنة الخاصة</b><small>احفظ بياناتك داخل خزنة مشفرة بكلمة مرور.</small></div>
+        <button class="primary" onclick="showPage('vault')">افتح الخزنة</button>
+      </div>
+      <div class="card tile" data-search="محلل المصروفات دخل مصاريف ميزانية رسوم بيانية" data-feature="expenses">
+        <div><div class="emoji">📊</div><b>محلل المصروفات</b><small>سجل مصروفاتك واعرف أين تذهب أموالك.</small></div>
+        <button class="primary" onclick="showPage('expenses')">حلل مصروفاتي</button>
+      </div>
+      <div class="card tile" data-search="وضع التركيز مؤقت مذاكرة استراحة بومودورو" data-feature="focus">
+        <div><div class="emoji">🎯</div><b>وضع التركيز</b><small>جلسات تركيز واستراحة ومتابعة وقتك.</small></div>
+        <button class="primary" onclick="showPage('focus')">ابدأ التركيز</button>
+      </div>
+      <div class="card tile" data-search="بطاقة شخصية رقمية بطاقة تعريف vcard qr" data-feature="profile">
+        <div><div class="emoji">🪪</div><b>بطاقتي الرقمية</b><small>أنشئ بطاقة تعريف وشاركها برمز QR.</small></div>
+        <button class="primary" onclick="showPage('profile')">أنشئ بطاقتي</button>
+      </div>
+      <div class="card tile" data-search="مترجم فوري عربي انجليزي ترجمة جمل نصوص" data-feature="translator">
+        <div><div class="emoji">🌐</div><b>المترجم الفوري</b><small>ترجمة الجمل والنصوص بين العربية والإنجليزية.</small></div>
+        <button class="primary" onclick="showPage('translator')">افتح المترجم</button>
+      </div>
+      <div class="card tile" data-search="تخصيص لوحة التحكم ترتيب اخفاء الاقسام" data-feature="customize">
+        <div><div class="emoji">🧩</div><b>تخصيص لوحة التحكم</b><small>اختر الأدوات التي تظهر في صفحتك الرئيسية.</small></div>
+        <button class="primary" onclick="showPage('customize')">خصص سَنَد</button>
+      </div>
     </div>
 
     <h2 class="section-title">معلومة اليوم</h2>
@@ -224,7 +246,7 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
   <section class="page" id="sos">
     <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
     <h2>🆘 زر الاستغاثة SOS</h2>
-    <div class="notice">يقوم بتحديد إحداثيات موقعك (GPS) وتجهيز رسالة استغاثة فورية لإرسالها عبر SMS أو واتساب. تحديد الموقع يعمل بدون إنترنت.</div>
+    <div class="notice">يقوم بتحديد إحداثيات موقعك (GPS) وتجهيز رسالة استغاثة فورية لإرسالها عبر SMS أو واتساب. قد يتطلب تحديد الموقع إذن المتصفح وخدمات الموقع المفعّلة، وقد يحتاج اتصالًا حسب الجهاز والمتصفح.</div>
     <div class="card">
       <label>أرقام جهات الاتصال للطوارئ (اكتب كل رقم في سطر منفصل)</label>
       <textarea id="sosC" rows="3" dir="ltr" placeholder="010xxxxxxxx&#10;011xxxxxxxx" onchange="sv('sosC',this.value)"></textarea>
@@ -302,33 +324,54 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
       <label>وزن الذهب المدخر (بالجرام)</label><input id="z2" type="number" placeholder="0">
       <label>عيار الذهب</label><select id="z3"><option value="24">عيار 24</option><option value="21" selected>عيار 21</option><option value="18">عيار 18</option></select>
       <label>قيمة عروض التجارة والبضائع</label><input id="z4" type="number" placeholder="0">
-      <label>الديون المستحقة عليك (تُخصم)</label><input id="z5" type="number" placeholder="0">
+      <label>الديون الحالة المستحقة قريبًا (إن وجدت)</label><input id="z5" type="number" placeholder="0">
+      <label style="display:flex;align-items:center;gap:8px"><input id="zHawl" type="checkbox" style="width:auto;margin:0"> مرّ حول هجري كامل على المال</label>
       <button class="success" style="width:100%" onclick="zakat()">احسب مقدار الزكاة</button>
       <div id="zR" class="result"></div>
-      <p class="muted">النصاب الشرعي = قيمة 85 جرام ذهب عيار 24 بشرط مرور عام هجري كامل. المقدار الواجب 2.5%.</p>
+      <p class="muted">الحاسبة تقديرية: تستخدم نصاب 85 جرامًا من الذهب عيار 24 ومعدل 2.5%، مع مراعاة مرور حول هجري. تختلف تفاصيل الزكاة باختلاف نوع المال والحالة؛ راجع جهة إفتاء موثوقة عند الشك.</p>
     </div>
   </section>
 
-  <!-- 7. فاتورة الكهرباء -->
+  <!-- 7. فاتورة الكهرباء المطورة -->
   <section class="page" id="elec">
     <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>⚡ حاسبة فاتورة الكهرباء</h2>
+    <h2>⚡ حاسبة فاتورة الكهرباء المطورة</h2>
     <div class="card">
-      <label>استهلاكك الشهري (كيلوواط/ساعة)</label>
-      <input id="e0" type="number" placeholder="أدخل قراءة الاستهلاك">
-      <button class="success" style="width:100%" onclick="elec()">احسب القيمة التقديرية</button>
+      <h3>قراءات العداد</h3>
+      <div class="row"><div><label>القراءة الحالية (اختياري)</label><input id="eCurrent" type="number" min="0" placeholder="مثال: 12500"></div><div><label>القراءة السابقة (اختياري)</label><input id="ePrevious" type="number" min="0" placeholder="مثال: 12380"></div></div>
+      <label>أو أدخل الاستهلاك مباشرة (كيلوواط/ساعة)</label><input id="e0" type="number" min="0" placeholder="مثال: 250">
+      <div class="notice">يمكنك تعديل أسعار الشرائح لتطابق تعريفة فاتورتك. الأسعار الافتراضية تقديرية وليست إعلانًا عن تعريفة رسمية حالية.</div>
+      <details><summary>⚙️ تعديل أسعار الشرائح (جنيه/ك.و.س)</summary>
+        <div class="row"><div><label>أول 50 وحدة</label><input id="er1" type="number" step="0.01" value="0.68"></div><div><label>من 51 إلى 100</label><input id="er2" type="number" step="0.01" value="0.78"></div></div>
+        <div class="row"><div><label>من 101 إلى 200</label><input id="er3" type="number" step="0.01" value="0.95"></div><div><label>من 201 إلى 350</label><input id="er4" type="number" step="0.01" value="1.55"></div></div>
+        <div class="row"><div><label>من 351 إلى 650</label><input id="er5" type="number" step="0.01" value="1.95"></div><div><label>من 651 إلى 1000</label><input id="er6" type="number" step="0.01" value="2.10"></div></div>
+        <label>أكثر من 1000 وحدة</label><input id="er7" type="number" step="0.01" value="2.23">
+      </details>
+      <label>رسوم/ضرائب إضافية (اختياري)</label><input id="eFees" type="number" min="0" step="0.01" value="0">
+      <button class="success" style="width:100%" onclick="elec()">احسب الفاتورة بالتفصيل</button>
       <div id="eR" class="result"></div>
-      <p class="muted">الحساب تقديري وفق شرائح الاستهلاك المنزلية ولا يشمل رسوم النظافة أو الدمغات.</p>
+      <div id="eBreakdown" class="muted"></div>
+      <p class="muted">النتيجة تقديرية؛ قد تختلف الفاتورة الفعلية حسب نوع العداد والرسوم والتعريفة المطبقة.</p>
     </div>
   </section>
 
-  <!-- 8. العملات والذهب -->
+  <!-- 8. العملات والذهب المطور -->
   <section class="page" id="money">
     <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>💱 أسعار العملات والذهب</h2>
-    <div class="notice">هذا القسم يتطلب اتصالاً بالإنترنت لجلب أحدث الأسعار العالمية.</div>
-    <button class="success" style="width:100%;margin-bottom:12px" onclick="rates()">🔄 تحديث الأسعار الآن</button>
-    <div class="card" id="rR"><p class="muted">اضغط على زر التحديث لعرض الأسعار.</p></div>
+    <h2>💱 مركز العملات والذهب</h2>
+    <button class="success" style="width:100%;margin-bottom:12px" onclick="rates()">🔄 تحديث الأسعار العالمية</button>
+    <div class="card" id="rR"><p class="muted">اضغط تحديث الأسعار لعرض آخر بيانات متاحة.</p></div>
+    <div class="card">
+      <h3>محول العملات إلى الجنيه المصري</h3>
+      <div class="row"><div><label>المبلغ</label><input id="fxAmount" type="number" min="0" value="1"></div><div><label>العملة</label><select id="fxCurrency"><option value="USD">دولار أمريكي</option><option value="EUR">يورو</option><option value="GBP">جنيه إسترليني</option><option value="SAR">ريال سعودي</option><option value="AED">درهم إماراتي</option><option value="KWD">دينار كويتي</option></select></div></div>
+      <button class="primary" onclick="currencyCalc()">احسب التحويل</button><div id="fxResult" class="result"></div>
+    </div>
+    <div class="card">
+      <h3>حاسبة قيمة الذهب التقريبية</h3>
+      <div class="row"><div><label>الوزن بالجرام</label><input id="goldWeight" type="number" min="0" step="0.01" placeholder="مثال: 10"></div><div><label>العيار</label><select id="goldKarat"><option value="24">24</option><option value="21" selected>21</option><option value="18">18</option><option value="14">14</option></select></div></div>
+      <button class="primary" onclick="goldCalc()">احسب قيمة الذهب</button><div id="goldResult" class="result"></div>
+      <p class="muted">التقدير مبني على السعر العالمي ولا يشمل المصنعية أو الضريبة أو هامش التاجر.</p>
+    </div>
   </section>
 
   <!-- 9. المحافظ والتحويلات -->
@@ -352,33 +395,25 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
     <div class="card" id="codeResult"><p class="muted">اختر شركة لعرض الأكواد المختصرة ونسخها.</p></div>
   </section>
 
-  <!-- 11. BMI والماء -->
-  <section class="page" id="bmi">
-    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>⚖️ مؤشر كتلة الجسم (BMI) والماء</h2>
-    <div class="card">
-      <label>الوزن (كجم)</label><input id="b0" type="number" placeholder="مثال: 75">
-      <label>الطول (سم)</label><input id="b1" type="number" placeholder="مثال: 175">
-      <button class="success" style="width:100%" onclick="bmi()">احسب النتيجة</button>
-      <div id="bR" class="result"></div>
-    </div>
-  </section>
 
-  <!-- 12. قارئ وصانع QR -->
+  <!-- قارئ وصانع QR المطور -->
   <section class="page" id="qr">
     <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>🔳 قارئ وصانع QR Code</h2>
+    <h2>🔳 مركز QR المتطور</h2>
     <div class="card">
-      <h3>📷 قارئ QR بالكاميرا</h3>
-      <video id="vid" playsinline hidden></video>
-      <button class="success" style="width:100%" onclick="scan()">تشغيل الكاميرا للمسح</button>
-      <div id="qrR" class="result" style="word-break:break-all"></div>
+      <h3>📷 قراءة بالكاميرا</h3>
+      <video id="vid" playsinline hidden></video><canvas id="qrScanCanvas" hidden></canvas>
+      <div class="row"><button class="success" onclick="scan()">تشغيل الكاميرا</button><button class="secondary" onclick="stopScan()">إيقاف الكاميرا</button></div>
+      <label>أو اختر صورة تحتوي على QR</label><input id="qrImageFile" type="file" accept="image/*" onchange="scanQRImage(this.files[0])">
+      <div id="qrR" class="result" style="word-break:break-word"></div>
+      <button id="qrOpen" class="secondary hidden" onclick="openScannedQR()">فتح الرابط المقروء</button>
     </div>
     <div class="card">
-      <h3>✨ صانع QR Code</h3>
-      <label>اكتب نصًا أو رابطًا قصيرًا (حتى 53 بايت)</label>
-      <textarea id="qrT" rows="2" maxlength="53" placeholder="مثال: https://example.com"></textarea>
-      <button class="primary" onclick="makeQR()">إنشاء رمز QR</button>
+      <h3>✨ إنشاء رمز QR</h3>
+      <label>اكتب رابطًا أو نصًا (يدعم الروابط الطويلة)</label>
+      <textarea id="qrT" rows="4" placeholder="الصق رابط موقعك أو اكتب أي نص هنا"></textarea>
+      <div class="row"><label>حجم الصورة<select id="qrSize"><option value="256">256 × 256</option><option value="384" selected>384 × 384</option><option value="512">512 × 512</option></select></label><label>تصحيح الأخطاء<select id="qrLevel"><option value="L">منخفض</option><option value="M">متوسط</option><option value="Q">مرتفع</option><option value="H" selected>الأعلى</option></select></label></div>
+      <button class="primary" onclick="makeQR()">إنشاء صورة QR</button>
       <div id="qrOutput" style="text-align:center;margin-top:15px"></div>
     </div>
   </section>
@@ -418,75 +453,28 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
     </div>
   </section>
 
-  <!-- 15. الحاسبة -->
-  <section class="page" id="calculator">
-    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>🧮 الحاسبة</h2>
-    <div class="card">
-      <input id="calcDisplay" readonly placeholder="0" style="font-size:25px;text-align:left;direction:ltr;font-weight:bold">
-      <div class="grid" style="grid-template-columns:repeat(4,1fr);gap:8px">
-        <button class="secondary" onclick="calc('7')">7</button><button class="secondary" onclick="calc('8')">8</button><button class="secondary" onclick="calc('9')">9</button><button class="secondary" onclick="calc('/')">÷</button>
-        <button class="secondary" onclick="calc('4')">4</button><button class="secondary" onclick="calc('5')">5</button><button class="secondary" onclick="calc('6')">6</button><button class="secondary" onclick="calc('*')">×</button>
-        <button class="secondary" onclick="calc('1')">1</button><button class="secondary" onclick="calc('2')">2</button><button class="secondary" onclick="calc('3')">3</button><button class="secondary" onclick="calc('-')">−</button>
-        <button class="secondary" onclick="calc('0')">0</button><button class="secondary" onclick="calc('.')">.</button><button class="success" onclick="calculate()">=</button><button class="secondary" onclick="calc('+')">+</button>
-      </div>
-      <div class="row" style="margin-top:8px">
-        <button class="secondary" onclick="calc('(')">(</button>
-        <button class="secondary" onclick="calc(')')">)</button>
-        <button class="danger" onclick="clearCalc()">مسح (C)</button>
-      </div>
-    </div>
-  </section>
 
-  <!-- 16. محول الوحدات -->
-  <section class="page" id="convert">
-    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>📏 محوّل الوحدات</h2>
-    <div class="card">
-      <label>نوع الوحدة</label>
-      <select id="unitType" onchange="updateUnits()"><option value="length">الطول</option><option value="weight">الوزن</option><option value="temp">درجة الحرارة</option></select>
-      <div class="row"><div><label>من</label><select id="unitFrom"></select></div><div><label>إلى</label><select id="unitTo"></select></div></div>
-      <label>القيمة</label><input id="unitValue" type="number" placeholder="اكتب الرقم">
-      <button class="primary" onclick="convertUnit()">تحويل</button>
-      <div class="result" id="unitResult"></div>
-    </div>
-  </section>
 
-  <!-- 17. مولد كلمات المرور -->
+  <!-- مولد كلمات المرور المطور -->
   <section class="page" id="password">
     <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>🔐 مولّد كلمات المرور القوية</h2>
+    <h2>🔐 مولّد كلمات المرور المتقدم</h2>
     <div class="card">
-      <label>طول كلمة المرور (من 8 إلى 40 حرف)</label>
-      <input id="passLength" type="number" min="8" max="40" value="16">
-      <button class="primary" onclick="makePassword()">إنشاء كلمة مرور عشوائية</button>
+      <label>طول كلمة المرور (8 إلى 64)</label><input id="passLength" type="number" min="8" max="64" value="20">
+      <label><input id="passUpper" type="checkbox" checked style="width:auto"> أحرف كبيرة A-Z</label>
+      <label><input id="passLower" type="checkbox" checked style="width:auto"> أحرف صغيرة a-z</label>
+      <label><input id="passNumbers" type="checkbox" checked style="width:auto"> أرقام 0-9</label>
+      <label><input id="passSymbols" type="checkbox" checked style="width:auto"> رموز خاصة</label>
+      <label><input id="passNoAmbiguous" type="checkbox" checked style="width:auto"> استبعاد الرموز المتشابهة مثل O و0 وI وl</label>
+      <button class="primary" onclick="makePassword()">إنشاء كلمة مرور قوية</button>
       <input id="passResult" readonly placeholder="ستظهر كلمة المرور هنا" dir="ltr" style="font-weight:bold;text-align:center">
-      <button class="secondary" style="width:100%" onclick="copyText($('passResult').value)">📋 نسخ كلمة المرور</button>
+      <div id="passStrength" class="muted"></div>
+      <div class="row"><button class="secondary" onclick="copyText($('passResult').value)">📋 نسخ</button><button class="success" onclick="makePassword()">🔄 إنشاء أخرى</button></div>
+      <p class="muted">يستخدم مولّد عشوائية التشفير في المتصفح. لا تحفظ كلمات المرور في سجل التطبيق.</p>
     </div>
   </section>
 
-  <!-- 18. ملاحظاتي -->
-  <section class="page" id="notes">
-    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>📝 ملاحظاتي السريعة</h2>
-    <div class="card">
-      <textarea id="noteText" rows="3" placeholder="اكتب ملاحظتك هنا..."></textarea>
-      <button class="primary" onclick="saveNote()">💾 حفظ الملاحظة</button>
-      <div id="noteList" style="margin-top:12px"></div>
-    </div>
-  </section>
 
-  <!-- 19. حاسبة المصروفات -->
-  <section class="page" id="budget">
-    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>💰 حاسبة الميزانية والمصروفات</h2>
-    <div class="card">
-      <label>إجمالي الميزانية</label><input id="budgetTotal" type="number" placeholder="مثال: 2000">
-      <label>إجمالي المصروفات</label><input id="budgetSpent" type="number" placeholder="مثال: 650">
-      <button class="primary" onclick="budgetCalc()">احسب المتبقي</button>
-      <div class="result" id="budgetResult"></div>
-    </div>
-  </section>
 
   <!-- 20. قائمة السفر -->
   <section class="page" id="travel">
@@ -502,32 +490,70 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
     </div>
   </section>
 
-  <!-- 21. الحماية الرقمية -->
-  <section class="page" id="security">
-    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>🛡️ مركز الحماية الرقمية</h2>
-    <div class="notice">نصائح عملية لحماية حساباتك الشخصية والمالية من الاختراق والاحتيال الإلكتروني.</div>
-    <div class="grid" id="securityList"></div>
-    <div class="card" style="margin-top:12px">
-      <h3>✅ قائمة فحص أمان حساباتك</h3>
-      <div id="securityChecks"></div>
-    </div>
-  </section>
 
-  <!-- 22. دليل الخدمات -->
+  <!-- دليل الخدمات والوزارات -->
   <section class="page" id="services">
     <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>🏛️ دليل الخدمات الحكومية</h2>
-    <div class="card">
-      <div class="item"><b>منظومة الشكاوى الحكومية</b><a class="copy" href="https://www.shakwa.eg/" target="_blank" rel="noopener">زيارة الموقع</a></div>
-      <div class="item"><b>بوابة مصر الرقمية</b><a class="copy" href="https://digital.gov.eg/" target="_blank" rel="noopener">زيارة الموقع</a></div>
-      <div class="item"><b>الجهاز القومي لتنظيم الاتصالات</b><a class="copy" href="https://www.tra.gov.eg/" target="_blank" rel="noopener">زيارة الموقع</a></div>
-      <div class="item"><b>وزارة الصحة والسكان</b><a class="copy" href="https://www.mohp.gov.eg/" target="_blank" rel="noopener">زيارة الموقع</a></div>
-      <div class="item"><b>وزارة الداخلية</b><a class="copy" href="https://moi.gov.eg/" target="_blank" rel="noopener">زيارة الموقع</a></div>
+    <h2>🏛️ دليل الوزارات والخدمات الرسمية</h2>
+    <div class="notice">روابط الجهات الحكومية أدناه للتوجيه إلى مواقعها. إذا تغيّر رابط وزارة، استخدم دليل الروابط الرسمي للجهاز المركزي للتنظيم والإدارة.</div>
+    <div class="card"><b>📚 الدليل الرسمي الشامل للوزارات</b><p class="muted">مرجع حكومي يجمع روابط مواقع الوزارات.</p><a class="copy" href="https://caoa.gov.eg/WebForms/HierarchyStructure.aspx" target="_blank" rel="noopener">فتح دليل الوزارات الرسمي</a></div>
+    <div class="card"><label>ابحث عن وزارة أو خدمة</label><input id="serviceSearch" oninput="filterServices(this.value)" placeholder="مثال: التعليم، الصحة، التموين..." /></div>
+    <div class="card" id="servicesList"></div>
+    <div class="card"><h3>⭐ صفحتي على فيسبوك</h3><div class="item"><b>Gedo Kazem</b><a class="copy" href="https://www.facebook.com/share/1EoMzgqQa7/" target="_blank" rel="noopener">زيارة صفحتي</a></div><button class="secondary" style="width:100%" onclick="copyText('https://www.facebook.com/share/1EoMzgqQa7/')">📋 نسخ رابط صفحتي</button></div>
+  </section>
+
+
+  <!-- مساعد سند الذكي: واجهة جاهزة للربط لاحقاً -->
+  <section class="page" id="assistant">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>🤖 مساعد سَنَد الذكي</h2>
+    <div class="notice">هذه نسخة واجهة وتجربة أولية؛ ليست متصلة حاليًا بنموذج ذكاء اصطناعي مباشر. يمكن ربطها لاحقًا بخدمة AI من خلال خادم آمن.</div>
+    <div class="card"><div id="assistantChat" class="chat-box"><div class="chat-msg bot">أهلًا بك! أنا واجهة مساعد سَنَد. أقدر حاليًا أساعدك في التنقل داخل أدوات التطبيق وأوضح طريقة استخدامها.</div></div>
+      <div class="row"><button class="secondary" onclick="assistantQuick('ما الأدوات الموجودة في سَنَد؟')">مميزات سَنَد</button><button class="secondary" onclick="assistantQuick('كيف أستخدم قارئ QR؟')">مساعدة QR</button></div>
+      <textarea id="assistantInput" rows="2" placeholder="اكتب رسالتك هنا..."></textarea><button class="primary" onclick="sendAssistant()">إرسال الرسالة</button>
     </div>
   </section>
 
-  <footer>سَنَد | SANAD - النسخة الشاملة المدمجة<br>MADE BY GEDO ❤️<br>المعلومة الصح في الوقت الصح.</footer>
+  <!-- الخزنة الخاصة -->
+  <section class="page" id="vault">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>🔒 الخزنة الخاصة المشفرة</h2>
+    <div class="notice">تُشفّر البيانات داخل المتصفح باستخدام AES-GCM ومفتاح مشتق من كلمة المرور. لا تنس كلمة المرور؛ لا توجد طريقة لاستعادتها إذا فُقدت.</div>
+    <div class="card" id="vaultSetup"><h3>إنشاء الخزنة</h3><label>كلمة مرور رئيسية (8 أحرف على الأقل)</label><input id="vaultNewPass" type="password" autocomplete="new-password"><label>تأكيد كلمة المرور</label><input id="vaultConfirmPass" type="password" autocomplete="new-password"><button class="primary" onclick="createVault()">إنشاء خزنة مشفرة</button></div>
+    <div class="card hidden" id="vaultUnlock"><h3>فتح الخزنة</h3><input id="vaultPass" type="password" autocomplete="current-password" placeholder="كلمة المرور الرئيسية"><button class="primary" onclick="unlockVault()">فتح الخزنة</button></div>
+    <div class="card hidden" id="vaultPanel"><div class="row"><h3 style="flex:1">محتويات الخزنة</h3><button class="secondary" onclick="lockVault()">قفل</button></div><label>عنوان السجل</label><input id="vaultTitle" placeholder="مثال: ملاحظة خاصة"><label>المحتوى</label><textarea id="vaultBody" rows="3" placeholder="اكتب ما تريد حفظه"></textarea><button class="success" onclick="addVaultItem()">حفظ داخل الخزنة</button><div id="vaultItems" style="margin-top:12px"></div></div>
+  </section>
+
+  <!-- محلل المصروفات -->
+  <section class="page" id="expenses">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>📊 محلل المصروفات</h2>
+    <div class="grid"><div class="mini-stat">إجمالي المصروفات<strong id="expenseTotal">0 ج.م</strong></div><div class="mini-stat">عدد العمليات<strong id="expenseCount">0</strong></div></div>
+    <div class="card"><h3>إضافة مصروف</h3><label>المبلغ بالجنيه</label><input id="expenseAmount" type="number" min="0.01" step="0.01" placeholder="مثال: 75"><label>التصنيف</label><select id="expenseCategory"><option>طعام</option><option>مواصلات</option><option>دراسة</option><option>ترفيه</option><option>مشتريات</option><option>فواتير</option><option>أخرى</option></select><label>وصف مختصر</label><input id="expenseNote" placeholder="مثال: وجبة أو مواصلات"><label>التاريخ</label><input id="expenseDate" type="date"><button class="primary" onclick="addExpense()">إضافة المصروف</button></div>
+    <div class="card"><h3>تحليل حسب التصنيف</h3><div id="expenseBreakdown" class="muted"></div></div><div class="card"><div class="row"><h3 style="flex:1">سجل العمليات</h3><button class="secondary" onclick="clearExpenses()">مسح الكل</button></div><div id="expenseList"></div></div>
+  </section>
+
+  <!-- وضع التركيز -->
+  <section class="page" id="focus">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>🎯 وضع التركيز</h2>
+    <div class="card"><label>مدة التركيز بالدقائق</label><input id="focusMinutes" type="number" min="1" max="180" value="25"><label>مدة الاستراحة بالدقائق</label><input id="breakMinutes" type="number" min="1" max="60" value="5"><div id="focusClock">25:00</div><div id="focusState" class="result" style="text-align:center">جاهز لجلسة تركيز جديدة</div><div class="row"><button class="success" onclick="startFocus()">ابدأ</button><button class="secondary" onclick="pauseFocus()">إيقاف مؤقت</button><button class="secondary" onclick="resetFocus()">إعادة ضبط</button></div><p class="muted">عند انتهاء الجلسة ستظهر رسالة للانتقال إلى الاستراحة.</p></div>
+  </section>
+
+  <!-- البطاقة الشخصية الرقمية -->
+  <section class="page" id="profile">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>🪪 بطاقتي الشخصية الرقمية</h2>
+    <div class="card"><label>الاسم المعروض</label><input id="cardName" placeholder="اسمك"><label>الصفة أو التعريف</label><input id="cardRole" placeholder="مثال: طالب / مطور"><label>رقم الهاتف (اختياري)</label><input id="cardPhone" type="tel" placeholder="01xxxxxxxxx"><label>البريد الإلكتروني (اختياري)</label><input id="cardEmail" type="email" placeholder="name@example.com"><label>رابط صفحتك أو موقعك</label><input id="cardLink" placeholder="https://..."><button class="primary" onclick="buildProfileCard()">إنشاء البطاقة</button><div id="profileOutput"></div></div>
+  </section>
+
+  <!-- المترجم الفوري -->
+  <section class="page" id="translator">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>🌐 المترجم الفوري للجمل</h2>
+    <div class="card"><div class="row"><div><label>من</label><select id="translateFrom"><option value="auto">تلقائي</option><option value="ar">العربية</option><option value="en">الإنجليزية</option></select></div><div><label>إلى</label><select id="translateTo"><option value="auto">تلقائي</option><option value="en">الإنجليزية</option><option value="ar">العربية</option></select></div></div><label>اكتب الجملة أو النص كاملًا</label><textarea id="translateInput" rows="5" placeholder="اكتب جملة بالعربية أو الإنجليزية..."></textarea><button class="primary" onclick="translateTextNow()">ترجم النص</button><label>الترجمة</label><textarea id="translateOutput" rows="5" readonly placeholder="ستظهر الترجمة هنا"></textarea><div class="row"><button class="secondary" onclick="copyText($('translateOutput').value)">نسخ الترجمة</button><button class="secondary" onclick="swapTranslation()">عكس الاتجاه</button><button class="secondary" onclick="clearTranslation()">مسح</button></div><p id="translateStatus" class="muted">يترجم جملًا ونصوصًا كاملة، وليس كلمات منفردة فقط.</p></div>
+  </section>
+
+  <!-- تخصيص لوحة التحكم -->
+  <section class="page" id="customize">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>🧩 تخصيص لوحة التحكم</h2><div class="card"><p class="muted">اختر الأدوات التي تريد ظهورها في الصفحة الرئيسية. يمكنك إعادة إظهار أي أداة لاحقًا.</p><div id="tileSettings"></div><button class="success" style="width:100%;margin-top:12px" onclick="saveTileSettings()">حفظ التخصيص</button><button class="secondary" style="width:100%;margin-top:8px" onclick="resetTileSettings()">إظهار كل الأدوات</button></div>
+  </section>
+
+  <footer>سَنَد | SANAD - النسخة المطورة<br>MADE BY GEDO ❤️<br>المعلومة الصح في الوقت الصح.</footer>
 </main>
 
 <nav class="tabs">
@@ -549,6 +575,7 @@ const sv=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';clearTimeout(t.x);t.x=setTimeout(()=>t.style.display='none',2400)}
 
 function showPage(id,btn){
+  if(id!=='qr'&&typeof stopScan==='function')stopScan();
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   $(id).classList.add('active');
   document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('selected'));
@@ -580,9 +607,10 @@ function fallbackCopy(t){
 }
 
 function searchAll(q){
-  q=q.trim().toLowerCase();
+  q=String(q||'').trim().toLowerCase();
   document.querySelectorAll('#mainTiles .tile').forEach(t=>{
-    t.style.display=(!q||t.dataset.search.toLowerCase().includes(q)||t.innerText.toLowerCase().includes(q))?'':'none';
+    const matches=!q||(t.dataset.search||'').toLowerCase().includes(q)||t.innerText.toLowerCase().includes(q);
+    t.style.display=matches&&!t.classList.contains('is-hidden')?'flex':'none';
   });
   if(q && !$('home').classList.contains('active'))showPage('home');
 }
@@ -590,7 +618,7 @@ function searchAll(q){
 // 1. SOS
 $('sosC').value=ls('sosC','');
 function sos(){
-  const n=$('sosC').value.split(/\n/).map(x=>x.trim()).filter(Boolean);
+  const n=$('sosC').value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
   if(!n.length)return toast('أضف رقم طوارئ أولاً');
   $('sosR').textContent='جاري تحديد موقعك عبر GPS...';
   const send=(loc)=>{
@@ -679,47 +707,50 @@ async function shareLocationAgain(){
 }
 function copyLocationLink(){if(window.sanadLocationLink)copyText(window.sanadLocationLink);}
 
-// 6. الزكاة
+// 6. الزكاة: حاسبة تفصيلية تقديرية
 function zakat(){
-  const g=+$('z0').value;if(!g)return toast('أدخل سعر جرام الذهب عيار 24 أولاً');
-  const gold=(+$('z2').value||0)*g*(+$('z3').value)/24;
-  const tot=(+$('z1').value||0)+gold+(+$('z4').value||0)-(+$('z5').value||0);
-  const nis=85*g;
-  $('zR').innerHTML=`إجمالي الوعاء الزكوي: ${tot.toLocaleString('ar-EG',{maximumFractionDigits:2})} جنيه<br>قيمة النصاب (85 جم): ${nis.toLocaleString('ar-EG',{maximumFractionDigits:2})} جنيه<hr>`+
-  (tot>=nis?`✅ بلغت النصاب — مقدار الزكاة الواجبة (2.5%): <span style="font-size:21px">${(tot*.025).toLocaleString('ar-EG',{maximumFractionDigits:2})} جنيه</span>`:'ℹ️ لم يبلغ المال النصاب الشرعي، لا زكاة واجبة.');
+  const price=Number($('z0').value),cash=Number($('z1').value||0),goldWeight=Number($('z2').value||0),karat=Number($('z3').value),trade=Number($('z4').value||0),debts=Number($('z5').value||0);
+  if(!Number.isFinite(price)||price<=0)return toast('أدخل سعر جرام الذهب عيار 24 بشكل صحيح');
+  if([cash,goldWeight,trade,debts].some(x=>!Number.isFinite(x)||x<0))return toast('راجع القيم المدخلة؛ لا تقبل القيم السالبة');
+  const goldValue=goldWeight*price*(karat/24),gross=cash+goldValue+trade,net=Math.max(0,gross-debts),nisab=85*price,haul=$('zHawl').checked;
+  const due=net>=nisab&&haul?net*.025:0;
+  $('zR').innerHTML=`<div class="item"><span>قيمة الذهب المدخر</span><b>${goldValue.toLocaleString('ar-EG',{maximumFractionDigits:2})} ج.م</b></div><div class="item"><span>إجمالي الأموال والبضائع</span><b>${gross.toLocaleString('ar-EG',{maximumFractionDigits:2})} ج.م</b></div><div class="item"><span>الصافي بعد الديون المدخلة</span><b>${net.toLocaleString('ar-EG',{maximumFractionDigits:2})} ج.م</b></div><div class="item"><span>النصاب التقريبي (85 جرام عيار 24)</span><b>${nisab.toLocaleString('ar-EG',{maximumFractionDigits:2})} ج.م</b></div><hr>${!haul?'لم يتم تحديد اكتمال الحول الهجري؛ لا يمكن تأكيد وجوب الزكاة من هذه البيانات.':net>=nisab?`<span>الزكاة الحسابية التقديرية (2.5%):</span><br><strong style="font-size:24px">${due.toLocaleString('ar-EG',{maximumFractionDigits:2})} جنيه</strong>`:'الصافي المدخل أقل من النصاب التقريبي.'}`;
 }
-async function goldOnline(){
-  toast('جاري جلب السعر...');
-  try{
-    const r=await(await fetch('https://open.er-api.com/v6/latest/USD')).json();
-    if(!r.rates.XAU)throw 0;
-    $('z0').value=Math.round(r.rates.EGP/r.rates.XAU/31.1035);
-    toast('✅ تم تحديث سعر الذهب');
-  }catch(e){toast('⚠️ تعذر الاتصال، تأكد من وجود إنترنت')}
-}
+async function goldOnline(){toast('جاري جلب السعر العالمي التقريبي...');try{const r=await(await fetch('https://open.er-api.com/v6/latest/USD')).json();if(!r.rates?.XAU||!r.rates?.EGP)throw Error('no rates');const g24=r.rates.EGP/r.rates.XAU/31.1034768;$('z0').value=g24.toFixed(2);toast('تم تحديث السعر العالمي التقديري');}catch(e){toast('تعذر جلب السعر الآن');}}
 
-// 7. الكهرباء
+// 7. الكهرباء: شرائح تصاعدية قابلة للتعديل
 function elec(){
-  let k=+$('e0').value,t=0;if(!k||k<0)return toast('أدخل استهلاكاً صحيحاً');
-  [[50,.68],[50,.78],[100,.95],[150,1.55],[300,1.95],[350,2.1],[1e9,2.23]].forEach(([c,r])=>{const u=Math.min(k,c);if(u>0){t+=u*r;k-=u}});
-  $('eR').textContent='التكلفة التقديرية للاستهلاك: '+t.toFixed(2)+' جنيه';
+  let consumption=Number($('e0').value||0);const current=$('eCurrent').value,previous=$('ePrevious').value;
+  if(current!==''||previous!==''){
+    if(current===''||previous===''||Number(current)<Number(previous))return toast('راجع قراءتي العداد الحالية والسابقة');
+    consumption=Number(current)-Number(previous);$('e0').value=consumption;
+  }
+  if(!Number.isFinite(consumption)||consumption<=0)return toast('أدخل استهلاكًا صحيحًا أكبر من صفر');
+  const limits=[50,100,200,350,650,1000],ids=['er1','er2','er3','er4','er5','er6','er7'];let left=consumption,total=0,rows=[],lower=0;
+  for(let i=0;i<7&&left>0;i++){
+    const rate=Number($(ids[i]).value);if(!Number.isFinite(rate)||rate<0)return toast('راجع أسعار الشرائح');
+    const cap=i<6?limits[i]-lower:Infinity,units=Math.min(left,cap),cost=units*rate;total+=cost;left-=units;
+    rows.push(`<div class="item"><span>${i===6?'أكثر من 1000':`من ${lower+1} إلى ${limits[i]}`} (${units} وحدة × ${rate.toFixed(2)})</span><b>${cost.toFixed(2)} ج.م</b></div>`);if(i<6)lower=limits[i];
+  }
+  const fees=Number($('eFees').value||0);if(!Number.isFinite(fees)||fees<0)return toast('راجع الرسوم الإضافية');
+  $('eR').textContent=`الاستهلاك: ${consumption.toLocaleString('ar-EG')} ك.و.س — الإجمالي التقديري: ${(total+fees).toFixed(2)} جنيه`;
+  $('eBreakdown').innerHTML=rows.join('')+`<div class="item"><span>رسوم إضافية</span><b>${fees.toFixed(2)} ج.م</b></div><div class="item"><strong>الإجمالي</strong><strong>${(total+fees).toFixed(2)} ج.م</strong></div>`;
 }
 
-// 8. العملات والذهب
+// 8. أسعار العملات والذهب + التحويل
+let sanadRates=null,sanadGold24=null;
 async function rates(){
-  $('rR').innerHTML='<p class="muted">⏳ جاري جلب أحدث الأسعار...</p>';
+  $('rR').innerHTML='<p class="muted">⏳ جاري تحديث الأسعار...</p>';
   try{
-    const r=(await(await fetch('https://open.er-api.com/v6/latest/USD')).json()).rates;
-    let h=[['🇺🇸 دولار أمريكي','USD'],['🇪🇺 يورو أوروبي','EUR'],['🇬🇧 جنيه إسترليني','GBP'],['🇸🇦 ريال سعودي','SAR'],['🇦🇪 درهم إماراتي','AED'],['🇰🇼 دينار كويتي','KWD']]
-    .map(x=>`<div class="item"><b>${x[0]}</b><span class="number" style="font-size:18px">${(r.EGP/r[x[1]]).toFixed(2)} ج.م</span></div>`).join('');
-    if(r.XAU){
-      const g24=Math.round(r.EGP/r.XAU/31.1035);
-      h+=`<div class="item"><b>🥇 جرام ذهب عيار 24</b><span class="number" style="font-size:18px">${g24} ج.م</span></div>
-          <div class="item"><b>🥇 جرام ذهب عيار 21</b><span class="number" style="font-size:18px">${Math.round(g24*21/24)} ج.م</span></div>`;
-    }
-    $('rR').innerHTML=h+'<p class="muted" style="margin-top:10px">الأسعار عالمية استرشادية. آخر تحديث: '+new Date().toLocaleTimeString('ar-EG')+'</p>';
-  }catch(e){$('rR').innerHTML='<p class="muted" style="color:var(--danger)">⚠️ لا يوجد اتصال بالإنترنت.</p>';}
+    const response=await fetch('https://open.er-api.com/v6/latest/USD');const data=await response.json();const r=data.rates;if(!r?.EGP)throw Error('rates unavailable');sanadRates=r;
+    let h=[['🇺🇸 الدولار الأمريكي','USD'],['🇪🇺 اليورو','EUR'],['🇬🇧 الجنيه الإسترليني','GBP'],['🇸🇦 الريال السعودي','SAR'],['🇦🇪 الدرهم الإماراتي','AED'],['🇰🇼 الدينار الكويتي','KWD'],['🇨🇦 الدولار الكندي','CAD'],['🇨🇭 الفرنك السويسري','CHF'],['🇯🇵 الين الياباني','JPY']].filter(x=>r[x[1]]).map(x=>`<div class="item"><b>${x[0]}</b><span class="number" style="font-size:16px">${(r.EGP/r[x[1]]).toFixed(3)} ج.م</span></div>`).join('');
+    if(r.XAU){sanadGold24=r.EGP/r.XAU/31.1034768;h+=`<hr><h3>🥇 أسعار الذهب العالمية التقديرية للجرام</h3>${[24,21,18,14].map(k=>`<div class="item"><b>عيار ${k}</b><span class="number" style="font-size:16px">${(sanadGold24*k/24).toFixed(2)} ج.م</span></div>`).join('')}`;}
+    $('rR').innerHTML=h+`<p class="muted">آخر تحديث: ${new Date().toLocaleString('ar-EG')} — أسعار مرجعية عالمية وليست تسعيرة بيع محلية.</p>`;
+    currencyCalc();goldCalc();
+  }catch(e){$('rR').innerHTML='<p class="muted">تعذر تحديث الأسعار. تحقق من الاتصال وحاول مرة أخرى.</p>';}
 }
+function currencyCalc(){if(!sanadRates)return toast('حدّث الأسعار أولاً');const amount=Number($('fxAmount').value),code=$('fxCurrency').value;if(!Number.isFinite(amount)||amount<0)return toast('أدخل مبلغًا صحيحًا');const rate=sanadRates.EGP/sanadRates[code];$('fxResult').textContent=`${amount.toLocaleString('ar-EG')} ${code} ≈ ${(amount*rate).toLocaleString('ar-EG',{maximumFractionDigits:2})} جنيه مصري`}
+function goldCalc(){if(!sanadGold24)return toast('حدّث الأسعار أولاً');const w=Number($('goldWeight').value),k=Number($('goldKarat').value);if(!Number.isFinite(w)||w<=0)return toast('أدخل وزنًا صحيحًا');$('goldResult').textContent=`القيمة العالمية التقريبية: ${(w*sanadGold24*k/24).toLocaleString('ar-EG',{maximumFractionDigits:2})} جنيه`}
 
 // 9. المحافظ
 const W=[
@@ -743,69 +774,27 @@ function showCodes(n){
   $('codeResult').innerHTML='<h3>'+networkNames[n]+'</h3>'+networkCodes[n].map(x=>`<div class="item"><div><b>${x[0]}</b><br><span class="number">${x[1]}</span></div><button class="copy" onclick="copyText(${JSON.stringify(x[1])})">📋 نسخ</button></div>`).join('');
 }
 
-// 11. BMI
-function bmi(){
-  const w=+$('b0').value,h=+$('b1').value/100;if(!w||!h)return toast('أدخل الوزن والطول');
-  const b=w/h/h;
-  const st=b<18.5?'نحافة':b<25?'وزن مثالي وطبيعي ✅':b<30?'زيادة في الوزن':'سمنة';
-  $('bR').innerHTML=`مؤشر كتلة الجسم (BMI): ${b.toFixed(1)} (${st})<br>الوزن الصحي المناسب لطولك: ${(18.5*h*h).toFixed(0)} - ${(24.9*h*h).toFixed(0)} كجم<br>💧 احتياجك اليومي من الماء: ${(w*.033).toFixed(1)} لتر تقريباً`;
-}
-
-// 12. QR
-let stream;
+// QR: مكتبة قياسية تدعم الروابط الطويلة حتى حدود معيار QR
+let stream=null,qrScanFrame=null,lastScannedValue='';
+function stopScan(){if(qrScanFrame)cancelAnimationFrame(qrScanFrame);qrScanFrame=null;if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}const v=$('vid');if(v){v.pause();v.srcObject=null;v.hidden=true;} }
 async function scan(){
-  if(!('BarcodeDetector' in window))return $('qrR').textContent='⚠️ متصفحك لا يدعم القراءة المباشرة للكاميرا، جرب متصفح Chrome على الأندرويد.';
-  try{
-    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
-    const v=$('vid');v.hidden=false;v.srcObject=stream;await v.play();
-    const d=new BarcodeDetector({formats:['qr_code']});
-    const l=async()=>{
-      if(!stream)return;
-      try{
-        const c=await d.detect(v);
-        if(c.length){
-          $('qrR').innerHTML='النتيجة: '+esc(c[0].rawValue)+` <button class="copy" onclick="copyText(${JSON.stringify(c[0].rawValue)})">نسخ</button>`;
-          stream.getTracks().forEach(t=>t.stop());stream=null;v.hidden=true;return;
-        }
-      }catch(e){}
-      setTimeout(l,300);
-    };l();
-  }catch(e){$('qrR').textContent='⚠️ تعذر الوصول للكاميرا.';}
+  if(!window.jsQR)return toast('مكتبة قراءة QR لم تُحمّل بعد');
+  if(!navigator.mediaDevices?.getUserMedia)return $('qrR').textContent='المتصفح لا يتيح الكاميرا؛ استخدم اختيار صورة QR.';
+  try{stopScan();stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});const v=$('vid'),canvas=$('qrScanCanvas'),ctx=canvas.getContext('2d',{willReadFrequently:true});v.hidden=false;v.srcObject=stream;await v.play();
+    const tick=()=>{if(!stream)return;if(v.readyState===v.HAVE_ENOUGH_DATA){canvas.width=v.videoWidth;canvas.height=v.videoHeight;ctx.drawImage(v,0,0,canvas.width,canvas.height);const frame=ctx.getImageData(0,0,canvas.width,canvas.height);const code=jsQR(frame.data,frame.width,frame.height,{inversionAttempts:'attemptBoth'});if(code){showQRResult(code.data);stopScan();return;}}qrScanFrame=requestAnimationFrame(tick);};tick();
+  }catch(e){stopScan();$('qrR').textContent='تعذر تشغيل الكاميرا. تحقق من صلاحية الكاميرا أو استخدم صورة.';}
 }
+function showQRResult(value){lastScannedValue=value;$('qrR').innerHTML='تمت القراءة: '+esc(value)+' <button class="copy" onclick="copyScannedQR()">نسخ النتيجة</button>';$('qrOpen').classList.toggle('hidden',!/^https?:\/\//i.test(value));}
+function copyScannedQR(){if(lastScannedValue)copyText(lastScannedValue);}
+function openScannedQR(){if(/^https?:\/\//i.test(lastScannedValue))window.open(lastScannedValue,'_blank','noopener');}
+function scanQRImage(file){if(!file)return;if(!window.jsQR)return toast('مكتبة قراءة QR لم تُحمّل بعد');const img=new Image(),url=URL.createObjectURL(file);img.onload=()=>{const c=$('qrScanCanvas'),ctx=c.getContext('2d',{willReadFrequently:true});const scale=Math.min(1,1800/Math.max(img.width,img.height));c.width=Math.round(img.width*scale);c.height=Math.round(img.height*scale);ctx.drawImage(img,0,0,c.width,c.height);const d=ctx.getImageData(0,0,c.width,c.height),code=jsQR(d.data,d.width,d.height,{inversionAttempts:'attemptBoth'});URL.revokeObjectURL(url);if(code)showQRResult(code.data);else $('qrR').textContent='لم يتم العثور على رمز QR واضح في الصورة.';};img.onerror=()=>{URL.revokeObjectURL(url);toast('تعذر فتح الصورة');};img.src=url;}
 function makeQR(){
-  const text=$('qrT').value;if(!text)return toast('اكتب نصًا أو رابطًا أولاً');
-  const bytes=new TextEncoder().encode(text);if(bytes.length>53)return toast('النص طويل جداً (الحد الأقصى 53 بايت)');
-  const matrix=qrEncode(bytes),scale=7,pad=4,n=matrix.length,canvas=document.createElement('canvas');
-  canvas.width=canvas.height=(n+pad*2)*scale;
-  const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#000';
-  matrix.forEach((row,y)=>row.forEach((v,x)=>{if(v)ctx.fillRect((x+pad)*scale,(y+pad)*scale,scale,scale)}));
-  window.currentQR=canvas.toDataURL('image/png');
-  $('qrOutput').innerHTML='<img alt="QR" style="width:100%;max-width:250px;border-radius:12px;border:1px solid var(--line)" src="'+window.currentQR+'"><br><button class="success" style="margin-top:10px" onclick="downloadQR()">⬇️ تحميل الصورة</button>';
+  const value=$('qrT').value.trim();if(!value)return toast('اكتب نصًا أو رابطًا أولاً');if(!window.QRCode)return toast('مكتبة إنشاء QR لم تُحمّل بعد');
+  const box=$('qrOutput');box.innerHTML='';const size=Number($('qrSize').value)||384,level=$('qrLevel').value;let ec=QRCode.CorrectLevel.H;if(level==='L')ec=QRCode.CorrectLevel.L;else if(level==='M')ec=QRCode.CorrectLevel.M;else if(level==='Q')ec=QRCode.CorrectLevel.Q;
+  try{new QRCode(box,{text:value,width:size,height:size,colorDark:'#000000',colorLight:'#ffffff',correctLevel:ec});setTimeout(()=>{const img=box.querySelector('img'),canvas=box.querySelector('canvas');let data=img?.src||(canvas?canvas.toDataURL('image/png'):'');if(!data){box.innerHTML='تعذر إنشاء الصورة؛ جرّب نصًا أقصر.';return;}window.currentQR=data;box.insertAdjacentHTML('beforeend','<p class="muted">تم إنشاء الرمز بنجاح. اختبره بكاميرا هاتف آخر قبل مشاركته.</p><button class="success" onclick="downloadQR()">⬇️ تحميل صورة PNG</button>');},120);
+  }catch(e){box.textContent='تعذر إنشاء الرمز بهذا المحتوى. جرّب تقليل طول النص.';}
 }
-function downloadQR(){if(!window.currentQR)return;const a=document.createElement('a');a.href=window.currentQR;a.download='sanad-qr.png';a.click();}
-function qrEncode(bytes){
-  const n=29,D=55,E=15,bits=[];const push=(v,l)=>{for(let i=l-1;i>=0;i--)bits.push((v>>>i)&1)};
-  push(4,4);push(bytes.length,8);bytes.forEach(b=>push(b,8));
-  for(let i=0;i<Math.min(4,D*8-bits.length);i++)bits.push(0);while(bits.length%8)bits.push(0);
-  let data=[];for(let i=0;i<bits.length;i+=8){let v=0;for(let j=0;j<8;j++)v=(v<<1)|(bits[i+j]||0);data.push(v)}
-  let tg=true;while(data.length<D){data.push(tg?236:17);tg=!tg}
-  const ex=[],lg=[];let x=1;for(let i=0;i<255;i++){ex[i]=x;lg[x]=i;x<<=1;if(x&256)x^=285}
-  for(let i=255;i<512;i++)ex[i]=ex[i-255];const mul=(a,b)=>a&&b?ex[lg[a]+lg[b]]:0;
-  let gen=[1];for(let i=0;i<E;i++){let nx=Array(gen.length+1).fill(0);gen.forEach((v,j)=>{nx[j]^=v;nx[j+1]^=mul(v,ex[i])});gen=nx}
-  let rem=Array(E).fill(0);data.forEach(v=>{const f=v^rem[0];rem.shift();rem.push(0);for(let i=0;i<E;i++)rem[i]^=mul(gen[i+1],f)});
-  const all=data.concat(rem),m=Array.from({length:n},()=>Array(n).fill(null)),set=(r,c,v)=>{if(r>=0&&r<n&&c>=0&&c<n)m[r][c]=!!v};
-  const fnd=(r,c)=>{for(let y=-1;y<=7;y++)for(let x=-1;x<=7;x++){const ins=y>=0&&y<=6&&x>=0&&x<=6,ed=y==0||y==6||x==0||x==6,ce=y>=2&&y<=4&&x>=2&&x<=4;set(r+y,c+x,ins&&(ed||ce))}};
-  fnd(0,0);fnd(0,n-7);fnd(n-7,0);
-  for(let i=8;i<n-8;i++){set(6,i,i%2==0);set(i,6,i%2==0)}
-  for(let y=-2;y<=2;y++)for(let x=-2;x<=2;x++){const d=Math.max(Math.abs(x),Math.abs(y));set(22+y,22+x,d==2||d==0)}
-  set(n-8,8,true);let rf=8;for(let i=0;i<10;i++)rf=(rf<<1)^(((rf>>>9)&1)?0x537:0);
-  const f=((8<<10)|rf)^0x5412;
-  for(let i=0;i<=5;i++)set(i,8,(f>>>i)&1);set(7,8,(f>>>6)&1);set(8,8,(f>>>7)&1);set(8,7,(f>>>8)&1);
-  for(let i=9;i<15;i++)set(14-i,8,(f>>>i)&1);for(let i=0;i<8;i++)set(8,n-1-i,(f>>>i)&1);for(let i=8;i<15;i++)set(n-15+i,8,(f>>>i)&1);
-  let st=[];all.forEach(v=>{for(let i=7;i>=0;i--)st.push((v>>>i)&1)});let ix=0,up=true;
-  for(let R=n-1;R>=1;R-=2){if(R==6)R--;for(let j=0;j<n;j++){const r=up?n-1-j:j;for(let k=0;k<2;k++){const c=R-k;if(m[r][c]!==null)continue;let v=ix<st.length?st[ix++]:0;if((r+c)%2==0)v^=1;m[r][c]=!!v}}up=!up}
-  return m;
-}
+function downloadQR(){if(!window.currentQR)return;const a=document.createElement('a');a.href=window.currentQR;a.download='sanad-qr.png';document.body.appendChild(a);a.click();a.remove();}
 
 // 13. الساعة العالمية
 const cities=[
@@ -881,24 +870,17 @@ function convertUnit(){
   $('unitResult').textContent=out.toLocaleString('en-US',{maximumFractionDigits:5})+' '+b;
 }
 
-// 17. الباسورد
+// مولد كلمات مرور قوي مع اختيار مجموعات الأحرف وعشوائية غير منحازة
+function secureRandomIndex(max){const limit=Math.floor(0x100000000/max)*max;const a=new Uint32Array(1);do{crypto.getRandomValues(a);}while(a[0]>=limit);return a[0]%max;}
 function makePassword(){
-  const n=Math.max(8,Math.min(40,Number($('passLength').value)||16)),chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%&*';
-  const rand=crypto.getRandomValues(new Uint32Array(n));
-  $('passResult').value=[...rand].map(x=>chars[x%chars.length]).join('');
-}
-
-// 18. الملاحظات
-function saveNote(){const t=$('noteText').value.trim();if(!t)return toast('اكتب الملاحظة أولاً');const a=ls('sanadNotes',[]);a.unshift(t);sv('sanadNotes',a);$('noteText').value='';renderNotes();toast('تم حفظ الملاحظة')}
-function renderNotes(){$('noteList').innerHTML=ls('sanadNotes',[]).map((t,i)=>`<div class="item"><span>${esc(t)}</span><button class="danger" style="padding:6px 10px" onclick="deleteNote(${i})">حذف</button></div>`).join('')}
-function deleteNote(i){const a=ls('sanadNotes',[]);a.splice(i,1);sv('sanadNotes',a);renderNotes()}
-renderNotes();
-
-// 19. الميزانية
-function budgetCalc(){
-  const av=$('budgetTotal').value,bv=$('budgetSpent').value;if(av===''||bv==='')return toast('أدخل الأرقام');
-  const r=Number(av)-Number(bv);
-  $('budgetResult').textContent=r>=0?'✅ المتبقي من الميزانية: '+r.toLocaleString('ar-EG')+' جنيه':'⚠️ تجاوزت الميزانية بمقدار: '+Math.abs(r).toLocaleString('ar-EG')+' جنيه';
+  if(!window.crypto?.getRandomValues)return toast('المتصفح لا يدعم مولد العشوائية الآمن');
+  let groups=[];const upper='ABCDEFGHJKLMNPQRSTUVWXYZ',lower='abcdefghijkmnopqrstuvwxyz',numbers='23456789',symbols='!@#$%^&*()-_=+[]{}?';
+  if($('passUpper').checked)groups.push(upper);if($('passLower').checked)groups.push(lower);if($('passNumbers').checked)groups.push(numbers);if($('passSymbols').checked)groups.push(symbols);
+  if(!groups.length)return toast('اختر نوعًا واحدًا على الأقل');const exclude=$('passNoAmbiguous').checked;let pool=groups.join('');if(!exclude)pool+='0O1Il';
+  const n=Math.max(8,Math.min(64,Number($('passLength').value)||20));$('passLength').value=n;let chars=groups.map(g=>g[secureRandomIndex(g.length)]);
+  while(chars.length<n)chars.push(pool[secureRandomIndex(pool.length)]);
+  for(let i=chars.length-1;i>0;i--){const j=secureRandomIndex(i+1);[chars[i],chars[j]]=[chars[j],chars[i]];}
+  $('passResult').value=chars.join('');$('passStrength').textContent=`الطول: ${n} حرفًا — مجموعات الأحرف المختارة: ${groups.length} — احفظها في مكان آمن.`;
 }
 
 // 20. السفر
@@ -911,26 +893,75 @@ function addTravel(){const t=$('travelNew').value.trim();if(!t)return;const a=ge
 function resetTravel(){localStorage.removeItem('sanadTravel');renderTravel();toast('تمت إعادة ضبط القائمة')}
 renderTravel();
 
-// 21. الحماية الرقمية ومعلومة اليوم
-const facts=['الماء يغطي نحو 71% من سطح كوكب الأرض.','الأخطبوط لديه ثلاثة قلوب وتسعة أدمغة.','ضوء الشمس يستغرق نحو 8 دقائق و20 ثانية ليصل إلى الأرض.','النحل يتواصل مع بعضه باستخدام حركات راقصة دقيقة.','اللغة العربية يتحدث بها أكثر من 400 مليون إنسان حول العالم.'];
+// معلومة اليوم
+const facts=['ضوء الشمس يستغرق نحو 8 دقائق و20 ثانية ليصل إلى الأرض.','النحل يتواصل باستخدام حركات راقصة دقيقة.','تتكون السنة الضوئية من المسافة التي يقطعها الضوء خلال سنة.','تساعد القراءة المنتظمة على توسيع المفردات والمعرفة.','تتغير أطوال الظلال خلال اليوم بسبب حركة الشمس الظاهرية.'];
 $('dailyFact').textContent=facts[new Date().getDate()%facts.length];
 
-const securityTips=[
-['🔑 كلمات المرور','استخدم كلمة مرور قوية ومختلفة لكل حساب مهم.'],
-['📲 التحقق بخطوتين (2FA)','فعّل المصادقة الثنائية لحماية حساباتك حتى لو سُرقت كلمة المرور.'],
-['🎣 روابط التصيد','لا تضغط على روابط الجوائز الوهمية أو رسائل إيقاف الحسابات البنكية.'],
-['🆘 الابتزاز الإلكتروني','لا ترضخ ولا تدفع، احتفظ بالأدلة وأبلغ الجهات المختصة فوراً.']
+// المساعد: واجهة تجريبية غير متصلة بنموذج AI بعد
+function assistantQuick(text){$('assistantInput').value=text;sendAssistant();}
+function assistantReply(text){const q=text.toLowerCase();if(q.includes('qr'))return 'افتح قسم QR، ويمكنك المسح بالكاميرا أو اختيار صورة، كما يمكنك إنشاء صورة QR لرابط طويل وتحميلها.';if(q.includes('كهرب')||q.includes('فاتورة'))return 'افتح حاسبة الكهرباء، أدخل الاستهلاك أو قراءتي العداد، ويمكنك تعديل أسعار الشرائح والرسوم قبل الحساب.';if(q.includes('ترجم'))return 'افتح المترجم الفوري، اكتب جملة كاملة، واترك اتجاه اللغة تلقائيًا أو اختر العربية والإنجليزية.';if(q.includes('مميزات')||q.includes('أدوات'))return 'يحتوي سَنَد على الطوارئ، البطاقة الطبية، الزكاة، الكهرباء، العملات والذهب، QR، التواريخ، كلمات المرور، الخزنة، المصروفات، التركيز، البطاقة الرقمية والمترجم.';if(q.includes('صفحة')||q.includes('فيس'))return 'يمكنك الوصول إلى صفحة Gedo Kazem من دليل الخدمات داخل سَنَد.';return 'أنا حاليًا في وضع تجريبي وأستطيع شرح أقسام سَنَد الأساسية. ربط نموذج ذكاء اصطناعي حقيقي سيتم لاحقًا من خلال خدمة آمنة.';}
+function sendAssistant(){const input=$('assistantInput'),text=input.value.trim();if(!text)return;const chat=$('assistantChat');chat.insertAdjacentHTML('beforeend',`<div class="chat-msg user">${esc(text)}</div><div class="chat-msg bot">${esc(assistantReply(text))}</div>`);input.value='';chat.scrollTop=chat.scrollHeight;}
+
+// الخزنة الخاصة المشفرة
+let vaultKey=null,vaultData=[];
+async function deriveVaultKey(password,salt){const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:250000,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);}
+function b64(bytes){return btoa(String.fromCharCode(...new Uint8Array(bytes)));}
+function un64(str){return Uint8Array.from(atob(str),c=>c.charCodeAt(0));}
+async function encryptVault(){const iv=crypto.getRandomValues(new Uint8Array(12));const plain=new TextEncoder().encode(JSON.stringify(vaultData));const cipher=await crypto.subtle.encrypt({name:'AES-GCM',iv},vaultKey,plain);const old=ls('sanadVault',{});old.iv=b64(iv);old.data=b64(cipher);sv('sanadVault',old);}
+function vaultUi(){const saved=ls('sanadVault',null);$('vaultSetup').classList.toggle('hidden',!!saved);$('vaultUnlock').classList.toggle('hidden',!saved||!!vaultKey);$('vaultPanel').classList.toggle('hidden',!vaultKey);}
+async function createVault(){try{if(!crypto.subtle)return toast('التشفير غير مدعوم في هذا المتصفح');const a=$('vaultNewPass').value,b=$('vaultConfirmPass').value;if(a.length<8)return toast('استخدم كلمة مرور من 8 أحرف على الأقل');if(a!==b)return toast('كلمتا المرور غير متطابقتين');const salt=crypto.getRandomValues(new Uint8Array(16));vaultKey=await deriveVaultKey(a,salt);vaultData=[];sv('sanadVault',{salt:b64(salt),iv:'',data:''});await encryptVault();$('vaultNewPass').value='';$('vaultConfirmPass').value='';vaultUi();renderVault();toast('تم إنشاء الخزنة المشفرة');}catch(e){vaultKey=null;toast('تعذر إنشاء الخزنة');}}
+async function unlockVault(){try{const saved=ls('sanadVault',null);if(!saved)return vaultUi();const pass=$('vaultPass').value;if(!pass)return toast('أدخل كلمة المرور');vaultKey=await deriveVaultKey(pass,un64(saved.salt));const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:un64(saved.iv)},vaultKey,un64(saved.data));vaultData=JSON.parse(new TextDecoder().decode(plain));$('vaultPass').value='';vaultUi();renderVault();toast('تم فتح الخزنة');}catch(e){vaultKey=null;vaultData=[];vaultUi();toast('كلمة المرور غير صحيحة أو تعذر فك التشفير');}}
+function lockVault(){vaultKey=null;vaultData=[];vaultUi();$('vaultItems').innerHTML='';toast('تم قفل الخزنة');}
+async function addVaultItem(){if(!vaultKey)return toast('افتح الخزنة أولاً');const title=$('vaultTitle').value.trim(),body=$('vaultBody').value.trim();if(!title||!body)return toast('أدخل العنوان والمحتوى');vaultData.unshift({id:Date.now(),title,body,created:new Date().toLocaleString('ar-EG')});try{await encryptVault();$('vaultTitle').value='';$('vaultBody').value='';renderVault();toast('تم حفظ السجل مشفرًا');}catch(e){toast('تعذر حفظ السجل');}}
+async function deleteVaultItem(id){vaultData=vaultData.filter(x=>x.id!==id);await encryptVault();renderVault();}
+function renderVault(){if(!$('vaultItems'))return;$('vaultItems').innerHTML=vaultData.map(x=>`<details class="card"><summary>${esc(x.title)} <small class="muted">${esc(x.created)}</small></summary><p style="white-space:pre-wrap">${esc(x.body)}</p><button class="danger" onclick="deleteVaultItem(${x.id})">حذف السجل</button></details>`).join('')||'<p class="muted">الخزنة فارغة حتى الآن.</p>';}
+vaultUi();
+
+// محلل المصروفات
+function getExpenses(){return ls('sanadExpenseItems',[])}
+function addExpense(){const amount=Number($('expenseAmount').value),category=$('expenseCategory').value,note=$('expenseNote').value.trim(),date=$('expenseDate').value||new Date().toISOString().slice(0,10);if(!Number.isFinite(amount)||amount<=0)return toast('أدخل مبلغًا صحيحًا');const a=getExpenses();a.unshift({id:Date.now(),amount,category,note,date});sv('sanadExpenseItems',a);$('expenseAmount').value='';$('expenseNote').value='';renderExpenses();}
+function deleteExpense(id){sv('sanadExpenseItems',getExpenses().filter(x=>x.id!==id));renderExpenses();}
+function clearExpenses(){if(!confirm('هل تريد مسح سجل المصروفات كله؟'))return;sv('sanadExpenseItems',[]);renderExpenses();}
+function renderExpenses(){const a=getExpenses(),total=a.reduce((s,x)=>s+x.amount,0),groups={};a.forEach(x=>groups[x.category]=(groups[x.category]||0)+x.amount);$('expenseTotal').textContent=total.toLocaleString('ar-EG',{maximumFractionDigits:2})+' ج.م';$('expenseCount').textContent=a.length.toLocaleString('ar-EG');$('expenseBreakdown').innerHTML=Object.entries(groups).sort((x,y)=>y[1]-x[1]).map(([name,val])=>`<div style="margin:12px 0"><div class="item"><b>${esc(name)}</b><b>${val.toLocaleString('ar-EG',{maximumFractionDigits:2})} ج.م</b></div><div class="bar-track"><div class="bar-fill" style="width:${total?val/total*100:0}%"></div></div></div>`).join('')||'أضف مصروفات لعرض التحليل.';$('expenseList').innerHTML=a.map(x=>`<div class="item"><div><b>${esc(x.category)} — ${x.amount.toLocaleString('ar-EG')} ج.م</b><div class="muted">${esc(x.note||'بدون وصف')} • ${esc(x.date)}</div></div><button class="danger" onclick="deleteExpense(${x.id})">حذف</button></div>`).join('')||'<p class="muted">لا توجد مصروفات مسجلة.</p>';}
+$('expenseDate').value=new Date().toISOString().slice(0,10);renderExpenses();
+
+// وضع التركيز
+let focusTimer=null,focusRemaining=25*60,focusMode='focus',focusPaused=true;
+function showFocusTime(){const m=Math.floor(focusRemaining/60),s=focusRemaining%60;$('focusClock').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');}
+function startFocus(){if(focusTimer)return;focusPaused=false;$('focusState').textContent=focusMode==='focus'?'جلسة تركيز جارية':'وقت الاستراحة';focusTimer=setInterval(()=>{focusRemaining--;showFocusTime();if(focusRemaining<=0){clearInterval(focusTimer);focusTimer=null;focusMode=focusMode==='focus'?'break':'focus';focusRemaining=(Number($(focusMode==='focus'?'focusMinutes':'breakMinutes').value)||25)*60;$('focusState').textContent=focusMode==='break'?'أحسنت! حان وقت الاستراحة.':'انتهت الاستراحة، يمكنك بدء جلسة جديدة.';showFocusTime();if(navigator.vibrate)navigator.vibrate([150,80,150]);}},1000);}
+function pauseFocus(){if(focusTimer){clearInterval(focusTimer);focusTimer=null;}$('focusState').textContent='تم إيقاف المؤقت مؤقتًا';}
+function resetFocus(){if(focusTimer)clearInterval(focusTimer);focusTimer=null;focusMode='focus';focusRemaining=(Number($('focusMinutes').value)||25)*60;showFocusTime();$('focusState').textContent='جاهز لجلسة تركيز جديدة';}
+$('focusMinutes').addEventListener('change',()=>{if(focusMode==='focus'&&!focusTimer)resetFocus();});showFocusTime();
+
+// البطاقة الشخصية الرقمية + vCard + QR
+function buildProfileCard(){const name=$('cardName').value.trim(),role=$('cardRole').value.trim(),phone=$('cardPhone').value.trim(),email=$('cardEmail').value.trim(),link=$('cardLink').value.trim();if(!name)return toast('اكتب الاسم أولاً');const clean=s=>String(s).replace(/[\r\n]/g,' ').replace(/\s+/g,' ').trim();const vcard=`BEGIN:VCARD\nVERSION:3.0\nFN:${clean(name)}\nTITLE:${clean(role)}\nTEL:${clean(phone)}\nEMAIL:${clean(email)}\nURL:${clean(link)}\nEND:VCARD`;const safeName=esc(name),safeRole=esc(role);$('profileOutput').innerHTML=`<div class="profile-card"><div class="avatar">👤</div><h2>${safeName}</h2><p>${safeRole}</p><p>${esc(phone)}<br>${esc(email)}</p><div id="profileQR" style="display:inline-block;background:white;padding:8px;border-radius:8px;margin-top:8px"></div></div><button class="success" style="width:100%" onclick="downloadVCard()">⬇️ تحميل بطاقة الاتصال</button>`;window.sanadVCard=vcard;try{new QRCode($('profileQR'),{text:vcard,width:160,height:160,correctLevel:QRCode.CorrectLevel.M});}catch(e){$('profileQR').textContent='تعذر إنشاء QR لهذه البيانات';}}
+function downloadVCard(){if(!window.sanadVCard)return;const blob=new Blob([window.sanadVCard],{type:'text/vcard;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='sanad-contact.vcf';a.click();URL.revokeObjectURL(url);}
+
+// المترجم: ترجمة جمل كاملة عبر MyMemory API مع تحديد الاتجاه تلقائيًا
+function swapTranslation(){const from=$('translateFrom'),to=$('translateTo');if(from.value==='auto')from.value='ar';if(to.value==='auto')to.value='en';const a=from.value;from.value=to.value;to.value=a;const input=$('translateInput').value;$('translateInput').value=$('translateOutput').value;$('translateOutput').value=input;}
+function clearTranslation(){$('translateInput').value='';$('translateOutput').value='';$('translateStatus').textContent='اكتب جملة ثم اضغط ترجمة النص.';}
+async function translateTextNow(){
+  const text=$('translateInput').value.trim();if(!text)return toast('اكتب جملة أو نصًا أولاً');let from=$('translateFrom').value,to=$('translateTo').value;const arabic=/[\u0600-\u06FF]/.test(text);if(from==='auto')from=arabic?'ar':'en';if(to==='auto')to=from==='ar'?'en':'ar';if(from===to)return toast('اختر لغتين مختلفتين');
+  const chunks=[];let remaining=text;while(remaining.length>450){let cut=remaining.lastIndexOf(' ',450);if(cut<150)cut=450;chunks.push(remaining.slice(0,cut));remaining=remaining.slice(cut).trim();}if(remaining)chunks.push(remaining);
+  $('translateStatus').textContent='جارٍ ترجمة النص...';$('translateOutput').value='';try{const translated=[];for(let i=0;i<chunks.length;i++){$('translateStatus').textContent=`جارٍ ترجمة الجزء ${i+1} من ${chunks.length}...`;const url='https://api.mymemory.translated.net/get?q='+encodeURIComponent(chunks[i])+'&langpair='+from+'|'+to;const response=await fetch(url);if(!response.ok)throw Error('translation service error');const data=await response.json();const part=data?.responseData?.translatedText;if(!part)throw Error('empty translation');translated.push(part);} $('translateOutput').value=translated.join(' ');$('translateStatus').textContent=`تمت ترجمة النص (${chunks.length} جزء) من ${from==='ar'?'العربية':'الإنجليزية'} إلى ${to==='ar'?'العربية':'الإنجليزية'}. راجع الترجمة في النصوص المتخصصة.`;}catch(e){$('translateStatus').textContent='تعذر الوصول لخدمة الترجمة أو تجاوز حد الاستخدام. حاول مرة أخرى لاحقًا.';}}
+
+
+// تخصيص لوحة التحكم
+function renderTileSettings(){const tiles=[...document.querySelectorAll('#mainTiles .tile')],hidden=ls('sanadHiddenTiles',[]);$('tileSettings').innerHTML=tiles.map((tile,i)=>{const title=tile.querySelector('b')?.textContent||`أداة ${i+1}`;return `<label class="item" style="color:var(--text)"><span>${esc(title)}</span><input type="checkbox" data-tile-index="${i}" style="width:auto" ${hidden.includes(i)?'':'checked'}></label>`;}).join('');}
+function saveTileSettings(){const hidden=[...document.querySelectorAll('[data-tile-index]')].filter(x=>!x.checked).map(x=>Number(x.dataset.tileIndex));sv('sanadHiddenTiles',hidden);applyTileSettings();toast('تم حفظ تخصيص لوحة التحكم');}
+function applyTileSettings(){const hidden=ls('sanadHiddenTiles',[]);document.querySelectorAll('#mainTiles .tile').forEach((x,i)=>x.classList.toggle('is-hidden',hidden.includes(i)));}
+function resetTileSettings(){sv('sanadHiddenTiles',[]);renderTileSettings();applyTileSettings();toast('تم إظهار جميع الأدوات');}
+renderTileSettings();applyTileSettings();
+
+// دليل الوزارات والخدمات
+const serviceLinks=[
+['رئاسة مجلس الوزراء','https://www.cabinet.gov.eg/'],['وزارة الدفاع والإنتاج الحربي','https://www.mod.gov.eg/'],['وزارة الداخلية','https://moi.gov.eg/'],['وزارة الخارجية والهجرة','https://www.mfa.gov.eg/ar/Home'],['وزارة العدل','https://moj.gov.eg/'],['وزارة المالية','https://mof.gov.eg/ar'],['وزارة التخطيط والتنمية الاقتصادية','https://mped.gov.eg/'],['وزارة الاستثمار والتجارة الخارجية','https://www.mit.gov.eg/'],['وزارة الصناعة','https://www.mti.gov.eg/'],['وزارة التموين والتجارة الداخلية','https://msit.gov.eg/'],['وزارة الصحة والسكان','https://www.mohp.gov.eg/'],['وزارة التربية والتعليم والتعليم الفني','https://moe.gov.eg/'],['وزارة التعليم العالي والبحث العلمي','https://mohesr.gov.eg/'],['وزارة الاتصالات وتكنولوجيا المعلومات','https://mcit.gov.eg/ar'],['وزارة الكهرباء والطاقة المتجددة','https://moee.gov.eg/'],['وزارة البترول والثروة المعدنية','https://www.petroleum.gov.eg/'],['وزارة الإسكان والمرافق والمجتمعات العمرانية','https://mhuc.gov.eg/'],['وزارة النقل','https://mot.gov.eg/'],['وزارة الطيران المدني','https://www.civilaviation.gov.eg/'],['وزارة الزراعة واستصلاح الأراضي','https://moa.gov.eg/'],['وزارة الموارد المائية والري','https://www.mwri.gov.eg/'],['وزارة التضامن الاجتماعي','https://www.moss.gov.eg/'],['وزارة العمل','https://www.manpower.gov.eg/'],['وزارة الأوقاف','https://ar.awkafonline.com/'],['وزارة الثقافة','https://www.moc.gov.eg/'],['وزارة السياحة والآثار','https://egymonuments.gov.eg/'],['وزارة الشباب والرياضة','https://www.emys.gov.eg/'],['وزارة البيئة','https://www.eeaa.gov.eg/'],['وزارة الدولة للإنتاج الحربي','https://www.momp.gov.eg/'],['بوابة مصر الرقمية','https://digital.gov.eg/'],['منظومة الشكاوى الحكومية','https://www.shakwa.eg/'],['الجهاز القومي لتنظيم الاتصالات','https://www.tra.gov.eg/'],['دليل الخدمات العامة الحكومي','https://psm.gov.eg/']
 ];
-$('securityList').innerHTML=securityTips.map(x=>`<div class="card" style="margin-bottom:0"><b>${x[0]}</b><p class="muted">${x[1]}</p></div>`).join('');
+function renderServices(){if(!$('servicesList'))return;$('servicesList').innerHTML=serviceLinks.map((x,i)=>`<div class="item service-entry" data-name="${esc(x[0].toLowerCase())}"><b>${esc(x[0])}</b><a class="copy" href="${x[1]}" target="_blank" rel="noopener">زيارة الموقع</a></div>`).join('');}
+function filterServices(q){const term=q.trim().toLowerCase();document.querySelectorAll('.service-entry').forEach(x=>x.classList.toggle('hidden',!x.dataset.name.includes(term)));}
+renderServices();
 
-const checks=['أستخدم كلمة مرور قوية ومختلفة لحساباتي','فعّلت التحقق بخطوتين (2FA)','أقفل شاشة هاتفي برمز سري أو بصمة','لا أشارك رمز OTP مع أي شخص أبداً','أحدّث نظام الهاتف والتطبيقات باستمرار'];
-$('securityChecks').innerHTML=checks.map((x,i)=>`<label class="item" style="color:var(--text)"><span>${x}</span><input type="checkbox" style="width:auto" data-check="${i}"></label>`).join('');
-document.querySelectorAll('[data-check]').forEach(el=>{
-  el.checked=localStorage.getItem('sanadCheck'+el.dataset.check)==='true';
-  el.addEventListener('change',()=>localStorage.setItem('sanadCheck'+el.dataset.check,el.checked));
-});
 
-if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>
 </html>
