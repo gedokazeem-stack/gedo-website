@@ -84,7 +84,6 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
 .bar-fill{height:100%;background:var(--accent);border-radius:20px}
 .profile-card{background:linear-gradient(135deg,#10234b,#176b78);color:white;border-radius:18px;padding:20px;max-width:460px;margin:12px auto;text-align:center;box-shadow:0 10px 28px #10234b30}
 .profile-card .avatar{width:68px;height:68px;border-radius:50%;background:#ffffff22;display:grid;place-items:center;font-size:30px;margin:0 auto 10px}
-#focusClock{font-size:48px;font-weight:900;text-align:center;direction:ltr;color:var(--primary);padding:16px}
 .qr-result-img{display:block;width:min(100%,560px);height:auto;margin:14px auto;background:#fff;border:0;border-radius:4px;image-rendering:pixelated;box-shadow:0 2px 12px #0002}
 .cv-paper{background:#fff;color:#17243d;border:1px solid #d9e0ea;border-radius:12px;padding:22px;min-height:180px;line-height:1.7;overflow-wrap:anywhere}
 .cv-paper h2{margin:0;color:#173b72}.cv-paper h3{color:#0d9488;border-bottom:1px solid #dce5ee;padding-bottom:5px}.cv-paper p{white-space:pre-wrap;margin:6px 0}
@@ -176,8 +175,8 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
         <button class="primary" onclick="showPage('qr')">افتح الأداة</button>
       </div>
 
-      <div class="card tile" data-search="ساعة عالمية توقيت القاهرة دول العالم نزلة سلمان">
-        <div><div class="emoji">🌍</div><b>الساعة العالمية</b><small>الوقت والتاريخ في عواصم العالم ونزلة سلمان.</small></div>
+      <div class="card tile" data-search="ساعة عالمية توقيت القاهرة دول العالم ">
+        <div><div class="emoji">🌍</div><b>الساعة العالمية</b><small>الوقت والتاريخ في عواصم العالم .</small></div>
         <button class="primary" onclick="showPage('world')">افتح الساعة</button>
       </div>
 
@@ -198,12 +197,6 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
       <div class="card tile" data-search="دليل حكومي خدمات بوابة مصر الرقمية شكاوى">
         <div><div class="emoji">🏛️</div><b>دليل الخدمات</b><small>روابط مباشرة لأهم المواقع والخدمات الحكومية.</small></div>
         <button class="primary" onclick="showPage('services')">افتح الدليل</button>
-      </div>
-
-
-      <div class="card tile" data-search="وضع التركيز مؤقت مذاكرة استراحة بومودورو" data-feature="focus">
-        <div><div class="emoji">🎯</div><b>وضع التركيز</b><small>جلسات تركيز واستراحة ومتابعة وقتك.</small></div>
-        <button class="primary" onclick="showPage('focus')">ابدأ التركيز</button>
       </div>
       <div class="card tile" data-search="بطاقة شخصية رقمية بطاقة تعريف vcard qr" data-feature="profile">
         <div><div class="emoji">🪪</div><b>بطاقتي الرقمية</b><small>أنشئ بطاقة تعريف وشاركها برمز QR.</small></div>
@@ -466,11 +459,29 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
 
 
 
-  <!-- مولد كلمات المرور المطور -->
+  <!-- مولّد كلمات المرور -->
   <section class="page" id="password">
     <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>🔐 مولّد كلمات المرور المتقدم</h2>
+    <h2>🔐 مولّد كلمات المرور الذكي</h2>
+
     <div class="card">
+      <h3>✨ اقتراحات سهلة التذكّر</h3>
+      <p class="muted">اكتب اسمًا مستعارًا أو كلمة غير شخصية، وسننشئ اقتراحات مختلفة بأرقام ورموز عشوائية.</p>
+      <label for="memorableBase">اسم مستعار أو كلمة تتذكرها</label>
+      <input id="memorableBase" maxlength="18" placeholder="مثال: Gedo أو كلمة مميزة" autocomplete="off">
+      <label for="memorableCount">عدد الاقتراحات</label>
+      <select id="memorableCount">
+        <option value="5">5 اقتراحات</option>
+        <option value="8" selected>8 اقتراحات</option>
+        <option value="10">10 اقتراحات</option>
+      </select>
+      <button class="primary" onclick="makeMemorablePasswords()">إنشاء اقتراحات</button>
+      <div id="memorableResults" style="margin-top:12px"></div>
+      <p class="muted">تنبيه أمان: لا تستخدم اسمك الحقيقي أو تاريخ ميلادك أو رقم هاتفك. هذه الطريقة أسهل في التذكّر لكنها أضعف من كلمة مرور عشوائية بالكامل؛ استخدم كلمة مختلفة لكل حساب.</p>
+    </div>
+
+    <div class="card">
+      <h3>🛡️ كلمة مرور عشوائية قوية</h3>
       <label>طول كلمة المرور (8 إلى 64)</label><input id="passLength" type="number" min="8" max="64" value="20">
       <label><input id="passUpper" type="checkbox" checked style="width:auto"> أحرف كبيرة A-Z</label>
       <label><input id="passLower" type="checkbox" checked style="width:auto"> أحرف صغيرة a-z</label>
@@ -481,10 +492,9 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
       <input id="passResult" readonly placeholder="ستظهر كلمة المرور هنا" dir="ltr" style="font-weight:bold;text-align:center">
       <div id="passStrength" class="muted"></div>
       <div class="row"><button class="secondary" onclick="copyText($('passResult').value)">📋 نسخ</button><button class="success" onclick="makePassword()">🔄 إنشاء أخرى</button></div>
-      <p class="muted">يستخدم مولّد عشوائية التشفير في المتصفح. لا تحفظ كلمات المرور في سجل التطبيق.</p>
+      <p class="muted">يستخدم المولّد العشوائية الآمنة في المتصفح، ولا يحفظ كلمات المرور داخل سَنَد.</p>
     </div>
   </section>
-
 
 
   <!-- دليل الخدمات والوزارات -->
@@ -492,18 +502,11 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
     <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
     <h2>🏛️ دليل الوزارات والخدمات الرسمية</h2>
     <div class="notice">روابط الجهات الحكومية أدناه للتوجيه إلى مواقعها. إذا تغيّر رابط وزارة، استخدم دليل الروابط الرسمي للجهاز المركزي للتنظيم والإدارة.</div>
-    <div class="card"><b>📚 الدليل الرسمي الشامل للوزارات</b><p class="muted">مرجع حكومي يجمع روابط مواقع الوزارات.</p><a class="copy" href="https://caoa.gov.eg/WebForms/HierarchyStructure.aspx" target="_blank" rel="noopener">فتح دليل الوزارات الرسمي</a></div>
-    <div class="card"><label>ابحث عن وزارة أو خدمة</label><input id="serviceSearch" oninput="filterServices(this.value)" placeholder="مثال: التعليم، الصحة، التموين..." /></div>
-    <div class="card" id="servicesList"></div>
+<div class="card"><label>ابحث عن وزارة أو خدمة</label><input id="serviceSearch" oninput="filterServices(this.value)" placeholder="مثال: التعليم، الصحة، التموين..." /></div>
+    <div class="card" id="servicesList" style="display:block"></div>
     <div class="card"><h3>⭐ صفحتي على فيسبوك</h3><div class="item"><b>Gedo Kazem</b><a class="copy" href="https://www.facebook.com/share/1EoMzgqQa7/" target="_blank" rel="noopener">زيارة صفحتي</a></div><button class="secondary" style="width:100%" onclick="copyText('https://www.facebook.com/share/1EoMzgqQa7/')">📋 نسخ رابط صفحتي</button></div>
   </section>
-<!-- وضع التركيز -->
-  <section class="page" id="focus">
-    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>🎯 وضع التركيز</h2>
-    <div class="card"><label>مدة التركيز بالدقائق</label><input id="focusMinutes" type="number" min="1" max="180" value="25"><label>مدة الاستراحة بالدقائق</label><input id="breakMinutes" type="number" min="1" max="60" value="5"><div id="focusClock">25:00</div><div id="focusState" class="result" style="text-align:center">جاهز لجلسة تركيز جديدة</div><div class="row"><button class="success" onclick="startFocus()">ابدأ / استكمل</button><button class="secondary" onclick="pauseFocus()">إيقاف مؤقت</button><button class="secondary" onclick="resetFocus()">إعادة ضبط</button><button class="secondary" onclick="skipFocusPhase()">تخطي المرحلة</button></div><p class="muted">اختر المدة التي تناسبك. المؤقت يعتمد على وقت النهاية حتى لا يتأثر كثيرًا عند انتقالك لتطبيق آخر.</p></div>
-  </section>
-
-  <!-- البطاقة الشخصية الرقمية -->
+<!-- البطاقة الشخصية الرقمية -->
   <section class="page" id="profile">
     <button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>🪪 بطاقتي الشخصية الرقمية</h2>
     <div class="card"><label>الاسم المعروض</label><input id="cardName" placeholder="اسمك"><label>الصفة أو التعريف</label><input id="cardRole" placeholder="مثال: طالب / مطور"><label>رقم الهاتف (اختياري)</label><input id="cardPhone" type="tel" placeholder="01xxxxxxxxx"><label>البريد الإلكتروني (اختياري)</label><input id="cardEmail" type="email" placeholder="name@example.com"><label>رابط صفحتك أو موقعك</label><input id="cardLink" placeholder="https://..."><button class="primary" onclick="buildProfileCard()">إنشاء البطاقة</button><div id="profileOutput"></div></div>
@@ -969,6 +972,35 @@ function convertUnit(){
   $('unitResult').textContent=out.toLocaleString('en-US',{maximumFractionDigits:5})+' '+b;
 }
 
+// اقتراح كلمات مرور أسهل في التذكر مع أرقام ورموز عشوائية
+function makeMemorablePasswords(){
+  const base=$('memorableBase').value.trim();
+  if(!base)return toast('اكتب اسمًا مستعارًا أو كلمة أولاً');
+  if(!window.crypto?.getRandomValues)return toast('المتصفح لا يدعم العشوائية الآمنة');
+  if(base.length<2)return toast('اكتب حرفين على الأقل');
+  const count=Math.max(5,Math.min(10,Number($('memorableCount').value)||8));
+  const digits='23456789', symbols='!@#$%&*?';
+  const suggestions=[];
+  for(let i=0;i<count;i++){
+    let number='';
+    for(let j=0;j<6;j++)number+=digits[secureRandomIndex(digits.length)];
+    const symbol1=symbols[secureRandomIndex(symbols.length)];
+    const symbol2=symbols[secureRandomIndex(symbols.length)];
+    const upperFirst=i%2===0;
+    const namePart=upperFirst?base.charAt(0).toUpperCase()+base.slice(1):base.toLowerCase();
+    const candidate=i%3===0?`${namePart}${symbol1}${number}`:
+      i%3===1?`${number}${symbol1}${namePart}${symbol2}`:
+      `${namePart}${number}${symbol1}${symbol2}`;
+    suggestions.push(candidate);
+  }
+  $('memorableResults').innerHTML=suggestions.map((p,i)=>
+    `<div class="item" style="display:flex;flex-direction:column;align-items:stretch;gap:8px;margin:8px 0">
+      <b style="direction:ltr;text-align:center;overflow-wrap:anywhere;font-size:17px">${esc(p)}</b>
+      <button class="secondary" type="button" data-password="${esc(p)}" onclick="copyText(this.dataset.password)">📋 نسخ الاقتراح ${i+1}</button>
+    </div>`
+  ).join('');
+}
+
 // مولد كلمات مرور قوي مع اختيار مجموعات الأحرف وعشوائية غير منحازة
 function secureRandomIndex(max){const limit=Math.floor(0x100000000/max)*max;const a=new Uint32Array(1);do{crypto.getRandomValues(a);}while(a[0]>=limit);return a[0]%max;}
 function makePassword(){
@@ -985,105 +1017,6 @@ function makePassword(){
 // معلومة اليوم
 const facts=['ضوء الشمس يستغرق نحو 8 دقائق و20 ثانية ليصل إلى الأرض.','النحل يتواصل باستخدام حركات راقصة دقيقة.','تتكون السنة الضوئية من المسافة التي يقطعها الضوء خلال سنة.','تساعد القراءة المنتظمة على توسيع المفردات والمعرفة.','تتغير أطوال الظلال خلال اليوم بسبب حركة الشمس الظاهرية.'];
 $('dailyFact').textContent=facts[new Date().getDate()%facts.length];
-
-
-// وضع التركيز: مؤقت موثوق يعتمد على الوقت الفعلي
-let focusTimer = null;
-let focusRemaining = 25 * 60;
-let focusMode = 'focus';
-let focusEndAt = null;
-
-function focusDuration(mode) {
-  const input = $(mode === 'focus' ? 'focusMinutes' : 'breakMinutes');
-  const fallback = mode === 'focus' ? 25 : 5;
-  const max = mode === 'focus' ? 180 : 60;
-  const value = input ? Number(input.value) : fallback;
-  return Math.min(max, Math.max(1, Number.isFinite(value) && value > 0 ? value : fallback)) * 60;
-}
-
-function showFocusTime() {
-  const clock = $('focusClock');
-  if (!clock) return;
-  const safe = Math.max(0, Math.ceil(focusRemaining));
-  const minutes = Math.floor(safe / 60);
-  const seconds = safe % 60;
-  clock.textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
-}
-
-function stopFocusInterval() {
-  if (focusTimer !== null) window.clearInterval(focusTimer);
-  focusTimer = null;
-}
-
-function focusTick() {
-  if (focusEndAt === null) return;
-  focusRemaining = Math.max(0, Math.ceil((focusEndAt - Date.now()) / 1000));
-  showFocusTime();
-  if (focusRemaining === 0) {
-    stopFocusInterval();
-    focusEndAt = null;
-    focusMode = focusMode === 'focus' ? 'break' : 'focus';
-    focusRemaining = focusDuration(focusMode);
-    const state = $('focusState');
-    if (state) state.textContent = focusMode === 'break'
-      ? 'أحسنت! انتهت جلسة التركيز، حان وقت الاستراحة.'
-      : 'انتهت الاستراحة؛ ابدأ جلسة تركيز جديدة عندما تكون مستعدًا.';
-    showFocusTime();
-    try { if (navigator.vibrate) navigator.vibrate([180, 100, 180]); } catch (e) {}
-    if (typeof toast === 'function') toast(focusMode === 'break' ? 'انتهت جلسة التركيز' : 'انتهت الاستراحة');
-  }
-}
-
-function startFocus() {
-  if (focusEndAt !== null) return;
-  if (focusRemaining <= 0) focusRemaining = focusDuration(focusMode);
-  focusEndAt = Date.now() + focusRemaining * 1000;
-  const state = $('focusState');
-  if (state) state.textContent = focusMode === 'focus' ? 'جلسة تركيز جارية' : 'وقت الاستراحة';
-  stopFocusInterval();
-  focusTimer = window.setInterval(focusTick, 200);
-  focusTick();
-}
-
-function pauseFocus() {
-  if (focusEndAt !== null) focusRemaining = Math.max(0, Math.ceil((focusEndAt - Date.now()) / 1000));
-  focusEndAt = null;
-  stopFocusInterval();
-  showFocusTime();
-  const state = $('focusState');
-  if (state) state.textContent = 'المؤقت متوقف مؤقتًا';
-}
-
-function resetFocus() {
-  focusEndAt = null;
-  stopFocusInterval();
-  focusMode = 'focus';
-  focusRemaining = focusDuration('focus');
-  showFocusTime();
-  const state = $('focusState');
-  if (state) state.textContent = 'جاهز لجلسة تركيز جديدة';
-}
-
-function skipFocusPhase() {
-  focusEndAt = null;
-  stopFocusInterval();
-  focusMode = focusMode === 'focus' ? 'break' : 'focus';
-  focusRemaining = focusDuration(focusMode);
-  showFocusTime();
-  const state = $('focusState');
-  if (state) state.textContent = focusMode === 'break' ? 'تم الانتقال إلى الاستراحة' : 'تم الانتقال إلى جلسة التركيز';
-}
-
-// إتاحة الدوال صراحةً لأزرار HTML
-window.startFocus = startFocus;
-window.pauseFocus = pauseFocus;
-window.resetFocus = resetFocus;
-window.skipFocusPhase = skipFocusPhase;
-$('focusMinutes').addEventListener('change', () => { if (focusEndAt === null && focusMode === 'focus') resetFocus(); });
-$('breakMinutes').addEventListener('change', () => { if (focusEndAt === null && focusMode === 'break') { focusRemaining = focusDuration('break'); showFocusTime(); } });
-// تحديث فوري عند الرجوع إلى التطبيق بعد تشغيله بالخلفية
- document.addEventListener('visibilitychange', () => { if (focusEndAt !== null) focusTick(); });
-resetFocus();
 
 // البطاقة الشخصية الرقمية + vCard + QR
 function buildProfileCard(){const name=$('cardName').value.trim(),role=$('cardRole').value.trim(),phone=$('cardPhone').value.trim(),email=$('cardEmail').value.trim(),link=$('cardLink').value.trim();if(!name)return toast('اكتب الاسم أولاً');const clean=s=>String(s).replace(/[\r\n]/g,' ').replace(/\s+/g,' ').trim();const vcard=`BEGIN:VCARD\nVERSION:3.0\nFN:${clean(name)}\nTITLE:${clean(role)}\nTEL:${clean(phone)}\nEMAIL:${clean(email)}\nURL:${clean(link)}\nEND:VCARD`;const safeName=esc(name),safeRole=esc(role);$('profileOutput').innerHTML=`<div class="profile-card"><div class="avatar">👤</div><h2>${safeName}</h2><p>${safeRole}</p><p>${esc(phone)}<br>${esc(email)}</p><div id="profileQR" style="display:inline-block;background:white;padding:8px;border-radius:8px;margin-top:8px"></div></div><button class="success" style="width:100%" onclick="downloadVCard()">⬇️ تحميل بطاقة الاتصال</button>`;window.sanadVCard=vcard;try{new QRCode($('profileQR'),{text:vcard,width:160,height:160,correctLevel:QRCode.CorrectLevel.M});}catch(e){$('profileQR').textContent='تعذر إنشاء QR لهذه البيانات';}}
