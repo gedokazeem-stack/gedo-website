@@ -85,7 +85,7 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
 .profile-card{background:linear-gradient(135deg,#10234b,#176b78);color:white;border-radius:18px;padding:20px;max-width:460px;margin:12px auto;text-align:center;box-shadow:0 10px 28px #10234b30}
 .profile-card .avatar{width:68px;height:68px;border-radius:50%;background:#ffffff22;display:grid;place-items:center;font-size:30px;margin:0 auto 10px}
 #focusClock{font-size:48px;font-weight:900;text-align:center;direction:ltr;color:var(--primary);padding:16px}
-.qr-result-img{width:100%;max-width:300px;image-rendering:pixelated;border:10px solid #fff;border-radius:8px}
+.qr-result-img{display:block;width:min(100%,560px);height:auto;margin:14px auto;background:#fff;border:0;border-radius:4px;image-rendering:pixelated;box-shadow:0 2px 12px #0002}
 .cv-paper{background:#fff;color:#17243d;border:1px solid #d9e0ea;border-radius:12px;padding:22px;min-height:180px;line-height:1.7;overflow-wrap:anywhere}
 .cv-paper h2{margin:0;color:#173b72}.cv-paper h3{color:#0d9488;border-bottom:1px solid #dce5ee;padding-bottom:5px}.cv-paper p{white-space:pre-wrap;margin:6px 0}
 @media print{body{background:#fff!important}.cv-paper{border:0!important;box-shadow:none!important}}
@@ -195,22 +195,12 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
 
 
 
-      <div class="card tile" data-search="سفر قائمة تجهيز شنطة أغراض">
-        <div><div class="emoji">🧳</div><b>قائمة السفر</b><small>جهز شنطتك وأغراضك الأساسية قبل السفر.</small></div>
-        <button class="primary" onclick="showPage('travel')">افتح القائمة</button>
-      </div>
-
-
       <div class="card tile" data-search="دليل حكومي خدمات بوابة مصر الرقمية شكاوى">
         <div><div class="emoji">🏛️</div><b>دليل الخدمات</b><small>روابط مباشرة لأهم المواقع والخدمات الحكومية.</small></div>
         <button class="primary" onclick="showPage('services')">افتح الدليل</button>
       </div>
 
 
-      <div class="card tile" data-search="خزنة خاصة سرية ملفات كلمات مرور تشفير" data-feature="vault">
-        <div><div class="emoji">🔒</div><b>الخزنة الخاصة</b><small>احفظ بياناتك داخل خزنة مشفرة بكلمة مرور.</small></div>
-        <button class="primary" onclick="showPage('vault')">افتح الخزنة</button>
-      </div>
       <div class="card tile" data-search="وضع التركيز مؤقت مذاكرة استراحة بومودورو" data-feature="focus">
         <div><div class="emoji">🎯</div><b>وضع التركيز</b><small>جلسات تركيز واستراحة ومتابعة وقتك.</small></div>
         <button class="primary" onclick="showPage('focus')">ابدأ التركيز</button>
@@ -226,10 +216,6 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
       <div class="card tile" data-search="سيرة ذاتية cv resume وظيفة تعليم خبرات مهارات">
         <div><div class="emoji">📄</div><b>منشئ السيرة الذاتية CV</b><small>أنشئ سيرة ذاتية عربية أو إنجليزية وصدّرها PDF.</small></div>
         <button class="primary" onclick="showPage('cv')">أنشئ CV</button>
-      </div>
-      <div class="card tile" data-search="حماية رقمية أمان انترنت تصيد احتيال خصوصية حسابات">
-        <div><div class="emoji">🛡️</div><b>مركز الحماية الرقمية</b><small>إرشادات لحماية حساباتك وبياناتك وأجهزتك.</small></div>
-        <button class="primary" onclick="showPage('cyber')">افتح مركز الحماية</button>
       </div>
     </div>
 
@@ -435,11 +421,11 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
     </div>
     <div class="card">
       <h3>✨ إنشاء رمز QR</h3>
-      <label>اكتب رابطًا أو نصًا (يدعم الروابط الطويلة)</label>
+      <label>اكتب رابطًا أو نصًا</label>
       <textarea id="qrT" rows="4" placeholder="الصق رابط موقعك أو اكتب أي نص هنا"></textarea>
-      <div class="row"><label>حجم الصورة<select id="qrSize"><option value="256">256 × 256</option><option value="384" selected>384 × 384</option><option value="512">512 × 512</option></select></label><label>تصحيح الأخطاء<select id="qrLevel"><option value="L">منخفض</option><option value="M">متوسط</option><option value="Q">مرتفع</option><option value="H" selected>الأعلى</option></select></label></div>
+      <div class="row"><label>دقة الصورة<select id="qrSize"><option value="512">512 × 512</option><option value="768" selected>768 × 768</option><option value="1024">1024 × 1024</option></select></label><label>تصحيح الأخطاء<select id="qrLevel"><option value="L">منخفض</option><option value="M" selected>متوسط (مناسب لمعظم الروابط)</option><option value="Q">مرتفع</option><option value="H">الأعلى</option></select></label></div>
       <button class="primary" onclick="makeQR()">إنشاء صورة QR</button>
-      <div id="qrOutput" style="text-align:center;margin-top:15px"></div>
+      <div id="qrOutput" style="text-align:center;margin-top:15px"></div><p class="muted">لأفضل نتيجة: نزّل صورة PNG الأصلية، ولا تقص الإطار الأبيض حول الرمز، وافتح الصورة على شاشة واضحة عند المسح.</p>
     </div>
   </section>
 
@@ -501,21 +487,6 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
 
 
 
-  <!-- 20. قائمة السفر -->
-  <section class="page" id="travel">
-    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>🧳 قائمة تجهيز السفر</h2>
-    <div class="card">
-      <div id="travelList"></div>
-      <div class="row" style="margin-top:10px">
-        <input id="travelNew" placeholder="أضف غرضًا جديدًا..." style="margin:0">
-        <button class="success" style="flex:0 0 auto" onclick="addTravel()">إضافة</button>
-      </div>
-      <button class="secondary" style="width:100%;margin-top:10px" onclick="resetTravel()">إعادة ضبط القائمة الافتراضية</button>
-    </div>
-  </section>
-
-
   <!-- دليل الخدمات والوزارات -->
   <section class="page" id="services">
     <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
@@ -525,14 +496,6 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
     <div class="card"><label>ابحث عن وزارة أو خدمة</label><input id="serviceSearch" oninput="filterServices(this.value)" placeholder="مثال: التعليم، الصحة، التموين..." /></div>
     <div class="card" id="servicesList"></div>
     <div class="card"><h3>⭐ صفحتي على فيسبوك</h3><div class="item"><b>Gedo Kazem</b><a class="copy" href="https://www.facebook.com/share/1EoMzgqQa7/" target="_blank" rel="noopener">زيارة صفحتي</a></div><button class="secondary" style="width:100%" onclick="copyText('https://www.facebook.com/share/1EoMzgqQa7/')">📋 نسخ رابط صفحتي</button></div>
-  </section>
-<!-- الخزنة الخاصة -->
-  <section class="page" id="vault">
-    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>🔒 الخزنة الخاصة المشفرة</h2>
-    <div class="notice">تُشفّر البيانات داخل المتصفح باستخدام AES-GCM ومفتاح مشتق من كلمة المرور. لا تنس كلمة المرور؛ لا توجد طريقة لاستعادتها إذا فُقدت.</div>
-    <div class="card" id="vaultSetup"><h3>إنشاء الخزنة</h3><label>كلمة مرور رئيسية (8 أحرف على الأقل)</label><input id="vaultNewPass" type="password" autocomplete="new-password"><label>تأكيد كلمة المرور</label><input id="vaultConfirmPass" type="password" autocomplete="new-password"><button class="primary" onclick="createVault()">إنشاء خزنة مشفرة</button></div>
-    <div class="card hidden" id="vaultUnlock"><h3>فتح الخزنة</h3><input id="vaultPass" type="password" autocomplete="current-password" placeholder="كلمة المرور الرئيسية"><button class="primary" onclick="unlockVault()">فتح الخزنة</button></div>
-    <div class="card hidden" id="vaultPanel"><div class="row"><h3 style="flex:1">محتويات الخزنة</h3><button class="secondary" onclick="lockVault()">قفل</button></div><label>عنوان السجل</label><input id="vaultTitle" placeholder="مثال: ملاحظة خاصة"><label>المحتوى</label><textarea id="vaultBody" rows="3" placeholder="اكتب ما تريد حفظه"></textarea><button class="success" onclick="addVaultItem()">حفظ داخل الخزنة</button><div id="vaultItems" style="margin-top:12px"></div></div>
   </section>
 <!-- وضع التركيز -->
   <section class="page" id="focus">
@@ -578,19 +541,6 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
       <button class="success" style="width:100%" onclick="previewCV()">معاينة السيرة الذاتية</button>
     </div>
     <div class="card"><div id="cvPreview" class="cv-paper"><p class="muted">املأ البيانات ثم اضغط معاينة.</p></div><button class="primary" onclick="exportCV()">🖨️ تصدير / حفظ PDF</button><p class="muted">اختر «حفظ كملف PDF» من نافذة الطباعة. راجع بياناتك قبل مشاركة السيرة.</p></div>
-  </section>
-
-  <!-- مركز الحماية الرقمية -->
-  <section class="page" id="cyber">
-    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>🛡️ مركز الحماية الرقمية</h2>
-    <div class="notice">إرشادات توعوية لحماية الحسابات والأجهزة. لا يوجد تطبيق يستطيع ضمان الحماية الكاملة؛ حدّث جهازك واستخدم القنوات الرسمية.</div>
-    <details class="card" open><summary>🔑 حماية الحسابات وكلمات المرور</summary><ul><li>استخدم كلمة مرور طويلة وفريدة لكل حساب.</li><li>فعّل التحقق بخطوتين من إعدادات الخدمة الرسمية.</li><li>لا تشارك كلمات المرور أو رموز التحقق مع أي شخص.</li><li>استخدم مدير كلمات مرور موثوقًا، ولا تحفظ أسرارك في ملاحظات عامة.</li></ul></details>
-    <details class="card"><summary>🎣 اكتشاف التصيد والروابط المزيفة</summary><ul><li>تحقق من عنوان الموقع حرفًا بحرف قبل تسجيل الدخول.</li><li>احذر الرسائل التي تستعجلك أو تهدد بإغلاق حسابك.</li><li>لا تفتح مرفقات غير متوقعة، حتى لو بدا اسم المرسل مألوفًا.</li><li>اذهب للموقع بكتابة عنوانه بنفسك بدل الضغط على رابط مشبوه.</li></ul></details>
-    <details class="card"><summary>📱 تأمين الهاتف</summary><ul><li>حدّث نظام التشغيل والتطبيقات باستمرار.</li><li>نزّل التطبيقات من المتاجر الرسمية فقط وراجع الأذونات.</li><li>استخدم قفل شاشة قويًا، وفعل العثور على الجهاز إن توفر.</li><li>تجنب شبكات Wi‑Fi العامة عند إدخال بيانات حساسة.</li></ul></details>
-    <details class="card"><summary>💳 الاحتيال المالي والمحافظ</summary><ul><li>لا تعطِ الرقم السري أو OTP لأي شخص يدّعي أنه موظف دعم.</li><li>راجع اسم المستلم والمبلغ قبل تأكيد التحويل.</li><li>تواصل مع البنك أو مزود المحفظة عبر التطبيق أو الرقم الرسمي عند الشك.</li><li>احتفظ بإشعارات العمليات وبلّغ فورًا عن أي معاملة لا تعرفها.</li></ul></details>
-    <details class="card"><summary>🧭 ماذا أفعل إذا شككت في اختراق حساب؟</summary><ol><li>استخدم جهازًا موثوقًا وغيّر كلمة المرور.</li><li>سجّل الخروج من الجلسات والأجهزة غير المعروفة.</li><li>فعّل التحقق بخطوتين وراجع بريد ورقم الاسترداد.</li><li>تواصل مع الدعم الرسمي، وأبلغ البنك فورًا إذا تعلّق الأمر بمال.</li></ol></details>
-    <div class="card"><b>قاعدة سَنَد:</b><p class="muted">لا ترسل كلمة مرور أو رمز تحقق أو صورة بطاقة بنكية في محادثة أو إلى شخص غير موثوق.</p></div>
   </section>
 
 <footer>سَنَد | SANAD - النسخة المطورة<br>المعلومة الصح في الوقت الصح.</footer>
@@ -899,12 +849,51 @@ function copyScannedQR(){if(lastScannedValue)copyText(lastScannedValue);}
 function openScannedQR(){if(/^https?:\/\//i.test(lastScannedValue))window.open(lastScannedValue,'_blank','noopener');}
 function scanQRImage(file){if(!file)return;if(!window.jsQR)return toast('مكتبة قراءة QR لم تُحمّل بعد');const img=new Image(),url=URL.createObjectURL(file);img.onload=()=>{const c=$('qrScanCanvas'),ctx=c.getContext('2d',{willReadFrequently:true});const scale=Math.min(1,1800/Math.max(img.width,img.height));c.width=Math.round(img.width*scale);c.height=Math.round(img.height*scale);ctx.drawImage(img,0,0,c.width,c.height);const d=ctx.getImageData(0,0,c.width,c.height),code=jsQR(d.data,d.width,d.height,{inversionAttempts:'attemptBoth'});URL.revokeObjectURL(url);if(code)showQRResult(code.data);else $('qrR').textContent='لم يتم العثور على رمز QR واضح في الصورة.';};img.onerror=()=>{URL.revokeObjectURL(url);toast('تعذر فتح الصورة');};img.src=url;}
 function makeQR(){
-  const value=$('qrT').value.trim();if(!value)return toast('اكتب نصًا أو رابطًا أولاً');if(!window.QRCode)return toast('مكتبة إنشاء QR لم تُحمّل بعد');
-  const box=$('qrOutput');box.innerHTML='';const size=Number($('qrSize').value)||384,level=$('qrLevel').value;let ec=QRCode.CorrectLevel.H;if(level==='L')ec=QRCode.CorrectLevel.L;else if(level==='M')ec=QRCode.CorrectLevel.M;else if(level==='Q')ec=QRCode.CorrectLevel.Q;
-  try{new QRCode(box,{text:value,width:size,height:size,colorDark:'#000000',colorLight:'#ffffff',correctLevel:ec});setTimeout(()=>{const img=box.querySelector('img'),canvas=box.querySelector('canvas');let data=img?.src||(canvas?canvas.toDataURL('image/png'):'');if(!data){box.innerHTML='تعذر إنشاء الصورة؛ جرّب نصًا أقصر.';return;}window.currentQR=data;box.insertAdjacentHTML('beforeend','<p class="muted">تم إنشاء الرمز بنجاح. اختبره بكاميرا هاتف آخر قبل مشاركته.</p><button class="success" onclick="downloadQR()">⬇️ تحميل صورة PNG</button>');},120);
-  }catch(e){box.textContent='تعذر إنشاء الرمز بهذا المحتوى. جرّب تقليل طول النص.';}
+  const value=$('qrT').value.trim();
+  if(!value)return toast('اكتب رابطًا أو نصًا أولاً');
+  if(!window.QRCode)return toast('مكتبة إنشاء QR لم تُحمّل؛ تأكد من اتصال الإنترنت ثم أعد المحاولة.');
+  const box=$('qrOutput');
+  box.innerHTML='<p class="muted">جارٍ إنشاء رمز واضح...</p>';
+  const size=Math.max(512,Number($('qrSize').value)||768);
+  const level=$('qrLevel').value||'M';
+  const levels={L:QRCode.CorrectLevel.L,M:QRCode.CorrectLevel.M,Q:QRCode.CorrectLevel.Q,H:QRCode.CorrectLevel.H};
+  const staging=document.createElement('div');
+  try{
+    const qr=new QRCode(staging,{text:value,width:size,height:size,colorDark:'#000000',colorLight:'#ffffff',correctLevel:levels[level]??QRCode.CorrectLevel.M});
+    let attempts=0;
+    const finish=()=>{
+      const source=staging.querySelector('canvas');
+      if(!source){
+        if(++attempts<30){setTimeout(finish,80);return;}
+        box.textContent='تعذر إنشاء الصورة. جرّب رابطًا أقصر.';return;
+      }
+      try{
+        const modules=qr._oQRCode&&qr._oQRCode.getModuleCount?qr._oQRCode.getModuleCount():37;
+        const quiet=Math.max(24,Math.ceil((size/modules)*4));
+        const output=document.createElement('canvas');
+        output.width=size+quiet*2;output.height=size+quiet*2;
+        const ctx=output.getContext('2d');
+        ctx.fillStyle='#ffffff';ctx.fillRect(0,0,output.width,output.height);
+        ctx.imageSmoothingEnabled=false;
+        ctx.drawImage(source,quiet,quiet,size,size);
+        const data=output.toDataURL('image/png');
+        window.currentQR=data;
+        box.innerHTML='';
+        const image=document.createElement('img');
+        image.className='qr-result-img';image.alt='رمز QR جاهز للمسح';image.src=data;
+        box.appendChild(image);
+        const note=document.createElement('p');note.className='muted';note.textContent='تم إنشاء الرمز مع إطار أبيض قياسي حوله لزيادة سهولة المسح.';box.appendChild(note);
+        const button=document.createElement('button');button.className='success';button.textContent='⬇️ تحميل صورة PNG';button.onclick=downloadQR;box.appendChild(button);
+      }catch(error){box.textContent='تعذر تجهيز صورة QR. جرّب تقليل طول النص.';}
+    };
+    setTimeout(finish,120);
+  }catch(error){box.textContent='النص طويل جدًا على رمز QR. جرّب استخدام رابط مختصر.';}
 }
-function downloadQR(){if(!window.currentQR)return;const a=document.createElement('a');a.href=window.currentQR;a.download='sanad-qr.png';document.body.appendChild(a);a.click();a.remove();}
+function downloadQR(){
+  if(!window.currentQR)return toast('أنشئ رمز QR أولاً');
+  const a=document.createElement('a');a.href=window.currentQR;a.download='sanad-qr.png';
+  document.body.appendChild(a);a.click();a.remove();
+}
 
 // 13. الساعة العالمية
 const cities=[
@@ -993,47 +982,108 @@ function makePassword(){
   $('passResult').value=chars.join('');$('passStrength').textContent=`الطول: ${n} حرفًا — مجموعات الأحرف المختارة: ${groups.length} — احفظها في مكان آمن.`;
 }
 
-// 20. السفر
-const defaultTravel=['بطاقة الهوية أو جواز السفر','الهاتف والشاحن والباور بانك','الملابس المناسبة','الأدوية الشخصية','النقود والبطاقات البنكية','مستلزمات النظافة الشخصية'];
-function getTravel(){return ls('sanadTravel',null)||defaultTravel.map(name=>({name,done:false}))}
-function renderTravel(){$('travelList').innerHTML=getTravel().map((x,i)=>`<div class="item"><label style="color:var(--text)"><input type="checkbox" style="width:auto;margin-left:8px" ${x.done?'checked':''} onchange="checkTravel(${i},this.checked)"> ${esc(x.name)}</label><button class="copy" onclick="removeTravel(${i})">حذف</button></div>`).join('')}
-function checkTravel(i,v){const a=getTravel();a[i].done=v;sv('sanadTravel',a)}
-function removeTravel(i){const a=getTravel();a.splice(i,1);sv('sanadTravel',a);renderTravel()}
-function addTravel(){const t=$('travelNew').value.trim();if(!t)return;const a=getTravel();a.push({name:t,done:false});sv('sanadTravel',a);$('travelNew').value='';renderTravel()}
-function resetTravel(){localStorage.removeItem('sanadTravel');renderTravel();toast('تمت إعادة ضبط القائمة')}
-renderTravel();
-
 // معلومة اليوم
 const facts=['ضوء الشمس يستغرق نحو 8 دقائق و20 ثانية ليصل إلى الأرض.','النحل يتواصل باستخدام حركات راقصة دقيقة.','تتكون السنة الضوئية من المسافة التي يقطعها الضوء خلال سنة.','تساعد القراءة المنتظمة على توسيع المفردات والمعرفة.','تتغير أطوال الظلال خلال اليوم بسبب حركة الشمس الظاهرية.'];
 $('dailyFact').textContent=facts[new Date().getDate()%facts.length];
 
 
-// الخزنة الخاصة المشفرة
-let vaultKey=null,vaultData=[];
-async function deriveVaultKey(password,salt){const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:250000,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);}
-function b64(bytes){return btoa(String.fromCharCode(...new Uint8Array(bytes)));}
-function un64(str){return Uint8Array.from(atob(str),c=>c.charCodeAt(0));}
-async function encryptVault(){const iv=crypto.getRandomValues(new Uint8Array(12));const plain=new TextEncoder().encode(JSON.stringify(vaultData));const cipher=await crypto.subtle.encrypt({name:'AES-GCM',iv},vaultKey,plain);const old=ls('sanadVault',{});old.iv=b64(iv);old.data=b64(cipher);sv('sanadVault',old);}
-function vaultUi(){const saved=ls('sanadVault',null);$('vaultSetup').classList.toggle('hidden',!!saved);$('vaultUnlock').classList.toggle('hidden',!saved||!!vaultKey);$('vaultPanel').classList.toggle('hidden',!vaultKey);}
-async function createVault(){try{if(!crypto.subtle)return toast('التشفير غير مدعوم في هذا المتصفح');const a=$('vaultNewPass').value,b=$('vaultConfirmPass').value;if(a.length<8)return toast('استخدم كلمة مرور من 8 أحرف على الأقل');if(a!==b)return toast('كلمتا المرور غير متطابقتين');const salt=crypto.getRandomValues(new Uint8Array(16));vaultKey=await deriveVaultKey(a,salt);vaultData=[];sv('sanadVault',{salt:b64(salt),iv:'',data:''});await encryptVault();$('vaultNewPass').value='';$('vaultConfirmPass').value='';vaultUi();renderVault();toast('تم إنشاء الخزنة المشفرة');}catch(e){vaultKey=null;toast('تعذر إنشاء الخزنة');}}
-async function unlockVault(){try{const saved=ls('sanadVault',null);if(!saved)return vaultUi();const pass=$('vaultPass').value;if(!pass)return toast('أدخل كلمة المرور');vaultKey=await deriveVaultKey(pass,un64(saved.salt));const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:un64(saved.iv)},vaultKey,un64(saved.data));vaultData=JSON.parse(new TextDecoder().decode(plain));$('vaultPass').value='';vaultUi();renderVault();toast('تم فتح الخزنة');}catch(e){vaultKey=null;vaultData=[];vaultUi();toast('كلمة المرور غير صحيحة أو تعذر فك التشفير');}}
-function lockVault(){vaultKey=null;vaultData=[];vaultUi();$('vaultItems').innerHTML='';toast('تم قفل الخزنة');}
-async function addVaultItem(){if(!vaultKey)return toast('افتح الخزنة أولاً');const title=$('vaultTitle').value.trim(),body=$('vaultBody').value.trim();if(!title||!body)return toast('أدخل العنوان والمحتوى');vaultData.unshift({id:Date.now(),title,body,created:new Date().toLocaleString('ar-EG')});try{await encryptVault();$('vaultTitle').value='';$('vaultBody').value='';renderVault();toast('تم حفظ السجل مشفرًا');}catch(e){toast('تعذر حفظ السجل');}}
-async function deleteVaultItem(id){vaultData=vaultData.filter(x=>x.id!==id);await encryptVault();renderVault();}
-function renderVault(){if(!$('vaultItems'))return;$('vaultItems').innerHTML=vaultData.map(x=>`<details class="card"><summary>${esc(x.title)} <small class="muted">${esc(x.created)}</small></summary><p style="white-space:pre-wrap">${esc(x.body)}</p><button class="danger" onclick="deleteVaultItem(${x.id})">حذف السجل</button></details>`).join('')||'<p class="muted">الخزنة فارغة حتى الآن.</p>';}
-vaultUi();
+// وضع التركيز: مؤقت موثوق يعتمد على الوقت الفعلي
+let focusTimer = null;
+let focusRemaining = 25 * 60;
+let focusMode = 'focus';
+let focusEndAt = null;
 
+function focusDuration(mode) {
+  const input = $(mode === 'focus' ? 'focusMinutes' : 'breakMinutes');
+  const fallback = mode === 'focus' ? 25 : 5;
+  const max = mode === 'focus' ? 180 : 60;
+  const value = input ? Number(input.value) : fallback;
+  return Math.min(max, Math.max(1, Number.isFinite(value) && value > 0 ? value : fallback)) * 60;
+}
 
-// وضع التركيز المطوّر: مؤقت يعتمد على وقت النهاية ويتعامل مع الخلفية
-let focusTimer=null,focusRemaining=25*60,focusMode='focus',focusEndAt=null;
-function focusDuration(mode){const id=mode==='focus'?'focusMinutes':'breakMinutes';const min=Number($(id).value);return Math.max(1,Math.min(mode==='focus'?180:60,Number.isFinite(min)&&min>0?min:mode==='focus'?25:5))*60;}
-function showFocusTime(){const m=Math.floor(focusRemaining/60),sec=focusRemaining%60;$('focusClock').textContent=String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');}
-function focusTick(){if(!focusEndAt)return;focusRemaining=Math.max(0,Math.ceil((focusEndAt-Date.now())/1000));showFocusTime();if(focusRemaining<=0){clearInterval(focusTimer);focusTimer=null;focusEndAt=null;focusMode=focusMode==='focus'?'break':'focus';focusRemaining=focusDuration(focusMode);$('focusState').textContent=focusMode==='break'?'أحسنت! انتهت جلسة التركيز، حان وقت الاستراحة.':'انتهت الاستراحة؛ ابدأ جلسة تركيز جديدة عندما تكون مستعدًا.';showFocusTime();if(navigator.vibrate)navigator.vibrate([180,100,180]);toast(focusMode==='break'?'انتهت جلسة التركيز':'انتهت الاستراحة');}}
-function startFocus(){if(focusTimer)return;if(focusRemaining<=0)focusRemaining=focusDuration(focusMode);focusEndAt=Date.now()+focusRemaining*1000;$('focusState').textContent=focusMode==='focus'?'جلسة تركيز جارية':'وقت الاستراحة';focusTimer=setInterval(focusTick,250);focusTick();}
-function pauseFocus(){if(focusEndAt)focusRemaining=Math.max(0,Math.ceil((focusEndAt-Date.now())/1000));if(focusTimer)clearInterval(focusTimer);focusTimer=null;focusEndAt=null;showFocusTime();$('focusState').textContent='المؤقت متوقف مؤقتًا';}
-function resetFocus(){if(focusTimer)clearInterval(focusTimer);focusTimer=null;focusEndAt=null;focusMode='focus';focusRemaining=focusDuration('focus');showFocusTime();$('focusState').textContent='جاهز لجلسة تركيز جديدة';}
-function skipFocusPhase(){if(focusTimer)clearInterval(focusTimer);focusTimer=null;focusEndAt=null;focusMode=focusMode==='focus'?'break':'focus';focusRemaining=focusDuration(focusMode);showFocusTime();$('focusState').textContent=focusMode==='break'?'تم الانتقال إلى الاستراحة':'تم الانتقال إلى جلسة التركيز';}
-$('focusMinutes').addEventListener('change',()=>{if(focusMode==='focus'&&!focusTimer)resetFocus();});$('breakMinutes').addEventListener('change',()=>{if(focusMode==='break'&&!focusTimer){focusRemaining=focusDuration('break');showFocusTime();}});resetFocus();
+function showFocusTime() {
+  const clock = $('focusClock');
+  if (!clock) return;
+  const safe = Math.max(0, Math.ceil(focusRemaining));
+  const minutes = Math.floor(safe / 60);
+  const seconds = safe % 60;
+  clock.textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+}
+
+function stopFocusInterval() {
+  if (focusTimer !== null) window.clearInterval(focusTimer);
+  focusTimer = null;
+}
+
+function focusTick() {
+  if (focusEndAt === null) return;
+  focusRemaining = Math.max(0, Math.ceil((focusEndAt - Date.now()) / 1000));
+  showFocusTime();
+  if (focusRemaining === 0) {
+    stopFocusInterval();
+    focusEndAt = null;
+    focusMode = focusMode === 'focus' ? 'break' : 'focus';
+    focusRemaining = focusDuration(focusMode);
+    const state = $('focusState');
+    if (state) state.textContent = focusMode === 'break'
+      ? 'أحسنت! انتهت جلسة التركيز، حان وقت الاستراحة.'
+      : 'انتهت الاستراحة؛ ابدأ جلسة تركيز جديدة عندما تكون مستعدًا.';
+    showFocusTime();
+    try { if (navigator.vibrate) navigator.vibrate([180, 100, 180]); } catch (e) {}
+    if (typeof toast === 'function') toast(focusMode === 'break' ? 'انتهت جلسة التركيز' : 'انتهت الاستراحة');
+  }
+}
+
+function startFocus() {
+  if (focusEndAt !== null) return;
+  if (focusRemaining <= 0) focusRemaining = focusDuration(focusMode);
+  focusEndAt = Date.now() + focusRemaining * 1000;
+  const state = $('focusState');
+  if (state) state.textContent = focusMode === 'focus' ? 'جلسة تركيز جارية' : 'وقت الاستراحة';
+  stopFocusInterval();
+  focusTimer = window.setInterval(focusTick, 200);
+  focusTick();
+}
+
+function pauseFocus() {
+  if (focusEndAt !== null) focusRemaining = Math.max(0, Math.ceil((focusEndAt - Date.now()) / 1000));
+  focusEndAt = null;
+  stopFocusInterval();
+  showFocusTime();
+  const state = $('focusState');
+  if (state) state.textContent = 'المؤقت متوقف مؤقتًا';
+}
+
+function resetFocus() {
+  focusEndAt = null;
+  stopFocusInterval();
+  focusMode = 'focus';
+  focusRemaining = focusDuration('focus');
+  showFocusTime();
+  const state = $('focusState');
+  if (state) state.textContent = 'جاهز لجلسة تركيز جديدة';
+}
+
+function skipFocusPhase() {
+  focusEndAt = null;
+  stopFocusInterval();
+  focusMode = focusMode === 'focus' ? 'break' : 'focus';
+  focusRemaining = focusDuration(focusMode);
+  showFocusTime();
+  const state = $('focusState');
+  if (state) state.textContent = focusMode === 'break' ? 'تم الانتقال إلى الاستراحة' : 'تم الانتقال إلى جلسة التركيز';
+}
+
+// إتاحة الدوال صراحةً لأزرار HTML
+window.startFocus = startFocus;
+window.pauseFocus = pauseFocus;
+window.resetFocus = resetFocus;
+window.skipFocusPhase = skipFocusPhase;
+$('focusMinutes').addEventListener('change', () => { if (focusEndAt === null && focusMode === 'focus') resetFocus(); });
+$('breakMinutes').addEventListener('change', () => { if (focusEndAt === null && focusMode === 'break') { focusRemaining = focusDuration('break'); showFocusTime(); } });
+// تحديث فوري عند الرجوع إلى التطبيق بعد تشغيله بالخلفية
+ document.addEventListener('visibilitychange', () => { if (focusEndAt !== null) focusTick(); });
+resetFocus();
 
 // البطاقة الشخصية الرقمية + vCard + QR
 function buildProfileCard(){const name=$('cardName').value.trim(),role=$('cardRole').value.trim(),phone=$('cardPhone').value.trim(),email=$('cardEmail').value.trim(),link=$('cardLink').value.trim();if(!name)return toast('اكتب الاسم أولاً');const clean=s=>String(s).replace(/[\r\n]/g,' ').replace(/\s+/g,' ').trim();const vcard=`BEGIN:VCARD\nVERSION:3.0\nFN:${clean(name)}\nTITLE:${clean(role)}\nTEL:${clean(phone)}\nEMAIL:${clean(email)}\nURL:${clean(link)}\nEND:VCARD`;const safeName=esc(name),safeRole=esc(role);$('profileOutput').innerHTML=`<div class="profile-card"><div class="avatar">👤</div><h2>${safeName}</h2><p>${safeRole}</p><p>${esc(phone)}<br>${esc(email)}</p><div id="profileQR" style="display:inline-block;background:white;padding:8px;border-radius:8px;margin-top:8px"></div></div><button class="success" style="width:100%" onclick="downloadVCard()">⬇️ تحميل بطاقة الاتصال</button>`;window.sanadVCard=vcard;try{new QRCode($('profileQR'),{text:vcard,width:160,height:160,correctLevel:QRCode.CorrectLevel.M});}catch(e){$('profileQR').textContent='تعذر إنشاء QR لهذه البيانات';}}
