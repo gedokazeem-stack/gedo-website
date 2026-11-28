@@ -84,20 +84,29 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
 .bar-fill{height:100%;background:var(--accent);border-radius:20px}
 .profile-card{background:linear-gradient(135deg,#10234b,#176b78);color:white;border-radius:18px;padding:20px;max-width:460px;margin:12px auto;text-align:center;box-shadow:0 10px 28px #10234b30}
 .profile-card .avatar{width:68px;height:68px;border-radius:50%;background:#ffffff22;display:grid;place-items:center;font-size:30px;margin:0 auto 10px}
-.intro-screen{position:fixed;inset:0;z-index:1000;background:linear-gradient(145deg,#10234b,#176b78);color:#fff;display:none;align-items:center;justify-content:center;padding:24px;text-align:center}.intro-screen.show{display:flex}.intro-panel{width:min(100%,560px);background:#ffffff12;border:1px solid #ffffff35;border-radius:24px;padding:28px;box-shadow:0 20px 60px #0003}.intro-mark{font-size:42px;font-weight:900;letter-spacing:2px;color:#a8e2e5}.intro-panel h1{font-size:30px;margin:14px 0}.intro-panel p{line-height:2;color:#e3f2fb}.intro-panel button{margin-top:12px;background:#0d9488;color:white;border:0;border-radius:12px;padding:13px 20px;font-weight:bold;width:100%}.wheel-wrap{max-width:360px;margin:12px auto;text-align:center}.wheel-wrap canvas{width:100%;height:auto;max-width:340px}.call-overlay{position:fixed;inset:0;z-index:900;background:linear-gradient(160deg,#14243b,#080d17);color:#fff;display:none;align-items:center;justify-content:center;text-align:center;padding:24px}.call-overlay.show{display:flex}.call-name{font-size:30px;font-weight:bold;margin:18px 0 8px}.call-actions{display:flex;justify-content:center;gap:42px;margin-top:55px}.call-actions button{border:0;border-radius:50%;width:68px;height:68px;color:#fff;font-size:25px}.call-answer{background:#16a34a}.call-decline{background:#dc3545}.call-state{color:#cbd5e1}.stats-bars{display:grid;gap:10px}.stats-row{display:flex;align-items:center;gap:9px}.stats-row span:first-child{width:120px;font-size:12px}.stats-row strong{font-size:12px;min-width:24px;text-align:left}.stats-row .bar-track{height:12px}
 .qr-result-img{display:block;width:min(100%,560px);height:auto;margin:14px auto;background:#fff;border:0;border-radius:4px;image-rendering:pixelated;box-shadow:0 2px 12px #0002}
 .cv-paper{background:#fff;color:#17243d;border:1px solid #d9e0ea;border-radius:12px;padding:22px;min-height:180px;line-height:1.7;overflow-wrap:anywhere}
 .cv-paper h2{margin:0;color:#173b72}.cv-paper h3{color:#0d9488;border-bottom:1px solid #dce5ee;padding-bottom:5px}.cv-paper p{white-space:pre-wrap;margin:6px 0}
 @media print{body{background:#fff!important}.cv-paper{border:0!important;box-shadow:none!important}}
 @media(max-width:420px){.tabs button{font-size:10px}.profile-card{padding:15px}}
+.callscr,.welcome{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;text-align:center;color:#fff}
+.callscr{z-index:200;justify-content:space-between;padding:80px 20px 70px;background:linear-gradient(#1f2d44,#0a111d)}
+.welcome{z-index:150;justify-content:center;padding:24px;background:linear-gradient(140deg,#10234b,#0d9488)}
+.callscr.show,.welcome.show{display:flex}
+.avatar{width:110px;height:110px;border-radius:50%;background:#ffffff25;display:flex;align-items:center;justify-content:center;font-size:48px;margin:0 auto 18px}
+.cbtns{display:flex;gap:70px}
+.cbtn{width:72px;height:72px;border-radius:50%;border:0;font-size:30px;color:#fff}
+.cbtn.red{background:#e0323f}.cbtn.green{background:#22b55a;animation:pulse 1s infinite}
+@keyframes pulse{50%{transform:scale(1.12)}}
+.bar{height:12px;background:var(--line);border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent)}
+.day{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);color:var(--text);font-weight:normal;font-size:14px}
+.day input{width:22px;height:22px;padding:0;margin:0;flex:none}.day.done{opacity:.5;text-decoration:line-through}
+.howto{background:var(--bg);border:1px dashed var(--accent);border-radius:12px;padding:10px 12px;margin:0 0 14px}.howto ol{margin:8px 0 4px}.howto li{font-size:13px;color:var(--text)}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 </head>
 <body>
-
-<div id="welcomeScreen" class="intro-screen"><div class="intro-panel"><div class="intro-mark">سَـنَـد</div><div class="made">✦ MADE BY GEDO ✦</div><h1>أهلاً بك في سَنَد</h1><p>المعلومة الصح في الوقت الصح.<br>أدوات يومية تساعدك في مكان واحد.</p><button onclick="showAboutIntro()">ابدأ رحلتك</button></div></div>
-<div id="aboutScreen" class="intro-screen"><div class="intro-panel"><div class="intro-mark">SANAD</div><h1>عن مشروع سَنَد</h1><p>سَنَد مشروع رقمي يجمع أدوات عملية للحياة اليومية، من الطوارئ والحسابات والتنظيم إلى التعلم والإنتاجية.</p><p><b>أهدافنا:</b> تسهيل الوصول للمعلومة، توفير أدوات بسيطة، وتشجيع الاستخدام الآمن للتقنية.</p><p><b>التقنيات:</b> HTML لبناء الصفحات، CSS للتصميم المتجاوب، JavaScript للتفاعل، وميزة التخزين المحلي لحفظ بعض التفضيلات على الجهاز.</p><p><b>الخصوصية:</b> أغلب الأدوات تعمل داخل المتصفح، وبعض الخدمات مثل الترجمة وتحديث الأسعار تحتاج اتصالًا بالإنترنت.</p><p>تصميم وتطوير: <b>MADE BY GEDO</b></p><button onclick="finishIntro()">دخول إلى سَنَد</button></div></div>
 
 <header>
   <div class="top">
@@ -126,6 +135,11 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
       <div class="card tile" data-search="sos استغاثة خطر موقع طوارئ رسالة">
         <div><div class="emoji">🆘</div><b>زر الاستغاثة SOS</b><small>أرسل موقعك الجغرافي لجهات الطوارئ فوراً.</small></div>
         <button class="danger" onclick="showPage('sos')">فتح SOS</button>
+      </div>
+
+      <div class="card tile" data-search="مكالمة وهمية اتصال رنين موقف محرج">
+        <div><div class="emoji">📞</div><b>المكالمة الوهمية</b><small>الموبايل يرن كأن حد بيتصل بيك عشان تخرج من أي موقف.</small></div>
+        <button class="danger" onclick="showPage('fakecall')">افتح</button>
       </div>
 
       <div class="card tile" data-search="بطاقة طبية فصيلة دم حساسية أدوية أمراض">
@@ -179,8 +193,8 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
         <button class="primary" onclick="showPage('qr')">افتح الأداة</button>
       </div>
 
-      <div class="card tile" data-search="ساعة عالمية توقيت القاهرة دول العالم ">
-        <div><div class="emoji">🌍</div><b>الساعة العالمية</b><small>الوقت والتاريخ في عواصم العالم .</small></div>
+      <div class="card tile" data-search="ساعة عالمية توقيت القاهرة دول العالم نزلة سلمان">
+        <div><div class="emoji">🌍</div><b>الساعة العالمية</b><small>الوقت والتاريخ في عواصم العالم.</small></div>
         <button class="primary" onclick="showPage('world')">افتح الساعة</button>
       </div>
 
@@ -190,11 +204,6 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
       </div>
 
 
-
-      <div class="card tile" data-search="كلمة مرور باسورد حماية أمان">
-        <div><div class="emoji">🔐</div><b>مولّد كلمات المرور</b><small>إنشاء كلمات مرور قوية وعشوائية.</small></div>
-        <button class="primary" onclick="showPage('password')">افتح المولّد</button>
-      </div>
 
 
       <div class="card tile" data-search="بطاقة شخصية رقمية بطاقة تعريف vcard qr" data-feature="profile">
@@ -209,36 +218,27 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
         <div><div class="emoji">📄</div><b>منشئ السيرة الذاتية CV</b><small>أنشئ سيرة ذاتية عربية أو إنجليزية وصدّرها PDF.</small></div>
         <button class="primary" onclick="showPage('cv')">أنشئ CV</button>
       </div>
+      <div class="card tile" data-search="مقابلة شخصية انترفيو أسئلة تحضير وظيفة cv طلاب جامعة مدرسة منحة مناقشة مشروع">
+        <div><div class="emoji">🎤</div><b>تحضير المقابلة الشخصية</b><small>أسئلة لكل الفئات: وظائف، طلاب، منح، ومناقشة المشروع.</small></div>
+        <button class="primary" onclick="showPage('interview')">ابدأ التدريب</button>
+      </div>
+      <div class="card tile" data-search="ختمة قرآن جدول ورد صفحات يوم">
+        <div><div class="emoji">📖</div><b>خطة ختمة القرآن</b><small>اختار عدد الأيام والجدول يقولك تقرأ كام صفحة كل يوم.</small></div>
+        <button class="primary" onclick="showPage('quran')">اعمل خطتي</button>
+      </div>
+      <div class="card tile" data-search="كاشف روابط نصب هكر مشبوه احتيال فحص رابط">
+        <div><div class="emoji">🕵️</div><b>كاشف الروابط المشبوهة</b><small>افحص أي رابط وشوف هل هو آمن ولا نصب.</small></div>
+        <button class="primary" onclick="showPage('scam')">افحص رابط</button>
+      </div>
+      <div class="card tile" data-search="أرقام كلام كتابة تفقيط شيك مبلغ">
+        <div><div class="emoji">🔢</div><b>الأرقام إلى كلام</b><small>حوّل أي رقم لكتابة بالعربي (1500 ← ألف وخمسمائة).</small></div>
+        <button class="primary" onclick="showPage('numwords')">حوّل رقم</button>
+      </div>
+      <div class="card tile" data-search="عن المشروع فكرة أهداف سند">
+        <div><div class="emoji">ℹ️</div><b>عن المشروع</b><small>فكرة سَنَد وأهدافه.</small></div>
+        <button class="primary" onclick="showPage('about')">اعرف أكتر</button>
+      </div>
     </div>
-
-      <div class="card tile" data-search="تحضير مقابلة شخصية انترفيو cv وظيفة أسئلة">
-        <div><div class="emoji">🎤</div><b>تحضير المقابلة الشخصية</b><small>تدرّب على أسئلة المقابلات واحصل على ملاحظات لتحسين إجاباتك.</small></div>
-        <button class="primary" onclick="showPage('cv');document.getElementById('interviewArea').scrollIntoView({behavior:'smooth'})">ابدأ التحضير</button>
-      </div>
-      <div class="card tile" data-search="ختم القرآن الكريم جدول قراءة صفحات أيام">
-        <div><div class="emoji">📖</div><b>خطة ختم القرآن</b><small>قسّم صفحات المصحف على عدد الأيام الذي تختاره.</small></div>
-        <button class="primary" onclick="showPage('quran')">أنشئ خطتي</button>
-      </div>
-      <div class="card tile" data-search="كاشف الروابط نصب احتيال تصيد رابط مشبوه">
-        <div><div class="emoji">🛡️</div><b>كاشف الروابط المشبوهة</b><small>افحص مؤشرات الرابط قبل فتحه.</small></div>
-        <button class="primary" onclick="showPage('linkcheck')">افحص رابطًا</button>
-      </div>
-      <div class="card tile" data-search="مكالمة وهمية اتصال مزيف رنين">
-        <div><div class="emoji">📞</div><b>المكالمة الوهمية</b><small>محاكاة اتصال وارد باسم تختاره.</small></div>
-        <button class="primary" onclick="showPage('fakecall')">افتح الميزة</button>
-      </div>
-      <div class="card tile" data-search="إحصائيات الاستخدام أكثر الأقسام استخدام رسم بياني">
-        <div><div class="emoji">📊</div><b>إحصائيات الاستخدام</b><small>اعرف أكثر أقسام سَنَد التي تستخدمها.</small></div>
-        <button class="primary" onclick="showPage('stats')">عرض الإحصائيات</button>
-      </div>
-      <div class="card tile" data-search="تحويل الأرقام إلى كلمات كتابة الرقم بالحروف العربية">
-        <div><div class="emoji">🔢</div><b>تحويل الأرقام إلى كلمات</b><small>حوّل الرقم إلى كتابة عربية واضحة.</small></div>
-        <button class="primary" onclick="showPage('numwords')">حوّل رقمًا</button>
-      </div>
-      <div class="card tile" data-search="عجلة القرار اختيار عشوائي اختيارات حظ">
-        <div><div class="emoji">🎡</div><b>عجلة القرار</b><small>أدخل اختياراتك ودع العجلة تختار عشوائيًا.</small></div>
-        <button class="primary" onclick="showPage('wheel')">لف العجلة</button>
-      </div>
 
     <h2 class="section-title">معلومة اليوم</h2>
     <div class="card">
@@ -321,6 +321,15 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
     <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
     <h2>🕋 حاسبة الزكاة</h2>
     <div class="card">
+      <details class="howto" open><summary>📘 طريقة الحساب خطوة بخطوة</summary><ol>
+<li><b>سعر الذهب:</b> اكتب سعر جرام الذهب عيار 24 النهارده في أول خانة، أو اضغط زرار «🌐 جلب السعر (نت)» وهيجيبه لوحده (محتاج إنترنت).</li>
+<li><b>الفلوس:</b> في «النقد والمدخرات البنكية» اكتب كل الفلوس اللي معاك أو في البنك.</li>
+<li><b>الذهب:</b> لو عندك ذهب مدخّر اكتب وزنه بالجرام واختار العيار (عيار 21 هو الأشهر).</li>
+<li><b>التجارة والديون:</b> لو عندك بضاعة للبيع اكتب قيمتها، ولو عليك ديون مستحقة قريب اكتبها في خانة الديون عشان تتخصم.</li>
+<li><b>الحول:</b> علّم على «مرّ حول هجري كامل» لو المال معاك سنة هجرية كاملة (حوالي 354 يوم).</li>
+<li><b>احسب:</b> اضغط زرار «احسب مقدار الزكاة» الأخضر، والنتيجة هتظهر تحته.</li>
+</ol>
+<p class="muted" style="margin:6px 0 0"><b>مثال:</b> سعر الجرام 4500 ومعاك 500,000 جنيه ومر عليها سنة هجرية. النصاب = 85 × 4500 = 382,500، والمبلغ أكبر منه، فالزكاة = 500,000 × 2.5% = <b>12,500 جنيه</b>.</p></details>
       <label>سعر جرام الذهب عيار 24 اليوم (بالجنيه)</label>
       <div class="row">
         <input id="z0" type="number" placeholder="مثال: 4500" style="margin:0">
@@ -343,6 +352,13 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
     <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
     <h2>⚡ حاسبة فاتورة الكهرباء المطورة</h2>
     <div class="card">
+      <details class="howto" open><summary>📘 طريقة الحساب خطوة بخطوة</summary><ol>
+<li><b>الاستهلاك:</b> اكتب «القراءة الحالية» و«القراءة السابقة» من العداد والفرق بينهم هو استهلاكك، أو اكتب الاستهلاك مباشرة (بالكيلوواط/ساعة) في خانة «أو أدخل الاستهلاك مباشرة» لو عارفه من الفاتورة.</li>
+<li><b>الأسعار (اختياري):</b> لو أسعار فاتورتك مختلفة اضغط «⚙️ تعديل أسعار الشرائح» وغيّر السعر قدام كل شريحة.</li>
+<li><b>الرسوم (اختياري):</b> اكتب أي رسوم زيادة (نظافة، مرافق...) في خانة «رسوم/ضرائب إضافية».</li>
+<li><b>احسب:</b> اضغط زرار «احسب الفاتورة بالتفصيل» الأخضر، وهتظهر تحته القيمة الإجمالية وحساب كل شريحة.</li>
+</ol>
+<p class="muted" style="margin:6px 0 0"><b>مثال:</b> استهلاك 250 ك.و.س بالأسعار الافتراضية = 34 + 39 + 95 + 77.5 = <b>245.5 جنيه</b>.</p></details>
       <h3>قراءات العداد</h3>
       <div class="row"><div><label>القراءة الحالية (اختياري)</label><input id="eCurrent" type="number" min="0" placeholder="مثال: 12500"></div><div><label>القراءة السابقة (اختياري)</label><input id="ePrevious" type="number" min="0" placeholder="مثال: 12380"></div></div>
       <label>أو أدخل الاستهلاك مباشرة (كيلوواط/ساعة)</label><input id="e0" type="number" min="0" placeholder="مثال: 250">
@@ -488,44 +504,7 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
 
 
   <!-- مولّد كلمات المرور -->
-  <section class="page" id="password">
-    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
-    <h2>🔐 مولّد كلمات المرور الذكي</h2>
-
-    <div class="card">
-      <h3>✨ اقتراحات سهلة التذكّر</h3>
-      <p class="muted">اكتب اسمًا مستعارًا أو كلمة غير شخصية، وسننشئ اقتراحات مختلفة بأرقام ورموز عشوائية.</p>
-      <label for="memorableBase">اسم مستعار أو كلمة تتذكرها</label>
-      <input id="memorableBase" maxlength="18" placeholder="مثال: Gedo أو كلمة مميزة" autocomplete="off">
-      <label for="memorableCount">عدد الاقتراحات</label>
-      <select id="memorableCount">
-        <option value="5">5 اقتراحات</option>
-        <option value="8" selected>8 اقتراحات</option>
-        <option value="10">10 اقتراحات</option>
-      </select>
-      <button class="primary" onclick="makeMemorablePasswords()">إنشاء اقتراحات</button>
-      <div id="memorableResults" style="margin-top:12px"></div>
-      <p class="muted">تنبيه أمان: لا تستخدم اسمك الحقيقي أو تاريخ ميلادك أو رقم هاتفك. هذه الطريقة أسهل في التذكّر لكنها أضعف من كلمة مرور عشوائية بالكامل؛ استخدم كلمة مختلفة لكل حساب.</p>
-    </div>
-
-    <div class="card">
-      <h3>🛡️ كلمة مرور عشوائية قوية</h3>
-      <label>طول كلمة المرور (8 إلى 64)</label><input id="passLength" type="number" min="8" max="64" value="20">
-      <label><input id="passUpper" type="checkbox" checked style="width:auto"> أحرف كبيرة A-Z</label>
-      <label><input id="passLower" type="checkbox" checked style="width:auto"> أحرف صغيرة a-z</label>
-      <label><input id="passNumbers" type="checkbox" checked style="width:auto"> أرقام 0-9</label>
-      <label><input id="passSymbols" type="checkbox" checked style="width:auto"> رموز خاصة</label>
-      <label><input id="passNoAmbiguous" type="checkbox" checked style="width:auto"> استبعاد الرموز المتشابهة مثل O و0 وI وl</label>
-      <button class="primary" onclick="makePassword()">إنشاء كلمة مرور قوية</button>
-      <input id="passResult" readonly placeholder="ستظهر كلمة المرور هنا" dir="ltr" style="font-weight:bold;text-align:center">
-      <div id="passStrength" class="muted"></div>
-      <div class="row"><button class="secondary" onclick="copyText($('passResult').value)">📋 نسخ</button><button class="success" onclick="makePassword()">🔄 إنشاء أخرى</button></div>
-      <p class="muted">يستخدم المولّد العشوائية الآمنة في المتصفح، ولا يحفظ كلمات المرور داخل سَنَد.</p>
-    </div>
-  </section>
-
-
-  <!-- البطاقة الشخصية الرقمية -->
+<!-- البطاقة الشخصية الرقمية -->
   <section class="page" id="profile">
     <button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>🪪 بطاقتي الشخصية الرقمية</h2>
     <div class="card"><label>الاسم المعروض</label><input id="cardName" placeholder="اسمك"><label>الصفة أو التعريف</label><input id="cardRole" placeholder="مثال: طالب / مطور"><label>رقم الهاتف (اختياري)</label><input id="cardPhone" type="tel" placeholder="01xxxxxxxxx"><label>البريد الإلكتروني (اختياري)</label><input id="cardEmail" type="email" placeholder="name@example.com"><label>رابط صفحتك أو موقعك</label><input id="cardLink" placeholder="https://..."><button class="primary" onclick="buildProfileCard()">إنشاء البطاقة</button><div id="profileOutput"></div></div>
@@ -562,22 +541,58 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
       <label>الدورات والشهادات</label><textarea id="cvCourses" rows="3" placeholder="اسم الدورة والجهة والسنة"></textarea>
       <button class="success" style="width:100%" onclick="previewCV()">معاينة السيرة الذاتية</button>
     </div>
+    <div class="card"><button class="success" style="width:100%" onclick="showPage('interview')">🎤 تحضير المقابلة الشخصية</button></div>
     <div class="card"><div id="cvPreview" class="cv-paper"><p class="muted">املأ البيانات ثم اضغط معاينة.</p></div><button class="primary" onclick="exportCV()">🖨️ تصدير / حفظ PDF</button><p class="muted">اختر «حفظ كملف PDF» من نافذة الطباعة. راجع بياناتك قبل مشاركة السيرة.</p></div>
-    <div class="card" id="interviewArea"><h3>🎤 التحضير للمقابلة الشخصية</h3><p class="muted">اختر نوع المقابلة، أجب عن الأسئلة واحدًا تلو الآخر، ثم احصل على ملاحظات عملية. التقييم آلي مبدئي وليس حكمًا على كفاءتك.</p><label>نوع المقابلة</label><select id="interviewType"><option value="general">مقابلة عامة / وظيفة</option><option value="student">مقابلة دراسية / منحة</option><option value="tech">مقابلة تقنية / برمجة</option></select><button class="primary" onclick="startInterview()">ابدأ التدريب</button><div id="interviewQuestion" class="notice hidden"></div><label id="interviewAnswerLabel" class="hidden">إجابتك</label><textarea id="interviewAnswer" rows="4" class="hidden" placeholder="اكتب إجابتك كما لو كنت أمام مسؤول المقابلة..."></textarea><div class="row"><button id="interviewSubmit" class="success hidden" onclick="submitInterviewAnswer()">قيّم إجابتي والسؤال التالي</button><button class="secondary" onclick="resetInterview()">إعادة التدريب</button></div><div id="interviewFeedback" class="result"></div></div>
   </section>
 
-  <section class="page" id="quran"><button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>📖 خطة ختم القرآن الكريم</h2><div class="card"><p class="muted">عدد صفحات المصحف الافتراضي 604 صفحات. يمكنك تغيير العدد إذا كنت تستخدم طبعة مختلفة.</p><label>عايز تختم في كام يوم؟</label><input id="quranDays" type="number" min="1" max="365" value="40"><label>عدد صفحات المصحف</label><input id="quranPages" type="number" min="1" max="2000" value="604"><button class="primary" onclick="buildQuranPlan()">إنشاء جدول الختم</button><div id="quranSummary" class="result"></div></div><div class="card"><div class="row"><h3 style="flex:1">جدول القراءة اليومي</h3><button class="secondary" onclick="resetQuranProgress()">تصفير المتابعة</button></div><div id="quranPlan" class="muted">أدخل عدد الأيام لإنشاء خطتك.</div></div></section>
-  <section class="page" id="linkcheck"><button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>🛡️ كاشف الروابط المشبوهة</h2><div class="card"><label>الصق الرابط هنا</label><input id="linkInput" type="url" inputmode="url" placeholder="https://example.com" dir="ltr"><button class="primary" onclick="checkLinkSafety()">افحص الرابط</button><div id="linkResult" class="result"></div><div class="notice">تنبيه مهم: الفحص هنا يحلل شكل الرابط وعلامات الخطر المعروفة داخل المتصفح، ولا يتصل بقاعدة بيانات عالمية للبرمجيات الخبيثة. نتيجة «لا تظهر علامات واضحة» لا تعني ضمان الأمان. لا تدخل كلمات المرور أو بياناتك البنكية في رابط غير موثوق.</div></div></section>
-  <section class="page" id="fakecall"><button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>📞 وضع المكالمة الوهمية</h2><div class="card"><p class="muted">محاكاة اتصال وارد داخل الصفحة فقط؛ لا يتم إجراء مكالمة حقيقية ولا الاتصال بأي شخص.</p><label>اسم المتصل الذي سيظهر</label><input id="fakeCallerName" maxlength="35" placeholder="مثال: أحمد" value="اتصال وارد"><label>تأخير الرنين (ثوانٍ)</label><select id="fakeCallDelay"><option value="0">فوري</option><option value="5">5 ثوانٍ</option><option value="10">10 ثوانٍ</option><option value="15">15 ثانية</option></select><button class="success" style="width:100%" onclick="startFakeCall()">📲 تشغيل المكالمة الوهمية</button><div id="fakeCallStatus" class="muted"></div></div></section>
-  <section class="page" id="stats"><button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>📊 إحصائيات الاستخدام</h2><div class="grid"><div class="mini-stat">إجمالي مرات فتح الأقسام<strong id="statsTotal">0</strong></div><div class="mini-stat">عدد الأقسام المستخدمة<strong id="statsUsed">0</strong></div></div><div class="card"><h3>الأكثر استخدامًا</h3><canvas id="statsChart" width="700" height="300" style="width:100%;height:auto"></canvas><div id="statsBars" class="stats-bars"></div><p class="muted">تُحفظ الإحصائيات على هذا الجهاز فقط، ويمكن أن تختلف عند مسح بيانات المتصفح.</p><button class="secondary" onclick="resetStats()">مسح الإحصائيات</button></div></section>
-  <section class="page" id="numwords"><button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>🔢 تحويل الأرقام إلى كلمات</h2><div class="card"><label>اكتب الرقم</label><input id="numberInput" type="text" inputmode="numeric" placeholder="مثال: 1500" dir="ltr"><button class="primary" onclick="convertNumberToWords()">تحويل إلى كلمات</button><div id="numberWordsResult" class="result"></div><button class="secondary" onclick="copyText($('numberWordsResult').textContent)">نسخ النتيجة</button><p class="muted">يدعم الأعداد الصحيحة الموجبة حتى أقل من تريليون.</p></div></section>
-  <section class="page" id="wheel"><button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>🎡 عجلة القرار</h2><div class="card"><label>اكتب الاختيارات، كل اختيار في سطر أو افصل بينها بفاصلة</label><textarea id="wheelOptions" rows="5" placeholder="بيتزا
-برجر
-فراخ
-كشري"></textarea><button class="primary" onclick="prepareWheel()">تحديث العجلة</button><div class="wheel-wrap"><div style="font-size:26px">▼</div><canvas id="wheelCanvas" width="340" height="340"></canvas></div><button id="spinWheelButton" class="success" style="width:100%" onclick="spinWheel()">🎡 لف العجلة</button><div id="wheelResult" class="result" style="text-align:center"></div></div></section>
-  <section class="page" id="about"><button class="secondary back" onclick="showPage('home')">← الرئيسية</button><h2>عن مشروع سَنَد</h2><div class="card"><h3>المعلومة الصح في الوقت الصح</h3><p>سَنَد مشروع أدوات رقمية يومية يهدف إلى جمع الخدمات العملية والمعلومات الأساسية في واجهة واحدة سهلة الاستخدام.</p><h3>أهداف المشروع</h3><ul><li>تسهيل الوصول إلى أدوات مفيدة.</li><li>دعم التنظيم والتعلم والإنتاجية.</li><li>تعزيز الوعي بالأمان الرقمي.</li><li>تقديم تجربة عربية مناسبة للموبايل.</li></ul><h3>التقنيات المستخدمة</h3><p>HTML وCSS وJavaScript وLocalStorage، مع بعض الخدمات الخارجية الاختيارية التي تتطلب الإنترنت.</p><p><b>MADE BY GEDO</b></p></div></section>
+  <!-- ميزات جديدة -->
+  <section class="page" id="fakecall">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>📞 المكالمة الوهمية</h2>
+    <div class="notice">للخروج من المواقف المحرجة: الموبايل يرن كأن حد بيتصل بيك. سيب الصفحة مفتوحة والشاشة شغالة وارفع الصوت. الاهتزاز مش بيشتغل على الآيفون.</div>
+    <div class="card"><label>اسم المتصل</label><input id="fcName" placeholder="ماما" maxlength="30">
+    <label>الرنين بعد</label><select id="fcDelay"><option value="0">فوراً</option><option value="5">5 ثواني</option><option value="10" selected>10 ثواني</option><option value="30">30 ثانية</option><option value="60">دقيقة</option></select>
+    <button class="danger" style="width:100%;font-size:17px" onclick="startFakeCall()">📞 ابدأ المكالمة</button></div>
+  </section>
 
-<footer>سَنَد | SANAD<br>المعلومة الصح في الوقت الصح — MADE BY GEDO</footer>
+  <section class="page" id="quran">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>📖 خطة ختمة القرآن</h2>
+    <div class="card"><label>عايز تختم في كام يوم؟</label><input id="qDays" type="number" min="1" max="604" value="30" inputmode="numeric"><button class="success" style="width:100%" onclick="makeKhatma()">📅 اعمل الجدول</button></div>
+    <div class="card" id="qBox" style="display:none"><div class="result" id="qSum"></div><div class="bar"><i id="qBar" style="width:0%"></i></div><p class="muted" id="qPct"></p><div id="qList"></div><button class="secondary" style="width:100%;margin-top:10px" onclick="resetKhatma()">🗑️ إلغاء الخطة</button></div>
+  </section>
+
+  <section class="page" id="scam">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>🕵️ كاشف الروابط المشبوهة</h2>
+    <div class="notice">الكاشف بيحلل شكل الرابط وعلامات النصب الشائعة من غير ما يدخل الموقع. النتيجة تقدير مش ضمان 100%، ولو في شك ما تدخلش بياناتك.</div>
+    <div class="card"><label>الصق الرابط هنا</label><input id="scUrl" dir="ltr" placeholder="https://example.com" autocapitalize="off" autocomplete="off"><button class="primary" onclick="checkLink()">🔎 افحص الرابط</button><div id="scOut"></div></div>
+  </section>
+
+  <section class="page" id="numwords">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>🔢 تحويل الأرقام إلى كلام</h2>
+    <div class="card"><label>اكتب الرقم</label><input id="nwIn" inputmode="decimal" placeholder="1500" oninput="convNum()"><label>العملة</label><select id="nwCur" onchange="convNum()"><option value="">بدون عملة</option><option value="egp">جنيه مصري</option></select>
+    <div class="result" id="nwOut">اكتب رقم لتظهر الكتابة هنا</div><button class="secondary" style="width:100%" onclick="copyText($('nwOut').textContent)">📋 نسخ</button></div>
+  </section>
+  <section class="page" id="interview">
+    <button class="secondary back" onclick="showPage('cv')">← منشئ CV</button>
+    <h2>🎤 تحضير المقابلة الشخصية</h2>
+    <div class="notice">اختار الفئة المناسبة ليك، اقرأ السؤال وجاوب بصوت عالي كأنك قدّام اللجنة، وبعدها شوف النصيحة.</div>
+    <div class="card"><label>نوع المقابلة</label><select id="ivCat" onchange="ivReset()"><option value="job">💼 وظيفة وشركات</option><option value="uni">🎓 طلاب الجامعة (قبول، تدريب، نشاط طلابي)</option><option value="school">🏫 طلاب المدرسة (قبول، مسابقة، اتحاد طلاب)</option><option value="grant">🏆 منح ومسابقات وعمل تطوعي</option><option value="project">📋 مناقشة مشروع أمام المدرس أو اللجنة</option></select>
+    <div class="muted" id="ivNum"></div><div class="result" id="ivQ" style="color:var(--text)">اضغط «سؤال جديد» لتبدأ</div><details id="ivTip" style="display:none"><summary>💡 نصيحة للإجابة</summary><p class="muted" id="ivT"></p></details><button class="success" style="width:100%;margin-top:12px" onclick="nextQ()">🎲 سؤال جديد</button></div>
+  </section>
+
+  <section class="page" id="about">
+    <button class="secondary back" onclick="showPage('home')">← الرئيسية</button>
+    <h2>ℹ️ عن المشروع</h2>
+    <div class="card"><h3>💡 فكرة سَنَد</h3><p class="muted">سَنَد دليل رقمي عربي يجمع في مكان واحد كل ما يحتاجه الشخص في يومه ووقت الطوارئ: استغاثة بالموقع، إسعافات أولية، بطاقة طبية، حاسبات، أدوات QR، مترجم، وغيرها. يعمل من المتصفح مباشرة وبدون تسجيل، وبياناتك تبقى على جهازك.</p></div>
+    <div class="card"><h3>🎯 الأهداف</h3><ul class="muted"><li>توفير المعلومة والأداة الصحيحة في الوقت الصحيح.</li><li>مساعدة المستخدم في مواقف الطوارئ بسرعة وبخطوات واضحة.</li><li>تبسيط الحسابات والخدمات اليومية في تطبيق واحد.</li><li>الحفاظ على خصوصية المستخدم بتخزين البيانات محلياً.</li><li>واجهة عربية بسيطة تعمل على الموبايل والكمبيوتر.</li></ul></div>
+    <div class="card"><h3>⭐ صفحتي على فيسبوك</h3><div class="item"><b>Gedo Kazem</b><a class="copy" href="https://www.facebook.com/share/1EoMzgqQa7/" target="_blank" rel="noopener">زيارة صفحتي</a></div><button class="secondary" style="width:100%" onclick="copyText('https://www.facebook.com/share/1EoMzgqQa7/')">📋 نسخ رابط صفحتي</button></div>
+    <div class="card"><p class="muted">تصميم وتطوير: GEDO</p></div>
+  </section>
+
+<footer>سَنَد | SANAD - النسخة المطورة<br>المعلومة الصح في الوقت الصح.</footer>
 </main>
 
 <nav class="tabs">
@@ -588,8 +603,10 @@ video{width:100%;border-radius:12px;background:#000;margin-bottom:10px}
   <button onclick="showPage('qr',this)"><span>🔳</span>QR</button>
 </nav>
 
-<div id="fakeCallOverlay" class="call-overlay"><div><div style="font-size:13px;color:#cbd5e1">مكالمة واردة</div><div class="call-name" id="fakeCallerDisplay">اتصال وارد</div><div class="call-state" id="fakeCallState">مكالمة واردة • محاكاة</div><div class="call-actions"><button class="call-answer" aria-label="رد" onclick="answerFakeCall()">✓</button><button class="call-decline" aria-label="إنهاء" onclick="endFakeCall()">✕</button></div><p style="color:#9ca3af;font-size:12px;margin-top:28px">محاكاة داخل سَنَد — لا توجد مكالمة حقيقية</p></div></div>
 <div id="toast"></div>
+<div class="callscr" id="callScreen"><div><div class="avatar" id="callAv">👤</div><h1 id="callName" style="margin:0 0 6px"></h1><div id="callStat" style="opacity:.8;font-size:17px">مكالمة واردة...</div></div><div class="cbtns" id="callBtns"><button class="cbtn red" onclick="endFakeCall()">✖</button><button class="cbtn green" onclick="answerFakeCall()">📞</button></div></div>
+<div class="welcome" id="welcome"><div style="font-size:56px">🤝</div><h1 style="margin:8px 0">أهلاً بك في سَنَد</h1><p style="max-width:380px;line-height:1.9;opacity:.92">دليلك الشامل للحياة اليومية والطوارئ: استغاثة، إسعافات أولية، أدوات وحاسبات وخدمات تسهّل يومك. كله في مكان واحد وبدون تسجيل.</p><button class="success" style="font-size:17px;padding:13px 34px" onclick="closeWelcome()">ابدأ الآن ←</button></div>
+
 
 <script>
 const $=id=>document.getElementById(id);
@@ -600,11 +617,11 @@ const sv=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';clearTimeout(t.x);t.x=setTimeout(()=>t.style.display='none',2400)}
 
 function showPage(id,btn){
+  const prevEl=document.querySelector('.page.active'),prevId=prevEl?prevEl.id:'';
+  if(prevId==='home'&&id!=='home')window.homeY=window.scrollY;
   if(id!=='qr'&&typeof stopScan==='function')stopScan();
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  if(!$(id))return;
   $(id).classList.add('active');
-  if(typeof recordPageVisit==='function')recordPageVisit(id);
   document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('selected'));
   if(btn)btn.classList.add('selected');
   else{
@@ -612,7 +629,7 @@ function showPage(id,btn){
     if(id in map)document.querySelectorAll('.tabs button')[map[id]].classList.add('selected');
   }
   if(id==='home'){$('search').value='';searchAll('');}
-  window.scrollTo(0,0);
+  window.scrollTo(0,(id==='home'&&prevId!=='home')?(window.homeY||0):0);
 }
 
 function toggleDark(){
@@ -997,55 +1014,13 @@ function updateUnits(){
   $('unitTo').innerHTML=keys.map(x=>`<option>${x}</option>`).join('');
   if(keys.length>1)$('unitTo').selectedIndex=1;
 }
-updateUnits();
+if($('unitType'))updateUnits();
 function convertUnit(){
   const v=Number($('unitValue').value),type=$('unitType').value;if(!$('unitValue').value||!Number.isFinite(v))return toast('اكتب قيمة صحيحة');
   const a=$('unitFrom').value,b=$('unitTo').value;let out;
   if(type==='temp'){const c=a==='مئوية'?v:a==='فهرنهايت'?(v-32)*5/9:v-273.15;out=b==='مئوية'?c:b==='فهرنهايت'?c*9/5+32:c+273.15;}
   else out=v*units[type][a]/units[type][b];
   $('unitResult').textContent=out.toLocaleString('en-US',{maximumFractionDigits:5})+' '+b;
-}
-
-// اقتراح كلمات مرور أسهل في التذكر مع أرقام ورموز عشوائية
-function makeMemorablePasswords(){
-  const base=$('memorableBase').value.trim();
-  if(!base)return toast('اكتب اسمًا مستعارًا أو كلمة أولاً');
-  if(!window.crypto?.getRandomValues)return toast('المتصفح لا يدعم العشوائية الآمنة');
-  if(base.length<2)return toast('اكتب حرفين على الأقل');
-  const count=Math.max(5,Math.min(10,Number($('memorableCount').value)||8));
-  const digits='23456789', symbols='!@#$%&*?';
-  const suggestions=[];
-  for(let i=0;i<count;i++){
-    let number='';
-    for(let j=0;j<6;j++)number+=digits[secureRandomIndex(digits.length)];
-    const symbol1=symbols[secureRandomIndex(symbols.length)];
-    const symbol2=symbols[secureRandomIndex(symbols.length)];
-    const upperFirst=i%2===0;
-    const namePart=upperFirst?base.charAt(0).toUpperCase()+base.slice(1):base.toLowerCase();
-    const candidate=i%3===0?`${namePart}${symbol1}${number}`:
-      i%3===1?`${number}${symbol1}${namePart}${symbol2}`:
-      `${namePart}${number}${symbol1}${symbol2}`;
-    suggestions.push(candidate);
-  }
-  $('memorableResults').innerHTML=suggestions.map((p,i)=>
-    `<div class="item" style="display:flex;flex-direction:column;align-items:stretch;gap:8px;margin:8px 0">
-      <b style="direction:ltr;text-align:center;overflow-wrap:anywhere;font-size:17px">${esc(p)}</b>
-      <button class="secondary" type="button" data-password="${esc(p)}" onclick="copyText(this.dataset.password)">📋 نسخ الاقتراح ${i+1}</button>
-    </div>`
-  ).join('');
-}
-
-// مولد كلمات مرور قوي مع اختيار مجموعات الأحرف وعشوائية غير منحازة
-function secureRandomIndex(max){const limit=Math.floor(0x100000000/max)*max;const a=new Uint32Array(1);do{crypto.getRandomValues(a);}while(a[0]>=limit);return a[0]%max;}
-function makePassword(){
-  if(!window.crypto?.getRandomValues)return toast('المتصفح لا يدعم مولد العشوائية الآمن');
-  let groups=[];const upper='ABCDEFGHJKLMNPQRSTUVWXYZ',lower='abcdefghijkmnopqrstuvwxyz',numbers='23456789',symbols='!@#$%^&*()-_=+[]{}?';
-  if($('passUpper').checked)groups.push(upper);if($('passLower').checked)groups.push(lower);if($('passNumbers').checked)groups.push(numbers);if($('passSymbols').checked)groups.push(symbols);
-  if(!groups.length)return toast('اختر نوعًا واحدًا على الأقل');const exclude=$('passNoAmbiguous').checked;let pool=groups.join('');if(!exclude)pool+='0O1Il';
-  const n=Math.max(8,Math.min(64,Number($('passLength').value)||20));$('passLength').value=n;let chars=groups.map(g=>g[secureRandomIndex(g.length)]);
-  while(chars.length<n)chars.push(pool[secureRandomIndex(pool.length)]);
-  for(let i=chars.length-1;i>0;i--){const j=secureRandomIndex(i+1);[chars[i],chars[j]]=[chars[j],chars[i]];}
-  $('passResult').value=chars.join('');$('passStrength').textContent=`الطول: ${n} حرفًا — مجموعات الأحرف المختارة: ${groups.length} — احفظها في مكان آمن.`;
 }
 
 // معلومة اليوم
@@ -1087,56 +1062,205 @@ function previewCV(){
 function exportCV(){if(!$('cvPreview').querySelector('h2'))previewCV();if(!$('cvPreview').querySelector('h2'))return;const w=window.open('','_blank');if(!w)return toast('اسمح بفتح نافذة المعاينة لتصدير PDF');const content=$('cvPreview').innerHTML;w.document.write(`<!doctype html><html dir="${$('cvPreview').dir}" lang="${$('cvLang').value}"><meta charset="utf-8"><title>CV</title><style>body{font-family:Arial,Tahoma,sans-serif;color:#17243d;line-height:1.7;padding:28px;max-width:850px;margin:auto}h2{color:#173b72;margin:0}h3{color:#0d9488;border-bottom:1px solid #ddd;padding-bottom:5px}p{white-space:pre-wrap;overflow-wrap:anywhere}@media print{body{padding:0}}</style><body>${content}<script>window.onload=()=>setTimeout(()=>window.print(),300)<\\/script></body></html>`);w.document.close();}
 
 
+// ===== ميزات جديدة =====
+// المكالمة الوهمية
+let callAC,callTimer,ringInt,callTick,callSec=0;
+$('fcName').value=ls('fcName','');
+function beep(){if(!callAC)return;[0,0.5].forEach(t=>{const o=callAC.createOscillator(),g=callAC.createGain(),n=callAC.currentTime+t;o.frequency.value=t?520:440;o.connect(g);g.connect(callAC.destination);g.gain.setValueAtTime(0.0001,n);g.gain.exponentialRampToValueAtTime(0.3,n+0.02);g.gain.exponentialRampToValueAtTime(0.0001,n+0.4);o.start(n);o.stop(n+0.45);});}
+function vib(){try{if(navigator.vibrate)navigator.vibrate([400,200,400])}catch(e){}}
+function stopRing(){clearInterval(ringInt);try{if(navigator.vibrate)navigator.vibrate(0)}catch(e){}}
+function startFakeCall(){
+  const name=$('fcName').value.trim()||'ماما';sv('fcName',$('fcName').value.trim());
+  const d=parseInt($('fcDelay').value)||0;
+  try{callAC=callAC||new(window.AudioContext||window.webkitAudioContext)();if(callAC.state==='suspended')callAC.resume();}catch(e){}
+  clearTimeout(callTimer);
+  toast(d?`هتجيلك مكالمة بعد ${d} ثانية`:'جارٍ الاتصال...');
+  callTimer=setTimeout(()=>showCall(name),d*1000);
+}
+function showCall(name){
+  $('callName').textContent=name;$('callAv').textContent=name.charAt(0);$('callStat').textContent='مكالمة واردة...';
+  document.querySelector('#callBtns .green').style.display='';
+  $('callScreen').classList.add('show');beep();vib();
+  clearInterval(ringInt);ringInt=setInterval(()=>{beep();vib()},2000);
+}
+function answerFakeCall(){
+  stopRing();document.querySelector('#callBtns .green').style.display='none';
+  callSec=0;$('callStat').textContent='00:00';clearInterval(callTick);
+  callTick=setInterval(()=>{callSec++;$('callStat').textContent=String(Math.floor(callSec/60)).padStart(2,'0')+':'+String(callSec%60).padStart(2,'0')},1000);
+}
+function endFakeCall(){stopRing();clearInterval(callTick);clearTimeout(callTimer);$('callScreen').classList.remove('show');}
 
-// شاشة الترحيب والتعريف: تظهر مرة واحدة فقط على هذا الجهاز
-function showAboutIntro(){ $('welcomeScreen').classList.remove('show'); $('aboutScreen').classList.add('show'); }
-function finishIntro(){ localStorage.setItem('sanadIntroSeen','1'); $('aboutScreen').classList.remove('show'); $('welcomeScreen').classList.remove('show'); }
-if(localStorage.getItem('sanadIntroSeen')!=='1'){ $('welcomeScreen').classList.add('show'); }
+// ختمة القرآن
+function khatmaRange(i,n){return [Math.floor(i*604/n)+1,Math.floor((i+1)*604/n)];}
+function makeKhatma(){
+  const n=parseInt($('qDays').value);
+  if(!(n>=1&&n<=604)){toast('اكتب عدد أيام من 1 إلى 604');return;}
+  sv('khatma',{n:n,start:Date.now(),done:[]});renderKhatma();
+}
+function renderKhatma(){
+  const k=ls('khatma',null),box=$('qBox');
+  if(!k){box.style.display='none';return;}
+  box.style.display='block';$('qDays').value=k.n;
+  const per=(604/k.n).toFixed(1).replace('.0','');
+  $('qSum').textContent=`ختمة في ${k.n} يوم، حوالي ${per} صفحة يومياً`;
+  $('qList').innerHTML=Array.from({length:k.n},(_,i)=>{
+    const r=khatmaRange(i,k.n),dn=k.done.includes(i);
+    const d=new Date(k.start+i*864e5).toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long'});
+    return `<label class="day${dn?' done':''}"><input type="checkbox" ${dn?'checked':''} onchange="toggleKhatma(${i})"><span>اليوم ${i+1} (${esc(d)}): من صفحة ${r[0]} إلى ${r[1]} (${r[1]-r[0]+1} صفحة)</span></label>`;
+  }).join('');
+  const p=Math.round(k.done.length/k.n*100);
+  $('qBar').style.width=p+'%';
+  $('qPct').textContent=`خلصت ${k.done.length} من ${k.n} يوم (${p}%)`+(p===100?' 🎉 تقبّل الله منك':'');
+}
+function toggleKhatma(i){const k=ls('khatma',null);if(!k)return;const j=k.done.indexOf(i);if(j<0)k.done.push(i);else k.done.splice(j,1);sv('khatma',k);renderKhatma();}
+function resetKhatma(){if(confirm('إلغاء خطة الختمة الحالية؟')){localStorage.removeItem('khatma');renderKhatma();}}
+renderKhatma();
 
-// إحصائيات محلية لأقسام سَنَد
-const pageNames={home:'الرئيسية',sos:'الاستغاثة',med:'البطاقة الطبية',firstaid:'الإسعافات',emergency:'الطوارئ',locationShare:'مشاركة الموقع',zakat:'الزكاة',elec:'الكهرباء',money:'العملات والذهب',wallets:'المحافظ',codes:'أكواد الشبكات',qr:'QR',world:'الساعة العالمية',dates:'التواريخ',password:'كلمات المرور',profile:'البطاقة الرقمية',translator:'المترجم',cv:'السيرة الذاتية',quran:'خطة القرآن',linkcheck:'كاشف الروابط',fakecall:'المكالمة الوهمية',stats:'الإحصائيات',numwords:'تحويل الأرقام',wheel:'عجلة القرار',about:'عن المشروع'};
-function recordPageVisit(id){const data=ls('sanadUsageStats',{});data[id]=(data[id]||0)+1;sv('sanadUsageStats',data);if(id==='stats')renderStats();}
-function renderStats(){const data=ls('sanadUsageStats',{}),entries=Object.entries(data).filter(([k,v])=>v>0).sort((a,b)=>b[1]-a[1]);const total=entries.reduce((a,x)=>a+x[1],0);$('statsTotal').textContent=total.toLocaleString('ar-EG');$('statsUsed').textContent=entries.length.toLocaleString('ar-EG');$('statsBars').innerHTML=entries.slice(0,12).map(([k,v])=>`<div class="stats-row"><span>${esc(pageNames[k]||k)}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.max(3,v/(entries[0]?.[1]||1)*100)}%"></div></div><strong>${v}</strong></div>`).join('')||'<p class="muted">ابدأ استخدام الأقسام لتظهر الإحصائيات هنا.</p>';const c=$('statsChart'),ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);if(!entries.length)return;const top=entries.slice(0,7),max=top[0][1],barH=28,gap=12;top.forEach(([k,v],i)=>{const y=15+i*(barH+gap),w=(v/max)*430;ctx.fillStyle='#0d9488';ctx.fillRect(210,y,w,barH);ctx.fillStyle=getComputedStyle(document.body).getPropertyValue('--text').trim()||'#17243d';ctx.font='16px Tahoma';ctx.textAlign='right';ctx.fillText(pageNames[k]||k,195,y+20);ctx.textAlign='left';ctx.fillText(String(v),220+w,y+20);});}
-function resetStats(){sv('sanadUsageStats',{});renderStats();toast('تم مسح الإحصائيات');}
+// كاشف الروابط
+const SC_BRANDS={paypal:'paypal.com',facebook:'facebook.com',instagram:'instagram.com',whatsapp:'whatsapp.com',google:'google.com',apple:'apple.com',microsoft:'microsoft.com',amazon:'amazon.com',netflix:'netflix.com',binance:'binance.com',tiktok:'tiktok.com',youtube:'youtube.com',vodafone:'vodafone.com.eg',etisalat:'etisalat.eg',instapay:'instapay.eg',fawry:'fawry.com'};
+function checkLink(){
+  const raw=$('scUrl').value.trim(),out=$('scOut');
+  if(!raw){toast('الصق الرابط الأول');return;}
+  let u;
+  try{u=new URL(/^[a-z][a-z0-9+.-]*:\/\//i.test(raw)?raw:'https://'+raw);}
+  catch(e){out.innerHTML='<div class="notice">الرابط غير صالح، راجع كتابته.</div>';return;}
+  const h=u.hostname.toLowerCase(),full=raw.toLowerCase();let sc=0;const r=[];
+  const add=(p,t)=>{sc+=p;r.push(t);};
+  const off=Object.values(SC_BRANDS).some(d=>h===d||h.endsWith('.'+d));
+  if(!/^https?:$/.test(u.protocol))add(40,'بروتوكول غير معتاد ('+u.protocol+')');
+  if(u.protocol==='http:')add(15,'الرابط غير مشفّر (HTTP بدون HTTPS)');
+  if(/^\d{1,3}(\.\d{1,3}){3}$/.test(h)||h.includes(':'))add(40,'بيستخدم عنوان IP بدل اسم موقع');
+  if(h.includes('xn--'))add(30,'اسم موقع بحروف مموّهة (Punycode) ممكن تقلّد موقع تاني');
+  if(raw.includes('@'))add(30,'فيه علامة @ داخل الرابط، حيلة لإخفاء الوجهة الحقيقية');
+  if(h.split('.').length>4)add(15,'عدد كبير من النطاقات الفرعية');
+  if((h.match(/-/g)||[]).length>=2)add(10,'اسم الموقع فيه شرطات كتير');
+  if(/\.(xyz|top|click|tk|ml|ga|cf|gq|work|loan|icu|buzz|rest|zip|mov|cam|monster)$/.test(h))add(20,'امتداد دومين شائع في المواقع الاحتيالية');
+  if(['bit.ly','tinyurl.com','t.co','cutt.ly','is.gd','rb.gy','shorturl.at','goo.gl','ow.ly'].includes(h))add(20,'رابط مختصر مش باين وجهته الحقيقية');
+  if(!off){
+    const kw=[...new Set(full.match(/login|verify|secure|update|account|confirm|suspend|password|wallet|bonus|claim|prize|gift|giveaway|hack|free|reward|اربح|جائزة|مجان/g)||[])];
+    if(kw.length)add(Math.min(30,kw.length*10),'كلمات متكررة في رسائل النصب: '+kw.join('، '));
+    for(const b in SC_BRANDS){if(h.includes(b)){add(40,'اسم "'+b+'" موجود في الرابط لكن الموقع مش الموقع الرسمي ('+SC_BRANDS[b]+')');break;}}
+  }
+  if(raw.length>100)add(10,'الرابط طويل بشكل مبالغ فيه');
+  const lv=sc>=50?['خطر','#dc3545','🔴','الأفضل ما تفتحش الرابط ولا تدخل أي بيانات.']:sc>=20?['مشبوه','#f59e0b','🟠','افتحه بحذر ولا تدخل أي بيانات أو أرقام.']:['لا توجد مؤشرات خطر واضحة','#0d9488','🟢','برضو راجع المصدر قبل ما تدخل بياناتك.'];
+  const good=/\.gov\.eg$/.test(h)?'<p class="muted">✅ نطاق حكومي مصري رسمي.</p>':'';
+  out.innerHTML=`<div class="result" style="color:${lv[1]}">${lv[2]} ${lv[0]} (الخطورة ${Math.min(sc,100)}/100)</div><p class="muted" dir="ltr">${esc(h)}</p>${r.length?'<ul>'+r.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<p class="muted">ما لقيناش علامات تحذير في شكل الرابط.</p>'}${good}<p class="muted">${lv[3]}</p>`;
+}
 
-// خطة ختم القرآن: توزيع صفحات المصحف بالتساوي مع متابعة محلية
-function buildQuranPlan(){const days=Math.floor(Number($('quranDays').value)),pages=Math.floor(Number($('quranPages').value));if(!days||days<1||days>365||!pages||pages<1||pages>2000)return toast('أدخل عدد أيام وصفحات صحيحًا');const base=Math.floor(pages/days),extra=pages%days;let page=1,rows=[];const done=ls('sanadQuranDone',{});for(let d=1;d<=days;d++){const count=base+(d<=extra?1:0),from=page,to=page+count-1;page=to+1;rows.push(`<label class="item" style="display:flex;gap:10px;align-items:center"><input type="checkbox" style="width:auto;margin:0" ${done[d]?'checked':''} onchange="toggleQuranDay(${d},this.checked)"><span style="flex:1">اليوم ${d}: الصفحات ${from}–${to}</span><b>${count} صفحة</b></label>`);} $('quranSummary').textContent=`خطة ${days} يومًا — متوسط ${ (pages/days).toFixed(1) } صفحة يوميًا — إجمالي ${pages} صفحة.`;$('quranPlan').innerHTML=rows.join('');}
-function toggleQuranDay(day,checked){const d=ls('sanadQuranDone',{});d[day]=checked;sv('sanadQuranDone',d);}
-function resetQuranProgress(){sv('sanadQuranDone',{});buildQuranPlan();toast('تم تصفير متابعة الختم');}
+// الأرقام إلى كلام
+const NW_O=['','واحد','اثنان','ثلاثة','أربعة','خمسة','ستة','سبعة','ثمانية','تسعة','عشرة','أحد عشر','اثنا عشر','ثلاثة عشر','أربعة عشر','خمسة عشر','ستة عشر','سبعة عشر','ثمانية عشر','تسعة عشر'];
+const NW_T=['','','عشرون','ثلاثون','أربعون','خمسون','ستون','سبعون','ثمانون','تسعون'];
+const NW_H=['','مائة','مائتان','ثلاثمائة','أربعمائة','خمسمائة','ستمائة','سبعمائة','ثمانمائة','تسعمائة'];
+function nw3(n){
+  const p=[],h=Math.floor(n/100),r=n%100;
+  if(h)p.push(NW_H[h]);
+  if(r){if(r<20)p.push(NW_O[r]);else{const o=r%10,t=NW_T[Math.floor(r/10)];p.push(o?NW_O[o]+' و'+t:t);}}
+  return p.join(' و');
+}
+function nwScale(g,one,two,few,many){
+  if(g===1)return one;if(g===2)return two;
+  if(g>=3&&g<=10)return nw3(g)+' '+few;
+  return (g===200?'مائتا':nw3(g))+' '+many;
+}
+function numToWords(n){
+  if(n===0)return 'صفر';
+  const b=Math.floor(n/1e9),m=Math.floor(n%1e9/1e6),t=Math.floor(n%1e6/1e3),u=n%1e3,p=[];
+  if(b)p.push(nwScale(b,'مليار','ملياران','مليارات','مليار'));
+  if(m)p.push(nwScale(m,'مليون','مليونان','ملايين','مليون'));
+  if(t)p.push(nwScale(t,'ألف','ألفان','آلاف','ألف'));
+  if(u)p.push(nw3(u));
+  return p.join(' و');
+}
+function convNum(){
+  let v=$('nwIn').value.replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[,،\s]/g,'').replace('٫','.');
+  const o=$('nwOut');
+  if(!v){o.textContent='اكتب رقم لتظهر الكتابة هنا';return;}
+  if(!/^-?\d+(\.\d+)?$/.test(v)){o.textContent='اكتب أرقام فقط';return;}
+  const neg=v[0]==='-';if(neg)v=v.slice(1);
+  const parts=v.split('.'),f=parts[1]||'';let i=parts[0].replace(/^0+(?=\d)/,'');
+  if(i.length>12){o.textContent='الرقم كبير جداً (الحد الأقصى 12 رقم)';return;}
+  let s=numToWords(Number(i));
+  if($('nwCur').value==='egp'){
+    s+=' جنيه';
+    if(f){const q=Math.round(parseFloat('0.'+f)*100);if(q>0&&q<100)s+=' و'+numToWords(q)+' قرش';}
+  }else if(f){s+=' فاصلة '+f.split('').map(d=>d==='0'?'صفر':NW_O[+d]).join(' ');}
+  o.textContent=(neg?'سالب ':'')+s;
+}
 
-// كاشف أولي لعلامات الروابط المشبوهة (لا يقدم ضمانًا أمنيًا)
-function checkLinkSafety(){const raw=$('linkInput').value.trim(),out=$('linkResult');out.textContent='';if(!raw)return toast('الصق رابطًا أولاً');let u;try{u=new URL(raw.includes('://')?raw:'https://'+raw);}catch(e){out.textContent='⚠️ الرابط غير مكتمل أو مكتوب بصيغة غير صحيحة.';return;}const host=u.hostname.toLowerCase(),flags=[];if(!['http:','https:'].includes(u.protocol))flags.push('بروتوكول غير معتاد');if(u.protocol!=='https:')flags.push('لا يستخدم اتصال HTTPS مشفرًا');if(u.username||u.password)flags.push('يحتوي على بيانات دخول داخل الرابط');if(host.startsWith('xn--')||host.includes('.xn--'))flags.push('يحتوي على اسم نطاق دولي قد يُستخدم لتقليد مواقع أخرى');if(/^\d{1,3}(\.\d{1,3}){3}$/.test(host))flags.push('يستخدم عنوان IP بدل اسم نطاق معروف');if(host.split('.').length>4)flags.push('اسم النطاق طويل أو متعدد المستويات بشكل غير معتاد');if((u.href.match(/@/g)||[]).length)flags.push('يحتوي على رمز @ قد يُستخدم لإخفاء الوجهة');if(host.includes('-')&&host.length>24)flags.push('اسم النطاق طويل ويحتوي على شرطات كثيرة');if(/login|verify|secure|account|update|gift|free|bonus|wallet|bank|password/i.test(host))flags.push('يحتوي اسم النطاق على كلمات شائعة في رسائل الاستدراج؛ يلزم التحقق من الجهة');if(/bit\.ly|tinyurl|t\.co|goo\.gl|shorturl|cutt\.ly/i.test(host))flags.push('رابط مختصر يخفي الوجهة النهائية');if(/%[0-9a-f]{2}/i.test(u.pathname))flags.push('يحتوي المسار على ترميز قد يخفي أجزاء من العنوان');const severe=flags.some(x=>/بيانات دخول|IP بدل|تقليد|بروتوكول غير معتاد/.test(x));if(flags.length){out.innerHTML=`<span style="color:#dc3545">⚠️ ${severe?'الرابط عالي الاشتباه':'الرابط يحتاج حذرًا'}</span><ul>${flags.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><small>النطاق الذي تم تحليله: ${esc(host)}</small>`;}else{out.innerHTML=`<span style="color:#0d9488">✓ لا تظهر علامات خطر واضحة في شكل الرابط.</span><p class="muted">هذا لا يثبت أنه آمن أو موثوق. تحقق من اسم الموقع والجهة المرسلة قبل فتحه.</p><small>النطاق: ${esc(host)}</small>`;}}
+// تحضير المقابلة
+const IVQ={
+job:[
+['عرّفني بنفسك.','ركّز على دراستك وخبراتك ومهاراتك في دقيقة تقريباً بدون ما تحكي حياتك كلها.'],
+['ليه اخترت التخصص ده؟','اربط اختيارك بشغف حقيقي أو موقف حفّزك.'],
+['إيه أهم نقاط قوتك؟','اذكر نقطتين أو تلاتة مع مثال واقعي لكل واحدة.'],
+['إيه نقطة ضعفك؟','اذكر نقطة حقيقية بسيطة وقول بتعمل إيه علشان تحسّنها.'],
+['ليه تحب تشتغل عندنا؟','اعرف معلومات عن الشركة قبل المقابلة واربط أهدافها بمهاراتك.'],
+['شايف نفسك فين بعد 5 سنين؟','وضّح طموحك مع التزامك بالتطور داخل المكان.'],
+['احكيلي عن موقف واجهت فيه مشكلة وحليتها.','رتّب إجابتك: الموقف، ثم تصرفك، ثم النتيجة.'],
+['بتتعامل إزاي مع الضغط؟','وضّح إنك بتنظّم وقتك وتحدد أولوياتك وتحافظ على هدوئك.'],
+['تفضّل الشغل لوحدك ولا في فريق؟','قول إنك مرن، مع مثال على نجاحك في الحالتين.'],
+['إيه أكبر إنجاز حققته؟','اختار إنجاز واضح له نتيجة ملموسة أو أرقام.'],
+['ليه نختارك انت؟','لخّص قيمتك: مهارة، وحماس، واستعداد للتعلم.'],
+['إيه توقعاتك من الراتب؟','اعرف متوسط السوق وقول نطاق مرن بدل رقم ثابت.'],
+['لو رأيك اختلف مع رأي زميلك هتعمل إيه؟','وضّح إنك بتسمع وتناقش بالمنطق وتقبل الرأي الأفضل.'],
+['إيه آخر حاجة اتعلمتها؟','بيبيّن إنك بتتعلم باستمرار، فاختار حاجة حديثة ومفيدة.'],
+['عندك أسئلة لينا؟','اسأل عن فرص التطور أو طبيعة الفريق، وماتقولش "لا".']],
+uni:[
+['عرّفنا بنفسك.','اتكلم عن دراستك واهتماماتك وهدفك في دقيقة واحدة.'],
+['ليه اخترت الكلية أو القسم ده؟','اربطه بشغفك وخطتك للمستقبل.'],
+['إيه المواد أو المجالات اللي بتحبها أكتر وليه؟','اختار مادة وقول مثال عملي أو مشروع عملته فيها.'],
+['بتنظّم وقتك إزاي بين المذاكرة والأنشطة؟','اذكر جدول أو أدوات بتستخدمها وإزاي بتحدد أولوياتك.'],
+['احكي عن مشروع أو شغل جماعي عملته في الكلية.','ركّز على دورك أنت وعلى النتيجة.'],
+['لو واجهت مادة صعبة هتعمل إيه؟','وضّح خطواتك: فهم، أسئلة، مراجعة، وطلب مساعدة.'],
+['ليه عايز تنضم للنشاط أو التدريب ده؟','وضّح هتستفيد إيه وهتضيف إيه للفريق.'],
+['إيه خطتك بعد التخرج؟','اذكر هدف واضح مع استعداد إنك تتعلم وتتطور.']],
+school:[
+['عرّفنا بنفسك.','قول اسمك وصفك وهواياتك بثقة وابتسامة.'],
+['إيه مادتك المفضلة وليه؟','اختار مادة وقول سبب حقيقي بجملة أو اتنين.'],
+['إيه هواياتك وبتقضي وقت فراغك في إيه؟','اذكر هواية مفيدة وإزاي بتنمّيها.'],
+['بتذاكر وتنظّم وقتك إزاي؟','اذكر عادات بسيطة زي جدول يومي ومراجعة.'],
+['إيه الصفة اللي بتميزك عن زمايلك؟','اذكر صفة طيبة مع موقف بيدل عليها.'],
+['لو زميلك محتاج مساعدة في مادة هتعمل إيه؟','وضّح التعاون والاحترام من غير تكبّر.'],
+['إيه طموحك لما تكبر؟','قول حلم واضح وإزاي بتخطط توصله.'],
+['ليه عايز تترشح أو تشارك في النشاط ده؟','اربطه بخدمة زمايلك والمدرسة.']],
+grant:[
+['ليه بتتقدم للمنحة أو المبادرة دي؟','اربط أهدافك بهدفها بدل ما تقول "علشان الفايدة" بس.'],
+['إيه أبرز إنجازاتك لحد دلوقتي؟','اذكر إنجازين أو تلاتة بأدلة أو أرقام.'],
+['هتستفيد إيه وهتفيد غيرك إزاي؟','وضّح أثر واضح على مجتمعك أو زمايلك.'],
+['احكي عن موقف قدت فيه فريق أو مبادرة.','رتّب كلامك: الموقف، دورك، النتيجة.'],
+['إيه أكبر تحدي قابلك وتخطيته؟','اختار تحدي حقيقي وركّز على الحل اللي عملته.'],
+['لو اتقبلت، هتعمل إيه في أول 6 شهور؟','قدّم خطة بسيطة بخطوات واضحة.'],
+['لو ما اتقبلتش هتعمل إيه؟','وضّح إنك مستمر وبتتعلم من أي نتيجة.'],
+['إيه قيمة بتلتزم بيها في تعاملك مع الناس؟','اذكر قيمة (أمانة، التزام) مع مثال حقيقي.']],
+project:[
+['اشرحلنا فكرة مشروعك في دقيقة.','قول المشكلة والحل وفايدته من غير تفاصيل كتير.'],
+['إيه المشكلة اللي بيحلها المشروع؟','وضّح مشكلة حقيقية بمثال من الواقع.'],
+['ليه اخترت الفكرة دي؟','اربطها باحتياج الناس أو موقف شفته.'],
+['إيه التقنيات اللي استخدمتها وليه؟','اذكر الأدوات بالاسم وسبب اختيار كل واحدة.'],
+['إيه أصعب مشكلة قابلتك وحليتها إزاي؟','اختار مشكلة تقنية حقيقية وقول خطوات الحل.'],
+['إيه اللي بيميّز مشروعك عن غيره؟','ركّز على ميزتك الأساسية زي جمع الطوارئ وأدوات الحياة اليومية في مكان واحد.'],
+['إزاي بتحمي بيانات المستخدم؟','وضّح إن البيانات بتتحفظ على جهاز المستخدم نفسه.'],
+['لو معاك وقت أكتر هتضيف إيه؟','اذكر تطويرات واقعية زي حساب مستخدم أو تطبيق موبايل.'],
+['إزاي اختبرت إن المشروع شغال صح؟','اذكر إنك جربته على أجهزة مختلفة وصلحت الأخطاء.'],
+['مين اللي ممكن يستفيد منه؟','حدد فئات المستخدمين بوضوح.']]
+};
+let ivDeck=[],ivN=0;
+function ivReset(){ivDeck=[];ivN=0;$('ivNum').textContent='';$('ivQ').textContent='اضغط «سؤال جديد» لتبدأ';$('ivTip').style.display='none';}
+function nextQ(){
+  const L=IVQ[$('ivCat').value];
+  if(!ivDeck.length)ivDeck=L.map((_,i)=>i).sort(()=>Math.random()-.5);
+  const q=L[ivDeck.pop()];ivN++;
+  $('ivNum').textContent='السؤال رقم '+ivN;$('ivQ').textContent=q[0];$('ivT').textContent=q[1];
+  $('ivTip').style.display='block';$('ivTip').open=false;
+}
 
-// تحويل الأرقام إلى كلمات عربية
-const ones=['','واحد','اثنان','ثلاثة','أربعة','خمسة','ستة','سبعة','ثمانية','تسعة'];
-const teens=['عشرة','أحد عشر','اثنا عشر','ثلاثة عشر','أربعة عشر','خمسة عشر','ستة عشر','سبعة عشر','ثمانية عشر','تسعة عشر'];
-const tens=['','','عشرون','ثلاثون','أربعون','خمسون','ستون','سبعون','ثمانون','تسعون'];
-const hundreds=['','مائة','مائتان','ثلاثمائة','أربعمائة','خمسمائة','ستمائة','سبعمائة','ثمانمائة','تسعمائة'];
-function underThousand(n){if(!n)return '';let h=Math.floor(n/100),r=n%100,parts=[];if(h)parts.push(hundreds[h]);if(r>=10&&r<20)parts.push(teens[r-10]);else if(r>=20){let t=Math.floor(r/10),o=r%10;if(o)parts.push(ones[o]+' و'+tens[t]);else parts.push(tens[t]);}else if(r>0)parts.push(ones[r]);return parts.join(' و');}
-function groupWords(n,scale){if(!n)return '';if(scale===0)return underThousand(n);const names={1:['ألف','ألفان','آلاف','ألف'],2:['مليون','مليونان','ملايين','مليون'],3:['مليار','ملياران','مليارات','مليار']};const a=names[scale];if(n===1)return a[0];if(n===2)return a[1];if(n>=3&&n<=10)return underThousand(n)+' '+a[2];if(n===0)return '';return underThousand(n)+' '+a[3];}
-function numberToArabicWords(value){if(value===0)return 'صفر';let n=value,groups=[],scale=0;while(n>0&&scale<=3){const part=n%1000;if(part){const w=groupWords(part,scale);groups.unshift(w);}n=Math.floor(n/1000);scale++;}return groups.join(' و');}
-function convertNumberToWords(){const raw=$('numberInput').value.trim().replace(/[٬,\s]/g,'');if(!/^\d+$/.test(raw))return toast('اكتب عددًا صحيحًا موجبًا');const n=Number(raw);if(!Number.isSafeInteger(n)||n>=1000000000000)return toast('الحد الأقصى أقل من تريليون');$('numberWordsResult').textContent=numberToArabicWords(n);}
+// شاشة الترحيب
+function closeWelcome(){
+  try{localStorage.setItem('sanadWelcome','1')}catch(e){}
+  $('welcome').classList.remove('show');showPage('about');
+}
+try{if(!localStorage.getItem('sanadWelcome'))$('welcome').classList.add('show');}catch(e){}
 
-// تدريب المقابلات داخل قسم السيرة الذاتية
-const interviewSets={general:['حدثني عن نفسك باختصار.','ما أبرز نقاط القوة التي ستساعدك في هذا الدور؟','احكِ عن موقف واجهت فيه مشكلة وكيف تعاملت معها.','لماذا تريد هذه الوظيفة أو الفرصة؟','كيف تتعامل مع ضغط الوقت والعمل ضمن فريق؟'],student:['عرّفنا بنفسك واهتماماتك الدراسية.','لماذا اخترت هذا التخصص أو البرنامج؟','ما مشروع أو إنجاز تفخر به؟','كيف تنظم وقتك بين الدراسة والأنشطة؟','ما المهارة التي تريد تطويرها خلال السنة القادمة؟'],tech:['اشرح مشروعًا تقنيًا عملت عليه ودورك فيه.','كيف تتعامل مع خطأ لا تعرف سببه في البرنامج؟','ما الفرق بين HTML وCSS وJavaScript؟','كيف تتأكد من أن مدخلات المستخدم آمنة؟','اشرح فكرة تقنية تعلمتها مؤخرًا لشخص مبتدئ.']};let interviewIndex=0,interviewQuestions=[];
-function startInterview(){interviewQuestions=interviewSets[$('interviewType').value]||interviewSets.general;interviewIndex=0;$('interviewFeedback').textContent='';$('interviewAnswer').value='';$('interviewQuestion').classList.remove('hidden');$('interviewAnswer').classList.remove('hidden');$('interviewAnswerLabel').classList.remove('hidden');$('interviewSubmit').classList.remove('hidden');showInterviewQuestion();}
-function showInterviewQuestion(){if(interviewIndex>=interviewQuestions.length){$('interviewQuestion').textContent='انتهت الجولة! أحسنت. يمكنك إعادة التدريب لجولة جديدة.';$('interviewSubmit').classList.add('hidden');$('interviewAnswer').classList.add('hidden');$('interviewAnswerLabel').classList.add('hidden');return;}$('interviewQuestion').textContent=`السؤال ${interviewIndex+1} من ${interviewQuestions.length}: ${interviewQuestions[interviewIndex]}`;}
-function submitInterviewAnswer(){const a=$('interviewAnswer').value.trim();if(a.length<15)return toast('اكتب إجابة أطول قليلًا حتى تحصل على ملاحظات مفيدة');const words=a.split(/\s+/).length,hasExample=/مثال|مثل|عندما|مشروع|موقف|نتيجة|تعلمت|قمت|عملت/i.test(a),hasStructure=/لأن|لذلك|ثم|بعد ذلك|أولًا|ثانيًا/i.test(a);let score=45+(words>=35?25:words>=18?15:5)+(hasExample?15:0)+(hasStructure?15:0);score=Math.min(100,score);let tips=[];if(words<25)tips.push('وسّع إجابتك قليلًا واذكر تفاصيل أكثر.');if(!hasExample)tips.push('أضف مثالًا واقعيًا يثبت كلامك.');if(!hasStructure)tips.push('رتّب الإجابة: الموقف، ما فعلته، والنتيجة.');if(!tips.length)tips.push('إجابة منظمة؛ حاول أن تجعلها مختصرة وواثقة مع الحفاظ على المثال.');$('interviewFeedback').textContent=`تقييم مبدئي: ${score}/100. ${tips.join(' ')}`;interviewIndex++;$('interviewAnswer').value='';showInterviewQuestion();}
-function resetInterview(){interviewIndex=0;interviewQuestions=[];$('interviewQuestion').classList.add('hidden');$('interviewAnswer').classList.add('hidden');$('interviewAnswerLabel').classList.add('hidden');$('interviewSubmit').classList.add('hidden');$('interviewFeedback').textContent='';$('interviewAnswer').value='';}
-
-// مكالمة وهمية محلية 
-let fakeCallTimeout=null,fakeCallTimer=null,fakeCallAudio=null;
-function stopFakeRingtone(){if(fakeCallAudio){try{fakeCallAudio.osc.stop();fakeCallAudio.ctx.close();}catch(e){}fakeCallAudio=null;}if(fakeCallTimer){clearInterval(fakeCallTimer);fakeCallTimer=null;}}
-function ringFakeCall(){const name=$('fakeCallerName').value.trim()||'اتصال وارد';$('fakeCallerDisplay').textContent=name;$('fakeCallOverlay').classList.add('show');$('fakeCallState').textContent='مكالمة واردة • محاكاة';try{const C=window.AudioContext||window.webkitAudioContext;if(C){const ctx=new C(),osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sine';osc.frequency.value=660;gain.gain.value=.035;osc.connect(gain);gain.connect(ctx.destination);osc.start();fakeCallAudio={ctx,osc};}}catch(e){}}
-function startFakeCall(){clearTimeout(fakeCallTimeout);stopFakeRingtone();const delay=Number($('fakeCallDelay').value)||0;$('fakeCallStatus').textContent=delay?`سيظهر الاتصال بعد ${delay} ثوانٍ...`:'جاري عرض الاتصال...';fakeCallTimeout=setTimeout(ringFakeCall,delay*1000);}
-function answerFakeCall(){stopFakeRingtone();$('fakeCallState').textContent='مكالمة وهمية نشطة';let sec=0;fakeCallTimer=setInterval(()=>{sec++;$('fakeCallState').textContent=`مكالمة وهمية • ${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')}`;},1000);}
-function endFakeCall(){clearTimeout(fakeCallTimeout);stopFakeRingtone();$('fakeCallOverlay').classList.remove('show');$('fakeCallStatus').textContent='انتهت المحاكاة.';}
-
-// عجلة القرار
-let wheelItems=[],wheelAngle=0,wheelBusy=false;
-function prepareWheel(){const raw=$('wheelOptions').value;wheelItems=raw.split(/[\n,،]+/).map(x=>x.trim()).filter(Boolean).slice(0,20);if(wheelItems.length<2)return toast('أدخل اختيارين على الأقل');wheelAngle=0;$('wheelResult').textContent='';drawWheel();}
-function drawWheel(){const c=$('wheelCanvas');if(!c)return;const ctx=c.getContext('2d'),cx=c.width/2,cy=c.height/2,r=155;ctx.clearRect(0,0,c.width,c.height);if(!wheelItems.length){ctx.fillStyle='#dce5ee';ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#173b72';ctx.font='bold 18px Tahoma';ctx.textAlign='center';ctx.fillText('أضف اختياراتك',cx,cy);return;}const step=Math.PI*2/wheelItems.length;wheelItems.forEach((item,i)=>{const a=wheelAngle+i*step-Math.PI/2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,a,a+step);ctx.closePath();ctx.fillStyle=i%2?'#0d9488':'#173b72';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();ctx.save();ctx.translate(cx,cy);ctx.rotate(a+step/2);ctx.fillStyle='#fff';ctx.font='bold 13px Tahoma';ctx.textAlign='right';ctx.fillText(item.slice(0,18),r-12,5);ctx.restore();});ctx.beginPath();ctx.arc(cx,cy,25,0,Math.PI*2);ctx.fillStyle='#f4c95d';ctx.fill();ctx.strokeStyle='#fff';ctx.stroke();}
-function spinWheel(){if(wheelBusy)return;if(!wheelItems.length)prepareWheel();if(wheelItems.length<2)return;wheelBusy=true;const button=$('spinWheelButton');button.disabled=true;const start=wheelAngle,extra=Math.PI*2*(5+Math.random()*4)+Math.random()*Math.PI*2,duration=4200,begin=performance.now();function frame(now){const t=Math.min(1,(now-begin)/duration),ease=1-Math.pow(1-t,4);wheelAngle=start+extra*ease;drawWheel();if(t<1)requestAnimationFrame(frame);else{wheelBusy=false;button.disabled=false;const step=Math.PI*2/wheelItems.length;let pointer=(Math.PI*2-((wheelAngle%(Math.PI*2))+Math.PI*2)%(Math.PI*2)+Math.PI*2)%(Math.PI*2);let idx=Math.floor(pointer/step)%wheelItems.length;$('wheelResult').textContent='🎉 الاختيار: '+wheelItems[idx];}}requestAnimationFrame(frame);}
 
 
 </script>
